@@ -1,0 +1,1064 @@
+# Copyright (C) 2025 TheMagnifico52
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: SAAS Software 0.0.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/saas-software\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-11-14T16:44:16+05:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: saas-software\n"
+
+#. Theme Name of the theme
+#: style.css
+msgid "SAAS Software"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://www.themagnifico.net/products/saas-software"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "The SAAS Software is a modern, multipurpose, and elegant WordPress theme built for startups, software companies, SaaS agencies, SaaS Solutions, Software agencies, SaaS Services, SaaS Development, Cloud Software, Software Consulting, SaaS Marketing, SaaS Growth and digital agencies looking to create a powerful online presence. With its minimal and sophisticated layout, it offers a clean and user-friendly interface that ensures effortless navigation and a visually stunning experience for visitors. The theme is designed using bootstrap technology and optimized codes for faster page load time, giving your website a professional edge. Fully responsive and retina ready, it delivers sharp visuals and seamless performance across all devices. It includes essential sections like banner, testimonial, and team areas to highlight your products, client feedback, and team members attractively. The integrated Call to Action (CTA) button and social media links help improve user engagement, while the personalization options give developers and business owners complete control over their site’s look and functionality."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "TheMagnifico52"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://www.themagnifico.net/"
+msgstr ""
+
+#: 404.php:16
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr ""
+
+#. translators: %s: post title
+#: comments.php:32
+msgid "One thought on &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: 1: number of comments, 2: post title
+#: comments.php:37
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:53
+#: comments.php:67
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:55
+#: comments.php:69
+msgid "Older Comments"
+msgstr ""
+
+#: comments.php:56
+#: comments.php:70
+msgid "Newer Comments"
+msgstr ""
+
+#: comments.php:80
+msgid "Comments are closed."
+msgstr ""
+
+#: footer.php:23
+msgid "firstsidebar"
+msgstr ""
+
+#: footer.php:24
+#: footer.php:41
+msgid "About Us"
+msgstr ""
+
+#: footer.php:26
+msgid "Nam malesuada nulla nisi, ut faucibus magna congue nec. Ut libero tortor, tempus at auctor in, molestie at nisi. In enim ligula, consequat eu feugiat a."
+msgstr ""
+
+#: footer.php:36
+msgid "Useful Links"
+msgstr ""
+
+#: footer.php:38
+#: functions.php:758
+msgid "Home"
+msgstr ""
+
+#: footer.php:39
+msgid "Tournaments"
+msgstr ""
+
+#: footer.php:40
+msgid "Reviews"
+msgstr ""
+
+#: footer.php:51
+msgid "Information"
+msgstr ""
+
+#: footer.php:53
+msgid "FAQ"
+msgstr ""
+
+#: footer.php:54
+msgid "Site Maps"
+msgstr ""
+
+#: footer.php:55
+msgid "Privacy Policy"
+msgstr ""
+
+#: footer.php:56
+msgid "Contact Us"
+msgstr ""
+
+#: footer.php:66
+msgid "Get In Touch"
+msgstr ""
+
+#: footer.php:68
+msgid "Via Carlo Montù 78"
+msgstr ""
+
+#: footer.php:68
+msgid "22021 Bellagio CO, Italy"
+msgstr ""
+
+#: footer.php:69
+msgid "+11 6254 7855"
+msgstr ""
+
+#: footer.php:70
+msgid "support@example.com"
+msgstr ""
+
+#. translators: %s: CMS name, i.e. WordPress.
+#: footer.php:84
+msgid "Proudly powered by %s"
+msgstr ""
+
+#. translators: 1: Theme name,
+#: footer.php:93
+msgid " %1$s "
+msgstr ""
+
+#. translators: 1: Theme author.
+#: footer.php:98
+msgid "by %1$s."
+msgstr ""
+
+#: footer.php:108
+msgid "TOP"
+msgstr ""
+
+#: functions.php:40
+msgid "Primary"
+msgstr ""
+
+#: functions.php:85
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:87
+msgid "Add widgets here."
+msgstr ""
+
+#: functions.php:95
+msgid "Footer Column 1"
+msgstr ""
+
+#: functions.php:105
+msgid "Footer Column 2"
+msgstr ""
+
+#: functions.php:115
+msgid "Footer Column 3"
+msgstr ""
+
+#: functions.php:393
+#: template-parts/navigation/nav.php:9
+msgid "Horizontal"
+msgstr ""
+
+#: functions.php:450
+msgid "Show sub menu"
+msgstr ""
+
+#: functions.php:486
+msgid "https://wordpress.org/support/theme/saas-software/"
+msgstr ""
+
+#: functions.php:489
+msgid "https://wordpress.org/support/theme/saas-software/reviews/"
+msgstr ""
+
+#: functions.php:492
+msgid "https://demo.themagnifico.net/saas-software/"
+msgstr ""
+
+#: functions.php:495
+msgid "https://www.themagnifico.net/products/saas-wordpress-theme"
+msgstr ""
+
+#: functions.php:498
+msgid "https://demo.themagnifico.net/eard/wathiqa/saas-software-pro-doc/"
+msgstr ""
+
+#: functions.php:501
+msgid "https://demo.themagnifico.net/eard/wathiqa/saas-software-free-doc/"
+msgstr ""
+
+#: functions.php:504
+msgid "https://www.themagnifico.net/products/wordpress-theme-bundle"
+msgstr ""
+
+#: functions.php:610
+msgid "Thank You For Choosing "
+msgstr ""
+
+#: functions.php:611
+msgid "Get Started With Theme By Clicking On Getting Started."
+msgstr ""
+
+#: functions.php:612
+msgid "Get started"
+msgstr ""
+
+#: functions.php:613
+msgid "Get Premium "
+msgstr ""
+
+#: functions.php:614
+#: inc/theme-installation/theme-installation.php:780
+msgid "Buy All Themes - 120+ Templates"
+msgstr ""
+
+#: functions.php:617
+#: inc/theme-installation/theme-installation.php:837
+msgid "View Demo"
+msgstr ""
+
+#: functions.php:764
+msgid "About"
+msgstr ""
+
+#: functions.php:771
+msgid "Services"
+msgstr ""
+
+#: functions.php:778
+msgid "Blog"
+msgstr ""
+
+#: functions.php:785
+msgid "Contact"
+msgstr ""
+
+#: header.php:33
+msgid "Skip to content"
+msgstr ""
+
+#. translators: %d: ID of a post.
+#: inc/class-navigation-menu.php:76
+msgid "#%d (no title)"
+msgstr ""
+
+#: inc/customizer.php:18
+msgid "SAAS Software Pro"
+msgstr ""
+
+#: inc/customizer.php:21
+msgid "Buy SAAS Software Pro"
+msgstr ""
+
+#: inc/customizer.php:38
+msgid "GET PREMIUM"
+msgstr ""
+
+#: inc/customizer.php:100
+msgid "Enable Disable Title"
+msgstr ""
+
+#: inc/customizer.php:111
+msgid "Title Font Size"
+msgstr ""
+
+#: inc/customizer.php:121
+msgid "Enable Disable Tagline"
+msgstr ""
+
+#: inc/customizer.php:132
+msgid "Tagline Font Size"
+msgstr ""
+
+#: inc/customizer.php:143
+msgid "Logo Width"
+msgstr ""
+
+#: inc/customizer.php:150
+msgid "Global Settings"
+msgstr ""
+
+#: inc/customizer.php:159
+msgid "Change the global color of the theme in one click."
+msgstr ""
+
+#: inc/customizer.php:266
+msgid "Heading Color"
+msgstr ""
+
+#: inc/customizer.php:278
+msgid "Heading Fonts"
+msgstr ""
+
+#: inc/customizer.php:288
+msgid "Heading Font Size"
+msgstr ""
+
+#: inc/customizer.php:300
+msgid "Paragraph Color"
+msgstr ""
+
+#: inc/customizer.php:312
+msgid "Paragraph Fonts"
+msgstr ""
+
+#: inc/customizer.php:322
+msgid "Paragraph Font Size"
+msgstr ""
+
+#: inc/customizer.php:330
+msgid "General Settings"
+msgstr ""
+
+#: inc/customizer.php:343
+msgid "Full Width"
+msgstr ""
+
+#: inc/customizer.php:344
+msgid "Wide Width"
+msgstr ""
+
+#: inc/customizer.php:345
+msgid "Boxed Width"
+msgstr ""
+
+#: inc/customizer.php:356
+msgid "Uppercase"
+msgstr ""
+
+#: inc/customizer.php:357
+msgid "Capitalize"
+msgstr ""
+
+#: inc/customizer.php:358
+msgid "Lowercase"
+msgstr ""
+
+#: inc/customizer.php:368
+msgid "Show Theme Preloader"
+msgstr ""
+
+#: inc/customizer.php:379
+msgid "Preloader Background Color"
+msgstr ""
+
+#: inc/customizer.php:389
+msgid "Preloader First Dot Color"
+msgstr ""
+
+#: inc/customizer.php:399
+msgid "Preloader Second Dot Color"
+msgstr ""
+
+#: inc/customizer.php:409
+msgid "Show Theme Scroll To Top"
+msgstr ""
+
+#: inc/customizer.php:423
+#: inc/customizer.php:983
+#: inc/customizer.php:1018
+msgid "Right"
+msgstr ""
+
+#: inc/customizer.php:424
+#: inc/customizer.php:981
+#: inc/customizer.php:1016
+msgid "Left"
+msgstr ""
+
+#: inc/customizer.php:425
+#: inc/customizer.php:982
+#: inc/customizer.php:1017
+msgid "Center"
+msgstr ""
+
+#: inc/customizer.php:434
+msgid "Scroll Top Background Color"
+msgstr ""
+
+#: inc/customizer.php:444
+msgid "Scroll Top Color"
+msgstr ""
+
+#: inc/customizer.php:454
+msgid "Scroll Top Font Size"
+msgstr ""
+
+#: inc/customizer.php:455
+msgid "Put in px"
+msgstr ""
+
+#: inc/customizer.php:465
+msgid "Scroll Top Border Radius"
+msgstr ""
+
+#: inc/customizer.php:466
+msgid "Put in %"
+msgstr ""
+
+#: inc/customizer.php:479
+msgid "Product per row"
+msgstr ""
+
+#: inc/customizer.php:494
+msgid "Product per page"
+msgstr ""
+
+#: inc/customizer.php:507
+msgid "Related Products Column Count"
+msgstr ""
+
+#: inc/customizer.php:525
+msgid "Number of Related Products Per Page"
+msgstr ""
+
+#: inc/customizer.php:540
+msgid "Show Related Products"
+msgstr ""
+
+#: inc/customizer.php:552
+msgid "Hide Shop Page Sidebar"
+msgstr ""
+
+#: inc/customizer.php:564
+msgid "Woocommerce Shop Page Sidebar"
+msgstr ""
+
+#. Template Name of the theme
+#: inc/customizer.php:567
+#: inc/customizer.php:593
+msgid "Left Sidebar"
+msgstr ""
+
+#. Template Name of the theme
+#: inc/customizer.php:568
+#: inc/customizer.php:594
+msgid "Right Sidebar"
+msgstr ""
+
+#: inc/customizer.php:578
+msgid "Hide Single Product Page Sidebar"
+msgstr ""
+
+#: inc/customizer.php:590
+msgid "Woocommerce Single Product Page Sidebar"
+msgstr ""
+
+#: inc/customizer.php:600
+msgid " Header Option"
+msgstr ""
+
+#: inc/customizer.php:608
+msgid "Show Search"
+msgstr ""
+
+#: inc/customizer.php:619
+msgid "Header Button Text"
+msgstr ""
+
+#: inc/customizer.php:630
+msgid "Header Button URL"
+msgstr ""
+
+#: inc/customizer.php:638
+msgid "Banner Settings"
+msgstr ""
+
+#: inc/customizer.php:646
+msgid "Show Banner"
+msgstr ""
+
+#: inc/customizer.php:657
+#: inc/customizer.php:813
+msgid "Heading"
+msgstr ""
+
+#: inc/customizer.php:668
+msgid "Content"
+msgstr ""
+
+#: inc/customizer.php:679
+msgid "Banner Button Text"
+msgstr ""
+
+#: inc/customizer.php:690
+msgid "Banner Button URL"
+msgstr ""
+
+#: inc/customizer.php:701
+msgid "Banner Icon Image 1"
+msgstr ""
+
+#: inc/customizer.php:711
+msgid "Banner Icon Image 2"
+msgstr ""
+
+#: inc/customizer.php:721
+msgid "Banner Icon Image 3"
+msgstr ""
+
+#: inc/customizer.php:731
+msgid "Review Heading"
+msgstr ""
+
+#: inc/customizer.php:742
+msgid "Review Text"
+msgstr ""
+
+#: inc/customizer.php:754
+msgid "Client Image "
+msgstr ""
+
+#: inc/customizer.php:765
+msgid "Banner Image 1"
+msgstr ""
+
+#: inc/customizer.php:775
+msgid "Banner Image 2"
+msgstr ""
+
+#: inc/customizer.php:783
+msgid "Service Section"
+msgstr ""
+
+#: inc/customizer.php:791
+msgid "Show Service Section"
+msgstr ""
+
+#: inc/customizer.php:802
+msgid "Short Heading"
+msgstr ""
+
+#: inc/customizer.php:838
+msgid "Select Category to display posts"
+msgstr ""
+
+#: inc/customizer.php:847
+msgid "Service Post Count"
+msgstr ""
+
+#: inc/customizer.php:860
+msgid "Service Icon "
+msgstr ""
+
+#: inc/customizer.php:864
+msgid "Select font awesome icons <a target=\"_blank\" href=\"https://fontawesome.com/v5/search?m=free\">Click Here</a> for select icon. for eg:-fas fa-file"
+msgstr ""
+
+#: inc/customizer.php:870
+msgid "Post Settings"
+msgstr ""
+
+#: inc/customizer.php:880
+msgid "Enable Post Page Title"
+msgstr ""
+
+#: inc/customizer.php:882
+msgid "Check this box to enable title on post page."
+msgstr ""
+
+#: inc/customizer.php:891
+msgid "Enable Post Page Meta"
+msgstr ""
+
+#: inc/customizer.php:893
+msgid "Check this box to enable meta on post page."
+msgstr ""
+
+#: inc/customizer.php:902
+msgid "Enable Post Page Thumbnail"
+msgstr ""
+
+#: inc/customizer.php:904
+msgid "Check this box to enable thumbnail on post page."
+msgstr ""
+
+#: inc/customizer.php:913
+msgid "Enable Post Page Content"
+msgstr ""
+
+#: inc/customizer.php:915
+msgid "Check this box to enable content on post page."
+msgstr ""
+
+#: inc/customizer.php:923
+msgid "Post Page Excerpt Length"
+msgstr ""
+
+#: inc/customizer.php:939
+msgid "Post Page Excerpt Suffix"
+msgstr ""
+
+#: inc/customizer.php:941
+msgid "For Ex. [...], etc"
+msgstr ""
+
+#: inc/customizer.php:950
+msgid "Enable Post Page Pagination"
+msgstr ""
+
+#: inc/customizer.php:952
+msgid "Check this box to enable pagination on post page."
+msgstr ""
+
+#: inc/customizer.php:961
+msgid "Enable Single Post Page Content"
+msgstr ""
+
+#: inc/customizer.php:963
+msgid "Check this box to enable content on single post page."
+msgstr ""
+
+#: inc/customizer.php:968
+msgid "Footer"
+msgstr ""
+
+#: inc/customizer.php:978
+msgid "Footer Widget Content Alignment"
+msgstr ""
+
+#: inc/customizer.php:993
+msgid "Show / Hide Copyright"
+msgstr ""
+
+#: inc/customizer.php:1001
+msgid "Replace the footer text"
+msgstr ""
+
+#: inc/customizer.php:1013
+msgid "Copyright Content Alignment"
+msgstr ""
+
+#: inc/customizer.php:1029
+msgid "Customizer Options"
+msgstr ""
+
+#. translators: %s: post date
+#. translators: %s: post author
+#: inc/template-tags.php:27
+#: inc/template-tags.php:33
+msgid "<span class=\"screen-reader-text\">Posted on</span> %s"
+msgstr ""
+
+#. translators: %s: post title
+#: inc/template-tags.php:42
+msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr ""
+
+#: inc/template-tags.php:141
+msgid "Pingback:"
+msgstr ""
+
+#: inc/template-tags.php:142
+#: inc/template-tags.php:162
+msgid "Edit"
+msgstr ""
+
+#: inc/template-tags.php:167
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:43
+msgid " Info"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:44
+msgid " Theme"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:446
+#: inc/theme-installation/theme-installation.php:666
+msgid "Install"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:451
+#: inc/theme-installation/theme-installation.php:671
+msgid "Activate"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:457
+#: inc/theme-installation/theme-installation.php:677
+msgid "Deactivate"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:477
+msgid "Hooray! There are no recommended actions for you right now."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:478
+msgid "Show All Recommended Actions"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:505
+msgid "Theme Feature"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:506
+msgid "Basic Version"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:507
+msgid "Premium Version"
+msgstr ""
+
+#. translators: %s - Theme Name
+#: inc/theme-installation/theme-installation.php:761
+msgid "Welcome to %s - "
+msgstr ""
+
+#. translators: %s - Theme Name
+#: inc/theme-installation/theme-installation.php:765
+msgid "%s is now installed and ready to use. We hope the following information will help and you enjoy using it!"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:772
+msgid "Try the Demo"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:776
+#: inc/theme-installation/theme-installation.php:797
+msgid "Get Premium"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:786
+msgid "Demo Impoter"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:787
+msgid "Compare Free Vs Pro"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:788
+msgid "Recommended Plugins"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:789
+msgid "Changelog"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:795
+msgid "Checkout Premium"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:796
+msgid "Our premium theme comes with extended features like demo content import , responsive layouts etc."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:803
+#: inc/theme-installation/theme-installation.php:805
+msgid "Contact Support"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:804
+msgid "Thank you for trying SAAS Software , feel free to contact us for any support regarding our theme."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:811
+#: inc/theme-installation/theme-installation.php:813
+msgid "Review"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:812
+msgid "If You love SAAS Software theme then we would appreciate your review about our theme."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:819
+#: inc/theme-installation/theme-installation.php:821
+msgid "Go to Customizer"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:820
+msgid "All Settings, Header & Footer Options and Theme Options are available via Customize screen."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:827
+#: inc/theme-installation/theme-installation.php:829
+msgid "Free Documentation"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:828
+msgid "Our guide is available if you require any help configuring and setting up the theme. Easy and quick way to setup the theme."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:835
+msgid "View Theme Demo"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:836
+msgid "Explore the demo to see how easily you can set up and customize the theme."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:847
+msgid "Instant Demo Setup"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:848
+msgid "Import your entire demo content in just one click, including pages, posts, and design elements for a quick setup."
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:849
+msgid "Start Demo Import"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:864
+msgid "Header Background Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:865
+#: inc/theme-installation/theme-installation.php:866
+#: inc/theme-installation/theme-installation.php:870
+#: inc/theme-installation/theme-installation.php:871
+#: inc/theme-installation/theme-installation.php:875
+#: inc/theme-installation/theme-installation.php:876
+#: inc/theme-installation/theme-installation.php:881
+#: inc/theme-installation/theme-installation.php:886
+#: inc/theme-installation/theme-installation.php:891
+#: inc/theme-installation/theme-installation.php:896
+#: inc/theme-installation/theme-installation.php:901
+#: inc/theme-installation/theme-installation.php:906
+#: inc/theme-installation/theme-installation.php:911
+#: inc/theme-installation/theme-installation.php:916
+#: inc/theme-installation/theme-installation.php:921
+#: inc/theme-installation/theme-installation.php:926
+#: inc/theme-installation/theme-installation.php:931
+#: inc/theme-installation/theme-installation.php:936
+#: inc/theme-installation/theme-installation.php:941
+#: inc/theme-installation/theme-installation.php:946
+#: inc/theme-installation/theme-installation.php:951
+#: inc/theme-installation/theme-installation.php:956
+#: inc/theme-installation/theme-installation.php:961
+#: inc/theme-installation/theme-installation.php:966
+#: inc/theme-installation/theme-installation.php:970
+#: inc/theme-installation/theme-installation.php:971
+msgid "yes"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:869
+msgid "Custom Navigation Logo Or Text"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:874
+msgid "Hide Logo Text"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:879
+msgid "Premium Support"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:880
+#: inc/theme-installation/theme-installation.php:885
+#: inc/theme-installation/theme-installation.php:890
+#: inc/theme-installation/theme-installation.php:895
+#: inc/theme-installation/theme-installation.php:900
+#: inc/theme-installation/theme-installation.php:905
+#: inc/theme-installation/theme-installation.php:910
+#: inc/theme-installation/theme-installation.php:915
+#: inc/theme-installation/theme-installation.php:920
+#: inc/theme-installation/theme-installation.php:925
+#: inc/theme-installation/theme-installation.php:930
+#: inc/theme-installation/theme-installation.php:935
+#: inc/theme-installation/theme-installation.php:940
+#: inc/theme-installation/theme-installation.php:945
+#: inc/theme-installation/theme-installation.php:950
+#: inc/theme-installation/theme-installation.php:955
+#: inc/theme-installation/theme-installation.php:960
+#: inc/theme-installation/theme-installation.php:965
+msgid "no"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:884
+msgid "Fully SEO Optimized"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:889
+msgid "Recent Posts Widget"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:894
+msgid "Easy Google Fonts"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:899
+msgid "Pagespeed Plugin"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:904
+msgid "Only Show Header Image On Front Page"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:909
+msgid "Show Header Everywhere"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:914
+msgid "Custom Text On Header Image"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:919
+msgid "Full Width (Hide Sidebar)"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:924
+msgid "Only Show Upper Widgets On Front Page"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:929
+msgid "Replace Copyright Text"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:934
+msgid "Customize Upper Widgets Colors"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:939
+msgid "Customize Navigation Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:944
+msgid "Customize Post/Page Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:949
+msgid "Customize Blog Feed Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:954
+msgid "Customize Footer Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:959
+msgid "Customize Sidebar Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:964
+msgid "Customize Background Color"
+msgstr ""
+
+#: inc/theme-installation/theme-installation.php:969
+msgid "Importable Demo Content"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Home Template"
+msgstr ""
+
+#. translators: %s: search query.
+#: search.php:21
+msgid "Search Results for: %s"
+msgstr ""
+
+#: searchform.php:12
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr ""
+
+#: searchform.php:12
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:14
+msgctxt "submit button"
+msgid "Search"
+msgstr ""
+
+#: template-parts/content-audio.php:41
+#: template-parts/content-gallery.php:29
+#: template-parts/content-image.php:24
+#: template-parts/content-search.php:15
+#: template-parts/content-single.php:21
+#: template-parts/content-video.php:40
+#: template-parts/content.php:24
+msgid "BY"
+msgstr ""
+
+#: template-parts/content-audio.php:52
+#: template-parts/content-gallery.php:40
+#: template-parts/content-image.php:35
+#: template-parts/content-search.php:21
+#: template-parts/content-video.php:51
+#: template-parts/content.php:35
+msgid "Read More"
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#. translators: 1: link to WP admin new post page.
+#: template-parts/content-none.php:24
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:37
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:44
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: template-parts/content-page.php:23
+#: template-parts/content-single.php:41
+msgid "Pages:"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: template-parts/content-page.php:35
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: template-parts/content-single.php:30
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:26
+msgid "You must be logged in to checkout."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:31
+msgid "Checkout"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:51
+msgid "Your order"
+msgstr ""

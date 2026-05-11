@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可视化编辑器 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TinyMCE 富文本编辑器 (免API Key版本) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* 顶部导航 */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .page-name {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .header-btn.primary {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .header-btn.primary:hover {
+            background: #059669;
+        }
+
+        .header-btn.danger {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .header-btn.danger:hover {
+            background: #dc2626;
+        }
+
+        /* 主内容区 */
+        .main {
+            padding: 88px 24px 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* 编辑布局 */
+        .editor-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            height: calc(100vh - 112px);
+        }
+
+        /* 编辑面板 */
+        .edit-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9fafb;
+        }
+
+        .panel-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-title i {
+            color: #3b82f6;
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* 修复富文本编辑器样式 */
+        .tox-tinymce {
+            border: 1px solid #d1d5db !important;
+            border-radius: 8px !important;
+        }
+        
+        .tox .tox-editor-container {
+            background: white !important;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        /* 区块样式 */
+        .section-block {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: #3b82f6;
+        }
+
+        .section-toggle {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .section-toggle:hover {
+            color: #3b82f6;
+        }
+
+        .section-content {
+            display: block;
+        }
+
+        .section-content.collapsed {
+            display: none;
+        }
+
+        /* 预览面板 */
+        .preview-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .preview-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+            background: #f5f7fa;
+        }
+
+        .preview-info {
+            padding: 12px 20px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* 按钮组 */
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* 图片上传区域 */
+        .image-upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f9fafb;
+        }
+
+        .image-upload-area:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .image-upload-area i {
+            font-size: 32px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        .image-upload-area p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .image-upload-area .hint {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        /* 元素编辑工具栏 */
+        .element-toolbar {
+            position: fixed;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 8px;
+            display: none;
+            z-index: 1000;
+            gap: 4px;
+        }
+
+        .element-toolbar.show {
+            display: flex;
+        }
+
+        .element-tool-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #374151;
+            transition: all 0.2s;
+        }
+
+        .element-tool-btn:hover {
+            background: #f3f4f6;
+            color: #3b82f6;
+        }
+
+        .element-tool-btn.danger:hover {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        /* 模态框 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            max-height: calc(90vh - 140px);
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* 图片库 */
+        .image-library {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .image-library-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .image-library-item:hover {
+            border-color: #3b82f6;
+        }
+
+        .image-library-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 底部操作栏 */
+        .editor-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 90;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+        }
+
+        .footer-left {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .footer-left .status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-left .status.saved {
+            color: #10b981;
+        }
+
+        .footer-left .status.unsaved {
+            color: #f59e0b;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* 加载状态 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 300;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .toast i {
+            font-size: 20px;
+        }
+
+        .toast.success i {
+            color: #10b981;
+        }
+
+        .toast.error i {
+            color: #ef4444;
+        }
+
+        /* 元素编辑高亮 */
+        .editable-element {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .editable-element:hover {
+            outline: 2px dashed #3b82f6;
+            outline-offset: 4px;
+        }
+
+        .editable-element.selected {
+            outline: 2px solid #3b82f6;
+            outline-offset: 4px;
+        }
+
+        .editable-element::after {
+            content: attr(data-element-type);
+            position: absolute;
+            top: -24px;
+            left: 0;
+            background: #3b82f6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .editable-element:hover::after,
+        .editable-element.selected::after {
+            opacity: 1;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .editor-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .preview-panel {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-right {
+                display: none;
+            }
+
+            .editor-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .footer-right {
+                width: 100%;
+            }
+
+            .footer-right .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        /* TinyMCE 自定义样式 */
+        .tox-tinymce {
+            border-radius: 8px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="logo">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回列表</span>
+            </a>
+            <div class="header-divider"></div>
+            <span class="page-name" id="pageTitle">编辑页面</span>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" onclick="refreshPreview()">
+                <i class="fas fa-sync-alt"></i>
+                <span>刷新预览</span>
+            </button>
+            <button class="header-btn" onclick="openImageLibrary()">
+                <i class="fas fa-images"></i>
+                <span>图片库</span>
+            </button>
+            <a href="#" class="header-btn" id="viewPageBtn" target="_blank">
+                <i class="fas fa-eye"></i>
+                <span>查看页面</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main">
+        <div class="editor-layout">
+            <!-- 编辑面板 -->
+            <div class="edit-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fas fa-edit"></i>
+                        内容编辑
+                    </h3>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="undoBtn" onclick="undo()" disabled>
+                            <i class="fas fa-undo"></i>
+                            撤回
+                        </button>
+                        <button class="btn btn-secondary" id="redoBtn" onclick="redo()" disabled>
+                            <i class="fas fa-redo"></i>
+                            重做
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadDefaultData()">
+                            <i class="fas fa-rotate-left"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body" id="editForm">
+                    <!-- 表单内容将由JS生成 -->
+                </div>
+            </div>
+
+            <!-- 预览面板 -->
+            <div class="preview-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fas fa-eye"></i>
+                        实时预览
+                    </h3>
+                </div>
+                <iframe class="preview-frame" id="previewFrame" src=""></iframe>
+                <div class="preview-info">
+                    <span><i class="fas fa-info-circle"></i> 预览仅供参考，实际效果以发布后的页面为准</span>
+                    <span id="previewSize">100%</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部操作栏 -->
+    <div class="editor-footer">
+        <div class="footer-left">
+            <div class="status unsaved" id="saveStatus">
+                <i class="fas fa-circle"></i>
+                <span>有未保存的更改</span>
+            </div>
+        </div>
+        <div class="footer-right">
+            <button class="btn btn-secondary" onclick="cancelEdit()">
+                <i class="fas fa-times"></i>
+                取消
+            </button>
+            <button class="btn btn-primary" onclick="saveData()">
+                <i class="fas fa-save"></i>
+                保存
+            </button>
+            <button class="btn btn-success" onclick="publishPage()">
+                <i class="fas fa-upload"></i>
+                发布
+            </button>
+        </div>
+    </div>
+
+    <!-- 元素编辑工具栏 -->
+    <div class="element-toolbar" id="elementToolbar">
+        <button class="element-tool-btn" onclick="editElementText()" title="编辑文本">
+            <i class="fas fa-font"></i>
+        </button>
+        <button class="element-tool-btn" onclick="editElementImage()" title="更换图片">
+            <i class="fas fa-image"></i>
+        </button>
+        <button class="element-tool-btn" onclick="editElementLink()" title="编辑链接">
+            <i class="fas fa-link"></i>
+        </button>
+        <button class="element-tool-btn" onclick="editElementStyle()" title="编辑样式">
+            <i class="fas fa-paint-brush"></i>
+        </button>
+        <button class="element-tool-btn danger" onclick="deleteElement()" title="删除元素">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+
+    <!-- 图片库模态框 -->
+    <div class="modal-overlay" id="imageLibraryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-images" style="color: #3b82f6; margin-right: 8px;"></i>
+                    图片库
+                </h3>
+                <button class="modal-close" onclick="closeImageLibrary()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="image-upload-area" onclick="document.getElementById('imageUploadInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>点击或拖拽上传图片</p>
+                    <span class="hint">支持 JPG, PNG, GIF, WebP 格式，最大 5MB</span>
+                </div>
+                <input type="file" id="imageUploadInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                
+                <h4 style="margin: 24px 0 16px; font-size: 14px; color: #374151;">已上传图片</h4>
+                <div class="image-library" id="imageLibrary">
+                    <!-- 图片列表将由JS生成 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeImageLibrary()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 元素编辑模态框 -->
+    <div class="modal-overlay" id="elementEditModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="elementEditTitle">
+                    <i class="fas fa-edit" style="color: #3b82f6; margin-right: 8px;"></i>
+                    编辑元素
+                </h3>
+                <button class="modal-close" onclick="closeElementEdit()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="elementEditBody">
+                <!-- 编辑表单将由JS生成 -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeElementEdit()">取消</button>
+                <button class="btn btn-primary" onclick="saveElementEdit()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载状态 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在加载...</div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script src="assets/editor-v2.js"></script>
+</body>
+</html>

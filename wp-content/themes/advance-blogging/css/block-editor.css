@@ -1,0 +1,79 @@
+.banner-section-1 h1,.banner-section-2 h2,.banner-section-3 h2,
+.blog-service-section .service-box h3 {
+  font-family: 'Playfair Display', serif;  
+}
+.banner-section-1 p,.banner-section-2 p,.banner-section-3 p,
+.blog-service-section .blog-box p,
+.blog-service-section .service-box p,
+.blog-service-btn .wp-block-button__link {
+    font-family: 'Poppins', sans-serif;
+}
+.blog-banner-section.wp-block-columns {
+    gap:  0em !important;
+}
+.blog-banner-section .wp-block {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+.blog-service-section img,
+.blog-service-section .wp-block-gallery img  {
+    width:  100%;
+}
+.banner-section-1,.banner-section-2,.banner-section-3,.service-box {
+    position: relative;
+}
+.banner-content,.banner-content-1,.banner-content-2 {
+    position: absolute !important;
+    top: 36px;
+    border-left: solid 3px var(--primary-color);
+}
+.blog-service-btn .wp-block-button__link {
+   padding: 10px 15px !important;
+   font-weight: 700 !important;
+   text-decoration: none !important;
+}
+.blog-service-btn .wp-block-button__link:hover {
+    background: #000 !important;
+}
+.blog-service-section .blog-box {
+    width: 66px;
+    position: absolute;
+    top: 3%;
+    padding: 0px;
+    margin: 0px;
+}
+.service-box .wp-block {
+    margin: 0px !important;
+}
+.blog-service-section .blog-box .text-para {
+    border-top:  solid 1px #fff;
+    padding-bottom: 0px !important ;
+}
+.blog-service-section .blog-box p:first-child {
+    margin: 0px !important;
+    padding-top: 10px !important;
+}
+.blog-service-section .gallery {
+    border-bottom: solid 2px var(--primary-color);
+    font-weight: 700;
+}
+.wp-block-search .wp-block-search__label {
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 5%;
+    border-bottom: 2px solid var(--primary-color);
+}
+.blog-service-section .wp-block-gallery img {
+    width:  100%;
+}
+.wp-block-search .wp-block-search__button{
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 700 !important;
+    padding: 5px 23px 3px 10px;
+}
+.blog-service-btn .wp-block-button__link {
+    margin-top: 12px;
+}

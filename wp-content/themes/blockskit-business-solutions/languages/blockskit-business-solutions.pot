@@ -1,0 +1,644 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Blockskit Business Solutions\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-02 11:01+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-7.4.21\n"
+"X-Domain: blockskit-business-solutions"
+
+#: patterns/home-about.php:35
+msgid "(85%)"
+msgstr ""
+
+#: patterns/home-about.php:19
+msgid "(92%)"
+msgstr ""
+
+#: patterns/home-about.php:27
+msgid "(95%)"
+msgstr ""
+
+#: patterns/home-process.php:43
+msgid "01."
+msgstr ""
+
+#: patterns/home-process.php:59
+msgid "02."
+msgstr ""
+
+#: patterns/home-process.php:75
+msgid "03."
+msgstr ""
+
+#: patterns/home-info.php:61
+msgid "24/7 Support"
+msgstr ""
+
+#: patterns/home-hero-banner.php:19
+msgid "BEST BUSINESS STRATEGY"
+msgstr ""
+
+#: patterns/template-order-confirmation.php:68
+msgid "Billing address"
+msgstr ""
+
+#. Name of the theme
+msgid "Blockskit Business Solutions"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"Blockskit Business Solutions is a modern, versatile FSE WordPress theme "
+"designed for business, company, consulting, consult, agency, corporate, "
+"digital marketing, marketing, startup, finance, fintech, it solution, saas, "
+"software, tech solution, technology, and other Startup Company &amp; "
+"Business websites—no coding required. With full-site editing, you can easily "
+"customize every aspect of your site, including headers and footers. "
+"Featuring multiple templates, patterns, and style variations, it adapts "
+"seamlessly to various aesthetics and business needs."
+msgstr ""
+
+#. Author of the theme
+msgid "BlockskitDev"
+msgstr ""
+
+#: patterns/template-cart.php:212
+msgid "Browse store"
+msgstr ""
+
+#: patterns/home-testimonials.php:23
+msgid "Checkout Customer Review&#39;s"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Accent"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Accent Text"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Background"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Body"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Current Color"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Foreground"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Heading"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Highlight"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Hover"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Inherit"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Light"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Neutral"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Outline"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Primary"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Pure Black"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Pure White"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Secondary"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Secondary Accent"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Secondary Accent Text"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Surface"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Color name"
+msgid "Transparent"
+msgstr ""
+
+#: patterns/footer.php:53
+msgid "Company"
+msgstr ""
+
+#: patterns/footer.php:108
+msgid "Copyright © 2025 ·"
+msgstr ""
+
+#: patterns/home-testimonials.php:54 patterns/home-testimonials.php:88
+msgid "CUSTOMER"
+msgstr ""
+
+#: patterns/home-about.php:19
+msgid "Customer Satisfaction"
+msgstr ""
+
+#: patterns/home-process.php:63
+msgid "Development &amp; Implements"
+msgstr ""
+
+#: patterns/template-order-confirmation.php:48
+msgid "Downloads"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Duotone name"
+msgid "Light"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Duotone name"
+msgid "Primary"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Duotone name"
+msgid "Secondary"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font family name"
+msgid "Inter"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font family name"
+msgid "Merriweather"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font family name"
+msgid "Poppins"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "X Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "X Small"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "XX Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "XXX Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Font size name"
+msgid "XXXX Large"
+msgstr ""
+
+#: patterns/header.php:28
+msgid "GET QUOTE"
+msgstr ""
+
+#: patterns/home-hero-banner.php:37
+msgid "GET STARTED"
+msgstr ""
+
+#: patterns/home-info.php:21
+msgid "Global Strategy"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Gradient name"
+msgid "Primary"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://blockskit.com"
+msgstr ""
+
+#. URI of the theme
+msgid "https://blockskit.com/blockskit-business-solutions/"
+msgstr ""
+
+#: patterns/home-info.php:65
+msgid "Interdum hac purus temp, eu quos maiores sodex"
+msgstr ""
+
+#: patterns/home-info.php:25 patterns/home-info.php:45
+msgid "Interdum hac purus temp, eu quos maiores sodex."
+msgstr ""
+
+#: patterns/home-about.php:44
+msgid "INTRODUCTION OF US"
+msgstr ""
+
+#: patterns/home-process.php:47
+msgid "Knowing Your Business"
+msgstr ""
+
+#: patterns/home-hero-banner.php:33
+msgid "LEARN MORE"
+msgstr ""
+
+#: patterns/home-process.php:79
+msgid "Marketing &amp; Execute"
+msgstr ""
+
+#: patterns/home-testimonials.php:63 patterns/home-testimonials.php:97
+msgid ""
+"Minus mollit sollicitudin porro fames, quis porttitor porttitor neque "
+"accumsan proident, esse! Deserunt egestas eveniet soluta ipsam risus."
+msgstr ""
+
+#: patterns/template-cart.php:220
+msgid "New in store"
+msgstr ""
+
+#: patterns/footer.php:19
+msgid ""
+"Nisl libero ullamcorper id ipsum viverra mauris non pellentesque placerat "
+"lorem lacinia sagittis non pretium."
+msgstr ""
+
+#: patterns/template-product-search-results.php:48
+msgid "No products were found matching your selection."
+msgstr ""
+
+#: patterns/template-order-confirmation.php:22
+msgid "Order Confirmation"
+msgstr ""
+
+#: patterns/template-order-confirmation.php:40
+msgid "Order details"
+msgstr ""
+
+#: patterns/home-latest-posts.php:16
+msgid "Our Insights And Blog"
+msgstr ""
+
+#: patterns/home-process.php:15
+msgid "OUR WORK PROCESS"
+msgstr ""
+
+#: patterns/home-about.php:2
+msgctxt "Pattern title"
+msgid "About"
+msgstr ""
+
+#: patterns/footer.php:2
+msgctxt "Pattern title"
+msgid "Footer"
+msgstr ""
+
+#: patterns/header.php:2
+msgctxt "Pattern title"
+msgid "Header"
+msgstr ""
+
+#: patterns/header-home.php:2
+msgctxt "Pattern title"
+msgid "Header Home"
+msgstr ""
+
+#: patterns/home-hero-banner.php:2
+msgctxt "Pattern title"
+msgid "Hero Banner"
+msgstr ""
+
+#: patterns/home.php:2
+msgctxt "Pattern title"
+msgid "Home"
+msgstr ""
+
+#: patterns/home-info.php:2
+msgctxt "Pattern title"
+msgid "Info"
+msgstr ""
+
+#: patterns/home-latest-posts.php:2
+msgctxt "Pattern title"
+msgid "Latest Posts"
+msgstr ""
+
+#: patterns/home-process.php:2
+msgctxt "Pattern title"
+msgid "Process"
+msgstr ""
+
+#: patterns/template-404.php:2
+msgctxt "Pattern title"
+msgid "Template 404"
+msgstr ""
+
+#: patterns/template-archive.php:2
+msgctxt "Pattern title"
+msgid "Template Archive"
+msgstr ""
+
+#: patterns/template-archive-product.php:2
+msgctxt "Pattern title"
+msgid "Template Archive Product"
+msgstr ""
+
+#: patterns/template-blog-listing.php:2
+msgctxt "Pattern title"
+msgid "Template Blog Listing"
+msgstr ""
+
+#: patterns/template-cart.php:2
+msgctxt "Pattern title"
+msgid "Template Cart"
+msgstr ""
+
+#: patterns/template-checkout.php:2
+msgctxt "Pattern title"
+msgid "Template Checkout"
+msgstr ""
+
+#: patterns/template-full-width.php:2
+msgctxt "Pattern title"
+msgid "Template Full Width"
+msgstr ""
+
+#: patterns/template-index.php:2
+msgctxt "Pattern title"
+msgid "Template Index"
+msgstr ""
+
+#: patterns/template-order-confirmation.php:2
+msgctxt "Pattern title"
+msgid "Template Order Confirmation"
+msgstr ""
+
+#: patterns/template-page.php:2
+msgctxt "Pattern title"
+msgid "Template Page"
+msgstr ""
+
+#: patterns/template-page-no-gap.php:2
+msgctxt "Pattern title"
+msgid "Template Page No Gap"
+msgstr ""
+
+#: patterns/template-page-no-title.php:2
+msgctxt "Pattern title"
+msgid "Template Page No Title"
+msgstr ""
+
+#: patterns/template-product-search-results.php:2
+msgctxt "Pattern title"
+msgid "Template Product Search Results"
+msgstr ""
+
+#: patterns/template-search.php:2
+msgctxt "Pattern title"
+msgid "Template Search"
+msgstr ""
+
+#: patterns/template-single.php:2
+msgctxt "Pattern title"
+msgid "Template Single"
+msgstr ""
+
+#: patterns/template-single-product.php:2
+msgctxt "Pattern title"
+msgid "Template Single Product"
+msgstr ""
+
+#: patterns/home-testimonials.php:2
+msgctxt "Pattern title"
+msgid "Testimonials"
+msgstr ""
+
+#: patterns/footer.php:37
+msgid "Products"
+msgstr ""
+
+#: patterns/home-info.php:41
+msgid "Project Managing"
+msgstr ""
+
+#: patterns/home-about.php:35
+msgid "Quality Project Works"
+msgstr ""
+
+#: patterns/home-latest-posts.php:12
+msgid "RECENT BLOG"
+msgstr ""
+
+#: patterns/template-single-product.php:57
+msgid "Related products"
+msgstr ""
+
+#: patterns/footer.php:73
+msgid "Resources"
+msgstr ""
+
+#: patterns/home-hero-banner.php:28
+msgid ""
+"Ridiculus ullam excepteur penatibus tenetur turpis proin occaecat, bibendum "
+"qui veniam ab, hac ut dolorum elementum penatibus, soluta, nobis varius "
+"maxime nisi, per animi incidunt undetates commodo."
+msgstr ""
+
+#: patterns/home-about.php:52
+msgid ""
+"Ridiculus ullam excepteur penatibus tenetur turpis proin occaecat, bibendum "
+"qui veniam ab, hac ut dolorum elementum penatibus, soluta, nobis varius "
+"maxime nisi, per animi incidunt undetates pulvinar illo."
+msgstr ""
+
+#: patterns/home-process.php:52 patterns/home-process.php:68
+#: patterns/home-process.php:84
+msgid ""
+"Ridiculus ullam excepteur penatibus tenetur turpis proin occaecat, bibendum "
+"qui veniam ab, hac ut dolorum elementum penatibus."
+msgstr ""
+
+#: patterns/home-testimonials.php:84
+msgid "Sally Watson"
+msgstr ""
+
+#: patterns/template-order-confirmation.php:58
+msgid "Shipping address"
+msgstr ""
+
+#: patterns/template-single-product.php:15
+msgid "Single Product"
+msgstr ""
+
+#: patterns/template-search.php:50
+msgid "Sorry, but nothing matched your search terms. Try another search?"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "X Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "X Small"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "XX Large"
+msgstr ""
+
+#: theme.json:1
+msgctxt "Space size name"
+msgid "XX Small"
+msgstr ""
+
+#: patterns/home-about.php:27
+msgid "Successful Projects"
+msgstr ""
+
+#: patterns/home-about.php:63
+msgid "Successfully Given Business Solution For 15 Years"
+msgstr ""
+
+#: patterns/footer.php:89
+msgid "Support"
+msgstr ""
+
+#: patterns/home-testimonials.php:19
+msgid "TESTIMONIALS"
+msgstr ""
+
+#: functions.php:48
+msgid "Theme Patterns"
+msgstr ""
+
+#: patterns/template-404.php:23
+msgid "This page could not be found. Maybe try a search?"
+msgstr ""
+
+#: patterns/home-about.php:48
+msgid "We Are Best Agency To Achieve Your Goal!!"
+msgstr ""
+
+#: patterns/home-hero-banner.php:23
+msgid "We Are Dedicate To Support You !"
+msgstr ""
+
+#: patterns/home-process.php:19
+msgid "We Are Top Corporate Company Since 1998. Come Join Us !"
+msgstr ""
+
+#: patterns/home-testimonials.php:50
+msgid "William Houston"
+msgstr ""
+
+#: patterns/template-cart.php:26 patterns/template-cart.php:89
+#: patterns/template-cart.php:152
+msgid "You may be interested in…"
+msgstr ""
+
+#: patterns/template-cart.php:208
+msgid "Your cart is currently empty!"
+msgstr ""
+
+#: patterns/footer.php:114
+msgid "· All rights reserved"
+msgstr ""

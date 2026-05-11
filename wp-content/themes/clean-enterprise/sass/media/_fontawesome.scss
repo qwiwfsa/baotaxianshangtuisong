@@ -1,0 +1,263 @@
+.menu-social-container li a:before,
+.main-navigation .dropdown-toggle:after,
+.main-navigation .menu-item-has-children>a:after,
+.main-navigation .page_item_has_children>a:after,
+.entry-breadcrumbs a:after,
+.author-link:after,
+#cancel-comment-reply-link:before,
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before,
+.post-navigation .nav-previous .nav-subtitle:before,
+.post-navigation .nav-next .nav-subtitle:after,
+.entry-footer .cat-links::before,
+.entry-footer .tags-links::before,
+.comment-metadata>a:before,
+.services-section .post-thumbnail a:after,
+.team-section .post-thumbnail a:after,
+.header-top-left-content li span .mobile-hours:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: var(--fa-display, inline-block);
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+
+.menu-social-container li a:before {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+}
+
+.main-navigation .dropdown-toggle:after,
+.main-navigation .menu-item-has-children>a:after,
+.main-navigation .page_item_has_children>a:after,
+.entry-breadcrumbs a:after,
+.author-link:after,
+#cancel-comment-reply-link:before,
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before,
+.post-navigation .nav-previous .nav-subtitle:before,
+.post-navigation .nav-next .nav-subtitle:after,
+.entry-footer .cat-links::before,
+.entry-footer .tags-links::before,
+.comment-metadata>a:before,
+.services-section .post-thumbnail a:after,
+.team-section .post-thumbnail a:after,
+.header-top-left-content li span .mobile-hours:before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+.menu-social-container li a[href*="mailto:"]:before,
+.menu-social-container li a[href*="tel:"]:before,
+.menu-social-container li a[href$="/feed"]:before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+.comment-metadata>a:before {
+    content: "\f017";
+    margin-right: 4px;
+}
+
+.post-navigation .nav-previous .nav-subtitle:before {
+    content: "\f104";
+    margin-right: 7px;
+}
+
+.post-navigation .nav-next .nav-subtitle:after {
+    content: "\f105";
+    margin-left: 7px;
+}
+
+.menu-social-container li a:before {
+    content: "\f0c1";
+}
+
+.main-navigation .dropdown-toggle:after,
+.entry-breadcrumbs a:after,
+.author-link:after {
+    content: "\f107";
+}
+
+#cancel-comment-reply-link:before {
+    content: "\f00d";
+}
+
+.custom-header-media .wp-custom-header-video-play:before {
+    content: "\f04c";
+}
+
+.custom-header-media .wp-custom-header-video-pause:before {
+
+    content: "\f04b";
+}
+
+.entry-footer .cat-links::before {
+    content: "\f07c";
+}
+
+.entry-footer .tags-links::before {
+    content: "\f02c";
+}
+
+.services-section .post-thumbnail a:after {
+    content: "\f002";
+}
+
+.team-section .post-thumbnail a:after {
+    content: "\f067";
+}
+
+.menu-social-container li a[href*="facebook.com"]:before {
+    content: "\f09a";
+}
+
+.menu-social-container li a[href*="twitter.com"]:before {
+    content: "\f099";
+}
+
+.menu-social-container li a[href*="x.com"]:before {
+    content: "\e61b";
+}
+
+.menu-social-container li a[href*="plus.google.com"]:before {
+    content: "\f0d5";
+}
+
+.menu-social-container li a[href$="/feed"]:before {
+    content: "\f09e";
+}
+
+.menu-social-container li a[href*="wordpress.com"]:before,
+.menu-social-container li a[href*="wordpress.org"]:before {
+    content: "\f19a";
+}
+
+.menu-social-container li a[href*="github.com"]:before {
+    content: "\f1d3";
+}
+
+.menu-social-container li a[href*="linkedin.com"]:before {
+    content: "\f0e1";
+}
+
+.menu-social-container li a[href*="pinterest.com"]:before {
+    content: "\f231";
+}
+
+.menu-social-container li a[href*="flickr.com"]:before {
+    content: "\f16e";
+}
+
+.menu-social-container li a[href*="vimeo.com"]:before {
+    content: "\f27d";
+}
+
+.menu-social-container li a[href*="youtube.com"]:before {
+    content: "\f16a";
+}
+
+.menu-social-container li a[href*="tumblr.com"]:before {
+    content: "\f173";
+}
+
+.menu-social-container li a[href*="instagram.com"]:before {
+    content: "\f16d";
+}
+
+.menu-social-container li a[href*="codepen.io"]:before {
+    content: "\f1cb";
+}
+
+.menu-social-container li a[href*="path.com"]:before {
+    content: "\f20c";
+}
+
+.menu-social-container li a[href*="dribbble.com"]:before {
+    content: "\f17d";
+}
+
+.menu-social-container li a[href*="skype.com"]:before {
+    content: "\f17e";
+}
+
+.menu-social-container li a[href*="digg.com"]:before {
+    content: "\f1a6";
+}
+
+.menu-social-container li a[href*="reddit.com"]:before {
+    content: "\f1a1";
+}
+
+.menu-social-container li a[href*="stumbleupon.com"]:before {
+    content: "\f1a4";
+}
+
+.menu-social-container li a[href*="getpocket.com"]:before {
+    content: "\f265";
+}
+
+.menu-social-container li a[href*="dropbox.com"]:before {
+    content: "\f16b";
+}
+
+.menu-social-container li a[href*="spotify.com"]:before {
+    content: "\f1bc";
+}
+
+.menu-social-container li a[href*="foursquare.com"]:before {
+    content: "\f180";
+}
+
+.menu-social-container li a[href*="twitch.tv"]:before {
+    content: "\f1e8";
+}
+
+.menu-social-container li a[href*="mailto:"]:before {
+    content: "\f0e0";
+}
+
+.menu-social-container li a[href*="vk.com"]:before {
+    content: "\f189";
+}
+
+.menu-social-container li a[href*="xing.com"]:before {
+    content: "\f168";
+}
+
+.menu-social-container li a[href*="tel:"]:before {
+    content: "\f879";
+}
+
+.menu-social-container li a[href*="bluesky.com"]:before,
+.menu-social-container li a[href*="bsky.app"]:before {
+    content: "\e671";
+}
+
+.menu-social-container li a[href*="threads.com"]:before {
+    content: "\e618";
+}
+
+.menu-social-container li a[href*="line.me"]:before {
+    content: "\f3c0";
+}
+
+.menu-social-container li a[href*="discord.com"]:before,
+.menu-social-container li a[href*="discord.gg"]:before {
+    content: "\f392";
+}
+
+.menu-social-container li a[href*="t.me"]:before {
+    content: "\f2c6";
+}
+
+.menu-social-container li a[href*="tiktok.com"]:before {
+    content: "\e07b";
+}
+
+.fa-search:before,
+.fa-times:before {
+    width: 15px;
+}

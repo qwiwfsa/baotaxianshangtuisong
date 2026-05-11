@@ -1,0 +1,90 @@
+# Translation of Themes - Arvila in Chinese (China)
+# This file is distributed under the same license as the Themes - Arvila package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-06-05 15:18:35+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: zh_CN\n"
+"Project-Id-Version: Themes - Arvila\n"
+
+#. Description of the theme
+#: style.css
+#, gp-priority: high
+msgid "Lightning Fast Speed & Responsive Theme. Arvila is a responsive and fully customizable theme to create any kind of websites. The advanced admin panel will enable you to customize it without any technical knowledge. This theme is lightweight, it will enable you to create almost any type of website such a blog, portfolio, acting and shooting industry, total trendy news, newspaper, mega magazine, fashion, dark themes, petcare, animals wildlife, wooden architecture, plumbing contractor, painting estate, interior design, rooms furniture, home decoration, green floral nature, construction, corporate, multiple agency, business promotion, dark variation, industries, Beauty & spa salons, photography, gym, fitness, health, medical, startups, business agencies, law firms, travel, NGO, charity, yoga, kids education, training institute, university portal, restaurant, meta shop, quick magazines, mutual fund, finance, accounting, consulting ,travel agency website. Theme is fully compatible with popular WordPress plugins like Elementor Page Builder, Slider, Carousal, Beaver Builder, Brizy, Visual Composer, Divi, SiteOrigin, Gutenberg, Block-Enabled, WooCommerce, WPML, Yoast SEO, Shortcode, Jetpack, Contact Form 7, Mailchimp for WordPress, bbPress, Demo Importer, WPForms and more. Your WordPress website will never be let down with this theme. View the demo of Arvila Pro https://demo.themesdaddy.com/arvila-pro/"
+msgstr "闪电般的速度和响应式主题。 Arvila 是一个响应式且完全可定制的主题，可以创建任何类型的网站。高级管理面板将使您无需任何技术知识即可对其进行自定义。这个主题是轻量级的，它将使您能够创建几乎任何类型的网站，例如博客、作品集、表演和拍摄行业、时尚新闻、报纸、大型杂志、时尚、黑暗主题、宠物护理、野生动物、木制建筑、管道承包商、绘画庄园、室内设计、房间家具、家居装饰、绿色花卉自然、建筑、企业、多重代理、商业推广、黑暗变化、工业、美容及水疗沙龙、摄影、健身房、健身、健康、医疗、初创公司、商业机构、律师事务所、旅游、非政府组织、慈善机构、瑜伽、儿童教育、培训机构、大学门户、餐厅、元商店、快速杂志、共同基金、财务、会计、咨询、旅行社网站。主题与流行的 WordPress 插件完全兼容，如 Elementor Page Builder、Slider、Carousal、Beaver Builder、Brizy、Visual Composer、Divi、SiteOrigin、Gutenberg、Block-Enabled、WooCommerce、WPML、Yoast SEO、Shortcode、Jetpack、Contact Form 7、适用于 WordPress、bbPress、演示导入器、WPForms 等的 Mailchimp。这个主题永远不会让您的 WordPress 网站失望。查看 Arvila Pro 的演示 https://demo.themesdaddy.com/arvila-pro/"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "Arvila"
+msgstr "Arvila"
+
+#: header.php:132
+msgid "Header Close Menu"
+msgstr "标题关闭菜单"
+
+#: header.php:123
+msgid "Menu Collaped"
+msgstr "菜单折叠"
+
+#: header.php:86
+msgid "Search Popup Close"
+msgstr "搜索弹出窗口关闭"
+
+#: header.php:83
+msgid "Type To Search"
+msgstr "输入搜索"
+
+#: header.php:82
+msgid "Site Search"
+msgstr "站点搜索"
+
+#: header.php:79
+msgid "Search Popup"
+msgstr "搜索弹出窗口"
+
+#: header.php:63
+msgid "0"
+msgstr ""
+
+#: header.php:25
+msgid "Skip to content"
+msgstr "跳至内容"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:20
+msgid "Share a Good Review"
+msgstr "分享好评"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:18
+msgid "Upgrade to Pro"
+msgstr "升级至专业版"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:16
+msgid "Premium Demo"
+msgstr "高级演示"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:14
+msgid "Need Support ?"
+msgstr "需要支持吗？"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://themesdaddy.com/"
+msgstr "https://themesdaddy.com/"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "Themes Daddy"
+msgstr "Themes Daddy"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://themesdaddy.com/themes/arvila-free/"
+msgstr "https://themesdaddy.com/themes/arvila-free/"

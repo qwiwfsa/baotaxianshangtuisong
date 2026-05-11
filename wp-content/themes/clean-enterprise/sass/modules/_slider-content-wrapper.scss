@@ -1,0 +1,139 @@
+.slider-content-wrapper .hentry {
+	max-width: 1510px;
+	margin: 0 auto;
+}
+
+.slider-content-wrapper .content-right {
+	text-align: right;
+}
+
+.slider-content-wrapper .content-right .entry-container {
+	margin-left: auto;
+}
+
+.slider-content-wrapper .content-center {
+	text-align: center;
+}
+
+.slider-content-wrapper .content-center .entry-container {
+	margin: 0 auto;
+}
+
+.slider-content-wrapper .entry-header {
+	margin-top: 14px;
+}
+
+.slider-content-wrapper .entry-container,
+.has-header-video .custom-header .custom-header-content,
+.home .custom-header .custom-header-content {
+	padding: 60px 30px;
+}
+
+.slider-content-wrapper .entry-container,
+.custom-header .custom-header-content {
+	z-index: 5;
+}
+
+.custom-header .custom-header-content {
+	max-width: 1510px;
+}
+
+.slider-content-wrapper .entry-container {
+	max-width: 920px;
+}
+
+.slider-content-wrapper .entry-container .entry-summary {
+	max-width: 720px;
+}
+
+.slider-content-wrapper .slider-image img {
+	-ms-transform: none;
+	-moz-transform: none;
+	-webkit-transform: none;
+	-o-object-fit: cover;
+	object-fit: cover;
+	height: 100%;
+	left: 0;
+	top: 0;
+	transform: none;
+	width: 100%;
+}
+
+.slider-content-wrapper .slider-image:before {
+	bottom: 0;
+	content: "";
+	height: 100%;
+	left: 0;
+	right: 0;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.slider-content-wrapper .sub-title,
+.home .custom-header .entry-title {
+	font-size: 42px;
+	font-size: 2.625rem;
+	line-height: 1.333333333333333;
+}
+
+.post-slide.cycle-slide {
+	width: 100%;
+}
+
+.slider-content-wrapper .cycle-pager {
+	bottom: 0;
+	left: 50%;
+	line-height: 0;
+	transform: translateX(-50%);
+	z-index: 999;
+}
+
+.slider-content-wrapper .cycle-pager {
+	bottom: 40px;
+}
+
+.cycle-prev,
+.cycle-next {
+    cursor: pointer;
+    z-index: 999;
+}
+
+.slider-content-wrapper .cycle-prev,
+.slider-content-wrapper .cycle-next {
+	display: none;
+	font-size: 60px;
+    font-size: 3.75rem;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.slider-content-wrapper .cycle-prev {
+	left: -20px;
+}
+
+.slider-content-wrapper .cycle-next {
+	right: -20px;
+}
+
+.slider-content-wrapper:hover .cycle-prev {
+	left: 10px;
+}
+
+.slider-content-wrapper:hover .cycle-next {
+	right: 10px;
+}
+
+.slider-content-wrapper .cycle-pager span {
+    cursor: pointer;
+    display: inline-block;
+    height: 3px;
+    margin: 0 5px;
+    overflow: hidden;
+    width: 25px;
+}
+
+.slider-content-wrapper.section,
+.slider-content-wrapper + .section {
+	border-top: 0;
+}

@@ -1,0 +1,853 @@
+/**
+ * CMS拖拽式编辑器样式
+ */
+
+/* 编辑器容器 */
+.builder-container {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    height: calc(100vh - 64px);
+    background: #f5f7fa;
+}
+
+/* 左侧组件库 */
+.builder-sidebar {
+    background: white;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.sidebar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-title i {
+    color: #3b82f6;
+}
+
+.component-categories {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.category-group {
+    margin-bottom: 16px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.category-header:hover {
+    background: #f3f4f6;
+}
+
+.category-header i {
+    color: #6b7280;
+    transition: transform 0.2s;
+}
+
+.category-header.collapsed i {
+    transform: rotate(-90deg);
+}
+
+.category-components {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 8px 0 8px 28px;
+}
+
+.category-components.collapsed {
+    display: none;
+}
+
+.component-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 8px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: grab;
+    transition: all 0.2s;
+}
+
+.component-item:hover {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+.component-item:active {
+    cursor: grabbing;
+}
+
+.component-item i {
+    font-size: 24px;
+    color: #3b82f6;
+}
+
+.component-item span {
+    font-size: 12px;
+    color: #374151;
+    text-align: center;
+}
+
+/* 中间画布区域 */
+.builder-canvas {
+    background: #e5e7eb;
+    overflow: auto;
+    padding: 24px;
+    position: relative;
+}
+
+.canvas-area {
+    background: white;
+    min-height: calc(100vh - 112px);
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.canvas-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: #9ca3af;
+}
+
+.canvas-empty i {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.canvas-empty p {
+    font-size: 14px;
+}
+
+/* 拖拽占位符 */
+.drop-zone {
+    height: 4px;
+    background: #3b82f6;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+
+.drop-zone.drag-over {
+    height: 60px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 2px dashed #3b82f6;
+}
+
+/* 已添加的组件 */
+.builder-component {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.builder-component:hover {
+    border-color: #3b82f6;
+}
+
+.builder-component.selected {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.builder-component.dragging {
+    opacity: 0.5;
+}
+
+.component-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(59, 130, 246, 0.05);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.builder-component:hover .component-overlay,
+.builder-component.selected .component-overlay {
+    opacity: 1;
+}
+
+.component-toolbar {
+    position: absolute;
+    top: -36px;
+    right: 0;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.builder-component:hover .component-toolbar,
+.builder-component.selected .component-toolbar {
+    opacity: 1;
+}
+
+.toolbar-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #3b82f6;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.toolbar-btn:hover {
+    background: #2563eb;
+}
+
+.toolbar-btn.delete {
+    background: #ef4444;
+}
+
+.toolbar-btn.delete:hover {
+    background: #dc2626;
+}
+
+.component-drag-handle {
+    cursor: grab;
+}
+
+.component-drag-handle:active {
+    cursor: grabbing;
+}
+
+.component-label {
+    position: absolute;
+    top: -24px;
+    left: 0;
+    background: #3b82f6;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.builder-component:hover .component-label,
+.builder-component.selected .component-label {
+    opacity: 1;
+}
+
+/* 右侧属性面板 */
+.builder-properties {
+    background: white;
+    border-left: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.properties-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.properties-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.properties-title i {
+    color: #3b82f6;
+}
+
+.properties-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.properties-empty {
+    text-align: center;
+    color: #9ca3af;
+    padding: 40px 20px;
+}
+
+.properties-empty i {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+/* 表单样式 */
+.prop-group {
+    margin-bottom: 24px;
+}
+
+.prop-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.prop-input,
+.prop-select,
+.prop-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.prop-input:focus,
+.prop-select:focus,
+.prop-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.prop-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.prop-hint {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+/* 图片上传 */
+.prop-image-upload {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #f9fafb;
+}
+
+.prop-image-upload:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.prop-image-upload i {
+    font-size: 24px;
+    color: #9ca3af;
+    margin-bottom: 8px;
+}
+
+.prop-image-preview {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 6px;
+    margin-top: 12px;
+}
+
+/* 复选框组 */
+.prop-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.prop-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.prop-checkbox input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* 颜色选择器 */
+.prop-color-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.prop-color-picker {
+    width: 40px;
+    height: 36px;
+    padding: 2px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* 列表字段 */
+.prop-list {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.prop-list-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.prop-list-item:last-child {
+    border-bottom: none;
+}
+
+.prop-list-item input,
+.prop-list-item select {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.prop-list-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prop-list-btn:hover {
+    background: #e5e7eb;
+}
+
+.prop-list-btn.add {
+    color: #10b981;
+}
+
+.prop-list-btn.remove {
+    color: #ef4444;
+}
+
+.prop-list-add {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #f3f4f6;
+    color: #374151;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.prop-list-add:hover {
+    background: #e5e7eb;
+}
+
+/* 标签页字段 */
+.prop-tabs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.prop-tab-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+}
+
+.prop-tab-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.prop-tab-header input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.prop-tab-content {
+    padding: 12px;
+}
+
+.prop-tab-content textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.prop-tab-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.prop-tab-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.prop-tab-header input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.prop-tab-content {
+    padding: 12px;
+}
+
+.prop-tab-content textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* 响应式 */
+@media (max-width: 1200px) {
+    .builder-container {
+        grid-template-columns: 240px 1fr 280px;
+    }
+}
+
+@media (max-width: 992px) {
+    .builder-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+    
+    .builder-sidebar,
+    .builder-properties {
+        max-height: 200px;
+    }
+}
+
+/* 动画 */
+@keyframes componentAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.builder-component {
+    animation: componentAppear 0.3s ease;
+}
+
+/* 拖拽时的样式 */
+.builder-component.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+
+/* 拖拽占位符 */
+.builder-component.drag-over {
+    border-top: 3px solid #3b82f6;
+}
+
+/* 组件内容区域 */
+.component-content {
+    min-height: 20px;
+}
+
+/* 修复组件内边距 */
+.builder-component {
+    padding: 4px;
+}
+
+.builder-component.selected {
+    padding: 4px;
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* 属性面板表单元素样式优化 */
+.prop-input:disabled {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+/* 复选框标签样式 */
+.prop-checkbox span {
+    font-size: 13px;
+    color: #374151;
+}
+
+/* 图片上传区域 */
+.prop-image-upload {
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.prop-image-preview {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 6px;
+    margin-top: 12px;
+    object-fit: contain;
+}
+
+/* 富文本编辑器在属性面板中的样式 */
+.prop-richtext .tox-tinymce {
+    border-radius: 6px !important;
+}
+
+/* 组件内容样式修复 */
+.component-content {
+    position: relative;
+}
+
+.component-content > * {
+    max-width: 100%;
+}
+
+/* 修复画布中的图片显示 */
+.component-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 修复表单元素在画布中的显示 */
+.component-content input,
+.component-content textarea,
+.component-content select,
+.component-content button {
+    font-family: inherit;
+}
+
+/* 修复按钮在画布中的显示 */
+.component-content .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    border: none;
+}
+
+.component-content .btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.component-content .btn-secondary {
+    background: #6b7280;
+    color: white;
+}
+
+.component-content .btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.component-content .btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+/* 修复折叠面板在画布中的显示 */
+.component-content .collapse-item,
+.component-content .accordion-item {
+    border: 1px solid #e5e7eb;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+
+.component-content .collapse-header,
+.component-content .accordion-header {
+    padding: 12px 16px;
+    background: #f9fafb;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.component-content .collapse-content,
+.component-content .accordion-content {
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* 修复轮播组件在画布中的显示 */
+.component-content .carousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.component-content .carousel-slide {
+    display: none;
+}
+
+.component-content .carousel-slide.active {
+    display: block;
+}
+
+.component-content .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 修复标签页在画布中的显示 */
+.component-content .tabs-header {
+    display: flex;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.component-content .tab-btn {
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.component-content .tab-btn.active {
+    border-bottom-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.component-content .tab-pane {
+    display: none;
+    padding: 16px 0;
+}
+
+.component-content .tab-pane.active {
+    display: block;
+}
+
+/* 修复多列排版在画布中的显示 */
+.component-content .component-columns {
+    display: grid;
+}
+
+.component-content .column-item {
+    min-height: 50px;
+}
+
+/* 修复图文展示在画布中的显示 */
+.component-content .component-image-text {
+    display: flex;
+    gap: 24px;
+}
+
+.component-content .component-image-text.layout-image-top {
+    flex-direction: column;
+}
+
+.component-content .component-image-text.layout-image-right {
+    flex-direction: row-reverse;
+}
+
+/* 修复图片列表在画布中的显示 */
+.component-content .image-grid {
+    display: grid;
+}
+
+.component-content .image-item img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* 修复文章列表在画布中的显示 */
+.component-content .component-article-list {
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.component-content .article-list-placeholder {
+    text-align: center;
+    color: #6b7280;
+}

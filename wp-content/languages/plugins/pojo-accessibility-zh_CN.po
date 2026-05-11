@@ -1,0 +1,572 @@
+# Translation of Plugins - Ally &#8211; Web Accessibility &amp; Usability - Stable (latest release) in Chinese (China)
+# This file is distributed under the same license as the Plugins - Ally &#8211; Web Accessibility &amp; Usability - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-11-18 16:04:34+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: zh_CN\n"
+"Project-Id-Version: Plugins - Ally &#8211; Web Accessibility &amp; Usability - Stable (latest release)\n"
+
+#: modules/legacy/components/settings.php:648
+#: modules/legacy/components/settings.php:667
+msgid "Toolbar"
+msgstr "工具栏"
+
+#: modules/legacy/components/settings.php:655
+#: modules/legacy/components/settings.php:656
+#: modules/legacy/components/settings.php:669
+msgid "Customize"
+msgstr "定制"
+
+#: modules/legacy/components/settings.php:664
+msgid "Set Accessibility settings"
+msgstr "设置辅助功能设置"
+
+#: modules/legacy/components/settings.php:666
+msgid "Set Accessibility Toolbar Settings"
+msgstr "设置辅助功能工具栏设置"
+
+#: modules/legacy/components/settings.php:668
+msgid "Customize Toolbar"
+msgstr "自定义工具栏"
+
+#: modules/legacy/components/admin.php:101
+msgid "Create high-end, pixel perfect websites at record speeds. Any theme, any page, any design. The most advanced frontend drag & drop page builder."
+msgstr "以创纪录的速度创建高端像素完美网站。任何主题，任何页面，任何设计。最先进的前端拖放页面生成器。"
+
+#: modules/legacy/components/admin.php:102
+msgid "Learn more about Elementor"
+msgstr "了解有关Elementor的更多信息"
+
+#: modules/legacy/components/admin.php:104
+msgid "Install Now For Free!"
+msgstr "免费安装！"
+
+#. translators: 1: One Click Accessibility, 2: Link to plugin review
+#: modules/legacy/components/admin.php:129
+msgid "Enjoyed %1$s? Please leave us a %2$s rating. We really appreciate your support!"
+msgstr "喜欢 %1$s 吗？请留下我们一个%2$s评分。非常感谢您的支持！"
+
+#: modules/legacy/components/admin.php:130
+#: modules/legacy/components/settings.php:715
+#: modules/legacy/components/settings.php:716
+msgid "One Click Accessibility"
+msgstr "一键式辅助功能"
+
+#: modules/legacy/components/customizer.php:22
+msgid "Toolbar Icon"
+msgstr "工具栏图标"
+
+#: modules/legacy/components/customizer.php:26
+msgid "Wheelchair"
+msgstr "轮椅"
+
+#: modules/legacy/components/customizer.php:25
+msgid "One Click"
+msgstr "一键"
+
+#: modules/legacy/components/customizer.php:30
+msgid "Set Toolbar Icon"
+msgstr "设置工具栏图标"
+
+#: modules/legacy/components/customizer.php:35
+msgid "Toolbar Position"
+msgstr "工具栏位置"
+
+#: modules/legacy/components/customizer.php:42
+msgid "Set Toolbar Position"
+msgstr "设置工具栏位置"
+
+#: modules/legacy/components/customizer.php:47
+msgid "Offset from Top (Desktop)"
+msgstr "与顶部（桌面）的偏移量"
+
+#: modules/legacy/components/customizer.php:50
+msgid "Set Toolbar top offset (Desktop)"
+msgstr "设置工具栏顶部偏移量（桌面）"
+
+#: modules/legacy/components/customizer.php:55
+msgid "Offset from Top (Mobile)"
+msgstr "与顶部（移动）的偏移量"
+
+#: modules/legacy/components/customizer.php:58
+msgid "Set Toolbar top offset (Mobile)"
+msgstr "设置工具栏顶部偏移（移动）"
+
+#: modules/legacy/components/customizer.php:63
+msgid "Toolbar Background"
+msgstr "工具栏背景"
+
+#: modules/legacy/components/customizer.php:68
+msgid "Set Toolbar background color"
+msgstr "设置工具栏背景颜色"
+
+#: modules/legacy/components/customizer.php:73
+msgid "Toolbar Color"
+msgstr "工具栏颜色"
+
+#: modules/legacy/components/customizer.php:78
+msgid "Set Toolbar text color"
+msgstr "设置工具栏文本颜色"
+
+#: modules/legacy/components/customizer.php:86
+msgid "Set Toolbar toggle button background color"
+msgstr "设置工具栏切换按钮背景颜色"
+
+#: modules/legacy/components/customizer.php:96
+msgid "Set Toolbar toggle button icon color"
+msgstr "设置工具栏切换按钮图标颜色"
+
+#: modules/legacy/components/customizer.php:101
+msgid "Active Background"
+msgstr "激活背景"
+
+#: modules/legacy/components/customizer.php:106
+msgid "Set Toolbar active background color"
+msgstr "设置工具栏活动背景颜色"
+
+#: modules/legacy/components/customizer.php:111
+msgid "Active Color"
+msgstr "当前颜色"
+
+#: modules/legacy/components/customizer.php:116
+msgid "Set Toolbar active text color"
+msgstr "设置工具栏活动文本颜色"
+
+#: modules/legacy/components/customizer.php:134
+msgid "Set Focus outline style"
+msgstr "设置焦点轮廓样式"
+
+#: modules/legacy/components/customizer.php:154
+msgid "Set Focus outline width"
+msgstr "设置焦点轮廓宽度"
+
+#: modules/legacy/components/customizer.php:162
+msgid "Set Focus outline color"
+msgstr "设置焦点轮廓颜色"
+
+#: modules/legacy/components/customizer.php:171
+msgid "Use the control below to customize the appearance and layout of the Accessibility Toolbar"
+msgstr "使用下面的控件自定义辅助功能工具栏的外观和布局"
+
+#: modules/legacy/components/customizer.php:172
+msgid "Additional Toolbar settings can be configured at the %s page."
+msgstr "可以在 %s 页面配置其他工具栏设置。"
+
+#: modules/legacy/components/customizer.php:173
+#: modules/legacy/components/settings.php:647
+msgid "Accessibility Toolbar"
+msgstr "辅助功能工具栏"
+
+#: modules/legacy/components/settings.php:336
+msgid "Add skip to content link when using keyboard."
+msgstr "使用键盘时将跳过添加到内容链接。"
+
+#: modules/legacy/components/settings.php:372
+msgid "This option will add <code>role=\"link\"</code> to all links on the page."
+msgstr "此选项将添加到 <code>role=\"link\"</code> 页面上的所有链接。"
+
+#: modules/legacy/components/settings.php:398
+msgid "Define how long your toolbar settings will be remembered"
+msgstr "定义工具栏设置将被记住的时间"
+
+#: modules/core/module.php:36 modules/legacy/components/settings.php:640
+#: modules/legacy/components/settings.php:665
+msgid "Settings"
+msgstr "设置"
+
+#: modules/legacy/components/admin.php:100
+msgid "Do You Like One Click Accessibility? You'll Love Elementor!"
+msgstr "您喜欢一键访问吗？您也会喜欢 Elementor 网站生成器的！"
+
+#: modules/legacy/components/settings.php:407
+msgid "1 Month"
+msgstr "1个月"
+
+#: modules/legacy/components/settings.php:383
+msgid "Sitewide Accessibility"
+msgstr "站点范围的辅助功能"
+
+#: modules/legacy/components/settings.php:384
+msgid "Consistent accessibility throughout your site visit. Site remembers you and stays accessible."
+msgstr "在整个网站访问过程中保持一致的可访问性。网站会记住您并保持可访问性。"
+
+#: modules/legacy/components/settings.php:396
+msgid "Remember user for"
+msgstr "记住用户"
+
+#: modules/legacy/components/settings.php:400
+msgid "1 Hour"
+msgstr "1小时"
+
+#: modules/legacy/components/settings.php:401
+msgid "6 Hours"
+msgstr "6小时"
+
+#: modules/legacy/components/settings.php:402
+msgid "12 Hours"
+msgstr "12小时"
+
+#: modules/legacy/components/settings.php:403
+msgid "1 Day"
+msgstr "1天"
+
+#: modules/legacy/components/settings.php:404
+msgid "2 Days"
+msgstr "2天"
+
+#: modules/legacy/components/settings.php:405
+msgid "3 Days"
+msgstr "3天"
+
+#: modules/legacy/components/settings.php:406
+msgid "1 Week"
+msgstr "1周"
+
+#: modules/legacy/components/customizer.php:131
+msgid "Initial"
+msgstr "初始"
+
+#: modules/legacy/components/settings.php:280 assets/build/admin.js:524
+#: assets/build/chunk-page-accessibility-statement.js:365
+#: assets/build/chunk-page-capabilities.js:362
+#: assets/build/chunk-page-design.js:365
+#: modules/settings/assets/js/helpers/accessibility-statement.js:27
+msgid "Feedback"
+msgstr "反馈"
+
+#: modules/core/components/skip-link.php:49
+#: modules/legacy/components/frontend.php:81
+msgid "Skip to content"
+msgstr "跳至内容"
+
+#: modules/legacy/components/customizer.php:38
+msgid "Left"
+msgstr "左侧"
+
+#: modules/legacy/components/customizer.php:39
+msgid "Right"
+msgstr "右侧"
+
+#: modules/legacy/components/customizer.php:83
+msgid "Toggle Button Background"
+msgstr "切换按钮背景"
+
+#: modules/legacy/components/customizer.php:91
+msgid "Toggle Button Color"
+msgstr "切换按钮颜色"
+
+#: modules/legacy/components/customizer.php:121
+msgid "Focus Outline Style"
+msgstr "焦点轮廓样式"
+
+#: modules/legacy/components/customizer.php:124
+msgid "Solid"
+msgstr "固定"
+
+#: modules/legacy/components/customizer.php:125
+msgid "Dotted"
+msgstr "点线"
+
+#: modules/legacy/components/customizer.php:126
+msgid "Dashed"
+msgstr "虚线"
+
+#: modules/legacy/components/customizer.php:127
+msgid "Double"
+msgstr "双边框"
+
+#: modules/legacy/components/customizer.php:128
+msgid "Groove"
+msgstr "凹陷"
+
+#: modules/legacy/components/customizer.php:129
+msgid "Ridge"
+msgstr "凸出"
+
+#: modules/legacy/components/customizer.php:130
+msgid "Outset"
+msgstr "开始"
+
+#: modules/legacy/components/customizer.php:139
+msgid "Focus Outline Width"
+msgstr "焦点轮廓宽度"
+
+#: modules/legacy/components/customizer.php:159
+msgid "Focus Outline Color"
+msgstr "焦点轮廓颜色"
+
+#: modules/dashboard/widgets/ally-dashboard-widget.php:104
+#: modules/legacy/components/customizer.php:27
+#: modules/legacy/components/customizer.php:177
+#: modules/legacy/components/settings.php:630
+#: modules/legacy/components/settings.php:631
+#: modules/legacy/components/upgrade.php:594 modules/settings/module.php:65
+#: assets/build/admin.js:433 assets/build/chunk-modal-get-started.js:1
+#: assets/build/chunk-page-accessibility-statement.js:274
+#: assets/build/chunk-page-capabilities.js:271
+#: assets/build/chunk-page-design.js:274
+#: modules/settings/assets/js/components/help-menu/get-started-modal.js:70
+#: modules/settings/assets/js/components/sidebar-heading/index.js:18
+msgid "Accessibility"
+msgstr "无障碍"
+
+#: modules/legacy/components/frontend.php:120
+msgid "Open toolbar"
+msgstr "打开工具栏"
+
+#: modules/legacy/components/frontend.php:198
+#: modules/legacy/components/frontend.php:199 assets/build/scanner.js:875
+#: assets/build/scanner.js:879
+#: modules/scanner/assets/js/components/color-contrast-form/color-set-disabled.js:77
+#: modules/scanner/assets/js/components/color-contrast-form/color-set.js:115
+msgid "Reset"
+msgstr "重置"
+
+#: modules/legacy/components/settings.php:44
+msgid "Display Toolbar"
+msgstr "显示工具栏"
+
+#: modules/legacy/components/settings.php:47
+msgid "Show on all devices"
+msgstr "在所有设备上显示"
+
+#: modules/legacy/components/settings.php:48
+msgid "Visible Desktop"
+msgstr "在桌面可见"
+
+#: modules/legacy/components/settings.php:49
+msgid "Visible Tablet"
+msgstr "在平板电脑可见"
+
+#: modules/legacy/components/settings.php:50
+msgid "Visible Phone"
+msgstr "在手机可见"
+
+#: modules/legacy/components/settings.php:51
+msgid "Hidden Desktop"
+msgstr "在桌面隐藏"
+
+#: modules/legacy/components/settings.php:52
+msgid "Hidden Tablet"
+msgstr "在平板电脑隐藏"
+
+#: modules/legacy/components/settings.php:53
+msgid "Hidden Phone"
+msgstr "在手机隐藏"
+
+#: modules/legacy/components/settings.php:54
+#: modules/legacy/components/settings.php:79
+#: modules/legacy/components/settings.php:110
+#: modules/legacy/components/settings.php:132
+#: modules/legacy/components/settings.php:154
+#: modules/legacy/components/settings.php:176
+#: modules/legacy/components/settings.php:198
+#: modules/legacy/components/settings.php:220
+#: modules/legacy/components/settings.php:326
+#: modules/legacy/components/settings.php:339
+#: modules/legacy/components/settings.php:362
+#: modules/legacy/components/settings.php:375
+#: modules/legacy/components/settings.php:388
+msgid "Disable"
+msgstr "禁用"
+
+#: modules/legacy/components/settings.php:64
+msgid "Title"
+msgstr "标题"
+
+#: modules/legacy/components/settings.php:66
+msgid "Title top of the toolbar (recommended)."
+msgstr "标题栏顶部（推荐）。"
+
+#: modules/legacy/components/settings.php:68
+msgid "Accessibility Tools"
+msgstr "辅助功能工具"
+
+#: modules/legacy/components/settings.php:74
+msgid "Resize Font"
+msgstr "调整字体大小"
+
+#: modules/legacy/components/settings.php:78
+#: modules/legacy/components/settings.php:109
+#: modules/legacy/components/settings.php:131
+#: modules/legacy/components/settings.php:153
+#: modules/legacy/components/settings.php:175
+#: modules/legacy/components/settings.php:197
+#: modules/legacy/components/settings.php:219
+#: modules/legacy/components/settings.php:325
+#: modules/legacy/components/settings.php:338
+#: modules/legacy/components/settings.php:361
+#: modules/legacy/components/settings.php:374
+#: modules/legacy/components/settings.php:387
+msgid "Enable"
+msgstr "启用"
+
+#: modules/legacy/components/settings.php:87
+#: modules/legacy/components/settings.php:90
+msgid "Increase Text"
+msgstr "增加文本"
+
+#: modules/legacy/components/settings.php:96
+#: modules/legacy/components/settings.php:99
+msgid "Decrease Text"
+msgstr "减小文本"
+
+#: modules/legacy/components/settings.php:105
+#: modules/legacy/components/settings.php:121
+msgid "Grayscale"
+msgstr "灰度"
+
+#: modules/legacy/components/settings.php:118
+msgid "Grayscale Title"
+msgstr "灰度标题"
+
+#: modules/legacy/components/settings.php:127
+#: modules/legacy/components/settings.php:143
+msgid "High Contrast"
+msgstr "高对比度"
+
+#: modules/legacy/components/settings.php:140
+msgid "High Contrast Title"
+msgstr "高对比度标题"
+
+#: modules/legacy/components/settings.php:149
+#: modules/legacy/components/settings.php:165
+msgid "Negative Contrast"
+msgstr "负对比度"
+
+#: modules/legacy/components/settings.php:162
+msgid "Negative Contrast Title"
+msgstr "负对比度标题"
+
+#: modules/legacy/components/settings.php:171
+#: modules/legacy/components/settings.php:187
+msgid "Light Background"
+msgstr "浅色背景"
+
+#: modules/legacy/components/settings.php:184
+msgid "Light Background Title"
+msgstr "浅色背景标题"
+
+#: modules/legacy/components/settings.php:193
+#: modules/legacy/components/settings.php:209
+msgid "Links Underline"
+msgstr "链接下划线"
+
+#: modules/legacy/components/settings.php:206
+msgid "Links Underline Title"
+msgstr "链接下划线标题"
+
+#: modules/legacy/components/settings.php:215
+#: modules/legacy/components/settings.php:231
+msgid "Readable Font"
+msgstr "可读字体"
+
+#: modules/legacy/components/settings.php:228
+msgid "Readable Font Title"
+msgstr "可读字体标题"
+
+#: modules/legacy/components/settings.php:237
+msgid "Sitemap Title"
+msgstr "站点地图标题"
+
+#: modules/legacy/components/settings.php:240 assets/build/admin.js:399
+#: assets/build/chunk-page-accessibility-scans.js:67
+#: assets/build/chunk-page-accessibility-statement.js:240
+#: assets/build/chunk-page-analytics.js:67
+#: assets/build/chunk-page-capabilities.js:237
+#: assets/build/chunk-page-design.js:240
+#: modules/settings/assets/js/constants/index.js:83
+#: modules/settings/assets/js/constants/index.js:84
+msgid "Sitemap"
+msgstr "网站地图"
+
+#: modules/legacy/components/settings.php:246
+msgid "Sitemap Link"
+msgstr "站点地图链接"
+
+#: modules/legacy/components/settings.php:249
+msgid "Link for sitemap page in your website. Leave blank to disable."
+msgstr "网站地图页面的链接。留空以禁用。"
+
+#: modules/legacy/components/settings.php:257
+msgid "Help Title"
+msgstr "帮助标题"
+
+#: modules/legacy/components/settings.php:260
+#: modules/settings/assets/js/components/help-menu/index.js:33
+#: modules/settings/assets/js/components/help-menu/index.js:50
+msgid "Help"
+msgstr "帮助"
+
+#: modules/legacy/components/settings.php:266
+msgid "Help Link"
+msgstr "帮助链接"
+
+#: modules/legacy/components/settings.php:269
+msgid "Link for help page in your website. Leave blank to disable."
+msgstr "链接以获取您网站上的帮助页面。留空以禁用。"
+
+#: modules/legacy/components/settings.php:277
+msgid "Feedback Title"
+msgstr "反馈标题"
+
+#: modules/legacy/components/settings.php:286
+msgid "Feedback Link"
+msgstr "反馈链接"
+
+#: modules/legacy/components/settings.php:289
+msgid "Link for feedback page in your website. Leave blank to disable."
+msgstr "链接用于网站中的反馈页面。留空以禁用。"
+
+#: modules/legacy/components/settings.php:298
+msgid "Toolbar Settings"
+msgstr "工具栏设置"
+
+#: modules/legacy/components/settings.php:321
+msgid "Add Outline Focus"
+msgstr "添加大纲焦点"
+
+#: modules/legacy/components/settings.php:323
+msgid "Add outline to elements on keyboard focus."
+msgstr "为键盘焦点上的元素添加轮廓。"
+
+#: modules/legacy/components/settings.php:334
+msgid "Skip to Content link"
+msgstr "跳到内容链接"
+
+#: modules/legacy/components/settings.php:356
+msgid "Remove target attribute from links"
+msgstr "从链接中删除目标属性"
+
+#: modules/legacy/components/settings.php:358
+msgid "This option will reset all your target links to open in the same window or tab."
+msgstr "此选项将重置所有目标链接以在同一窗口或选项卡中打开。"
+
+#: modules/legacy/components/settings.php:370
+msgid "Add landmark roles to all links"
+msgstr "向所有链接添加地标角色"
+
+#: modules/legacy/components/settings.php:416
+msgid "General Settings"
+msgstr "常规设置"
+
+#: modules/legacy/components/settings.php:306
+msgid "Style Settings"
+msgstr "样式设置"
+
+#: modules/legacy/components/settings.php:307
+msgid "For style settings of accessibility tools go to > Customize > <a href=\"%s\">Accessibility</a>."
+msgstr "有关辅助功能工具的样式设置，请转到\"自定义\">\"<a href=\"%s\">辅助功能\"。</a>"
+
+#: modules/legacy/components/settings.php:639
+msgid "Accessibility Settings"
+msgstr "设置辅助功能设置"
+
+#: pojo-accessibility.php:53 pojo-accessibility.php:63
+msgid "Cheatin&#8217; huh?"
+msgstr "开玩笑&#8217; 呵?"

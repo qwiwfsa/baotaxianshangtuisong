@@ -1,0 +1,645 @@
+/* Main Background Color */
+body {
+	background-color: $main-background-color;
+}
+
+/* Header Text Color */
+.site-title a,
+.site-description {
+	color: $header-text-color;
+}
+
+/* Page Background Color */
+.boxed-layout #page,
+#header-content,
+.navigation-classic.fluid-layout .nav-search-wrap,
+.navigation-classic.boxed-layout .nav-search-wrap .wrapper,
+body:not(.navigation-classic) .menu-toggle-wrapper,
+body:not(.navigation-classic) .menu-inside-wrapper,
+body:not(.navigation-classic) #social-search-wrapper,
+ #search-container,
+ #sec-search-container,
+ .main-navigation ul ul,
+body:not(.navigation-classic) .nav-search-wrap.main-nav-scrolled,
+.services-section .entry-container,
+.slider-content-wrapper .cycle-pager span,
+#sec-header-navigation-area,
+.promotion-section .wrapper,
+.testimonial-section .entry-container,
+.testimonial-section .cycle-prev,
+.testimonial-section .cycle-next,
+.featured-content-section .wrapper,
+body:not(.home).content-modern .site-content .content-box,
+ .main-navigation ul ul,
+#search-container,
+#sec-search-container,
+#header-navigation-area .menu-inside-wrapper {
+	background-color: $page-background-color;
+}
+
+.testimonial-section .post-thumbnail img {
+	border-color: $page-background-color;
+}
+
+/* Secondary Background Color */
+.featured-content-section,
+.services-section,
+.hero-content-wrapper,
+.testimonial-section,
+.contact-section,
+table,
+blockquote,
+ins,
+mark,
+pre,
+.author-info,
+.team-section .entry-container,
+body:not(.home).content-modern #page,
+.wp-caption .wp-caption-text,
+.woocommerce .widget_price_filter .price_slider_wrapper .ui-widget-content,
+.woocommerce-error,
+.woocommerce-info,
+.woocommerce-message {
+	background-color: $secondary-background-color;
+}
+
+/* Secondary Section Background Color */
+#footer-newsletter,
+.stats-section {
+	background-color: $secondary-section-background-color;
+}
+
+/* Tertiary Background Color */
+table thead,
+#site-generator,
+#tertiary,
+.header-top-bar,
+#top-search-container button,
+#top-search-container input,
+body:not(.no-header-media-text) .custom-header:after {
+	background-color: $tertiary-background-color;
+}
+
+/* 20% of Tertiary Background Color */
+.site-footer table {
+	background-color: $twenty-of-tertiary-background-color;
+}
+
+/* 8% of Tertiary Background Color */
+#add_payment_method #payment,
+.woocommerce-cart #payment,
+.woocommerce-checkout #payment {
+	background-color: $eight-of-tertiary-background-color;
+}
+
+/* Main Text Color */
+body,
+button,
+input,
+select,
+optgroup,
+textarea,
+cite {
+	color: $main-text-color;
+}
+
+#top-search-container .search-field,
+#top-search-container .search-submit {
+	background-color: $main-text-color;
+}
+
+/* Heading Text Color */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote,
+cite,
+.drop-cap::first-letter {
+	color: $heading-text-color;
+}
+
+/*12% of Heading Text Color*/
+.testimonial-section .cycle-pager span {
+	background-color: $twelve-of-heading-text-color;
+}
+
+/*80% of Heading Text Color*/
+.section-description,
+.contact-description {
+	color: $eighty-of-heading-text-color;
+}
+
+/* Link Color */
+a,
+.services-section .post-thumbnail a:hover,
+.services-section .post-thumbnail a:focus,
+.site-header-main .site-contact li p,
+.contact-details,
+.woocommerce-loop-product__title,
+.main-navigation .menu-toggle,
+.ewnewsletter .widget-inner-wrap,
+.main-navigation .dropdown-toggle {
+	color: $link-color;
+}
+
+/* 60% Of Link Color */
+.posted-at,
+.cat-in,
+.comments-num,
+.author-label,
+.comment-metadata a {
+	color: $sixty-of-link-color;
+}
+
+@media screen and (min-width: 64em) {
+	.site-header-main .site-contact ul h3 {
+		color: $sixty-of-link-color;
+	}
+}
+
+/* 75% Of Link Color */
+.portfolio-section .entry-container {
+	background-color: $seventy-five-of-link-color;
+}
+
+/* Link Hover Color */
+a:hover,
+a:focus,
+.site-title a:hover,
+.site-title a:focus,
+.slider-content-wrapper .cycle-next:hover,
+.slider-content-wrapper .cycle-next:focus,
+.slider-content-wrapper .cycle-prev:hover,
+.slider-content-wrapper .cycle-prev:focus,
+.main-navigation .menu-toggle:hover,
+.main-navigation .menu-toggle:focus,
+.main-navigation .dropdown-toggle:hover,
+.main-navigation .dropdown-toggle:focus,
+blockquote:before,
+.entry-footer .cat-links:before,
+.entry-footer .tags-links:before,
+.post-navigation .nav-subtitle,
+.comments-link .fa-comment,
+.comment-metadata a:hover,
+.comment-metadata a:focus,
+.comment-metadata > a:before,
+.portfolio-section .entry-title a:hover,
+.portfolio-section .entry-title a:focus,
+.woocommerce-loop-product__title:hover,
+.woocommerce-loop-product__title:focus,
+.navigation-classic .main-navigation li a:hover,
+.navigation-classic .main-navigation li a:focus,
+.navigation-classic .main-navigation .current_page_item > a,
+.navigation-classic .main-navigation .current_page_item > a {
+	color: $link-hover-color;
+}
+
+.page-links > span {
+	background-color: $link-hover-color;
+}
+
+/* Input Hover and Focus Color (Link Hover Color) */
+input[type="text"]:hover,
+input[type="text"]:focus,
+input[type="email"]:hover,
+input[type="email"]:focus,
+input[type="url"]:hover,
+input[type="url"]:focus,
+input[type="password"]:hover,
+input[type="password"]:focus,
+input[type="number"]:hover,
+input[type="number"]:focus,
+input[type="tel"]:hover,
+input[type="tel"]:focus,
+input[type="range"]:hover,
+input[type="range"]:focus,
+input[type="date"]:hover,
+input[type="date"]:focus,
+input[type="month"]:hover,
+input[type="month"]:focus,
+input[type="week"]:hover,
+input[type="week"]:focus,
+input[type="time"]:hover,
+input[type="time"]:focus,
+input[type="datetime"]:hover,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:hover,
+input[type="datetime-local"]:focus,
+input[type="color"]:hover,
+input[type="color"]:focus,
+textarea:hover,
+textarea:focus,
+select:hover,
+select:focus,
+.author-title:after,
+.sidebar .widget-title:after,
+.testimonial-section .entry-header:after {
+	border-color: $input-hover-focus-color;
+}
+
+/* ## >= 1024px (Menu hover border top color(Link Hover Color))*/
+@media screen and (min-width: 64em) {
+	.navigation-classic .main-navigation .menu-item-has-children > ul,
+	.navigation-classic .main-navigation .page_item_has_children > ul,
+	.navigation-classic #search-container,
+	.navigation-classic #sec-search-container {
+		border-color: $input-hover-focus-color;
+	}
+}
+
+/* Secondary Link Color */
+table thead,
+.slider-content-wrapper .sub-title,
+.slider-content-wrapper .entry-content,
+.slider-content-wrapper .entry-summary,
+.slider-content-wrapper .entry-title a,
+.slider-content-wrapper .cycle-next,
+.slider-content-wrapper .cycle-prev,
+.custom-header .entry-title,
+.custom-header .entry-content,
+.custom-header .entry-summary,
+.woocommerce .breadcrumb-area .woocommerce-breadcrumb span a,
+.portfolio-section .entry-title a,
+.site-footer a,
+.stats-section .entry-title a,
+.stats-section .section-title,
+.stats-section .entry-content,
+.stats-section .entry-summary,
+.stats-section .entry-meta a,
+.nav-search-wrap .site-contact,
+.stats-section .hentry .more-link,
+.header-top-left-content li span .mobile-hours:before,
+#footer-newsletter .section-heading-wrap .section-title,
+.header-top-bar a:hover,
+.header-top-bar a:focus,
+#top-search-container button:hover,
+#top-search-container button:focus,
+.slider-content-wrapper .cycle-pager span {
+	color: $secondary-link-color;
+}
+
+.stats-section .view-all-button .more-link:hover,
+.stats-section .view-all-button .more-link:focus,
+.nav-search-wrap .quote-button a:hover,
+.nav-search-wrap .quote-button a:focus,
+.header-top-left-content li span .mobile-hours {
+	background-color: $secondary-link-color;
+}
+
+/* 12% Of Secondary Link Color */
+ #search-container input[type="search"],
+ #sec-search-container input[type="search"] {
+	background-color: $twelve-of-secondary-link-color;
+}
+
+/* 18% of Secondary Link Color */
+.is-open .menu-inside-wrapper,
+.site-footer table caption,
+.site-footer tbody tr,
+.site-header-right {
+	border-color: $eighteen-of-secondary-link-color;
+}
+
+/* 60% Of Secondary Link Color */
+.site-footer,
+.site-footer .widget-title,
+#sec-search-container input,
+.header-top-bar a,
+.top-contact-information,
+#top-search-container button,
+#top-search-container .search-field, input[type=search]::placeholder {
+	color: $sixty-of-secondary-link-color;
+}
+
+
+/* 80% of Secondary Link Color */
+.stats-section .section-description,
+#footer-newsletter .section-description p {
+	color: $eighty-of-secondary-link-color;
+}
+
+/* Secondary Link Hover Color */
+ .site-primary-menu a:hover,
+ .site-primary-menu a:focus,
+ .main-navigation .dropdown-toggle:hover,
+ .main-navigation .dropdown-toggle:focus,
+.breadcrumb-area a:hover,
+.breadcrumb-area a:focus,
+.breadcrumb-current,
+.woocommerce .breadcrumb-area .woocommerce-breadcrumb span a:hover,
+.woocommerce .breadcrumb-area .woocommerce-breadcrumb span a:focus,
+.woocommerce .breadcrumb-area .woocommerce-breadcrumb span,
+.site-footer a:hover,
+.site-footer a:focus,
+.stats-section .entry-title a:hover,
+.stats-section .entry-title a:focus,
+.stats-section .entry-meta a:hover,
+.stats-section .entry-meta a:focus,
+.widget-area .essential-widgets .tagcloud a:hover,
+.widget-area .essential-widgets .tagcloud a:focus,
+.slider-content-wrapper .entry-title a:hover,
+.slider-content-wrapper .entry-title a:focus,
+.stats-section .hentry .more-link:hover,
+.stats-section .hentry .more-link:focus {
+	color: $secondary-link-hover-color;
+}
+
+.testimonial-section .cycle-pager .cycle-pager-active {
+	background-color: $secondary-link-hover-color;
+}
+
+/* Button Background Color */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.more-recent-posts .more-link,
+.view-all-button .more-link,
+.hero-content-wrapper .more-link,
+.slider-content-wrapper .more-link,
+.slider-content-wrapper .cycle-pager span:hover,
+.slider-content-wrapper .cycle-pager span:focus,
+.slider-content-wrapper .cycle-pager span.cycle-pager-active,
+.sticky-label,
+.services-section .post-thumbnail a:after,
+.team-section .post-thumbnail a:after,
+.contact-section .site-social li a,
+.pagination .next,
+.pagination .prev,
+.posts-navigation .nav-links a,
+#infinite-handle span button,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button,
+#scrollup,
+#subbutton,
+.custom-header .more-link,
+.custom-header .wp-custom-header-video-button:hover,
+.custom-header .wp-custom-header-video-button:focus,
+.woocommerce a.load-more.button,
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range,
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle,
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce span.onsale,
+.woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt,
+.team-section .post-thumbnail .artist-social-profile .menu-social-container li a:before {
+	background-color: $button-background-color;
+}
+
+.team-section .entry-container,
+.featured-content-section .wrapper {
+	border-color: $button-background-color;
+}
+
+.woocommerce-info {
+	border-top-color: $button-background-color;
+}
+
+.slider-content-wrapper .cycle-pager span:hover,
+.slider-content-wrapper .cycle-pager span:focus,
+.slider-content-wrapper .cycle-pager span.cycle-pager-active,
+.team-section .social-links-menu li a:hover a:before,
+.team-section .social-links-menu li a:focus a:before {
+	color: $button-background-color;
+}
+
+/* Button Hover Background Color */
+button:hover,
+button:focus,
+input[type="button"]:hover,
+input[type="button"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+.button:hover,
+.button:focus,
+.more-recent-posts .more-link:hover,
+.more-recent-posts .more-link:focus,
+.view-all-button .more-link:hover,
+.view-all-button .more-link:focus,
+.hero-content-wrapper .more-link:hover,
+.hero-content-wrapper .more-link:focus,
+.slider-content-wrapper .more-link:hover,
+.slider-content-wrapper .more-link:focus,
+.services-section .fa:hover,
+.services-section .fa:focus,
+.pagination .next:hover,
+.pagination .next:focus,
+.pagination .prev:hover,
+.pagination .prev:focus,
+.posts-navigation .nav-links a:hover,
+.posts-navigation .nav-links a:focus,
+#infinite-handle span button:hover,
+#infinite-handle span button:focus,
+.testimonial-section .cycle-prev:hover,
+.testimonial-section .cycle-prev:focus,
+.testimonial-section .cycle-next:hover,
+.testimonial-section .cycle-next:focus,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button:hover,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button:focus,
+#scrollup:hover,
+#scrollup:focus,
+.contact-section .site-social li a:hover,
+.contact-section .site-social li a:focus,
+.custom-header .more-link:hover,
+.custom-header .more-link:focus,
+.woocommerce a.load-more.button:hover,
+.woocommerce a.load-more.button:focus,
+.woocommerce #respond input#submit:hover,
+.woocommerce #respond input#submit:focus,
+.woocommerce a.button:hover,
+.woocommerce a.button:focus,
+.woocommerce button.button:hover,
+.woocommerce button.button:focus,
+.woocommerce input.button:hover,
+.woocommerce input.button:focus,
+.woocommerce #respond input#submit.alt:hover,
+.woocommerce #respond input#submit.alt:focus,
+.woocommerce a.button.alt:hover,
+.woocommerce a.button.alt:focus,
+.woocommerce button.button.alt:hover,
+.woocommerce button.button.alt:focus,
+.woocommerce input.button.alt:hover,
+.woocommerce input.button.alt:focus,
+.ewnewsletter .ew-newsletter-wrap #subbutton:hover,
+.ewnewsletter .ew-newsletter-wrap #subbutton:focus {
+	background-color: $button-background-hover-color;
+}
+
+/* Button Text Color */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.view-all-button .more-link,
+.hero-content-wrapper .more-link,
+.slider-content-wrapper .more-link,
+.sticky-label,
+.team-section .post-thumbnail a:after,
+.contact-section .site-social li a,
+.pagination .next,
+.pagination .prev,
+.posts-navigation .nav-links a,
+#infinite-handle span button,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button,
+#scrollup,
+.custom-header .more-link,
+.woocommerce a.load-more.button,
+.nav-search-wrap .quote-button a,
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt,
+.stats-section .view-all-button .more-link:hover,
+.stats-section .view-all-button .more-link:focus,
+.nav-search-wrap .quote-button a:hover,
+.nav-search-wrap .quote-button a:focus,
+.services-section .post-thumbnail a:after,
+.more-recent-posts .more-link,
+.team-section .post-thumbnail .artist-social-profile .menu-social-container li a:before {
+	color: $button-text-color;
+}
+
+/* Button Hover Text Color*/
+button:hover,
+button:focus,
+input[type="button"]:hover,
+input[type="button"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+.button:hover,
+.button:focus,
+.pagination .next:hover,
+.pagination .next:focus,
+.pagination .prev:hover,
+.pagination .prev:focus,
+.more-recent-posts .more-link:hover,
+.more-recent-posts .more-link:focus,
+.posts-navigation .nav-links a:hover,
+.posts-navigation .nav-links a:focus,
+.view-all-button .more-link:hover,
+.view-all-button .more-link:focus,
+.hero-content-wrapper .more-link:hover,
+.hero-content-wrapper .more-link:focus,
+.slider-content-wrapper .more-link:hover,
+.slider-content-wrapper .more-link:focus,
+.services-section .fa:hover,
+.services-section .fa:focus,
+#infinite-handle span button:hover,
+#infinite-handle span button:focus,
+.testimonial-section .cycle-prev:hover,
+.testimonial-section .cycle-prev:focus,
+.testimonial-section .cycle-next:hover,
+.testimonial-section .cycle-next:focus,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button:hover,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button:focus,
+#subbutton,
+#scrollup:hover,
+#scrollup:focus,
+.contact-section .site-social li a:hover,
+.contact-section .site-social li a:focus,
+.custom-header .more-link:hover,
+.custom-header .more-link:focus,
+.custom-header .wp-custom-header-video-button,
+.woocommerce a.load-more.button:hover,
+.woocommerce a.load-more.button:focus,
+.woocommerce #respond input#submit:hover,
+.woocommerce #respond input#submit:focus,
+.woocommerce a.button:hover,
+.woocommerce a.button:focus,
+.woocommerce button.button:hover,
+.woocommerce button.button:focus,
+.woocommerce input.button:hover,
+.woocommerce input.button:focus,
+.woocommerce #respond input#submit.alt:hover,
+.woocommerce #respond input#submit.alt:focus,
+.woocommerce a.button.alt:hover,
+.woocommerce a.button.alt:focus,
+.woocommerce button.button.alt:hover,
+.woocommerce button.button.alt:focus,
+.woocommerce input.button.alt:hover,
+.woocommerce input.button.alt:focus {
+	color: $button-text-hover-color;
+}
+
+/* Border Color */
+.nav-search-wrap,
+tbody tr,
+ .is-open .menu-inside-wrapper,
+ #search-container input,
+ #sec-search-container input,
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea,
+select,
+.post-navigation .nav-links,
+.comment-body,
+#footer-instagram,
+#footer-newsletter,
+.services-section .entry-container,
+.section + .site-content,
+.recent-blog-content-wrapper,
+.contact-section,
+.sidebar,
+.featured-content-section .hentry,
+.featured-content-section .section-content-wrapper.layout-three .hentry,
+.featured-content-section .section-content-wrapper.layout-two .hentry,
+.featured-content-section .section-content-wrapper.layout-four .hentry,
+.featured-content-section .section-content-wrapper.layout-four .hentry:nth-child(2n),
+#sec-header-navigation-area {
+	border-color: $border-color;
+}
+
+/*Overlay*/
+.services-section .post-thumbnail a:before,
+.team-section .post-thumbnail .artist-social-profile:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.slider-content-wrapper .slider-image:before,
+.menu-open .site-overlay {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ## >= 1024px */
+@media screen and (min-width: 64em) {
+	 .nav-search-wrap,
+	.sidebar,
+	 .is-open .menu-inside-wrapper,
+	 .is-open .menu-inside-wrapper {
+		border: 0;
+	}
+}
+
+#promotion-section:before {
+    background-color: rgba(24, 48, 99, 0.5);
+}

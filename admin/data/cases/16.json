@@ -1,0 +1,22 @@
+{
+    "id": "16",
+    "title": "某高新技术企业",
+    "type": "企业过桥",
+    "city": "测试七",
+    "amount": "2亿元",
+    "period": "",
+    "summary": "提供月末、季末银行存款冲量服务，帮助企业优化财务报表。",
+    "detail": "提供月末、季末银行存款冲量服务，帮助企业优化财务报表。",
+    "image": "uploads\/20260427_69efbc9dcf100.jpg",
+    "coverImage": "uploads\/20260427_69efbc9dcf100.jpg",
+    "images": [
+        "uploads\/20260427_69efbc9dcf100.jpg"
+    ],
+    "highlights": [],
+    "process": [],
+    "hasVideo": false,
+    "video": "",
+    "status": "published",
+    "createdAt": "2026-05-06 01:36:29",
+    "lastModified": "2026-05-06 01:36:29"
+}

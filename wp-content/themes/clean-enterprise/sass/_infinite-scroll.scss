@@ -1,0 +1,37 @@
+/* Globally hidden elements when Infinite Scroll is supported and in use. */
+.infinite-scroll .posts-navigation, /* Older / Newer Posts Navigation (always hidden) */
+.infinite-scroll.neverending .site-footer { /* Theme Footer (when set to scrolling) */
+	display: none;
+}
+
+/* When Infinite Scroll has reached its end we need to re-display elements that were hidden (via .neverending) before. */
+.infinity-end.neverending .site-footer {
+	display: block;
+}
+
+.pagination,
+.posts-navigation {
+    clear: both;
+    width: 100%;
+}
+
+.pagination .page-numbers {
+	display: inline-block;
+	padding: 5px 10px;
+	margin: 14px 0;
+}
+
+.pagination .prev.page-numbers,
+.pagination .next.page-numbers {
+	margin: 0;
+}
+
+#infinite-handle span {
+	background: none;
+	border-radius: 0;
+	padding: 0;
+}
+
+.infinite-loader .spinner {
+	margin: 0 auto;
+}

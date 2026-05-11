@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="533" viewBox="0 0 400 533">
+  <rect width="400" height="533" fill="#f3f4f6"/>
+  <rect x="100" y="200" width="200" height="133" rx="8" fill="#e5e7eb"/>
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="16" fill="#9ca3af" text-anchor="middle">案例图片</text>
+  <circle cx="200" cy="150" r="40" fill="#d1d5db"/>
+  <rect x="120" y="360" width="160" height="12" rx="6" fill="#e5e7eb"/>
+  <rect x="140" y="380" width="120" height="8" rx="4" fill="#e5e7eb"/>
+</svg>

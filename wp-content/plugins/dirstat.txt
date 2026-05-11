@@ -1,0 +1,1 @@
+[["\/",0],["\/www",0],["\/www\/wwwroot",0],["\/www\/wwwroot\/www.yaozijin.com",1],["\/www\/wwwroot\/www.yaozijin.com\/wp-content",0],["\/www\/wwwroot\/www.yaozijin.com\/wp-content\/plugins",0]]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "msg_001",
+    "name": "张三",
+    "content": "咨询业务详情",
+    "email": "zhang@example.com",
+    "phone": "13800138000",
+    "time": "2026-04-29 10:30:00",
+    "status": "unread",
+    "source": "contact"
+  },
+  {
+    "id": "msg_002",
+    "name": "李四",
+    "content": "想预约办理过桥业务，请尽快联系我",
+    "email": "lisi@example.com",
+    "phone": "13900139000",
+    "time": "2026-04-29 09:15:00",
+    "status": "unread",
+    "source": "appointment"
+  }
+]

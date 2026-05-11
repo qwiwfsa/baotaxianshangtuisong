@@ -1,0 +1,251 @@
+.sky-enterprise-admin-notice {
+  padding: 0 30px;
+}
+.sky-enterprise-admin-notice .info-content h5 {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #2271b1;
+}
+.sky-enterprise-admin-notice .info-content h1 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 26px;
+  text-transform: capitalize;
+  margin: 5px 0 !important;
+}
+.sky-enterprise-admin-notice #install-activate-button {
+  background-color: #2271b1;
+  color: #fff;
+}
+.sky-enterprise-admin-notice #install-activate-button:hover,
+.sky-enterprise-admin-notice .button.admin-button.info-button:hover {
+  background: #135e96;
+  border-color: #135e96;
+  color: #fff;
+}
+.sky-enterprise-admin-notice .button.admin-button.info-button {
+  background: #2271b1;
+  color: #ffffff;
+  padding: 3px 10px;
+  font-weight: 600;
+  border-radius: 0;
+}
+.sky-enterprise-admin-notice .admin-button.dismiss-notice.btn-notice-dismiss {
+  color: #a4a4a7;
+  display: inline-block;
+  margin: 15px;
+}
+.sky-enterprise-admin-notice .admin-button.dismiss-notice.btn-notice-dismiss:hover {
+  color: #d63638;
+}
+.sky-enterprise-admin-notice .notice-text {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+.dashboard-about-sky-enterprise {
+  padding: 30px;
+  background: #fff;
+  box-sizing: border-box;
+  width: 98.5%;
+  margin: 20px 0 0 0;
+}
+.dashboard-about-sky-enterprise .half-col {
+  width: 50%;
+  display: inline-block;
+}
+
+.dashboard-about-sky-enterprise .featured-list {
+  display: flex;
+  grid-gap: 30px;
+}
+.dashboard-about-sky-enterprise .half-col ul ul {
+  margin: 10px 0 20px;
+  padding: 0 0 0 30px;
+}
+.dashboard-about-sky-enterprise .half-col ul ul li,
+.dashboard-about-sky-enterprise .half-col.pro-features li {
+  position: relative;
+}
+.dashboard-about-sky-enterprise .half-col ul ul li:before,
+.dashboard-about-sky-enterprise .half-col.pro-features li:before {
+  content: "\2713";
+  background: #bdbfc2;
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  left: -20px;
+  top: 2px;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: center;
+  border-radius: 20px;
+  color: #fff;
+}
+.dashboard-about-sky-enterprise .half-col.pro-features li {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+.dashboard-about-sky-enterprise .half-col.pro-features li:before {
+  background: #04cf9c;
+}
+.dashboard-about-sky-enterprise .half-col.pro-features ul {
+  margin: 0;
+  padding: 0 0 0 18px;
+}
+
+.dashboard-about-sky-enterprise .upgrade-btn.button {
+  text-transform: uppercase;
+  background: #58caf0;
+  border-color: #58caf0;
+  color: #fff;
+  display: inline-block;
+  margin-top: 21px;
+  padding: 10px 24px;
+}
+.dashboard-about-sky-enterprise .upgrade-btn.button:hover {
+  background: #f39446;
+  border-color: #f39446;
+}
+.sky-enterprise-admin-notice .info-content h3,
+.dashboard-about-sky-enterprise h3,
+.sky-enterprise-admin-notice .info-content .sky-enterprise-required-plugin li h4,
+.dashboard-about-sky-enterprise .sky-enterprise-required-plugin li h4 {
+  margin: 0;
+}
+
+.sky-enterprise-admin-notice .info-content .sky-enterprise-required-plugin li,
+.dashboard-about-sky-enterprise .sky-enterprise-required-plugin li {
+  margin: 5px 0;
+}
+.sky-enterprise-admin-notice .info-content .sky-enterprise-required-plugin,
+.dashboard-about-sky-enterprise .sky-enterprise-required-plugin {
+  margin: 10px 0 30px;
+}
+.dashboard-about-sky-enterprise .sky-enterprise-baisc-guideline {
+  margin: 20px 0;
+  display: inline-block;
+  width: 100%;
+}
+.dashboard-about-sky-enterprise .sky-enterprise-baisc-guideline .featured-box {
+  padding: 15px 0;
+  border-bottom: 1px solid #ededed;
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+.dashboard-about-sky-enterprise h3.sky-enterprise-baisc-guideline-header {
+  width: 100%;
+  display: inline-block;
+  margin: 20px 0 0;
+}
+.dashboard-about-sky-enterprise .sky-enterprise-baisc-guideline .featured-box li strong {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.dashboard-about-sky-enterprise h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.sky-enterprise-admin-notice {
+  display: flex;
+}
+.sky-enterprise-admin-notice .info-content {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.sky-enterprise-admin-notice .theme-hero-screens {
+  text-align: right;
+  width: 50%;
+}
+.sky-enterprise-admin-notice .theme-hero-screens img {
+  max-width: 85%;
+  margin: -10px 0 -22px;
+}
+.dashboard-about-sky-enterprise p {
+  font-size: 16px;
+}
+.sky-enterprise-dashboard #sky-enterprise-dashboard-tabs-nav {
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ededed;
+  padding-bottom: 3px;
+}
+.sky-enterprise-dashboard #sky-enterprise-dashboard-tabs-nav li {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  position: relative;
+}
+
+.sky-enterprise-dashboard #sky-enterprise-dashboard-tabs-nav li a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  color: #101010;
+  border-radius: 0;
+  display: inline-block;
+  border-radius: 0;
+  transition: ease all 0.23s;
+  background: #ededed;
+}
+.sky-enterprise-dashboard #sky-enterprise-dashboard-tabs-nav li a:hover {
+  color: #58caf0;
+}
+.sky-enterprise-dashboard #sky-enterprise-dashboard-tabs-nav li.active a {
+  background: #58caf0;
+  color: #ffffff;
+}
+.sky-enterprise-dashboard #tabs-content {
+  padding: 20px 0;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.sky-enterprise-admin-notice.notice.notice-info .info-content .admin-button.info-button.processing-spinner {
+  padding-right: 50px;
+  position: relative;
+}
+/*processing-spinner*/
+.sky-enterprise-admin-notice.notice.notice-info .info-content .admin-button.info-button.processing-spinner:before {
+  content: "";
+  right: 5px;
+  top: 5px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #58caf0;
+  display: inline-block;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: processingLocader 1s ease-in infinite;
+}
+@keyframes processingLocader {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+.installing-all-pluign.info-button {
+  background: #2271b1;
+  margin: 0 0 40px;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 12px;
+  font-size: 18px;
+}

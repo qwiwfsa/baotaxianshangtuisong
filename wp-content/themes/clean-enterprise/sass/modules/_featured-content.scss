@@ -1,0 +1,35 @@
+.slider-content-wrapper + .featured-content-section,
+.custom-header + .featured-content-section {
+	margin-top: -21px;
+}
+
+.featured-content-section .wrapper {
+	max-width: 1510px;
+	position: relative;
+	z-index: 999;
+}
+
+.featured-content-section .hentry {
+	margin-bottom: 0;
+}
+
+.featured-content-section .hentry,
+.services-section .hentry,
+.portfolio-section .hentry,
+.team-section .hentry,
+.footer-widget-area .widget-column,
+.footer-widget-area.three,
+.sidebar .widget,
+.archive-content-wrap .hentry,
+.recent-blog-content-wrapper .hentry,
+.why-choose-us-section .hentry,
+.stats-section .hentry,
+.testimonial-section .hentry,
+.news-section .hentry {
+	float: left;
+	width: 100%;
+}
+
+.featured-content-section .section-content-wrapper .hentry {
+	margin-bottom: 30px;
+}

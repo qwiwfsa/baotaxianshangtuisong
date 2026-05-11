@@ -1,0 +1,75 @@
+.section,
+#footer-instagram,
+#footer-newsletter {
+    clear: both;
+    width: 100%;
+}
+
+.sticky-label {
+	padding: 7px 10px 3px 10px;
+}
+
+.entry-header .entry-meta > span {
+	display: inline-block;
+	margin-right: 21px;
+}
+
+.entry-header .entry-meta > span:last-child {
+	margin-right: 0;
+}
+
+.post-thumbnail img,
+.slider-image img,
+.post-thumbnail a,
+.slider-image a {
+	display: block;
+	margin: 0 auto;
+}
+
+.page-links {
+	clear: both;
+	margin: 0 0 1.5em;
+}
+
+.page-links span {
+	border-radius: 6px;
+	padding: 4px 4px;
+}
+
+.page-links > .page-links-title {
+	background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    display: inline-block;
+    margin: 0 14px 0 0;
+    padding: 0;
+}
+
+.tags-links a,
+.cat-links a {
+	margin-bottom: 7px;
+	margin-right: 7px;
+}
+
+.entry-footer .cat-links::before,
+.entry-footer .tags-links::before {
+	margin-right: 14px;
+}
+
+.tags-links a:last-child,
+.cat-links li:last-child a {
+	margin-right: 0
+}
+
+.author-info,
+.team-section .entry-container {
+	padding: 35px;
+}
+
+.site-content .archive-content-wrap .hentry .post-thumbnail img {
+	width: 100%;
+}
+
+.news-section .post-thumbnail img {
+	width: 100%;
+}

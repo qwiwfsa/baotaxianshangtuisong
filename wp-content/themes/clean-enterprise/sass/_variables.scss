@@ -1,0 +1,100 @@
+/* Main Background Color */
+$main-background-color: #fff;
+
+/* Header Text Color */
+$header-text-color: #000;
+
+/* Page Background Color */
+$page-background-color: #fff;
+
+/* 60% of Page Background Color */
+	$sixty-of-page-background-color: rgba( $page-background-color, 60% );
+
+/* Secondary Background Color */
+$secondary-background-color: #f5f5f5;
+
+/* Secondary Section Background Color */
+$secondary-section-background-color: #183063;
+
+/* Tertiary Background Color */
+$tertiary-background-color: #3d3d3d;
+
+/* 20% of Tertiary Background Color */
+	$twenty-of-tertiary-background-color: rgba( $tertiary-background-color, 20% );
+
+/* 90% of Tertiary Background Color */
+	$ninty-of-tertiary-background-color: rgba( $tertiary-background-color, 90% );
+
+/* 8% of Tertiary Background Color */
+	$eight-of-tertiary-background-color: rgba( $tertiary-background-color, 8% );
+
+/* Main Text Color */
+$main-text-color: #333;
+
+/* Heading Text Color */
+$heading-text-color: #000;
+
+/*12% of Heading Text Color*/
+	$twelve-of-heading-text-color: rgba( $heading-text-color, 12% );
+
+/*80% of Heading Text Color*/
+	$eighty-of-heading-text-color: rgba( $heading-text-color, 80% );
+
+/* Link Color */
+$link-color: #000;
+
+/* 60% Of Link Color */
+	$sixty-of-link-color: rgba( $link-color, 60% );
+
+/* 75% Of Link Color */
+	$seventy-five-of-link-color: rgba( $link-color, 75% );
+
+/* Link Hover Color */
+$link-hover-color: #4ea34c;
+
+/* Input Hover and Focus Color (Link Hover Color) */
+$input-hover-focus-color: #4ea34c;
+
+/* Secondary Link Color */
+$secondary-link-color: #fff;
+
+/* 12% Of Secondary Link Color */
+	$twelve-of-secondary-link-color: rgba( $secondary-link-color, 12% );
+
+/* 18% of Secondary Link Color */
+	$eighteen-of-secondary-link-color: rgba( $secondary-link-color, 18% );
+
+/* 60% Of Secondary Link Color */
+	$sixty-of-secondary-link-color: rgba( $secondary-link-color, 60% );
+
+/* 80% of Secondary Link Color */
+	$eighty-of-secondary-link-color: rgba( $secondary-link-color, 80% );
+
+/* Secondary Link Hover Color */
+$secondary-link-hover-color: #4ea34c;
+
+/* Button Background Color */
+$button-background-color: #4ea34c;
+
+/* Button Hover Background Color */
+$button-background-hover-color: #000;
+
+/* Button Text Color */
+$button-text-color: #fff;
+
+/* Button Hover Text Color*/
+$button-text-hover-color: #fff;
+
+/* Border Color */
+$border-color: #e4e4e4;
+
+// Font Variables
+$font__primary: 'Merriweather Sans', sans-serif;
+
+$font__secondary: 'Merriweather', serif;
+
+$font__tertiary: 'Yesteryear', cursive;
+
+$font__pre: 'Inconsolata', monospace;
+
+$font_blockquote: "Georgia";

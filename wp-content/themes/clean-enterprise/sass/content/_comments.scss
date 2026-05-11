@@ -1,0 +1,74 @@
+.comment-body {
+	padding: 1.944444444444444em 0;
+}
+
+.comment-list {
+	margin: 0;
+}
+
+.post-categories,
+.comment-list,
+.comments-area .children {
+	list-style: none;
+}
+
+.comment-content {
+	clear: both;
+	margin-left: 5.833333333333333em;
+	margin-top: 0.3888888888888889em;
+}
+
+.comment-list .comment-respond {
+	padding-bottom: 1.944444444444444em;
+}
+
+.comment-author .avatar {
+	float: left;
+	height: 70px;
+	margin-right: 35px;
+	width: 70px;
+}
+
+.comment-respond {
+	max-width: 670px;
+}
+
+#cancel-comment-reply-link {
+	right: 0;
+	text-indent: -9999px;
+	top: 10px;
+}
+
+#cancel-comment-reply-link:before {
+	text-indent: 0;
+	right: 0;
+}
+
+.comment-reply-link {
+	margin-left: 8.076923076923077em;
+	margin-top: 1.076923076923077em;
+}
+
+.comment-metadata > a {
+	margin-right: 14px;
+}
+
+.comment-content a {
+	word-wrap: break-word;
+}
+
+.site .avatar {
+	border-radius: 50%;
+}
+.author-avatar .avatar {
+	height: 150px;
+	width: 150px;
+}
+
+.posted-at,
+.cat-in,
+.fa-comment,
+.author-label {
+	display: inline-block;
+	padding-right: 4px;
+}

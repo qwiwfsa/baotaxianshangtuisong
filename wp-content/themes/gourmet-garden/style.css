@@ -1,0 +1,74 @@
+/*
+Theme Name: Gourmet Garden
+Theme URI: https://wordpress.org/themes/formula/
+Template: formula
+Author: A WP Life
+Author URI: http://awplife.com/
+Description: Gourmet Garden Fast Speed & Responsive Theme. It is a responsive and fully customizable theme to create any kind of websites. The advanced admin panel will enable you to customize it without any technical knowledge. This theme is lightweight, it will enable you to create almost any type of website such a blog, portfolio, acting and shooting industry, total trendy news, newspaper, mega magazine, fashion, dark themes, petcare, animals wildlife, wooden architecture, plumbing contractor, painting estate, interior design, rooms furniture, home decoration, green floral nature, construction, corporate, multiple agency, business promotion, dark variation, industries, Beauty & spa salons, photography, gym, fitness, health, medical, startups, business agencies, law firms, travel, NGO, nature, charity, yoga, kids education, training institute, university portal, restaurant, meta shop, quick magazines, mutual fund, finance, accounting, consulting ,travel agency website. Theme is fully compatible with popular WordPress plugins like Elementor Page Builder, Slider, Carousal, Beaver Builder, Brizy, Visual Composer, Divi, SiteOrigin, Gutenberg, Block-Enabled, WooCommerce, WPML, Yoast SEO, Shortcode, Jetpack, Contact Form 7, Mailchimp for WordPress, bbPress, Demo Importer, WPForms and more. Your WordPress website will never be let down with this theme. Live Demo https://awplife.com/demo/gourmet-garden/
+Tags: blog,portfolio,news,grid-Layout,one-column,two-columns,three-columns,left-sidebar,right-sidebar,custom-background,custom-colors,custom-logo,custom-menu,featured-images,footer-widgets,full-width-template,post-formats,rtl-language-support,sticky-post,translation-ready
+Version: 0.0.5
+Tested up to: 6.7
+Requires PHP: 5.4
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GNU General Public License v2 or later
+Text Domain: gourment-garden
+*/
+
+.blog .entry-content a {
+	font-size: 15px;
+	text-decoration: underline;
+	font-weight: 600;
+}
+
+.comment-section .comment a {
+	text-decoration: underline;
+}
+
+.blog-grid { padding: 100px 0; }
+
+.blog .post {
+    margin: 0;
+}
+
+.blog-head {
+	margin-top: 0;
+}
+
+.blog-grid .full-content {
+	margin-bottom: 5rem; 
+}
+
+.blog-image-margin {
+	margin-top: -182px;
+}
+
+.page-title-module {
+	background-position: center center !important;
+}
+
+.primary-menu li.current-menu-item>a, .primary-menu li.current-menu-item>.link-icon-wrapper>a {
+	color: var(--thm-primary);
+}
+
+.primary-menu a:hover, .primary-menu a:focus, .primary-menu .current_page_ancestor {
+	color: var(--thm-primary);
+}
+
+.slider-caption .thm-btn:hover {
+	color: var(--thm-primary);
+	background: #fff;
+}
+
+.header .menu>.menu-item:hover>a, .header .menu>.menu-item:hover>span.icon {
+	color: inherit;
+}
+
+.slider-caption .subtitle {
+    background: rgb(255 255 255 / 11%);
+}
+
+@media (max-width: 768px) {
+    .admin-bar-sticky-padding {
+        margin-top: 7vh !important;
+    }
+}

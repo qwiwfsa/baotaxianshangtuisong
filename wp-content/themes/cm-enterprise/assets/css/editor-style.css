@@ -1,0 +1,172 @@
+/*primary btn*/
+.editor-styles-wrapper .is-style-cm-enterprise-button-primary .wp-block-button__link {
+    padding: 12px 24px;
+    background-color: var(--wp--preset--color--accent-color);
+    color: var(--wp--preset--color--light-color);
+    font-size: 16px;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+}
+
+.editor-styles-wrapper .is-style-cm-enterprise-button-primary .wp-block-button__link:hover {
+    background-color: var(--wp--preset--color--secondary-color);
+}
+
+/*primary btn with arrow */
+.editor-styles-wrapper .is-style-cm-enterprise-button-primary-with-arrow .wp-block-button__link {
+    padding: 12px 24px;
+    background-color: var(--wp--preset--color--accent-color);
+    color: var(--wp--preset--color--light-color);
+    font-size: 16px;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+}
+
+.editor-styles-wrapper .is-style-cm-enterprise-button-primary-with-arrow .wp-block-button__link:after {
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg width='15' height='16' viewBox='0 0 15 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.293 2.793C8.48053 2.60553 8.73484 2.50021 9 2.50021C9.26516 2.50021 9.51947 2.60553 9.707 2.793L14.207 7.293C14.3945 7.48053 14.4998 7.73484 14.4998 8C14.4998 8.26516 14.3945 8.51947 14.207 8.707L9.707 13.207C9.5184 13.3892 9.2658 13.49 9.0036 13.4877C8.7414 13.4854 8.49059 13.3802 8.30518 13.1948C8.11977 13.0094 8.0146 12.7586 8.01233 12.4964C8.01005 12.2342 8.11084 11.9816 8.293 11.793L11 9H1.5C1.23478 9 0.98043 8.89464 0.792893 8.70711C0.605357 8.51957 0.5 8.26522 0.5 8C0.5 7.73478 0.605357 7.48043 0.792893 7.29289C0.98043 7.10536 1.23478 7 1.5 7H11L8.293 4.207C8.10553 4.01947 8.00021 3.76516 8.00021 3.5C8.00021 3.23484 8.10553 2.98053 8.293 2.793Z' fill='white'/%3E%3C/svg%3E%0A");
+    margin-left: 10px;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+.editor-styles-wrapper .is-style-cm-enterprise-button-primary-with-arrow .wp-block-button__link:hover {
+    background-color: var(--wp--preset--color--secondary-color);
+}
+
+
+/*white button*/
+.editor-styles-wrapper .is-style-cm-enterprise-white-button .wp-block-button__link {
+    padding: 12px 24px;
+    background-color: var(--wp--preset--color--light-color);
+    color: var(--wp--preset--color--secondary-color);
+    border: 2px solid var(--wp--preset--color--light-color);
+    font-size: 16px;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+}
+
+.editor-styles-wrapper .is-style-cm-enterprise-white-button .wp-block-button__link:hover {
+    background-color: transparent;
+    border: 2px solid var(--wp--preset--color--light-color);
+    color: var(--wp--preset--color--light-color);
+}
+
+/*white button With Arrow */
+.editor-styles-wrapper .is-style-cm-enterprise-white-button-with-arrow .wp-block-button__link {
+    padding: 12px 24px;
+    background-color: var(--wp--preset--color--light-color);
+    color: var(--wp--preset--color--paragraph-color-dark);
+    border: 2px solid var(--wp--preset--color--light-color);
+    font-size: 16px;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+}
+
+.editor-styles-wrapper .is-style-cm-enterprise-white-button-with-arrow .wp-block-button__link:after {
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg width='15' height='16' viewBox='0 0 15 16' fill='var(--wp--preset--color--accent-color)' xmlns='http://www.w3.org/2000/svg'%3E%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='var(--wp--preset--color--accent-color)' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.793 2.79303C8.98053 2.60556 9.23484 2.50024 9.5 2.50024C9.76516 2.50024 10.0195 2.60556 10.207 2.79303L14.707 7.29303C14.8945 7.48056 14.9998 7.73487 14.9998 8.00003C14.9998 8.26519 14.8945 8.5195 14.707 8.70703L10.207 13.207C10.0184 13.3892 9.7658 13.49 9.5036 13.4877C9.2414 13.4854 8.99059 13.3803 8.80518 13.1948C8.61977 13.0094 8.5146 12.7586 8.51233 12.4964C8.51005 12.2342 8.61084 11.9816 8.793 11.793L11.5 9.00003H2C1.73478 9.00003 1.48043 8.89467 1.29289 8.70714C1.10536 8.5196 1 8.26525 1 8.00003C1 7.73481 1.10536 7.48046 1.29289 7.29292C1.48043 7.10539 1.73478 7.00003 2 7.00003H11.5L8.793 4.20703C8.60553 4.0195 8.50021 3.76519 8.50021 3.50003C8.50021 3.23487 8.60553 2.98056 8.793 2.79303Z' fill='var(--wp--preset--color--accent-color)'/%3E%3C/svg%3E%3C/svg%3E%0A");
+    margin-left: 10px;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    transition: all 0.3s ease-in-out;
+}
+
+.editor-styles-wrapper .is-style-cm-enterprise-white-button-with-arrow .wp-block-button__link:hover {
+    background-color: transparent;
+    border: 2px solid var(--wp--preset--color--light-color);
+    color: var(--wp--preset--color--light-color);
+}
+
+.editor-styles-wrapper.is-style-cm-enterprise-white-button-with-arrow .wp-block-button__link:hover:after {
+    background-image: url("data:image/svg+xml,%3Csvg width='15' height='16' viewBox='0 0 15 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.293 2.793C8.48053 2.60553 8.73484 2.50021 9 2.50021C9.26516 2.50021 9.51947 2.60553 9.707 2.793L14.207 7.293C14.3945 7.48053 14.4998 7.73484 14.4998 8C14.4998 8.26516 14.3945 8.51947 14.207 8.707L9.707 13.207C9.5184 13.3892 9.2658 13.49 9.0036 13.4877C8.7414 13.4854 8.49059 13.3802 8.30518 13.1948C8.11977 13.0094 8.0146 12.7586 8.01233 12.4964C8.01005 12.2342 8.11084 11.9816 8.293 11.793L11 9H1.5C1.23478 9 0.98043 8.89464 0.792893 8.70711C0.605357 8.51957 0.5 8.26522 0.5 8C0.5 7.73478 0.605357 7.48043 0.792893 7.29289C0.98043 7.10536 1.23478 7 1.5 7H11L8.293 4.207C8.10553 4.01947 8.00021 3.76516 8.00021 3.5C8.00021 3.23484 8.10553 2.98053 8.293 2.793Z' fill='white'/%3E%3C/svg%3E%0A");
+}
+
+/*Arrow Lists*/
+.is-style-cm-enterprise-list-with-arrow {
+    list-style: none;
+    padding-left: 28px;
+}
+
+.is-style-cm-enterprise-list-with-arrow .wp-block-list-item {
+    position: relative;
+    padding: 6px 0;
+}
+
+
+/*readmore arrow*/
+.wp-block-post-excerpt__more-link{
+    margin-top: 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.wp-block-post-excerpt__more-link:after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: var(--wp--preset--color--accent-color, currentColor);
+    clip-path: path('M7.11225 5.11023C7.18429 5.03979 7.28207 5.00014 7.38407 5C7.48608 4.99986 7.58397 5.03924 7.65622 5.10948L11.8756 9.2096C11.915 9.24794 11.9463 9.2935 11.9677 9.34365C11.989 9.3938 12 9.44758 12 9.50188C12 9.55618 11.989 9.60995 11.9677 9.66011C11.9463 9.71026 11.915 9.75582 11.8756 9.79416L7.65622 13.895C7.58356 13.9633 7.48633 14.001 7.38546 14C7.28459 13.999 7.18816 13.9594 7.11693 13.8897C7.0457 13.8201 7.00538 13.7259 7.00465 13.6275C7.00392 13.5291 7.04283 13.4344 7.11302 13.3638L11.0862 9.50225L7.11302 5.64075C7.0408 5.57049 7.00014 5.47513 7 5.37565C6.99986 5.27616 7.04023 5.18069 7.11225 5.11023Z');
+    display: block;
+    transition: all 0.3s ease-in-out;
+    margin-left: 4px;
+    z-index: 1;
+}
+
+.wp-block-post-excerpt__more-link:hover:after {
+    margin-left: 10px;
+}
+
+/*cover hover effects*/
+.is-style-cm-enterprise-image-hover-effect .wp-block-cover__image-background {
+    transition: all 0.3s ease-in-out;
+}
+
+.is-style-cm-enterprise-image-hover-effect:hover .wp-block-cover__image-background {
+    transform: scale(110%);
+}
+
+/*core/categories css*/
+.wp-block-categories-list {
+    list-style-type: none;
+}
+
+/* shadow */
+.is-style-cm-enterprise-box-shadow-light {
+    box-shadow: var(--wp--custom--cm-enterprise-box-shadow-light);
+}
+
+/*user icon before author name*/
+.wp-block-post-author-name__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.wp-block-post-author-name__link:before {
+    font-family: 'dashicons';
+    content: "\f110";
+    font-size: 20px;
+    color: var(--wp--preset--color--accent-color);
+}
+
+/*calendar icon before post date*/
+.wp-block-post-date__modified-date {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.wp-block-post-date__modified-date:before {
+    content: "\f508";
+    font-family: 'dashicons';
+    font-size: 20px;
+    color: var(--wp--preset--color--accent-color);
+}

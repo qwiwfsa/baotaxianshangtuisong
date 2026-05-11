@@ -1,0 +1,261 @@
+/* 社交分享功能样式 */
+
+/* 分享按钮容器 */
+.social-share {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.social-share-label {
+    font-size: 14px;
+    color: #6b7280;
+    margin-right: 8px;
+}
+
+/* 分享按钮 */
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    color: #fff;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 各平台按钮颜色 */
+.share-btn.wechat {
+    background: #07c160;
+}
+
+.share-btn.wechat-moments {
+    background: #07c160;
+}
+
+.share-btn.qq {
+    background: #12b7f5;
+}
+
+.share-btn.weibo {
+    background: #e6162d;
+}
+
+.share-btn.copy {
+    background: #6b7280;
+}
+
+.share-btn.copy.copied {
+    background: #10b981;
+}
+
+/* 文章列表页分享按钮（简化版） */
+.article-share-compact {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.article-share-compact .share-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+}
+
+/* 文章详情页分享栏 */
+.article-share-full {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 0 0;
+    background: transparent;
+    border-radius: 12px;
+    margin: 40px auto 0;
+    max-width: 500px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.article-share-full .share-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.article-share-full .share-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.article-share-full .share-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.article-share-full .share-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+}
+
+.article-share-full .share-btn-label {
+    display: none;
+}
+
+/* 微信分享弹窗 */
+.wechat-share-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.wechat-share-modal.show {
+    display: flex;
+}
+
+.wechat-share-content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.wechat-share-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.wechat-share-desc {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+.wechat-qr-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 24px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.wechat-qr-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.wechat-share-close {
+    padding: 12px 32px;
+    background: #1e3a8a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.wechat-share-close:hover {
+    background: #1e40af;
+}
+
+/* 复制成功提示 */
+.copy-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.copy-toast.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .social-share {
+        gap: 6px;
+    }
+    
+    .social-share-label {
+        font-size: 12px;
+        margin-right: 6px;
+    }
+    
+    .share-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .article-share-full {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px 0 0;
+        margin: 30px auto 0;
+    }
+    
+    .article-share-full .share-left {
+        flex-direction: row;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .article-share-full .share-title {
+        font-size: 11px;
+    }
+    
+    .article-share-full .share-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+    
+    .wechat-share-content {
+        padding: 24px;
+    }
+    
+    .wechat-qr-container {
+        width: 160px;
+        height: 160px;
+    }
+}

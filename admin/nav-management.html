@@ -1,0 +1,667 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航菜单管理 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f3f4f6; min-height: 100vh; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: #1e293b; color: white; position: fixed; left: 0; top: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+        .cms-sidebar-header { padding: 24px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { display: flex; align-items: center; gap: 12px; }
+        .cms-sidebar-brand i { font-size: 28px; color: #3b82f6; }
+        .cms-sidebar-brand span { font-size: 20px; font-weight: 600; }
+        .cms-sidebar-nav { padding: 16px 0; }
+        .cms-nav-section { margin-bottom: 8px; }
+        .cms-nav-title { padding: 12px 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+        .cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; }
+        .cms-nav-item:hover { background: #334155; color: white; }
+        .cms-nav-item.active { background: #3b82f6; color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+        .cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+        .cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .cms-header-left { display: flex; align-items: center; gap: 16px; }
+        .cms-header-title { font-size: 20px; font-weight: 600; color: #1f2937; }
+        .cms-header-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .cms-header-btn:hover { background: linear-gradient(135deg, #1e40af, #2563eb); }
+        .cms-content { padding: 24px; }
+        .nav-list { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .nav-item { display: flex; align-items: center; padding: 16px 24px; border-bottom: 1px solid #e5e7eb; transition: all 0.2s; }
+        .nav-item:last-child { border-bottom: none; }
+        .nav-item:hover { background: #f9fafb; }
+        .nav-drag { color: #9ca3af; cursor: move; margin-right: 16px; }
+        .nav-icon { width: 40px; height: 40px; background: #eff6ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #3b82f6; margin-right: 16px; }
+        .nav-info { flex: 1; }
+        .nav-name { font-size: 16px; font-weight: 500; color: #1f2937; margin-bottom: 4px; }
+        .nav-url { font-size: 13px; color: #6b7280; }
+        .nav-actions { display: flex; gap: 8px; }
+        .nav-btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s; }
+        .nav-btn-edit { background: #eff6ff; color: #3b82f6; }
+        .nav-btn-edit:hover { background: #dbeafe; }
+        .nav-btn-delete { background: #fef2f2; color: #ef4444; }
+        .nav-btn-delete:hover { background: #fee2e2; }
+        .nav-btn-sort-up, .nav-btn-sort-down { background: #f0fdf4; color: #22c55e; padding: 6px 10px; }
+        .nav-btn-sort-up:hover, .nav-btn-sort-down:hover { background: #dcfce7; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }
+        .modal-title { font-size: 18px; font-weight: 600; color: #1f2937; }
+        .modal-close { background: none; border: none; font-size: 20px; color: #6b7280; cursor: pointer; }
+        .modal-body { padding: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 8px; }
+        .form-input { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .form-input:focus { outline: none; border-color: #3b82f6; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 12px; }
+        .btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-primary { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; }
+        .btn-primary:hover { background: linear-gradient(135deg, #1e40af, #2563eb); }
+        .empty-state { text-align: center; padding: 80px 24px; background: white; border-radius: 12px; }
+        .empty-state i { font-size: 64px; color: #d1d5db; margin-bottom: 20px; }
+        .empty-state h3 { font-size: 18px; color: #374151; margin-bottom: 8px; }
+        .empty-state p { font-size: 14px; color: #9ca3af; margin-bottom: 24px; }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- 侧边栏 -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表板</span></a>
+                    <a href="logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+                    <a href="case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>案例管理</span></a>
+                    <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面管理</span></a>
+                    <a href="nav-management.html" class="cms-nav-item active"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+                    <a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+                    <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>                    
+                    
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="cms-main">
+            <header class="cms-header">
+                <div class="cms-header-left">
+                    <h1 class="cms-header-title">导航菜单管理</h1>
+                </div>
+                <button class="cms-header-btn" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i>
+                    <span>添加菜单项</span>
+                </button>
+            </header>
+
+            <!-- 标签页 -->
+            <div style="background: white; border-bottom: 1px solid #e5e7eb; padding: 0 24px;">
+                <div style="display: flex; gap: 32px;">
+                    <div class="tab-btn active" data-tab="nav" onclick="switchTab('nav')" style="padding: 16px 0; font-size: 14px; font-weight: 500; color: #3b82f6; border-bottom: 2px solid #3b82f6; cursor: pointer;">导航菜单</div>
+                    <div class="tab-btn" data-tab="component" onclick="switchTab('component')" style="padding: 16px 0; font-size: 14px; font-weight: 500; color: #6b7280; border-bottom: 2px solid transparent; cursor: pointer;">组件管理</div>
+                </div>
+            </div>
+
+            <div class="cms-content">
+                <!-- 导航菜单标签页 -->
+                <div id="navTab" class="tab-content">
+                    <div class="nav-list" id="navList">
+                        <!-- 菜单项将在这里显示 -->
+                    </div>
+                    <div class="empty-state" id="emptyState" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                        <h3>暂无导航菜单</h3>
+                        <p>点击右上角"添加菜单项"按钮创建您的第一个菜单</p>
+                    </div>
+                </div>
+
+                <!-- 组件管理标签页 -->
+                <div id="componentTab" class="tab-content" style="display: none;">
+                    <div style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h2 style="font-size: 18px; font-weight: 600;">组件库管理</h2>
+                            <button class="cms-header-btn" onclick="openComponentModal()">
+                                <i class="fas fa-plus"></i>
+                                <span>添加组件</span>
+                            </button>
+                        </div>
+                        <div id="componentList">
+                            <!-- 组件列表将在这里显示 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 添加/编辑菜单模态框 -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">添加菜单项</h3>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">菜单名称</label>
+                    <input type="text" class="form-input" id="navName" placeholder="例如:首页">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">链接地址</label>
+                    <input type="text" class="form-input" id="navUrl" placeholder="例如:index.html">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">图标类名(Font Awesome)</label>
+                    <input type="text" class="form-input" id="navIcon" placeholder="例如:fas fa-home">
+                </div>
+                <input type="hidden" id="navId">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveNav()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加/编辑组件模态框 -->
+    <div class="modal-overlay" id="componentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="componentModalTitle">添加组件</h3>
+                <button class="modal-close" onclick="closeComponentModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">组件名称</label>
+                    <input type="text" class="form-input" id="componentName" placeholder="例如:产品卡片">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">组件类型</label>
+                    <select class="form-input" id="componentType">
+                        <option value="basic">基础组件</option>
+                        <option value="layout">排版组件</option>
+                        <option value="interactive">互动组件</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">图标类名</label>
+                    <input type="text" class="form-input" id="componentIcon" placeholder="例如:fas fa-cube">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">HTML代码</label>
+                    <textarea class="form-input" id="componentHtml" rows="6" placeholder="输入组件的HTML代码"></textarea>
+                </div>
+                <input type="hidden" id="componentId">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeComponentModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveComponent()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 默认导航菜单
+        const defaultNavItems = [
+            { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
+            { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
+            { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
+            { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
+            { id: '5', name: '行业资讯', url: 'news.html', icon: 'fas fa-newspaper' },
+            { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
+            { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
+        ];
+
+        let navItems = [];
+        let editingId = null;
+
+        // 加载菜单
+        function loadNavItems() {
+            fetch('api/nav-save.php?type=nav')
+                .then(res => res.json())
+                .then(result => {
+                    if (result.code === 0 && result.data) {
+                        navItems = result.data;
+                    } else {
+                        navItems = [];
+                    }
+                    renderNavItems();
+                })
+                .catch(err => {
+                    console.error('加载导航失败:', err);
+                    navItems = [];
+                    renderNavItems();
+                });
+        }
+
+        // 渲染菜单
+        function renderNavItems() {
+            const container = document.getElementById('navList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (navItems.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = navItems.map((item, index) => `
+                <div class="nav-item" data-id="${item.id}">
+                    <i class="fas fa-grip-vertical nav-drag"></i>
+                    <div class="nav-icon"><i class="${item.icon || 'fas fa-link'}"></i></div>
+                    <div class="nav-info">
+                        <div class="nav-name">${item.name}</div>
+                        <div class="nav-url">${item.url}</div>
+                    </div>
+                    <div class="nav-actions">
+                        <button class="nav-btn nav-btn-sort-up" onclick="moveNav('${item.id}', -1)" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <button class="nav-btn nav-btn-sort-down" onclick="moveNav('${item.id}', 1)" ${index === navItems.length - 1 ? 'disabled style="opacity:0.4"' : ''}>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <button class="nav-btn nav-btn-edit" onclick="editNav('${item.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="nav-btn nav-btn-delete" onclick="deleteNav('${item.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 打开添加模态框
+        function openAddModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = '添加菜单项';
+            document.getElementById('navName').value = '';
+            document.getElementById('navUrl').value = '';
+            document.getElementById('navIcon').value = '';
+            document.getElementById('modal').classList.add('show');
+        }
+
+        // 上下排序
+        function moveNav(id, direction) {
+            const idx = navItems.findIndex(n => n.id === id);
+            if (idx < 0) return;
+            const newIdx = idx + direction;
+            if (newIdx < 0 || newIdx >= navItems.length) return;
+
+            // 交换位置
+            const temp = navItems[idx];
+            navItems[idx] = navItems[newIdx];
+            navItems[newIdx] = temp;
+
+            // 重新渲染
+            renderNavItems();
+
+            // 批量保存新顺序
+            const ordered = navItems.map((item, i) => ({
+                id: item.id,
+                name: item.name,
+                url: item.url,
+                icon: item.icon || ''
+            }));
+
+            fetch('api/nav-save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'save_all',
+                    type: 'nav',
+                    items: ordered
+                })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.code === 0) {
+                    showToast('排序已更新');
+                }
+            })
+            .catch(err => {
+                showToast('排序保存失败', 'error');
+            });
+        }
+
+        // 编辑菜单
+        function editNav(id) {
+            const item = navItems.find(n => n.id === id);
+            if (!item) return;
+
+            editingId = id;
+            document.getElementById('modalTitle').textContent = '编辑菜单项';
+            document.getElementById('navName').value = item.name;
+            document.getElementById('navUrl').value = item.url;
+            document.getElementById('navIcon').value = item.icon || '';
+            document.getElementById('modal').classList.add('show');
+        }
+
+        // 保存菜单
+        function saveNav() {
+            const name = document.getElementById('navName').value.trim();
+            const url = document.getElementById('navUrl').value.trim();
+            const iconElement = document.getElementById('navIcon');
+            const icon = iconElement ? iconElement.value.trim() : '';
+
+            if (!name || !url) {
+                showToast('请填写菜单名称和链接地址', 'error');
+                return;
+            }
+
+            const payload = {
+                action: 'save',
+                type: 'nav',
+                item_id: editingId || '',
+                name: name,
+                url: url,
+                icon: icon
+            };
+
+            fetch('api/nav-save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.code === 0) {
+                    closeModal();
+                    loadNavItems();
+                    showToast('保存成功');
+                } else {
+                    showToast(result.msg || '保存失败', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('保存失败: ' + err.message, 'error');
+            });
+        }
+
+        // 删除菜单
+        function deleteNav(id) {
+            if (!window.confirm('确定要删除这个菜单项吗?')) return;
+
+            fetch('api/nav-save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'delete',
+                    type: 'nav',
+                    item_id: id
+                })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.code === 0) {
+                    loadNavItems();
+                    showToast('导航已删除');
+                } else {
+                    showToast(result.msg || '删除失败', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('删除失败: ' + err.message, 'error');
+            });
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;top:20px;right:20px;padding:12px 20px;background:' + (type === 'error' ? '#ef4444' : '#10b981') + ';color:white;border-radius:8px;z-index:9999;font-size:14px;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+        
+        // 编辑页面 - 跳转到可视化编辑器
+        function editPage(url) {
+            if (!url) {
+                showToast('页面地址无效', 'error');
+                return;
+            }
+            // 确保URL格式正确
+            let cleanUrl = url.trim();
+            if (!cleanUrl.endsWith('.html')) {
+                cleanUrl += '.html';
+            }
+            window.location.href = 'visual-editor.html?page=' + encodeURIComponent(cleanUrl);
+        }
+
+        // ========== 组件管理功能 ==========
+        let components = [];
+        let editingComponentId = null;
+
+        // 默认组件
+        const defaultComponents = [
+            { id: '1', name: '标题', type: 'basic', icon: 'fas fa-heading', html: '<h2 style="padding: 20px; font-size: 28px; color: #1f2937;">新标题</h2>' },
+            { id: '2', name: '文本段落', type: 'basic', icon: 'fas fa-paragraph', html: '<p style="padding: 20px; font-size: 16px; line-height: 1.6; color: #4b5563;">这是一段新文本内容</p>' },
+            { id: '3', name: '图片', type: 'basic', icon: 'fas fa-image', html: '<div style="padding: 20px; text-align: center;"><img src="../images/placeholder.jpg" style="max-width: 100%; height: auto; border-radius: 8px;" alt="图片"></div>' },
+            { id: '4', name: '按钮', type: 'basic', icon: 'fas fa-square', html: '<div style="padding: 20px; text-align: center;"><a href="#" style="display: inline-block; padding: 12px 32px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; text-decoration: none; border-radius: 8px; font-weight: 500;">点击按钮</a></div>' },
+            { id: '5', name: '分割线', type: 'basic', icon: 'fas fa-minus', html: '<hr style="margin: 20px 0; border: none; border-top: 1px solid #e5e7eb;">' },
+            { id: '6', name: 'Hero大图', type: 'layout', icon: 'fas fa-image', html: '<div style="padding: 80px 40px; text-align: center; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white;"><h1 style="font-size: 42px; margin-bottom: 20px;">Hero标题</h1><p style="font-size: 18px; opacity: 0.9;">副标题描述文字</p></div>' },
+            { id: '7', name: '特性列表', type: 'layout', icon: 'fas fa-list', html: '<div style="padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;"><div style="text-align: center; padding: 24px;"><i class="fas fa-check-circle" style="font-size: 40px; color: #3b82f6; margin-bottom: 16px;"></i><h3 style="margin-bottom: 8px;">特性一</h3><p style="color: #6b7280;">描述文字</p></div></div>' },
+            { id: '8', name: '卡片网格', type: 'layout', icon: 'fas fa-th', html: '<div style="padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;"><div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"><div style="height: 160px; background: #e5e7eb;"></div><div style="padding: 20px;"><h3 style="margin-bottom: 8px;">卡片标题</h3><p style="color: #6b7280; font-size: 14px;">卡片描述</p></div></div></div>' },
+            { id: '9', name: '数据统计', type: 'layout', icon: 'fas fa-chart-bar', html: '<div style="padding: 60px 40px; background: #f9fafb; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;"><div><div style="font-size: 48px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">100+</div><div style="color: #6b7280;">项目数量</div></div></div>' },
+            { id: '10', name: '联系表单', type: 'interactive', icon: 'fas fa-envelope', html: '<div style="padding: 40px; max-width: 600px; margin: 0 auto;"><h2 style="text-align: center; margin-bottom: 24px;">联系我们</h2><form style="display: grid; gap: 16px;"><input type="text" placeholder="您的姓名" style="padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;"><button type="submit" style="padding: 14px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer;">提交</button></form></div>' },
+            { id: '11', name: '地图', type: 'interactive', icon: 'fas fa-map-marker-alt', html: '<div style="padding: 40px;"><div style="height: 400px; background: #e5e7eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9ca3af;"><i class="fas fa-map-marked-alt" style="font-size: 48px;"></i></div></div>' },
+            { id: '12', name: '轮播图', type: 'interactive', icon: 'fas fa-images', html: '<div style="padding: 40px;"><div style="height: 400px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white;"><div style="text-align: center;"><h2 style="font-size: 36px; margin-bottom: 16px;">轮播图标题</h2></div></div></div>' }
+        ];
+
+        // 切换标签页
+        function switchTab(tab) {
+            // 更新标签按钮样式
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.style.color = '#6b7280';
+                btn.style.borderBottomColor = 'transparent';
+                btn.classList.remove('active');
+            });
+            document.querySelector('.tab-btn[data-tab="' + tab + '"]').style.color = '#3b82f6';
+            document.querySelector('.tab-btn[data-tab="' + tab + '"]').style.borderBottomColor = '#3b82f6';
+            document.querySelector('.tab-btn[data-tab="' + tab + '"]').classList.add('active');
+
+            // 显示对应内容
+            document.getElementById('navTab').style.display = tab === 'nav' ? 'block' : 'none';
+            document.getElementById('componentTab').style.display = tab === 'component' ? 'block' : 'none';
+
+            // 更新按钮
+            const headerBtn = document.querySelector('.cms-header-btn');
+            if (tab === 'nav') {
+                headerBtn.innerHTML = '<i class="fas fa-plus"></i><span>添加菜单项</span>';
+                headerBtn.onclick = openAddModal;
+            } else {
+                headerBtn.innerHTML = '<i class="fas fa-plus"></i><span>添加组件</span>';
+                headerBtn.onclick = openComponentModal;
+            }
+
+            // 如果切换到组件标签，加载组件列表
+            if (tab === 'component') {
+                loadComponents();
+            }
+        }
+
+        // 加载组件
+        function loadComponents() {
+            fetch('api/nav-save.php?type=component')
+                .then(res => res.json())
+                .then(result => {
+                    if (result.code === 0 && result.data) {
+                        components = result.data;
+                    } else {
+                        components = [];
+                    }
+                    renderComponents();
+                })
+                .catch(err => {
+                    console.error('加载组件失败:', err);
+                    components = [];
+                    renderComponents();
+                });
+        }
+
+        // 渲染组件列表
+        function renderComponents() {
+            const container = document.getElementById('componentList');
+            
+            if (components.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-cubes"></i><h3>暂无自定义组件</h3><p>点击右上角"添加组件"按钮创建</p></div>';
+                return;
+            }
+
+            const typeNames = { basic: '基础组件', layout: '排版组件', interactive: '互动组件' };
+            
+            container.innerHTML = components.map(comp => `
+                <div class="nav-item" style="margin-bottom: 12px;">
+                    <div class="nav-icon"><i class="${comp.icon || 'fas fa-cube'}"></i></div>
+                    <div class="nav-info">
+                        <div class="nav-name">${comp.name}</div>
+                        <div class="nav-url">${typeNames[comp.type] || comp.type}</div>
+                    </div>
+                    <div class="nav-actions">
+                        <button class="nav-btn nav-btn-edit" onclick="editComponent('${comp.id}')">
+                            <i class="fas fa-edit"></i> 编辑
+                        </button>
+                        <button class="nav-btn nav-btn-delete" onclick="deleteComponent('${comp.id}')">
+                            <i class="fas fa-trash"></i> 删除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 打开添加组件模态框
+        function openComponentModal() {
+            editingComponentId = null;
+            document.getElementById('componentModalTitle').textContent = '添加组件';
+            document.getElementById('componentName').value = '';
+            document.getElementById('componentType').value = 'basic';
+            document.getElementById('componentIcon').value = '';
+            document.getElementById('componentHtml').value = '';
+            document.getElementById('componentModal').classList.add('show');
+        }
+
+        // 编辑组件
+        function editComponent(id) {
+            const comp = components.find(c => c.id === id);
+            if (!comp) return;
+
+            editingComponentId = id;
+            document.getElementById('componentModalTitle').textContent = '编辑组件';
+            document.getElementById('componentName').value = comp.name;
+            document.getElementById('componentType').value = comp.type;
+            document.getElementById('componentIcon').value = comp.icon;
+            document.getElementById('componentHtml').value = comp.html;
+            document.getElementById('componentModal').classList.add('show');
+        }
+
+        // 保存组件
+        function saveComponent() {
+            const name = document.getElementById('componentName').value.trim();
+            const itemType = document.getElementById('componentType').value;
+            const icon = document.getElementById('componentIcon').value.trim() || 'fas fa-cube';
+            const compHtml = document.getElementById('componentHtml').value.trim();
+
+            if (!name || !compHtml) {
+                showToast('请填写组件名称和HTML代码', 'error');
+                return;
+            }
+
+            const payload = {
+                action: 'save',
+                type: 'component',
+                item_id: editingComponentId || '',
+                name: name,
+                item_type: itemType,
+                icon: icon,
+                html: compHtml
+            };
+
+            fetch('api/nav-save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.code === 0) {
+                    closeComponentModal();
+                    loadComponents();
+                    showToast('组件保存成功');
+                } else {
+                    showToast(result.msg || '保存失败', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('保存失败: ' + err.message, 'error');
+            });
+        }
+
+        // 删除组件
+        function deleteComponent(id) {
+            if (!confirm('确定要删除这个组件吗？')) return;
+
+            fetch('api/nav-save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'delete',
+                    type: 'component',
+                    item_id: id
+                })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.code === 0) {
+                    loadComponents();
+                    showToast('组件已删除');
+                } else {
+                    showToast(result.msg || '删除失败', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('删除失败: ' + err.message, 'error');
+            });
+        }
+
+        // 关闭组件模态框
+        function closeComponentModal() {
+            document.getElementById('componentModal').classList.remove('show');
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;top:20px;right:20px;padding:12px 20px;background:' + (type === 'error' ? '#ef4444' : '#10b981') + ';color:white;border-radius:8px;z-index:9999;font-size:14px;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', loadNavItems);
+    </script>
+</body>
+</html>

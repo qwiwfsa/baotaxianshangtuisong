@@ -1,0 +1,143 @@
+.custom-header {
+	width: 100%;
+}
+
+.custom-header:before {
+	content: "";
+	display: block;
+	height: 100%;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 9;
+}
+
+body:not(.no-header-media-text) .custom-header:after {
+	content: "";
+	height: 100%;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}
+
+.has-header-video .custom-header-media video,
+.has-header-video .custom-header-media iframe {
+	left: 0;
+	top: 0;
+	width: 100%;
+}
+
+/* For browsers that support 'object-fit' */
+@supports ( object-fit: cover ) {
+	.has-header-video .custom-header-media video,
+	.has-header-video .custom-header-media iframe {
+		-ms-transform: none;
+		-moz-transform: none;
+		-webkit-transform: none;
+		-o-object-fit: cover;
+		object-fit: cover;
+		height: 100%;
+		left: 0;
+		top: 0;
+		transform: none;
+		width: 100%;
+	}
+}
+
+.custom-header-media img,
+.custom-header-media video,
+.custom-header-media iframe {
+    -ms-transform: none;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-object-fit: cover;
+    object-fit: cover;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+    width: 100%;
+}
+
+.wp-custom-header-video-button {
+	background-color: transparent;
+	border-radius: 50%;
+	height: 60px;
+	opacity: 0;
+	padding: 0;
+	text-indent: -9999px;
+	width: 60px;
+	z-index: 6;
+}
+
+.wp-custom-header-video-button,
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before {
+	left: 50%;
+}
+
+.no-header-media-text .wp-custom-header-video-button,
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before {
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.wp-custom-header-video-button {
+	bottom: 14%;
+	transform: translateX(-50%);
+}
+
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before {
+	display: block;
+	font-size: 21px;
+	font-size: 1.3125rem;
+	text-indent: 0;
+}
+
+.custom-header .custom-header-content {
+	padding: 70px 30px;
+}
+
+.has-header-video.no-header-media-text .wp-custom-header {
+	padding-bottom: 180px;
+	padding-top: 180px;
+}
+
+.custom-header-content .entry-meta {
+	letter-spacing: normal;
+}
+
+/*Author Info*/
+.author-title:after,
+.sidebar .widget-title:after,
+.testimonial-section .entry-header:after {
+	border-bottom: 2px solid;
+	content: "";
+	display: block;
+	margin-top: 14px;
+	width: 30px;
+}
+
+.author-title:after {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.testimonial-section .entry-header:after {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 28px;
+	width: 67px;
+}
+
+.custom-header .custom-header-content {
+	z-index: 9;
+    text-align: left;
+}
+
+.custom-header .custom-header-content .entry-summary {
+	max-width: 800px;
+}

@@ -1,0 +1,89 @@
+.blog-banner-section .banner-section-1,.banner-section-2,.banner-section-3 {
+    width: auto;
+    height: auto;
+}
+.blog-banner-section.wp-block-columns {
+    gap:  0em !important;
+}
+.banner-section-1,.banner-section-2,.banner-section-3,.service-box {
+    position: relative;
+}
+.banner-content,.banner-content-1,.banner-content-2 {
+    position: absolute !important;
+    bottom: 12px;
+    border-left: solid 3px var(--primary-color);
+}
+.blog-banner-section .banner-content{
+    left: 25%;
+    right: 15%;
+}
+.blog-banner-section .banner-content-1,.blog-banner-section .banner-content-2{
+    left: 5%;
+}
+.blog-service-section img {
+    width:  100%;
+}
+.blog-service-btn a {
+   padding: 10px 15px !important;
+   font-weight: 700 !important;
+   text-decoration: none !important;
+}
+.blog-service-btn a.wp-block-button__link {
+    background: #000;
+}
+.blog-service-section .blog-box {
+    width: 65px;
+    position: absolute;
+    top: 15%;
+}
+.blog-service-section .blog-box .text-para {
+    border-top:  solid 1px #fff;
+}
+.blog-service-section .gallery {
+    border-bottom: solid 2px var(--primary-color);
+    font-weight: 700;
+}
+.wp-block-search .wp-block-search__label {
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 5%;
+    border-bottom: 2px solid var(--primary-color);
+}
+button.wp-block-search__button {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 700 !important;
+}
+@media screen and (max-width: 720px) {
+    .blog-service-section .blog-box {
+        top: 10%;
+    }
+    .blog-banner-section .banner-content {
+        left: 3%;
+        right: 10%;
+    }
+}
+@media screen and (max-width: 992px) and (min-width: 767px) {
+    .blog-banner-section.wp-block-columns,
+    .blog-service-section.wp-block-columns {
+        flex-wrap: nowrap !important;
+    }
+    .blog-service-section .blog-box {
+        top: 5%;
+    }
+    .blog-banner-section .banner-content {
+        left: 7%;
+        right: 0%;
+    }
+}
+@media screen and (max-width: 1024px) and (min-width: 993px) {
+    .blog-service-section .blog-box {
+        top: 10%;
+    }
+    .blog-banner-section .banner-content {
+        left: 7%;
+        right: 15%;
+    }
+}

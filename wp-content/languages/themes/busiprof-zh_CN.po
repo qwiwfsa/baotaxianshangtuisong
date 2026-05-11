@@ -1,0 +1,324 @@
+# Translation of Themes - Busiprof in Chinese (China)
+# This file is distributed under the same license as the Themes - Busiprof package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-12-23 19:19:06+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: zh_CN\n"
+"Project-Id-Version: Themes - Busiprof\n"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "Busiprof"
+msgstr "Busiprof"
+
+#: functions/breadcrumbs/breadcrumbs.php:58
+msgid "Archive by category"
+msgstr "分类归档："
+
+#: child_theme_compatible.php:182 functions/breadcrumbs/breadcrumbs.php:61
+#: functions/customizer/customizer-archive.php:80 theme_setup_data.php:193
+msgid "Search results for"
+msgstr "搜索结果："
+
+#: functions/breadcrumbs/breadcrumbs.php:128
+msgid "Posts tagged"
+msgstr "标签："
+
+#: functions/breadcrumbs/breadcrumbs.php:133
+msgid "Articles posted by"
+msgstr "作者："
+
+#: functions/breadcrumbs/breadcrumbs.php:141
+msgid "Page"
+msgstr "页面"
+
+#. Template Name of the theme
+msgid "Home Two"
+msgstr "第二首页模板"
+
+#: functions/customizer/custo_general_settings.php:64
+#: functions/customizer/custo_general_settings.php:84
+#: functions/customizer/custo_sections_settings.php:27
+#: functions/customizer/custo_sections_settings.php:39
+msgid "ON"
+msgstr "激活"
+
+#: functions/customizer/custo_general_settings.php:65
+#: functions/customizer/custo_general_settings.php:85
+#: functions/customizer/custo_sections_settings.php:28
+#: functions/customizer/custo_sections_settings.php:40
+msgid "OFF"
+msgstr "禁用"
+
+#: functions/customizer/customizer_typography.php:497
+#: functions/customizer/custo_sections_settings.php:49
+msgid "Title"
+msgstr "标题"
+
+#: functions/customizer/custo_sections_settings.php:58
+msgid "Description"
+msgstr "描述"
+
+#: functions/customizer/customizer_typography.php:1197
+msgid "Button Text"
+msgstr "按钮文字"
+
+#: child_theme_compatible.php:52 theme_setup_data.php:60
+msgid "Meet our clients"
+msgstr "我们的客户介绍"
+
+#: functions/widgets/custom-widgets.php:7
+#: functions/widgets/custom-widgets.php:9
+msgid "Sidebar widget area"
+msgstr "边栏小工具区域"
+
+#: functions/widgets/custom-widgets.php:27
+#: functions/widgets/custom-widgets.php:29
+msgid "WooCommerce sidebar area"
+msgstr "WooCommerce边栏区或"
+
+#: comments.php:45
+msgid "Logout"
+msgstr "登出"
+
+#: comments.php:47
+msgid "Send Message"
+msgstr "发送信息"
+
+#: comments.php:49 index-blog.php:49
+msgid "Leave a Reply"
+msgstr "发表评论"
+
+#: 404.php:15 functions/breadcrumbs/breadcrumbs.php:136
+msgid "Error 404"
+msgstr "404错误"
+
+#: 404.php:16
+msgid "Oops! Page not found"
+msgstr "出错了！未找到页面"
+
+#: 404.php:18
+msgid "Go Back"
+msgstr "返回"
+
+#: comments.php:29
+msgid "You must be <a href=\"%s\">logged in</a> to post a comment"
+msgstr "要发表评论，您必须先<a href=\"%s\">登录</a>。"
+
+#: comments.php:35
+msgid "Name"
+msgstr "名称"
+
+#: comments.php:36
+msgid "Email"
+msgstr "电子邮件"
+
+#. Template Name of the theme
+msgid "Page Fullwidth"
+msgstr "页全宽度"
+
+#: functions/widgets/custom-widgets.php:17
+#: functions/widgets/custom-widgets.php:19
+msgid "Footer widget area"
+msgstr "页脚小工具区"
+
+#: 404.php:17
+msgid "We are sorry, but the page you are looking for does not exist."
+msgstr "非常抱歉，您正在找的页面不存在。"
+
+#: archive.php:68 author.php:53 category.php:52 index.php:27 search.php:35
+#: tag.php:51
+msgid "Previous"
+msgstr "上一页"
+
+#: archive.php:69 author.php:54 category.php:53 index.php:28 search.php:36
+#: tag.php:52
+msgid "Next"
+msgstr "下一页"
+
+#: search.php:28
+msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
+msgstr "抱歉，没有符合您搜索条件的结果。请换其它关键词再试。"
+
+#: search.php:27
+msgid "Nothing Found"
+msgstr "未找到"
+
+#: functions.php:168
+msgid "Primary Menu"
+msgstr "主菜单"
+
+#: child_theme_compatible.php:76 child_theme_compatible.php:105
+#: theme_setup_data.php:85
+msgid "More Services"
+msgstr "更多服务"
+
+#: admin/tab-pages/free_vs_pro.php:12
+msgid "Features"
+msgstr "特色"
+
+#: admin/tab-pages/useful_plugins.php:97
+msgid "Translation Ready"
+msgstr "支持多国语言翻译"
+
+#. Template Name of the theme
+#: functions/breadcrumbs/breadcrumbs.php:35
+#: functions/menu/default_menu_walker.php:23 index-bannerstrip.php:23
+msgid "Home"
+msgstr "首页"
+
+#: functions/commentbox/comment-function.php:31
+msgid "Your comment is awaiting moderation."
+msgstr "您的评论正等待审核。"
+
+#: functions/commentbox/comment-function.php:16
+msgid "Reply"
+msgstr "回复"
+
+#: comments.php:45
+msgid "Logged in as"
+msgstr "以以下身份登陆"
+
+#: comments.php:11 comments.php:21
+msgid "Newer Comments &rarr;"
+msgstr "较新评论 &rarr;"
+
+#: comments.php:10 comments.php:20
+msgid "&larr; Older Comments"
+msgstr "&larr; 早期评论"
+
+#: comments.php:9 comments.php:19
+msgid "Comment navigation"
+msgstr "评论导航"
+
+#: comments.php:6
+msgid "Comment"
+msgstr "评论"
+
+#: comments.php:2
+msgid "This post is password protected. Enter the password to view any comments."
+msgstr "这篇文章受密码保护。输入密码以查看评论。"
+
+#. translators: 1: plugin name.
+#: functions/class-tgm-plugin-activation.php:3509
+#: functions/class-tgm-plugin-activation.php:3517
+msgid "Hide Details"
+msgstr "隐藏详情"
+
+#. translators: 1: plugin name.
+#: functions/class-tgm-plugin-activation.php:3509
+#: functions/class-tgm-plugin-activation.php:3517
+msgid "Show Details"
+msgstr "显示详情"
+
+#: functions/class-tgm-plugin-activation.php:2554
+msgid "Status"
+msgstr "状态"
+
+#: functions/class-tgm-plugin-activation.php:2549
+msgid "Type"
+msgstr "类型"
+
+#: functions/class-tgm-plugin-activation.php:2548
+msgid "Source"
+msgstr "源"
+
+#: functions/class-tgm-plugin-activation.php:2547
+msgid "Plugin"
+msgstr "插件"
+
+#: admin/inc/class-webriti-about-page.php:442
+#: functions/class-tgm-plugin-activation.php:2726
+#: functions/customizer/customizer_recommended_plugin.php:18
+msgid "Activate"
+msgstr "启用"
+
+#: admin/inc/class-webriti-about-page.php:413 functions.php:289
+#: functions/class-tgm-plugin-activation.php:2717
+#: functions/customizer-notify/busiprof-customizer-notify-section.php:256
+msgid "Install"
+msgstr "安装"
+
+#: functions/class-tgm-plugin-activation.php:2273
+msgid "Required"
+msgstr "必填"
+
+#: functions/class-tgm-plugin-activation.php:380
+msgid "Begin activating plugin"
+msgid_plural "Begin activating plugins"
+msgstr[0] "开始激活插件"
+
+#: functions/class-tgm-plugin-activation.php:370
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] "开始安装插件"
+
+#. translators: 1: plugin name(s).
+#: functions/class-tgm-plugin-activation.php:346
+msgid "The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s."
+msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
+msgstr[0] "以下插件需要更新到最新的版本，以确保与这一主题的最大兼容性： %1$s。"
+
+#. translators: 1: plugin name(s).
+#: functions/class-tgm-plugin-activation.php:358
+msgid "The following required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] "以下必需的插件是当前处于非活动状态： %1$s。"
+
+#. translators: 1: plugin name(s).
+#: functions/class-tgm-plugin-activation.php:364
+msgid "The following recommended plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] "以下推荐插件是当前处于非活动状态： %1$s。"
+
+#. translators: 1: plugin name(s).
+#: functions/class-tgm-plugin-activation.php:334
+msgid "This theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] "这一主题需要以下插件： %1$s。"
+
+#. translators: %s: plugin name.
+#: functions/class-tgm-plugin-activation.php:330
+msgid "Installing Plugin: %s"
+msgstr "正在安装插件：%s"
+
+#: functions/class-tgm-plugin-activation.php:328
+msgid "Install Plugins"
+msgstr "安装插件"
+
+#: content.php:49 functions.php:529 index-blog.php:61
+msgid "Read More"
+msgstr "阅读更多"
+
+#: content.php:26
+msgid "Leave a comment"
+msgstr "留下评论"
+
+#: functions/customizer/customizer-archive.php:87 searchform.php:2
+#: searchform.php:3
+msgid "Search"
+msgstr "搜索"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://webriti.com/busiprof-premium-wordpress-theme-1/"
+msgstr "https://webriti.com/busiprof-premium-wordpress-theme-1/"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "webriti"
+msgstr "webriti"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://www.webriti.com"
+msgstr "https://www.webriti.com"

@@ -1,0 +1,164 @@
+.header-top-left-content,
+.header-top-right-content {
+	padding: 0 30px;
+}
+
+.header-top-bar ul {
+	list-style: none;
+}
+
+.header-top-left-content li .fa,
+.contact-details li .fa {
+	margin-right: 14px;
+}
+
+.header-top-left-content li:last-child {
+	margin-right: 0;
+}
+
+.header-top-content ul {
+	margin: 0;
+}
+
+.header-top-right-content li a {
+	padding: 10px;
+}
+
+.header-top-right-content{
+    margin-left: auto;
+}
+
+.header-top-left-content li a:hover span,
+.header-top-left-content li a:hover span {
+	text-decoration: underline;
+}
+
+.site-header-main {
+	-webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.site-header-main {
+	padding: 0;
+}
+
+.site-branding,
+.site-header-right {
+	padding: 14px 30px;
+}
+
+.site-header-right {
+    -webkit-flex: 0 1 100%;
+    -ms-flex: 0 1 100%;
+    flex: 0 1 100%;
+}
+
+.site-contact ul {
+	list-style: none;
+	margin: 0;
+}
+
+.site-contact ul h3 {
+	margin: 0;
+}
+
+.nav-search-wrap .site-contact ul h3 {
+	display: inline-block;
+}
+
+.site-contact ul p {
+	display: inline-block;
+	font-size: 20px;
+	font-size: 1.25rem;
+	line-height: 1.458333333333333;
+	margin-bottom: 0;
+}
+
+.quote-button .fa,
+#wp-comment-cookies-consent {
+	margin-right: 7px;
+}
+
+.header-top-left-content li .hours {
+	position: relative;
+}
+
+.header-top-left-content li .hours .fa {
+	cursor: pointer;
+    pointer-events: none;
+}
+
+.header-top-left-content li span .mobile-hours {
+	-webkit-box-shadow: 0px 15px 50px 0px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 15px 50px 0px rgba(0, 0, 0, 0.1);
+	display: none;
+	left: -14px;
+	padding: 10px 14px;
+	position: absolute;
+	top: calc(100% + 8px);
+	width: 220px;
+	z-index: 1;
+}
+
+.header-top-left-content li span .mobile-hours:before {
+    content: "\f0d8";
+    font-size: 28px;
+    font-size: 1.75rem;
+    line-height: 0;
+    position: absolute;
+    left: 11px;
+    top: -3px;
+}
+
+.site-branding {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-flex: 0 auto;
+    -ms-flex: 0 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex: 0 auto;
+    flex-direction: row;
+    margin: 0 auto 0 0;
+    text-align: left;
+    width: auto;
+}
+
+.header-top-right-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#top-search-container input{
+    border: none;
+}
+
+.header-top-left-content li:first-child {
+    margin-right: 14px;
+}
+
+#top-search-container {
+    opacity: 0.5;
+}
+
+#top-search-container:hover,
+#top-search-container:focus {
+    opacity: 1;
+    transition-duration: 1s;
+}

@@ -1,0 +1,589 @@
+# Translation of Themes - Flixita in Chinese (China)
+# This file is distributed under the same license as the Themes - Flixita package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-06-05 15:24:54+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: zh_CN\n"
+"Project-Id-Version: Themes - Flixita\n"
+
+#. Description of the theme
+#: style.css
+#, gp-priority: high
+msgid "Lightning Fast Speed & Responsive Theme. Flixita is a responsive and fully customizable theme to create any kind of websites. The advanced admin panel will enable you to customize it without any technical knowledge. This theme is lightweight, it will enable you to create almost any type of website such a blog, portfolio, acting and shooting industry, total trendy news, newspaper, mega magazine, fashion, dark themes, petcare, animals wildlife, wooden architecture, plumbing contractor, painting estate, interior design, rooms furniture, home decoration, green floral nature, construction, corporate, multiple agency, business promotion, dark variation, industries, Beauty & spa salons, photography, gym, fitness, health, medical, startups, business agencies, law firms, travel, NGO, charity, yoga, kids education, training institute, university portal, restaurant, meta shop, quick magazines, mutual fund, finance, accounting, consulting ,travel agency website. Theme is fully compatible with popular WordPress plugins like Elementor Page Builder, Slider, Carousal, Beaver Builder, Brizy, Visual Composer, Divi, SiteOrigin, Gutenberg, Block-Enabled, WooCommerce, WPML, Yoast SEO, Shortcode, Jetpack, Contact Form 7, Mailchimp for WordPress, bbPress, Demo Importer, WPForms and more. Your WordPress website will never be let down with this theme.  View the demo of Flixita Pro https://demo.themesdaddy.com/flixita-pro/"
+msgstr "闪电般的速度和响应式主题。 Flixita 是一个响应式且完全可定制的主题，可用于创建任何类型的网站。高级管理面板将使您无需任何技术知识即可对其进行自定义。这个主题是轻量级的，它将使您能够创建几乎任何类型的网站，例如博客、作品集、表演和拍摄行业、时尚新闻、报纸、大型杂志、时尚、黑暗主题、宠物护理、野生动物、木制建筑、管道承包商、绘画庄园、室内设计、房间家具、家居装饰、绿色花卉自然、建筑、企业、多重代理、商业推广、黑暗变化、工业、美容及水疗沙龙、摄影、健身房、健身、健康、医疗、初创公司、商业机构、律师事务所、旅游、非政府组织、慈善机构、瑜伽、儿童教育、培训机构、大学门户、餐厅、元商店、快速杂志、共同基金、财务、会计、咨询、旅行社网站。主题与流行的 WordPress 插件完全兼容，如 Elementor Page Builder、Slider、Carousal、Beaver Builder、Brizy、Visual Composer、Divi、SiteOrigin、Gutenberg、Block-Enabled、WooCommerce、WPML、Yoast SEO、Shortcode、Jetpack、Contact Form 7、适用于 WordPress、bbPress、演示导入器、WPForms 等的 Mailchimp。这个主题永远不会让您的 WordPress 网站失望。  查看 Flixita Pro 演示 https://demo.themesdaddy.com/flixita-pro/"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "Flixita"
+msgstr "Flixita"
+
+#: core/customizer/flixita-default-options.php:18
+msgid "Get in Touch"
+msgstr "联系我们"
+
+#. translators: 1: welcome page link starting html tag, 2: welcome page link
+#. ending html tag.
+#: core/core.php:579
+msgid "Get started with %1$s"
+msgstr "开始使用 %1$s"
+
+#: core/core.php:573
+msgid "Install and activate <strong>Daddy Plus</strong> plugin for taking full advantage of all the features this theme has to offer."
+msgstr "安装并激活 <strong>Daddy Plus</strong> 插件，以充分利用该主题提供的所有功能。"
+
+#. translators: 1: welcome page link starting html tag, 2: welcome page link
+#. ending html tag.
+#: core/core.php:569
+msgid "Welcome! Thank you for choosing %1$s!"
+msgstr "欢迎！感谢您选择%1$s！"
+
+#: core/core.php:562
+msgid "Theme Screenshot"
+msgstr "主题截图"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:22
+msgid "Share a Good Review"
+msgstr "分享好评"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:18
+msgid "Premium Demo"
+msgstr "高级演示"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:16
+msgid "Need Support ?"
+msgstr "需要支持吗？"
+
+#: woocommerce/content-product.php:34
+msgid "Sale"
+msgstr "销售"
+
+#: woocommerce/cart/mini-cart.php:134 woocommerce/cart/mini-cart.php:266
+msgid "No products in the cart."
+msgstr "购物车里没有产品。"
+
+#: woocommerce/cart/mini-cart.php:112 woocommerce/cart/mini-cart.php:241
+msgid "Checkout"
+msgstr "查看"
+
+#: woocommerce/cart/mini-cart.php:71 woocommerce/cart/mini-cart.php:201
+msgid "Remove this item"
+msgstr "移除此项"
+
+#: woocommerce/cart/mini-cart.php:46 woocommerce/cart/mini-cart.php:176
+msgid "Total:"
+msgstr "总计："
+
+#: template-parts/content.php:70
+msgid "Pages:"
+msgstr "页面："
+
+#: template-parts/content-page.php:69 template-parts/content.php:65
+msgid "Read More"
+msgstr "继续阅读"
+
+#: template-parts/content-page.php:45 template-parts/content.php:41
+msgid "Comments"
+msgstr "评论"
+
+#: template-parts/content-none.php:32
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "我们可能无法找到您需要的内容。或许搜索功能可以帮到您。"
+
+#: template-parts/content-none.php:27
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "抱歉，未找到与您的搜索条件匹配的内容。请尝试使用其他关键字。"
+
+#. translators: 1: link to WP admin new post page.
+#: template-parts/content-none.php:14
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "准备好发布第一篇文章了？<a href=\"%1$s\">从这里开始</a>。"
+
+#: template-parts/author-details.php:36
+msgid "View All Post"
+msgstr "查看所有文章"
+
+#. Translators: %1$s: <a> tag. %2$s: </a>.
+#: template-parts/author-details.php:26
+msgid "You haven&rsquo;t entered your Biographical Information yet. %1$sEdit your Profile%2$s now."
+msgstr "您尚未输入您的个人信息。 %1$s立即编辑您的个人资料%2$s。"
+
+#: searchform.php:8
+msgid "Search for:"
+msgstr "搜索："
+
+#. Template Name of the theme
+msgid "Builder Page"
+msgstr "构建器页面"
+
+#: header.php:132
+msgid "Header Close Menu"
+msgstr "标题关闭菜单"
+
+#: header.php:123
+msgid "Menu Collaped"
+msgstr "菜单折叠"
+
+#: header.php:86
+msgid "Search Popup Close"
+msgstr "搜索弹出窗口关闭"
+
+#: header.php:83
+msgid "Type To Search"
+msgstr "输入搜索"
+
+#: header.php:82
+msgid "Site Search"
+msgstr "站内搜索"
+
+#: header.php:79
+msgid "Search Popup"
+msgstr "搜索弹出窗口"
+
+#: header.php:25
+msgid "Skip to content"
+msgstr "跳转到内容"
+
+#: functions.php:18
+msgid "Primary Menu"
+msgstr "主菜单"
+
+#. Template Name of the theme
+msgid "Full Width Page"
+msgstr "全宽页面"
+
+#. Template Name of the theme
+msgid "Frontpage"
+msgstr "主页"
+
+#: footer.php:7
+msgid "scrollingUp"
+msgstr "向上滚动"
+
+#: core/theme-menu/class-bootstrap-navwalker.php:227
+msgid "Add a menu"
+msgstr "添加菜单"
+
+#: core/customizer/flixita-panels-and-sections.php:60
+msgid "Footer Setting"
+msgstr "页脚设置"
+
+#: core/customizer/flixita-panels-and-sections.php:52
+msgid "Blog Setting"
+msgstr "博客设置"
+
+#: core/customizer/flixita-panels-and-sections.php:43
+msgid "Top Scroller Setting"
+msgstr "顶部滚动条设置"
+
+#: core/customizer/flixita-panels-and-sections.php:36
+msgid "Page Header Setting"
+msgstr "页眉设置"
+
+#: core/customizer/flixita-panels-and-sections.php:31
+msgid "General Options"
+msgstr "常规选项"
+
+#: core/customizer/flixita-panels-and-sections.php:24
+msgid "Menu Bar Setting"
+msgstr "菜单栏设置"
+
+#: core/customizer/flixita-panels-and-sections.php:17
+msgid "Top Bar Setting"
+msgstr "顶栏设置"
+
+#: core/customizer/custom-controls/customize-upgrade-control.php:20
+#: core/customizer/flixita-panels-and-sections.php:11
+msgid "Upgrade to Pro"
+msgstr "升级至Pro"
+
+#: core/customizer/flixita-general.php:288
+msgid "Copyright"
+msgstr "版权所有"
+
+#: core/customizer/flixita-general.php:275
+msgid "Footer  Copyright"
+msgstr "页脚版权"
+
+#: core/customizer/flixita-general.php:259
+msgid "Content"
+msgstr "正文"
+
+#: core/customizer/flixita-general.php:258
+msgid "Meta"
+msgstr "功能"
+
+#: core/customizer/flixita-general.php:254
+msgid "Drag & Drop post items to re-arrange the order and also hide and show items as per the need by clicking on the eye icon."
+msgstr "拖放文章项目以重新排列顺序，还可以通过单击眼睛图标根据需要隐藏和显示项目。"
+
+#: core/customizer/flixita-general.php:243
+msgid "Blog/Archive/Single"
+msgstr "博客/档案/单曲"
+
+#: core/customizer/flixita-general.php:227
+msgid "Overlay Color"
+msgstr "叠加颜色"
+
+#: core/customizer/flixita-general.php:214
+msgid "Opacity"
+msgstr "不透明度"
+
+#: core/customizer/flixita-general.php:187
+msgid "Page Header"
+msgstr "页面页眉"
+
+#: core/customizer/flixita-general.php:158
+msgid "Sticky Header"
+msgstr "置顶页眉"
+
+#: core/customizer/flixita-general.php:141
+msgid "Open in New Tab ?"
+msgstr "在新标签中打开？"
+
+#: core/customizer/flixita-general.php:115
+msgid "Label"
+msgstr "标签"
+
+#: core/customizer/flixita-general.php:88
+msgid "Button"
+msgstr "按键"
+
+#: core/customizer/flixita-general.php:61 searchform.php:9 searchform.php:11
+msgid "Search"
+msgstr "搜索"
+
+#: core/customizer/flixita-general.php:47
+#: core/customizer/flixita-general.php:74
+#: core/customizer/flixita-general.php:100
+#: core/customizer/flixita-general.php:169
+#: core/customizer/flixita-general.php:200
+msgid "Enable / Disable ?"
+msgstr "启用/禁用？"
+
+#: core/customizer/flixita-general.php:34
+msgid "Cart"
+msgstr "购物车"
+
+#: core/customizer/flixita-general.php:18
+msgid "Logo Size"
+msgstr "标志尺寸"
+
+#: core/customizer/flixita-default-options.php:29
+msgid "Copyright &copy; {current_year}. Created by %s. Powered by %s."
+msgstr "版权所有&复制； {今年}。由 %s 创建。由 %s 提供支持。"
+
+#: core/customizer/customizer.php:74
+msgid "Deactivate"
+msgstr "停用"
+
+#: core/customizer/customizer.php:73
+msgid "Activate"
+msgstr "激活"
+
+#: core/customizer/customizer.php:72
+msgid "Install and Activate"
+msgstr "安装并激活"
+
+#: core/customizer/customizer.php:71
+msgid "Add More Features"
+msgstr "添加更多功能"
+
+#: core/customizer/customizer.php:70
+msgid "Recommended Actions"
+msgstr "推荐操作"
+
+#. translators: %s: plugin name
+#: core/customizer/customizer.php:64
+msgid "Recommended Plugin: If you want to show all the features and business sections of the FrontPage. please install and activate %s plugin"
+msgstr "推荐插件：如果您想展示FrontPage的所有功能和业务部分。请安装并激活 %s 插件"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:571
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:604
+msgid "Add Icon"
+msgstr "添加图标"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:566
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:596
+msgid "Remove Icon"
+msgstr "移除图标"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:549
+msgid "Social icons"
+msgstr "社交图标"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:541
+msgid "None"
+msgstr "无"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:536
+msgid "Image type"
+msgstr "图像类型"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:525
+msgid "Center"
+msgstr "居中"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:521
+msgid "Right"
+msgstr "右侧"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:517
+msgid "Left"
+msgstr "左侧"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:513
+msgid "Align"
+msgstr "对齐"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:505
+msgid "Upload Image"
+msgstr "上传图像"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:502
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:540
+msgid "Image"
+msgstr "图像"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:467
+msgid "http://fontawesome.io/icons/"
+msgstr "http://fontawesome.io/icons/"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:466
+msgid "Note: Some icons may not be displayed here. You can see the full list of icons at %1$s."
+msgstr "注意：某些图标可能没有显示在此处。 您可以在 %1$s 上看到完整的图标列表。"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:461
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:539
+msgid "Icon"
+msgstr "图标"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:450
+msgid "Open link in new tab:"
+msgstr "在新标签页打开链接："
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:414
+msgid "Delete field"
+msgstr "删除字段"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:315
+msgid "Delete %s"
+msgstr "删除 %s"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:278
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:384
+msgid "Button Text"
+msgstr "按钮文字"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:269
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:394
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:563
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:585
+#: core/customizer/flixita-general.php:129
+msgid "Link"
+msgstr "链接"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:261
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:376
+msgid "Button Label"
+msgstr "按钮标签"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:254
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:369
+msgid "Description"
+msgstr "描述"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:246
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:360
+msgid "Subtitle 2"
+msgstr "副标题 2"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:238
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:352
+msgid "Subtitle"
+msgstr "字幕"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:230
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:344
+#: core/customizer/flixita-general.php:257
+msgid "Title"
+msgstr "标题"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:34
+msgid "Customizer Repeater"
+msgstr "中继定制器"
+
+#: core/customizer/customizer-repeater/class/customizer-repeater-control.php:29
+msgid "Add new field"
+msgstr "添加新字段"
+
+#: core/customizer/customizer-notice/flixita-customizer-notify.php:114
+msgid "Activating"
+msgstr "启用中…"
+
+#: core/core.php:527
+msgid "Page"
+msgstr "网页"
+
+#: core/core.php:521
+msgid "Error 404 "
+msgstr "404错误 "
+
+#: core/core.php:516
+msgid "Articles posted by "
+msgstr "文章作者 "
+
+#: core/core.php:509
+msgid "Posts tagged "
+msgstr "文章标签 "
+
+#: core/core.php:394
+msgid "Search results for "
+msgstr "搜索结果 "
+
+#: core/core.php:388
+msgid "Archive by category"
+msgstr "分类归档："
+
+#: core/core.php:382
+msgid "Home"
+msgstr "首页"
+
+#: core/core.php:364
+msgid "Author: %s"
+msgstr "作者：%s"
+
+#: core/core.php:362
+msgid "Error 404"
+msgstr "404错误"
+
+#: core/core.php:360
+msgid "Tag Archives: %s"
+msgstr "标签归档：%s"
+
+#: core/core.php:358
+msgid "Category Archives: %s"
+msgstr "分类目录归档：%s"
+
+#: core/core.php:356
+msgid "Yearly Archives: %s"
+msgstr "年度归档：%s"
+
+#: core/core.php:354
+msgid "Monthly Archives: %s"
+msgstr "月度归档：%s"
+
+#: core/core.php:352
+msgid "Daily Archives: %s"
+msgstr "日度归档：%s"
+
+#: core/core.php:330 header.php:63 woocommerce/cart/mini-cart.php:39
+#: woocommerce/cart/mini-cart.php:122 woocommerce/cart/mini-cart.php:169
+#: woocommerce/cart/mini-cart.php:254
+msgid "0"
+msgstr ""
+
+#: core/core.php:231
+msgid "This Widget area for WooCommerce Widget"
+msgstr "WooCommerce 小工具的此小工具区域"
+
+#: core/core.php:229
+msgid "WooCommerce Sidebar"
+msgstr "WooCommerce 侧边栏"
+
+#: core/core.php:217
+msgid "The Footer Widget Area 4"
+msgstr "页脚小工具区域 4"
+
+#: core/core.php:215
+msgid "Footer  Sidebar 4"
+msgstr "页脚侧边栏 4"
+
+#: core/core.php:204
+msgid "The Footer Widget Area 3"
+msgstr "页脚小工具区域 3"
+
+#: core/core.php:202
+msgid "Footer  Sidebar 3"
+msgstr "页脚侧边栏 3"
+
+#: core/core.php:191
+msgid "The Footer Widget Area 2"
+msgstr "页脚小工具区域 2"
+
+#: core/core.php:189
+msgid "Footer  Sidebar 2"
+msgstr "页脚侧边栏 2"
+
+#: core/core.php:178
+msgid "The Footer Widget Area 1"
+msgstr "页脚小工具区域 1"
+
+#: core/core.php:176
+msgid "Footer  Sidebar 1"
+msgstr "页脚侧边栏 1"
+
+#: core/core.php:163 core/core.php:165
+msgid "Main Sidebar Widget"
+msgstr "主侧边栏小工具"
+
+#: comments.php:45
+msgid "Comments are closed."
+msgstr "评论已关闭。"
+
+#: comments.php:26 comments.php:40
+msgid "Newer Comments"
+msgstr "较新评论"
+
+#: comments.php:25 comments.php:39
+msgid "Older Comments"
+msgstr "较旧评论"
+
+#: comments.php:23 comments.php:37
+msgid "Comment navigation"
+msgstr "评论导航"
+
+#: archive.php:11 index.php:16 page.php:15 page.php:19 page.php:23
+#: search.php:11 single.php:11 woocommerce.php:11
+msgid "col-lg-12"
+msgstr "col-lg-12"
+
+#: archive.php:11 index.php:16 page.php:15 page.php:19 page.php:23
+#: search.php:11 single.php:11 woocommerce.php:11
+msgid "col-lg-8"
+msgstr "col-lg-8"
+
+#: 404.php:16
+msgid "Go Home Page"
+msgstr "转到主页"
+
+#: 404.php:14
+msgid "The page you are looking is not available or has been removed."
+msgstr "您正在查看的页面不可用或已被删除。"
+
+#: 404.php:13
+msgid "404 Page Not Found"
+msgstr "404未找到"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://themesdaddy.com/"
+msgstr "https://themesdaddy.com/"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://themesdaddy.com/themes/flixita-free/"
+msgstr "https://themesdaddy.com/themes/flixita-free/"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "Themes Daddy"
+msgstr "Themes Daddy"

@@ -1,0 +1,107 @@
+.sliderbox h1, .sliderbox h2{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700 !important;
+}
+.sliderbox p, .sliderbox .block-editor-rich-text__editable.wp-block-button__link, .main-about-sec p, .sliderbox h1, .sliderbox h2, .main-about-sec h2, .main-about-sec h3{
+  font-family: 'Poppins', sans-serif ;
+}
+.sliderbox{
+  min-height: 600px;
+}
+/*slider section*/
+.sliderbox .block-editor-rich-text__editable.wp-block-button__link.rich-text{
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  background: #ed0009;
+  padding: 12px 16px;
+  border-radius: 0;
+  text-transform: uppercase;
+}
+.sliderbox .wp-block-column.block-editor-block-list__block.wp-block{
+  margin-right: 2em !important;
+}
+.sliderbox .block-editor-block-list__block{
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+.sliderbox h2{
+  letter-spacing: 5px;
+  line-height: 1.2;
+}
+.sliderbox h1{
+  font-style: italic;
+  color: #fff !important;
+}
+.sliderbox p{
+  color: #fff !important;
+}
+.sliderbox h2.has-background{
+  padding: 10px !important;
+}
+.sliderbox-content {
+  flex-basis: 49.66% !important;
+}
+.wp-block-column.slider-col{
+  flex-basis: 50.66% !important;
+}
+.sliderbox .block-editor-rich-text__editable.wp-block-button__link:hover{
+  background-color: #32373c !important;
+}
+/*services section*/
+.service-box:after{
+  content: "";
+  bottom: -35px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 110px solid transparent;
+  border-right: 120px solid transparent;
+  border-top: 35px solid #f1f1f1;
+  overflow: visible;
+  position: absolute;
+}
+.services-content, .services-content .wp-block, .services-content h3{
+  margin: 0;
+}
+.service-box h3, .sliderbox h1{
+  letter-spacing: 2px;
+  font-weight: 600 !important;
+}
+.main-service{
+  margin-top: -28px !important;
+}
+.main-service .wp-block-cover, .sliderbox{
+  margin-top:0 !important;
+  margin-bottom: 0 !important;
+}
+.service-box:hover span{
+  background-color: #ed0009 !important;
+}
+.service-box:hover h3{
+  color: #ffffff !important;
+}
+.service-box img{
+  filter: inherit;
+  -webkit-filter: inherit;
+}
+.service-box:hover img {
+  filter: contrast(0%) brightness(300%);
+  -webkit-filter: contrast(0%) brightness(300%);
+}
+.service-box:hover:after {
+    border-top: 35px solid #ed0009;
+}
+/*about section*/
+.main-about h4:after{
+  content: "";
+  width: 40px;
+  height: 4px;
+  background-color: #ed0009;
+  display: block;
+  margin-top: 10px;
+}
+.main-about .block-editor-block-list__layout .block-editor-block-list__block:after{
+  top: 25px !important;
+}

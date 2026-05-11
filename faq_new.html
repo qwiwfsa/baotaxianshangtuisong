@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Yaoʽ - ʽҵĳ">
+    <meta name="keywords" content=",ҵ,ʽ,ҵ,Ӧ˿,FAQ">
+    <title> - Yaoʽ</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/page-custom.css">
+<script>
+(function() {
+    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                if (data && data.code === 0 && data.data) {
+                    var seo = data.data;
+                    if (seo.page_title) document.title = seo.page_title;
+                    if (seo.meta_keywords) {
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw) kw.content = seo.meta_keywords;
+                    }
+                    if (seo.meta_description) {
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc) desc.content = seo.meta_description;
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+})();
+</script>
+<script>
+(function() {
+    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                if (data && data.code === 0 && data.data) {
+                    var seo = data.data;
+                    if (seo.page_title) document.title = seo.page_title;
+                    if (seo.meta_keywords) {
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw) kw.content = seo.meta_keywords;
+                    }
+                    if (seo.meta_description) {
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc) desc.content = seo.meta_description;
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+})();
+</script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">תҪ</a>
+
+    <!--  -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="">
+        <div class="navbar-container">
+<a href="index.html" class="logo" aria-label="Yaoʽҳ"><img src="uploads/logo.png?v=20260502040820" alt="Yaoʽ" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="index.html" class="nav-link" role="menuitem">ҳ</a></li>
+                <li role="none"><a href="services.html" class="nav-link" role="menuitem">ҵΧ</a></li>
+                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">ɹ</a></li>
+                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem"></a></li>
+                <li role="none"><a href="news.php" class="nav-link" role="menuitem">ҵѶ</a></li>
+                <li role="none"><a href="faq.html" class="nav-link active" role="menuitem"></a></li>
+                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">ϵ</a></li>
+            </ul>
+
+            <button class="search-toggle" id="searchToggle" aria-label="" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="򿪲˵" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- ҳ -->
+        <section class="page-header">
+            <div class="page-header-container">
+                <div class="page-header-badge">
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQ</span>
+                </div>
+                <h1 class="page-header-title"></h1>
+                <p class="page-header-subtitle">ʽҵĳ</p>
+            </div>
+        </section>
+
+        <!-- FAQ - ɱ༭ -->
+        <section class="page-content">
+            <div class="section-container">
+                
+                <!-- FAQ -->
+                <div class="editable-section" data-section="faq-search">
+                    <div class="faq-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="faq-search-input" placeholder="ؼ...">
+                        <button class="faq-search-btn"></button>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="editable-section" data-section="faq-categories">
+                    <div class="faq-categories" id="faqCategoryButtons">
+                        <div class="faq-category-item active" data-category="all">
+                            <i class="fas fa-th-large"></i>
+                            <span>ȫ</span>
+                        </div>
+                        <!-- ̬ɷఴť -->
+                    </div>
+                </div>
+
+                <!-- FAQб -->
+                <div class="editable-section" data-section="faq-list">
+                    <div class="faq-custom-container">
+                        <!-- ҵ -->
+                        <div class="faq-custom-category" data-category="liangzi">
+                            <h3 class="faq-custom-category-title">
+                                <i class="fas fa-lightbulb"></i>
+                                ҵ
+                            </h3>
+                            <div class="faq-custom-list">
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ʲôҵ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ҵָҵڲͶꡢĿǢ̸ȳʱҪԷչʾʽʵķṩʽڿͻ˻չʾ֤ҵ߱ӦʽԼ</p>
+                                        <p>ҵͨΪʱʺʱʽ</p>
+                                        <ul>
+                                            <li><strong>ʱ</strong>ضʱչʾʽͨͶ̸ֳеȳ</li>
+                                            <li><strong>ʱ</strong>һʱڱʽˣͨĿԼ֤𡢺ͬԼ</li>
+                                        </ul>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ҵҪ೤ʱ䣿</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ݿͻҵɷΪʱʺʱʣ</p>
+                                        <ul>
+                                            <li><strong>ʱ</strong>ͨ1-3ɣʽԼʱչʾ</li>
+                                            <li><strong>ʱ</strong>ԼޣӼ쵽²ȣʽԼڱ</li>
+                                        </ul>
+                                        <p>ʱҪݿͻľҵ񳡾ȷ</p>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ҵշμ㣿</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ҵշҪۺȷ</p>
+                                        <ul>
+                                            <li>ʽģչʾʽС</li>
+                                            <li>ʱչʾʽʱ䳤</li>
+                                            <li>ӳ̶ȣǷҪСصȲ</li>
+                                            <li>ʱЧҪǷҪӼ</li>
+                                        </ul>
+                                        <p>Ҫʵӭѯȡϸۡ</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- ʽ -->
+                        <div class="faq-custom-category" data-category="bridge">
+                            <h3 class="faq-custom-category-title">
+                                <i class="fas fa-exchange-alt"></i>
+                                ʽ
+                            </h3>
+                            <div class="faq-custom-list">
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ʽЩ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ʽҪ³</p>
+                                        <ul>
+                                            <li><strong>д</strong>ԭڣ´δſڼʱת</li>
+                                            <li><strong>ƱѺ</strong>й˾ɶƱѺʱʱʽ</li>
+                                            <li><strong>ļ˻黹</strong>й˾ļʽ黹ʱʱת</li>
+                                            <li><strong>ҵ</strong>еʱʽ</li>
+                                            <li><strong>Ŀ֤</strong>ͶꡢԼ֤ʱʽ</li>
+                                            <li><strong>ʽת</strong>ҵʽתʱʱ֧</li>
+                                        </ul>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ʽҪʲô</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ʽͨҪṩϣ</p>
+                                        <ul>
+                                            <li>ҵӪҵִա֤֯</li>
+                                            <li>֤</li>
+                                            <li>񱨱£</li>
+                                            <li>ʽ;˵</li>
+                                            <li>Դ֤Ӧ˿֤ȣ</li>
+                                            <li>ѺϣУ</li>
+                                        </ul>
+                                        <p>嵥ҵͬǵĿͻľṩϸ嵥</p>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ʽÿԷſ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ȫͨڵշſһ£뵽ſҪ1-3ա</p>
+                                        <p>ſٶҪȡڣ</p>
+                                        <ul>
+                                            <li>׼̶</li>
+                                            <li>̵ĸӳ̶</li>
+                                            <li>ʽȵİ</li>
+                                        </ul>
+                                        <p>ڽṩӼ񣬿ʱɷſ</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- ҵ -->
+                        <div class="faq-custom-category" data-category="baizhang">
+                            <h3 class="faq-custom-category-title">
+                                <i class="fas fa-university"></i>
+                                ҵ
+                            </h3>
+                            <div class="faq-custom-list">
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>˺ʲô</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>˺Ȼ漰ʽչʾڲʽӦóͬ</p>
+                                        <table class="faq-custom-table">
+                                            <tr>
+                                                <th>Ա</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Ҫ;</td>
+                                                <td>񱨱Żơ</td>
+                                                <td>չʾʽʵ</td>
+                                            </tr>
+                                            <tr>
+                                                <td>չʾ</td>
+                                                <td>ƻܲ</td>
+                                                <td>б귽</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ʱҪ</td>
+                                                <td>ͨҪһʱ</td>
+                                                <td>ʱչʾ</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ʽ</td>
+                                                <td>ʽ˻</td>
+                                                <td>ʽչʾת</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ҵȫ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ϸշɷͼҪչҵȷҵİȫԣ</p>
+                                        <ul>
+                                            <li><strong>Ϲ</strong>ҵطɷҪ</li>
+                                            <li><strong>ͬ</strong>вͬϣȷ˫Ȩ</li>
+                                            <li><strong>ʽȫ</strong>ʽ˻ȫб</li>
+                                            <li><strong>Ϣ</strong>ͻϢϸܣй¶</li>
+                                        </ul>
+                                        <p>ͻѡ桢ʵʽȷҵȫ</p>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ҵЩͣ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ݿͻ;ҵҪΪͣ</p>
+                                        <ul>
+                                            <li><strong>ʱ</strong>ضʱ㣨ĩĩĩʽ</li>
+                                            <li><strong>վ</strong>һʱڱվ</li>
+                                            <li><strong>ڰ</strong>Զڴʽˣ</li>
+                                            <li><strong>ʵ</strong>ҵעʱʵ</li>
+                                            <li><strong>ʽ֤</strong>ڿʽ֤б</li>
+                                        </ul>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- Ӧ˿ -->
+                        <div class="faq-custom-category" data-category="receivable">
+                            <h3 class="faq-custom-category-title">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                Ӧ˿
+                            </h3>
+                            <div class="faq-custom-list">
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ʲôӦ˿ʣ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>һ˵͵Ӧ˿׻ʣ</p>
+                                        <ul>
+                                            <li>ҵй˾ȣӦ˿</li>
+                                            <li>6ڵӦ˿</li>
+                                            <li>óױʵͬƱȫӦ˿</li>
+                                            <li>õӦ˿</li>
+                                        </ul>
+                                        <p>ǽšƱȶʽӦ˿룬ʶҪӦ˿ľ</p>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>Ӧ˿ʶȷ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ʶҪۺ</p>
+                                        <ul>
+                                            <li><strong>Ӧ˿</strong>ʽͨӦ˿</li>
+                                            <li><strong>õȼ</strong>й˾õȼߣʱ</li>
+                                            <li><strong>ڳ</strong>Խ̣ʱԽ</li>
+                                            <li><strong>ʷ׼¼</strong>ںͻܸʱ</li>
+                                        </ul>
+                                        <p>һʽΪӦ˿70%-95%ʵȷ</p>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>Ʊʲôƣ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>Ʊȴͳʷʽƣ</p>
+                                        <ul>
+                                            <li><strong>׼</strong>ҵҪԿ</li>
+                                            <li><strong></strong>ѯҵż¼</li>
+                                            <li><strong>ִ</strong>ɽִϼ¼ҵ</li>
+                                            <li><strong>ת</strong>Ʊݿɲ֡ת֧</li>
+                                            <li><strong>ʱ</strong>̼򵥣ſٶȿ</li>
+                                            <li><strong>ɱɿ</strong>ʳɱ͸ۺϳɱϵ</li>
+                                        </ul>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- һ -->
+                        <div class="faq-custom-category" data-category="general">
+                            <h3 class="faq-custom-category-title">
+                                <i class="fas fa-info-circle"></i>
+                                һ
+                            </h3>
+                            <div class="faq-custom-list">
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>Yaoʽķģ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ǵķ£</p>
+                                        <ol>
+                                            <li><strong>ͨ</strong>˽ͻʽҵ</li>
+                                            <li><strong></strong>ˣȷ</li>
+                                            <li><strong>˻¿</strong>˻ǩЭز</li>
+                                            <li><strong>ͳ</strong>黹ϣЭ˺ٽ</li>
+                                        </ol>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ϵYaoʽ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ͨ·ʽϵǣ</p>
+                                        <ul>
+                                            <li><strong>绰ѯ</strong>13552883008ܣ</li>
+                                            <li><strong>ϵ</strong>wanglizhongguo@126.com</li>
+                                            <li><strong>΢ѯ</strong>ɨվҲά΢</li>
+                                            <li><strong></strong>ͨվϵҳ</li>
+                                        </ul>
+                                        <p>ǵĹʱΪһ 9:00-18:00ʱϵ</p>
+                                    </div>
+                                </details>
+                                <details class="faq-custom-item">
+                                    <summary class="faq-custom-question">
+                                        <span>ҵҪЩʣ</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </summary>
+                                    <div class="faq-custom-answer">
+                                        <p>ҵͲͬҲͬ</p>
+                                        <ul>
+                                            <li><strong>ҵͻ</strong>Ӫҵִա֤񱨱</li>
+                                            <li><strong>й˾</strong>⣬Ҫ»</li>
+                                            <li><strong>˿ͻ</strong>֤֤ʲ֤</li>
+                                        </ul>
+                                        <p>ҪѯǵĿͻǻҵṩϸ嵥</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+                <div class="editable-section" data-section="faq-more">
+                    <div class="faq-more-box">
+                        <div class="faq-more-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="faq-more-content">
+                            <h3>⣿</h3>
+                            <p>ӭʱϵǵרҵʣǽ߳Ϊ</p>
+                        </div>
+                        <div class="contact-button-wrapper">
+                            <button class="btn btn-primary" id="faqConsultBtn">
+                                <i class="fas fa-phone-alt"></i>
+                                ϵ
+                            </button>
+                            <span id="faqPhoneDisplay" style="display:none;font-size:18px;font-weight:700;color:#1e3a8a;letter-spacing:2px;white-space:nowrap;">13552883008</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Ҳ߸绰ť -->
+    <div class="chat-widget" id="chatWidget" aria-label="ϵ绰">
+        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="绰" aria-expanded="false">
+            <i class="fas fa-phone-alt" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- ̬FAQ -->
+    <script>
+        // localStorageغ̨FAQ
+        (function() {
+            // ط
+            let categoryLabels = {};
+            const savedCategories = localStorage.getItem('cms_faq_categories');
+            if (savedCategories) {
+                categoryLabels = JSON.parse(savedCategories);
+            } else {
+                // ĬϷ
+                categoryLabels = {
+                    'liangzi': 'ҵ',
+                    'bridge': 'ʽ',
+                    'baizhang': 'ҵ',
+                    'receivable': 'Ӧ˿',
+                    'deposit': 'д',
+                    'general': 'һ'
+                };
+            }
+            
+            // ͼӳ
+            const categoryIcons = {
+                'liangzi': 'fa-lightbulb',
+                'bridge': 'fa-exchange-alt',
+                'baizhang': 'fa-university',
+                'receivable': 'fa-file-invoice-dollar',
+                'deposit': 'fa-landmark',
+                'general': 'fa-info-circle'
+            };
+            
+            // ̬ɷఴť
+            const categoryButtonsContainer = document.getElementById('faqCategoryButtons');
+            if (categoryButtonsContainer) {
+                let buttonsHtml = `
+                    <div class="faq-category-item active" data-category="all">
+                        <i class="fas fa-th-large"></i>
+                        <span>ȫ</span>
+                    </div>
+                `;
+                
+                Object.keys(categoryLabels).forEach(cat => {
+                    const catName = categoryLabels[cat];
+                    const catIcon = categoryIcons[cat] || 'fa-circle';
+                    buttonsHtml += `
+                        <div class="faq-category-item" data-category="${cat}">
+                            <i class="fas ${catIcon}"></i>
+                            <span>${catName}</span>
+                        </div>
+                    `;
+                });
+                
+                categoryButtonsContainer.innerHTML = buttonsHtml;
+                
+                // °󶨷¼
+                bindCategoryEvents();
+            }
+            
+            // 󶨷¼
+            function bindCategoryEvents() {
+                document.querySelectorAll('.faq-category-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        document.querySelectorAll('.faq-category-item').forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        const category = this.dataset.category;
+                        filterFAQByCategory(category);
+                    });
+                });
+            }
+            
+            // ɸѡFAQ
+            function filterFAQByCategory(category) {
+                const categories = document.querySelectorAll('.faq-custom-category');
+                categories.forEach(cat => {
+                    if (category === 'all' || cat.dataset.category === category) {
+                        cat.style.display = 'block';
+                    } else {
+                        cat.style.display = 'none';
+                    }
+                });
+            }
+            
+            const savedFAQ = localStorage.getItem('cms_faqs');
+            if (savedFAQ) {
+                try {
+                    const faqs = JSON.parse(savedFAQ);
+                    console.log('غ̨FAQ:', faqs);
+                    console.log('ط:', categoryLabels);
+                    
+                    // 
+                    const groupedFAQs = {};
+                    faqs.forEach(faq => {
+                        const cat = faq.category || 'general';
+                        if (!groupedFAQs[cat]) {
+                            groupedFAQs[cat] = [];
+                        }
+                        groupedFAQs[cat].push(faq);
+                    });
+                    
+                    // ʹų́˳򣬰շ
+                    const container = document.querySelector('.faq-custom-container');
+                    if (container) {
+                        let html = '';
+                        let hasContent = false;
+                        
+                        // зࣨûFAQķࣩ
+                        Object.keys(categoryLabels).forEach(cat => {
+                            const catName = categoryLabels[cat];
+                            const catIcon = categoryIcons[cat] || 'fa-question';
+                            const catFAQs = groupedFAQs[cat] || [];
+                            
+                            html += `
+                                <div class="faq-custom-category" data-category="${cat}">
+                                    <h3 class="faq-custom-category-title">
+                                        <i class="fas ${catIcon}"></i>
+                                        ${catName}
+                                    </h3>
+                                    <div class="faq-custom-list">
+                            `;
+                            
+                            if (catFAQs.length > 0) {
+                                hasContent = true;
+                                catFAQs.forEach((faq) => {
+                                    html += `
+                                        <details class="faq-custom-item">
+                                            <summary class="faq-custom-question">
+                                                <span>${faq.question}</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </summary>
+                                            <div class="faq-custom-answer">
+                                                ${faq.answer}
+                                            </div>
+                                        </details>
+                                    `;
+                                });
+                            } else {
+                                html += '<p style="padding: 20px; color: #9ca3af; text-align: center;">÷</p>';
+                            }
+                            
+                            html += '</div></div>';
+                        });
+                        
+                        // ̨ݣ滻ʾ
+                        if (hasContent || Object.keys(categoryLabels).length > 0) {
+                            container.innerHTML = html;
+                        }
+                    }
+                } catch (e) {
+                    console.log('FAQݽʧ:', e);
+                }
+            }
+        })();
+    </script>
+
+    <!-- ҳ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="uploads/logo.png?v=20260502041100" alt="Yaoʽ" style="height:48px;width:auto;"></div>
+
+                    <p class="footer-desc">רҵʽҵ̣ṩй˾šҵˡдӦ˿ʵȫλʽ</p>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title"></h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">ҳ</a></li>
+                        <li><a href="services.html">ҵΧ</a></li>
+                        <li><a href="cases.html">ɹ</a></li>
+                        <li><a href="advantages.html"></a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title"></h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="news.php">ҵѶ</a></li>
+                        <li><a href="faq.html"></a></li>
+                        <li><a href="contact.html">ϵ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">ϵʽ</h4>
+                    <ul class="footer-nav-list">
+                        <li><i class="fas fa-phone"></i> 13552883008</li>
+                        <li><i class="fas fa-user"></i> </li>
+                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 Yaoʽ Ȩ</p>
+                <p class="footer-disclaimer">ͶзգվݽοͶʽ顣</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // ʾ/ص绰
+        function showPhoneNumber() {
+            const phoneDisplay = document.getElementById('phone-display');
+            if (phoneDisplay.style.display === 'none') {
+                phoneDisplay.style.display = 'inline-block';
+            } else {
+                phoneDisplay.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        // FAQл
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryItems = document.querySelectorAll('.faq-category-item');
+            const faqCategories = document.querySelectorAll('.faq-custom-category');
+
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    
+                    // ·״̬
+                    categoryItems.forEach(ci => ci.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // ʾ/FAQ
+                    if (category === 'all') {
+                        faqCategories.forEach(fc => {
+                            fc.style.display = 'block';
+                            setTimeout(() => {
+                                fc.style.opacity = '1';
+                                fc.style.transform = 'translateY(0)';
+                            }, 50);
+                        });
+                    } else {
+                        faqCategories.forEach(fc => {
+                            if (fc.dataset.category === category) {
+                                fc.style.display = 'block';
+                                setTimeout(() => {
+                                    fc.style.opacity = '1';
+                                    fc.style.transform = 'translateY(0)';
+                                }, 50);
+                            } else {
+                                fc.style.opacity = '0';
+                                fc.style.transform = 'translateY(20px)';
+                                setTimeout(() => {
+                                    fc.style.display = 'none';
+                                }, 300);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    
+        <!-- CMS Editor -->
+    <script>
+        // ǷҪر༭
+        (function() {
+            console.log('[CMS] ʼ...');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const isEditMode = urlParams.get('edit') === 'true';
+            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
+            
+            console.log('[CMS] ༭ģʽ:', isEditMode);
+            console.log('[CMS] ¼״̬:', isLoggedIn);
+            
+            if (isEditMode && isLoggedIn) {
+                console.log('[CMS] ʼر༭...');
+                
+                // ر༭ʽ
+                const editorCss = document.createElement('link');
+                editorCss.rel = 'stylesheet';
+                editorCss.href = 'admin/editor.css';
+                editorCss.onerror = function() {
+                    console.error('[CMS] ༭ʽʧ');
+                };
+                document.head.appendChild(editorCss);
+                
+                // ر༭ű
+                const editorScript = document.createElement('script');
+                editorScript.src = 'admin/editor.js';
+                editorScript.onload = function() {
+                    console.log('[CMS] ༭űسɹ');
+                };
+                editorScript.onerror = function() {
+                    console.error('[CMS] ༭űʧ');
+                };
+                document.body.appendChild(editorScript);
+            } else if (isEditMode && !isLoggedIn) {
+                console.log('[CMS] δ¼ض򵽵¼ҳ');
+                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
+            }
+        })();
+
+        // ϵǰťťťأʾ룻ҳհ״أťָ
+        (function() {
+            const btn = document.getElementById('faqConsultBtn');
+            const phone = document.getElementById('faqPhoneDisplay');
+            if (!btn || !phone) return;
+            
+            let isPhoneVisible = false;
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); // ֹ¼ðݣⴥdocumentĵ
+                btn.style.display = 'none';
+                phone.style.display = 'inline';
+                isPhoneVisible = true;
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!isPhoneVisible) return;
+                // contact-button-wrapperڲʱbtnʱˣ
+                const wrapper = document.querySelector('.contact-button-wrapper');
+                if (wrapper && wrapper.contains(e.target)) return;
+                
+                phone.style.display = 'none';
+                btn.style.display = ''; // ָĬdisplayCSSƣ
+                isPhoneVisible = false;
+            });
+        })();
+    </script>
+    <script src="admin/assets/cms.js"></script>
+</body>
+</html>
+

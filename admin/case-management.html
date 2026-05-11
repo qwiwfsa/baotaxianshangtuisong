@@ -1,0 +1,2606 @@
+﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例管理 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+
+        /* 布局 */
+        .cms-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏 */
+        .cms-sidebar {
+            width: 260px;
+            background: #1e293b;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .cms-sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .cms-sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cms-sidebar-brand i {
+            font-size: 28px;
+            color: #3b82f6;
+        }
+
+        .cms-sidebar-brand span {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .cms-sidebar-nav {
+            padding: 16px 0;
+        }
+
+        .cms-nav-section {
+            margin-bottom: 8px;
+        }
+
+        .cms-nav-title {
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+        }
+
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .cms-nav-item:hover {
+            background: #334155;
+            color: white;
+        }
+
+        .cms-nav-item.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .cms-nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* 主内容区 */
+        .cms-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* 顶部栏 */
+        .cms-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .cms-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cms-header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .cms-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cms-header-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .cms-header-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .cms-header-btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+
+        .cms-header-btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        /* 内容区域 */
+        .cms-content {
+            padding: 24px;
+        }
+
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .stat-title {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        /* 筛选栏 */
+        .filter-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .filter-select,
+        .filter-input {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .filter-input {
+            min-width: 200px;
+        }
+
+        /* 案例列表 */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .case-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .case-card-image {
+            position: relative;
+            height: 100px;
+            overflow: hidden;
+            background: #f3f4f6;
+        }
+
+        .case-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-card-image.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+        }
+
+        .case-card-image.empty i {
+            font-size: 48px;
+        }
+
+        .case-card-badges {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .case-badge {
+            padding: 2px 6px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .case-badge.type {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .case-badge.status {
+            background: #10b981;
+            color: white;
+        }
+
+        .case-badge.status.draft {
+            background: #f59e0b;
+        }
+
+        .case-card-content {
+            padding: 10px;
+        }
+
+        .case-card-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .case-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .case-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .case-card-amount {
+            font-size: 12px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 6px;
+        }
+
+        .case-card-actions {
+            display: flex;
+            gap: 4px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .case-card-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .case-card-btn.edit {
+            background: #eff6ff;
+            color: #3b82f6;
+            border: none;
+        }
+
+        .case-card-btn.edit:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .case-card-btn.view {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+        }
+
+        .case-card-btn.view:hover {
+            background: #e5e7eb;
+        }
+
+        .case-card-btn.delete {
+            background: #fef2f2;
+            color: #ef4444;
+            border: none;
+        }
+
+        .case-card-btn.delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 24px;
+        }
+
+        /* 加载状态 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e5e7eb;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 16px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast.success .toast-icon { color: #10b981; }
+        .toast.error .toast-icon { color: #ef4444; }
+        .toast.warning .toast-icon { color: #f59e0b; }
+
+        .toast-message {
+            font-size: 14px;
+            color: #374151;
+        }
+
+        /* 业务类型管理弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        #typeManagerModal .modal-container {
+            max-width: 550px;
+            max-height: 80vh;
+        }
+
+        .type-item-inline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background 0.15s;
+        }
+
+        .type-item-inline:hover {
+            background: #f9fafb;
+        }
+
+        .type-sort-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .type-sort-btns button {
+            width: 22px;
+            height: 18px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #6b7280;
+            padding: 0;
+            transition: all 0.15s;
+        }
+
+        .type-sort-btns button:hover:not(:disabled) {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .type-sort-btns button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .type-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .type-item-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .type-item-name {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .type-item-desc {
+            color: #94a3b8;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .type-actions-icon {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .type-icon-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition: all 0.15s;
+        }
+
+        .type-icon-btn.edit {
+            color: #6b7280;
+        }
+
+        .type-icon-btn.edit:hover {
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .type-icon-btn.delete {
+            color: #9ca3af;
+        }
+
+        .type-icon-btn.delete:hover {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .modal-overlay.show .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .modal-body {
+            padding: 12px 16px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 10px 16px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        .btn-danger {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* 业务类型列表 */
+        .type-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .type-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            cursor: move;
+            transition: all 0.2s;
+        }
+
+        .type-item:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        .type-item.dragging {
+            opacity: 0.5;
+            background: #eff6ff;
+            border-color: #3b82f6;
+        }
+
+        .type-item.drag-over {
+            border-top: 2px solid #3b82f6;
+        }
+
+        .type-drag-handle {
+            color: #9ca3af;
+            cursor: grab;
+        }
+
+        .type-drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .type-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .type-info {
+            flex: 1;
+        }
+
+        .type-name {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .type-desc {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .type-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .type-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .type-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .type-btn.delete:hover {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-color {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-color {
+            height: 44px;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .empty-types {
+            text-align: center;
+            padding: 40px 24px;
+            color: #9ca3af;
+        }
+
+        .empty-types i {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        /* 批量操作工具栏 */
+        .batch-bar {
+            display: none;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 20px;
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .batch-bar.show {
+            display: flex;
+        }
+
+        .batch-bar .selected-count {
+            font-size: 14px;
+            color: #4338ca;
+            font-weight: 500;
+        }
+
+        .batch-bar .btn-batch-delete {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .batch-bar .btn-batch-delete:hover {
+            background: #dc2626;
+        }
+
+        .batch-bar .btn-batch-category {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 8px;
+        }
+
+        .batch-bar .btn-batch-category:hover {
+            background: #2563eb;
+        }
+
+        .batch-bar .btn-batch-cancel {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .batch-bar .btn-batch-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        /* 案例卡片复选框 */
+        .case-card {
+            position: relative;
+        }
+
+        .case-card .card-checkbox {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
+            width: 20px;
+            height: 20px;
+            accent-color: #3b82f6;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .case-card:hover .card-checkbox {
+            opacity: 1;
+        }
+
+        .case-card .card-checkbox:checked {
+            opacity: 1;
+        }
+
+        .case-card.selected {
+            outline: 2px solid #3b82f6;
+            outline-offset: -2px;
+            background: #f0f9ff;
+            border-radius: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 确认删除弹窗 */
+        .confirm-modal .modal-container {
+            max-width: 420px;
+        }
+
+        .confirm-modal .modal-body {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .confirm-modal .confirm-icon {
+            font-size: 48px;
+            color: #ef4444;
+            margin-bottom: 16px;
+        }
+
+        .confirm-modal .confirm-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .confirm-modal .confirm-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1800px) {
+            .cases-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .cases-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cases-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cms-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .cms-main {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- 侧边栏 -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>仪表板</span>
+                    </a>
+                    <a href="logo-settings.html" class="cms-nav-item">
+                        <i class="fas fa-image"></i>
+                        <span>Logo设置</span>
+                    </a>
+                    <a href="case-management.html" class="cms-nav-item active">
+                        <i class="fas fa-trophy"></i>
+                        <span>案例管理</span>
+                    </a>
+                    <a href="index.html" class="cms-nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>页面管理</span>
+                    </a>
+                    <a href="nav-management.html" class="cms-nav-item">
+                        <i class="fas fa-bars"></i>
+                        <span>导航菜单</span>
+                    </a>
+                    <a href="components/news/article-list.html" class="cms-nav-item">
+                        <i class="fas fa-newspaper"></i>
+                        <span>文章管理</span>
+                    </a>
+                    <a href="faq-management.html" class="cms-nav-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>常见问题</span>
+                    </a>
+                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>
+
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="cms-main">
+            <!-- 顶部栏 -->
+            <header class="cms-header">
+                <div class="cms-header-left">
+                    <h1 class="cms-header-title">案例管理</h1>
+                </div>
+                <div class="cms-header-right">
+                    <button class="cms-header-btn" onclick="syncIndex()" title="同步索引,清理无效条目">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>同步索引</span>
+                    </button>
+                    <a href="case-edit.html" class="cms-header-btn cms-header-btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <span>新建案例</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="cms-content">
+                <!-- 统计卡片 -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">总案例数</span>
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="totalCases">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">已发布</span>
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="publishedCases">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">草稿</span>
+                            <div class="stat-icon">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="draftCases">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">带视频</span>
+                            <div class="stat-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="videoCases">0</div>
+                    </div>
+                </div>
+
+                <!-- 筛选栏 -->
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <span class="filter-label">业务类型:</span>
+                        <select class="filter-select" id="filterType" onchange="filterCases()">
+                            <option value="">全部</option>
+                        </select>
+                        <button class="cms-header-btn" onclick="openTypeManager()" style="margin-left: 8px;">
+                            <i class="fas fa-cog"></i>
+                            管理
+                        </button>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">状态:</span>
+                        <select class="filter-select" id="filterStatus" onchange="filterCases()">
+                            <option value="">全部</option>
+                            <option value="published">已发布</option>
+                            <option value="draft">草稿</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <input type="text" class="filter-input" id="filterSearch" placeholder="搜索案例标题..." oninput="filterCases()">
+                    </div>
+                    <div class="filter-group">
+                        <button class="cms-header-btn" onclick="forceRefresh()" title="强制刷新">
+                            <i class="fas fa-sync-alt"></i>
+                            刷新
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 批量操作栏 -->
+                <div class="batch-bar" id="batchBar">
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;margin-right:12px;">
+                        <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this.checked)" style="width:18px;height:18px;accent-color:#3b82f6;cursor:pointer;">
+                        <span>全选</span>
+                    </label>
+                    <span class="selected-count">已选择 <strong id="selectedCount">0</strong> 个案例</span>
+                    <button class="btn-batch-category" onclick="openBatchCategoryModal()">
+                        <i class="fas fa-folder-open"></i> 批量修改分类
+                    </button>
+                    <button class="btn-batch-delete" onclick="batchDelete()">
+                        <i class="fas fa-trash-alt"></i> 批量删除
+                    </button>
+                    <button class="btn-batch-cancel" onclick="clearSelection()">
+                        <i class="fas fa-times"></i> 取消选择
+                    </button>
+                </div>
+
+                <!-- 案例列表 -->
+                <div class="cases-grid" id="casesGrid">
+                    <!-- 案例卡片将在这里显示 -->
+                </div>
+
+                <!-- 空状态 -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <h3>暂无案例</h3>
+                    <p>点击右上角"新建案例"按钮创建您的第一个案例</p>
+                    <a href="case-edit.html" class="cms-header-btn cms-header-btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <span>新建案例</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在加载...</div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span class="toast-message">操作成功</span>
+    </div>
+
+    <!-- 批量修改分类弹窗 -->
+    <div class="modal-overlay" id="batchCategoryModal" onclick="if(event.target===this)closeBatchCategoryModal()">
+        <div class="modal-container" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-folder-open"></i> 批量修改分类
+                </h3>
+                <button class="modal-close" onclick="closeBatchCategoryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">请选择要修改的业务类型：</p>
+                <select id="batchCategorySelect" class="filter-select" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px;">
+                    <option value="">请选择分类</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBatchCategoryModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmBatchCategory()">确认修改</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 业务类型管理弹窗 -->
+    <div class="modal-overlay" id="typeManagerModal" onclick="if(event.target===this)closeTypeManager()">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-tags"></i> 业务类型管理
+                </h3>
+                <button class="modal-close" onclick="closeTypeManager()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="type-list" id="typeList">
+                    <!-- 业务类型列表将在这里显示 -->
+                </div>
+                <div class="empty-types" id="emptyTypes" style="display: none;">
+                    <i class="fas fa-tags"></i>
+                    <p>暂无业务类型</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="openTypeForm()">
+                    <i class="fas fa-plus"></i> 新增类型
+                </button>
+                <button class="btn btn-secondary" onclick="closeTypeManager()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 业务类型表单弹窗 -->
+    <div class="modal-overlay" id="typeFormModal" onclick="if(event.target===this)closeTypeForm()">
+        <div class="modal-container" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="typeFormTitle">
+                    <i class="fas fa-tag"></i> 新增业务类型
+                </h3>
+                <button class="modal-close" onclick="closeTypeForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="typeForm">
+                    <input type="hidden" id="typeId">
+                    <div class="form-group">
+                        <label class="form-label">类型名称 <span style="color: #ef4444;">*</span></label>
+                        <input type="text" class="form-input" id="typeName" placeholder="请输入业务类型名称" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">描述</label>
+                        <textarea class="form-textarea" id="typeDescription" placeholder="请输入业务类型描述(可选)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">标识颜色</label>
+                        <input type="color" class="form-color" id="typeColor" value="#3b82f6">
+                    </div>
+                    <div class="form-group" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                        <label class="form-label" style="display: flex; align-items: center; gap: 6px;">
+                            🔍 SEO设置 <span style="font-size: 12px; color: #94a3b8; font-weight: normal;">(选填)</span>
+                        </label>
+                        <input type="text" class="form-input" id="typeMetaTitle" placeholder="SEO标题" style="margin-bottom: 10px;">
+                        <input type="text" class="form-input" id="typeMetaKeywords" placeholder="SEO关键词(逗号分隔)" style="margin-bottom: 10px;">
+                        <textarea class="form-textarea" id="typeMetaDescription" placeholder="SEO描述"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeTypeForm()">取消</button>
+                <button class="btn btn-primary" onclick="saveType()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除弹窗 -->
+    <div class="modal-overlay confirm-modal" id="confirmModal" onclick="if(event.target===this)closeConfirmModal()">
+        <div class="modal-container">
+            <div class="modal-body">
+                <div class="confirm-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="confirm-title" id="confirmTitle">确认删除</div>
+                <div class="confirm-text" id="confirmText">确定要删除选中的案例吗？此操作不可恢复。</div>
+            </div>
+            <div class="modal-footer" style="justify-content: center; gap: 12px;">
+                <button class="btn btn-secondary" onclick="closeConfirmModal()">取消</button>
+                <button class="btn" id="confirmDeleteBtn" style="background: #ef4444; color: white;" onclick="executeBatchDelete()">
+                    <i class="fas fa-trash-alt"></i> 确认删除
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API基础地址 - Node.js API
+        const API_BASE = '/api/';
+        const PHP_API_BASE = 'api/case/';
+
+        // 所有案例数据
+        let allCases = [];
+        let filteredCases = [];
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCases();
+        });
+
+        // 从API加载案例列表
+        async function loadCasesFromAPI() {
+            try {
+                // 添加时间戳参数避免缓存
+                const timestamp = new Date().getTime();
+                const response = await fetch(PHP_API_BASE + 'list.php?t=' + timestamp, {
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                console.log('API返回数据:', result);
+                if (result.success && result.cases) {
+                    console.log('从API加载案例数量:', result.cases.length);
+                    // 详细记录每个案例的ID和标题
+                    console.log('API返回案例详情:');
+                    result.cases.forEach((c, idx) => {
+                        console.log(`  [${idx}] ID: ${c.id} (类型: ${typeof c.id}), 标题: ${c.title}`);
+                    });
+                    return result.cases;
+                }
+                throw new Error(result.message || 'API返回错误');
+            } catch (e) {
+                console.error('从API加载失败:', e);
+                return null;
+            }
+        }
+
+        // 加载案例列表
+        async function loadCases() {
+            showLoading();
+
+            // 清除localStorage中的旧案例数据,强制从服务器重新加载
+
+            console.log('开始加载案例列表...');
+
+            try {
+                // 优先从API加载
+                const apiCases = await loadCasesFromAPI();
+                console.log('API返回案例数:', apiCases ? apiCases.length : 0);
+                let mergedCases = [];
+
+                if (apiCases !== null && apiCases.length > 0) {
+                    mergedCases = [...apiCases];
+                    console.log('使用API数据:', mergedCases.map(c => c.title));
+                }
+
+
+                // 去重处理 - 确保每个ID只出现一次(以先出现的为准)
+                const seenIds = new Set();
+                allCases = mergedCases.filter(c => {
+                    // 确保ID存在且有效
+                    if (!c.id && c.id !== 0) {
+                        console.warn('发现无效ID的案例:', c);
+                        return false;
+                    }
+                    const id = String(c.id).trim();
+                    if (!id) {
+                        console.warn('发现空ID的案例:', c);
+                        return false;
+                    }
+                    if (seenIds.has(id)) {
+                        console.warn('发现重复ID的案例,已过滤:', c.title, 'ID:', id);
+                        return false;
+                    }
+                    seenIds.add(id);
+                    return true;
+                });
+
+                console.log('去重后案例数:', allCases.length);
+                console.log('去重后案例标题列表:', allCases.map(c => c.title));
+
+
+                // 重置筛选条件,显示所有案例
+                document.getElementById('filterType').value = '';
+                document.getElementById('filterStatus').value = '';
+                document.getElementById('filterSearch').value = '';
+
+                filteredCases = [...allCases];
+                console.log('最终渲染案例数:', filteredCases.length);
+                console.log('案例标题列表:', filteredCases.map(c => c.title));
+                updateStats();
+                renderCases();
+
+                if (allCases.length === 0) {
+                    showToast('暂无案例数据', 'error');
+                }
+            } catch (error) {
+                console.log('加载失败:', error);
+
+                // 纯API模式,无本地回退
+                allCases = [];
+                filteredCases = [];
+                updateStats();
+                renderCases();
+                showToast('加载案例失败: ' + (error.message || '未知错误'), 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 强制刷新 - 清除所有缓存并重新加载
+        function forceRefresh() {
+            // 清除localStorage缓存
+                        // 重新加载数据
+            loadCases();
+            showToast('已强制刷新数据');
+        }
+
+        // 更新统计
+        function updateStats() {
+            const total = allCases.length;
+            const published = allCases.filter(c => c.status === 'published').length;
+            const draft = allCases.filter(c => c.status === 'draft').length;
+            const withVideo = allCases.filter(c => c.hasVideo).length;
+
+            document.getElementById('totalCases').textContent = total;
+            document.getElementById('publishedCases').textContent = published;
+            document.getElementById('draftCases').textContent = draft;
+            document.getElementById('videoCases').textContent = withVideo;
+        }
+
+        // 筛选案例
+        function filterCases() {
+            const type = document.getElementById('filterType').value;
+            const status = document.getElementById('filterStatus').value;
+            const search = document.getElementById('filterSearch').value.toLowerCase();
+
+            filteredCases = allCases.filter(c => {
+                if (type && c.type !== type) return false;
+                if (status && c.status !== status) return false;
+                if (search && !c.title.toLowerCase().includes(search)) return false;
+                return true;
+            });
+
+            renderCases();
+        }
+
+        // 渲染案例列表
+
+        // 打开类型管理器
+        function openTypeManager() {
+            document.getElementById('typeManagerModal').classList.add('show');
+            loadCaseTypes(true);
+        }
+
+        function closeTypeManager() {
+            document.getElementById('typeManagerModal').classList.remove('show');
+        }
+
+        function renderCases() {
+            const container = document.getElementById('casesGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            console.log('渲染案例列表,总数:', filteredCases.length);
+            console.log('案例数据:', filteredCases.map(c => c.title));
+
+            if (filteredCases.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = filteredCases.map(caseItem => {
+                // 优先使用 coverImage 字段,其次使用 images 数组的第一张,最后使用 image 字段
+                const coverImage = caseItem.coverImage || (caseItem.images && caseItem.images.length > 0 ? caseItem.images[0] : caseItem.image);
+                const hasImage = coverImage && coverImage.trim() !== '';
+                // 修复状态显示逻辑 - 处理 null/undefined 的情况
+                const actualStatus = caseItem.status || 'draft';
+                const statusClass = actualStatus === 'published' ? '' : 'draft';
+                const statusText = actualStatus === 'published' ? '已发布' : '草稿';
+
+                // 处理图片路径 - 支持多种路径格式
+                let imageUrl = coverImage;
+                if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('data:')) {
+                    // 如果路径以 / 开头，表示绝对路径，需要转换为相对路径
+                    if (imageUrl.startsWith('/')) {
+                        imageUrl = imageUrl.substring(1);
+                    }
+                    // 确保路径以 ../ 开头（从 admin/ 目录访问到项目根目录）
+                    // 注意：uploads/xxx 路径也需要转为 ../uploads/xxx
+                    if (!imageUrl.startsWith('../')) {
+                        imageUrl = '../' + imageUrl;
+                    }
+                }
+                
+                console.log('[DEBUG] 案例图片:', caseItem.id, '原始路径:', coverImage, '处理后:', imageUrl);
+
+                return `
+                    <div class="case-card" data-id="${caseItem.id}">
+                        <input type="checkbox" class="card-checkbox" value="${caseItem.id}" onchange="onCaseCheckChange()">
+                        <div class="case-card-image ${hasImage ? '' : 'empty'}">
+                            ${hasImage
+                                ? `<img src="${imageUrl}" alt="${caseItem.title}" onerror="this.parentElement.classList.add('empty'); this.parentElement.innerHTML='<i class=\\'fas fa-image\\'></i>';">`
+                                : '<i class="fas fa-image"></i>'
+                            }
+                            <div class="case-card-badges">
+                                <span class="case-badge type">${caseItem.type}</span>
+                                <span class="case-badge status ${statusClass}">${statusText}</span>
+                            </div>
+                        </div>
+                        <div class="case-card-content">
+                            <h3 class="case-card-title">${caseItem.title || '未命名案例'}</h3>
+                            <div class="case-card-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> ${caseItem.city || '未知'}</span>
+                                <span><i class="fas fa-calendar"></i> ${caseItem.year || '-'}</span>
+                            </div>
+                            <div class="case-card-amount">出资金额:${caseItem.amount || '-'}</div>
+                            <div class="case-card-actions">
+                                <a href="case-edit.html?id=${caseItem.id}" class="case-card-btn edit">
+                                    <i class="fas fa-edit"></i> 编辑
+                                </a>
+                                <button class="case-card-btn view" onclick="copyCase('${caseItem.id}')">
+                                    <i class="fas fa-copy"></i> 复制
+                                </button>
+                                <button class="case-card-btn delete" onclick="deleteCase('${caseItem.id}')">
+                                    <i class="fas fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 从API删除案例
+        async function deleteCaseFromAPI(caseId) {
+            try {
+                console.log('正在删除案例:', caseId);
+                const response = await fetch(PHP_API_BASE + 'delete.php', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: caseId })
+                });
+
+                console.log('删除响应状态:', response.status);
+
+                if (!response.ok) {
+                    console.error('删除响应错误:', response.status, response.statusText);
+                    return false;
+                }
+
+                const result = await response.json();
+                console.log('删除响应结果:', result);
+
+                if (result.success) {
+                    return true;
+                } else {
+                    console.error('删除失败:', result.message);
+                    return false;
+                }
+            } catch (e) {
+                console.error('从API删除失败:', e);
+                return false;
+            }
+        }
+
+        // 删除案例
+        async function deleteCase(caseId) {
+            if (!confirm('确定要删除这个案例吗?此操作不可恢复。')) {
+                return;
+            }
+
+            showLoading('正在删除...');
+
+            let apiDeleted = false;
+            let localDeleted = false;
+            let errorMessage = '';
+
+            // 先从本地列表中移除(立即反馈)
+            allCases = allCases.filter(c => String(c.id) !== String(caseId));
+            filteredCases = filteredCases.filter(c => String(c.id) !== String(caseId));
+            renderCases();
+            updateStats();
+
+            // 尝试从API删除
+            try {
+                apiDeleted = await deleteCaseFromAPI(caseId);
+            } catch (e) {
+                console.error('API删除异常:', e);
+                errorMessage = '服务器连接失败';
+            }
+
+            if (apiDeleted || localDeleted) {
+                showToast('案例删除成功');
+
+                // 清理localStorage中可能存在的缓存(已移除)
+
+                // 强制刷新页面以确保数据同步
+                console.log('[Delete] 删除成功,准备刷新页面');
+                setTimeout(() => {
+                    window.location.reload(true); // true表示强制从服务器重新加载
+                }, 800);
+            } else {
+                showToast(errorMessage || '删除失败,请检查网络连接后重试', 'error');
+                // 如果删除失败,重新加载列表
+                await loadCases();
+            }
+
+            hideLoading();
+        }
+
+        // 显示加载
+        function showLoading(text = '正在加载...') {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.querySelector('.loading-text').textContent = text;
+        }
+
+        // 隐藏加载
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'success') {
+            const existingToast = document.querySelector('.cms-toast');
+            if (existingToast) existingToast.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'cms-toast';
+            toast.style.cssText = 'position: fixed; top: 20px; right: 20px; padding: 16px 24px; border-radius: 8px; color: white; font-size: 14px; z-index: 10000; animation: slideIn 0.3s ease; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);';
+
+            if (type === 'error') {
+                toast.style.background = '#ef4444';
+            } else if (type === 'warning') {
+                toast.style.background = '#f59e0b';
+            } else {
+                toast.style.background = '#10b981';
+            }
+
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 生成唯一ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // 复制案例
+        async function copyCase(caseId) {
+            const originalCase = allCases.find(c => String(c.id) === String(caseId));
+            if (!originalCase) {
+                showToast('案例不存在', 'error');
+                return;
+            }
+
+            showLoading('正在复制...');
+
+            // 创建新案例数据
+            const newCase = {
+                ...originalCase,
+                id: generateId(),
+                title: originalCase.title + '-复制',
+                status: 'published',
+                createTime: new Date().toISOString(),
+                updateTime: new Date().toISOString()
+            };
+
+            // 尝试保存到API
+            let saved = false;
+            try {
+                const response = await fetch(PHP_API_BASE + 'save.php', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newCase)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    saved = true;
+                }
+            } catch (e) {
+                console.log('API保存失败:', e);
+            }
+
+            if (saved) {
+                hideLoading();
+                showToast('案例复制成功');
+                await loadCases();
+            } else {
+                hideLoading();
+                showToast('复制失败,请检查网络连接', 'error');
+            }
+        }
+
+        function openTypeForm(typeId = null) {
+            const form = document.getElementById('typeForm');
+            const title = document.getElementById('typeFormTitle');
+
+            form.reset();
+            document.getElementById('typeId').value = '';
+
+            if (typeId) {
+                const type = caseTypes.find(t => t.id === typeId);
+                if (type) {
+                    title.innerHTML = '<i class="fas fa-tag"></i> 编辑业务类型';
+                    document.getElementById('typeId').value = type.id;
+                    document.getElementById('typeName').value = type.name;
+                    document.getElementById('typeDescription').value = type.description || '';
+                    document.getElementById('typeColor').value = type.color || '#3b82f6';
+                }
+            } else {
+                title.innerHTML = '<i class="fas fa-tag"></i> 新增业务类型';
+                document.getElementById('typeColor').value = '#3b82f6';
+            }
+
+            document.getElementById('typeFormModal').classList.add('show');
+        }
+
+        // 关闭业务类型表单弹窗
+        function closeTypeForm() {
+            document.getElementById('typeFormModal').classList.remove('show');
+        }
+
+        // 保存业务类型
+        async function saveType() {
+            const id = document.getElementById('typeId').value;
+            const name = document.getElementById('typeName').value.trim();
+            const description = document.getElementById('typeDescription').value.trim();
+            const color = document.getElementById('typeColor').value;
+
+            if (!name) {
+                showToast('请输入类型名称', 'warning');
+                return;
+            }
+
+            const data = {
+                name: name,
+                description: description,
+                color: color
+            };
+
+            if (id) {
+                data.id = parseInt(id);
+            }
+
+            try {
+                showLoading('正在保存...');
+
+                console.log('保存业务类型:', id ? 'PUT更新' : 'POST创建', data);
+
+                const response = await fetch(PHP_API_BASE + 'types.php', {
+                    method: id ? 'PUT' : 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // 检查响应状态
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('HTTP错误:', response.status, errorText);
+                    throw new Error('HTTP ' + response.status + ': ' + errorText);
+                }
+
+                const result = await response.json();
+                console.log('保存结果:', result);
+
+                if (result.success) {
+                    showToast(id ? '业务类型更新成功' : '业务类型创建成功');
+                    closeTypeForm();
+                    // 清除缓存强制刷新
+                    typesCache = null;
+                    typesCacheTime = 0;
+                    await loadCaseTypes(true, true); // 保留筛选值,强制刷新
+                    renderTypeList();
+                    // 触发前端页面刷新(通过localStorage事件)
+                                    } else {
+                    showToast(result.message || '保存失败', 'error');
+                }
+            } catch (e) {
+                console.error('保存业务类型失败:', e);
+                showToast('保存失败,请检查网络连接', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 编辑业务类型
+        function editType(typeId) {
+            openTypeForm(typeId);
+        }
+
+        // 删除业务类型
+        async function deleteType(typeId) {
+            const type = caseTypes.find(t => t.id === typeId);
+            if (!type) return;
+
+            if (!confirm(`确定要删除业务类型「${type.name}」吗?\n\n注意:如果该类型下还有案例,将无法删除。`)) {
+                return;
+            }
+
+            try {
+                showLoading('正在删除...');
+
+                // 使用POST方法模拟DELETE(兼容性更好)
+                const response = await fetch(PHP_API_BASE + 'types.php?id=' + typeId, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: typeId })
+                });
+
+                // 检查响应状态
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('HTTP错误:', response.status, errorText);
+                    throw new Error('HTTP ' + response.status + ': ' + errorText);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast('业务类型删除成功');
+                    // 清除缓存强制刷新
+                    typesCache = null;
+                    typesCacheTime = 0;
+                    await loadCaseTypes(true, true); // 保留筛选值,强制刷新
+                    renderTypeList();
+                    // 触发前端页面刷新(通过localStorage事件)
+                                    } else {
+                    showToast(result.message || '删除失败', 'error');
+                }
+            } catch (e) {
+                console.error('删除业务类型失败:', e);
+                showToast('删除失败,请检查网络连接', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 类型数据
+        let caseTypes = [];
+
+        // 类型缓存
+        let typesCache = null;
+        let typesCacheTime = 0;
+
+        // 加载业务类型列表
+        async function loadCaseTypes(keepFilter = false, forceRefresh = false) {
+            try {
+                // 检查缓存(5分钟内有效)
+                const now = Date.now();
+                if (!forceRefresh && typesCache && (now - typesCacheTime) < 300000) {
+                    caseTypes = typesCache;
+                    renderTypeList();
+                    return;
+                }
+
+                const response = await fetch(PHP_API_BASE + 'types.php', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    caseTypes = result.data;
+                    typesCache = result.data;
+                    typesCacheTime = Date.now();
+                    renderTypeList();
+                    renderFilterTypes();
+                } else {
+                    console.warn('API返回格式异常:', result);
+                    if (!caseTypes) caseTypes = [];
+                    renderTypeList();
+                    renderFilterTypes();
+                }
+            } catch (e) {
+                console.error('加载业务类型失败:', e);
+                if (!caseTypes) caseTypes = [];
+                renderTypeList();
+                renderFilterTypes();
+            }
+        }
+
+        // 渲染业务类型列表
+        function renderTypeList() {
+            const typeList = document.getElementById('typeList');
+            if (!typeList) return;
+
+            const types = caseTypes || [];
+
+            if (types.length === 0) {
+                typeList.innerHTML = '<div style="padding: 40px 20px; text-align: center; color: #94a3b8;"><i class="fas fa-tags" style="font-size: 40px; display: block; margin-bottom: 10px;"></i>暂无业务类型</div>';
+                return;
+            }
+
+            typeList.innerHTML = types.map((type, index) => `
+                <div class="type-item-inline">
+                    <div class="type-sort-btns">
+                        <button onclick="moveType(${type.id}, -1)" ${index === 0 ? 'disabled' : ''} title="上移">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <button onclick="moveType(${type.id}, 1)" ${index === types.length - 1 ? 'disabled' : ''} title="下移">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <span class="type-color-dot" style="background:${type.color || '#3b82f6'}"></span>
+                    <div class="type-item-info">
+                        <span class="type-item-name">${type.name}</span>
+                        ${type.description ? `<span class="type-item-desc">${type.description}</span>` : ''}
+                    </div>
+                    <div class="type-actions-icon">
+                        <button class="type-icon-btn edit" onclick="editType(${type.id})" title="编辑">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="type-icon-btn delete" onclick="deleteType(${type.id})" title="删除">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染筛选下拉框
+        function renderFilterTypes() {
+            const select = document.getElementById('filterType');
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">全部</option>';
+            (caseTypes || []).forEach(type => {
+                const opt = document.createElement('option');
+                // 使用分类名称作为value，因为案例数据中的type字段是名称
+                opt.value = type.name;
+                opt.textContent = type.name;
+                select.appendChild(opt);
+            });
+            select.value = currentVal;
+        }
+
+        // ========== 业务类型 CRUD 函数 ==========
+
+        // 打开新增类型表单
+        function openTypeForm() {
+            document.getElementById('typeId').value = '';
+            document.getElementById('typeName').value = '';
+            document.getElementById('typeDescription').value = '';
+            document.getElementById('typeColor').value = '#3b82f6';
+            document.getElementById('typeMetaTitle').value = '';
+            document.getElementById('typeMetaKeywords').value = '';
+            document.getElementById('typeMetaDescription').value = '';
+            document.getElementById('typeFormTitle').textContent = '新增业务类型';
+            document.getElementById('typeFormModal').classList.add('show');
+            setTimeout(() => document.getElementById('typeName').focus(), 100);
+        }
+
+        function closeTypeForm() {
+            document.getElementById('typeFormModal').classList.remove('show');
+        }
+
+        // 编辑类型
+        async function editType(typeId) {
+            const type = (caseTypes || []).find(t => String(t.id) === String(typeId));
+            if (!type) {
+                showToast('未找到该业务类型', 'error');
+                return;
+            }
+            document.getElementById('typeId').value = type.id;
+            document.getElementById('typeName').value = type.name || '';
+            document.getElementById('typeDescription').value = type.description || '';
+            document.getElementById('typeColor').value = type.color || '#3b82f6';
+            document.getElementById('typeMetaTitle').value = type.meta_title || '';
+            document.getElementById('typeMetaKeywords').value = type.meta_keywords || '';
+            document.getElementById('typeMetaDescription').value = type.meta_description || '';
+            document.getElementById('typeFormTitle').textContent = '编辑业务类型';
+            document.getElementById('typeFormModal').classList.add('show');
+            setTimeout(() => document.getElementById('typeName').focus(), 100);
+        }
+
+        // 保存类型
+        async function saveType() {
+            const name = document.getElementById('typeName').value.trim();
+            if (!name) {
+                showToast('请输入类型名称', 'warning');
+                return;
+            }
+            showLoading();
+            try {
+                const typeId = document.getElementById('typeId').value;
+                const method = typeId ? 'PUT' : 'POST';
+                const metaTitle = document.getElementById('typeMetaTitle').value.trim();
+                const metaKeywords = document.getElementById('typeMetaKeywords').value.trim();
+                const metaDescription = document.getElementById('typeMetaDescription').value.trim();
+                const body = typeId
+                    ? { id: typeId, name: name, description: document.getElementById('typeDescription').value.trim(), color: document.getElementById('typeColor').value, meta_title: metaTitle, meta_keywords: metaKeywords, meta_description: metaDescription }
+                    : { name: name, description: document.getElementById('typeDescription').value.trim(), color: document.getElementById('typeColor').value, meta_title: metaTitle, meta_keywords: metaKeywords, meta_description: metaDescription };
+
+                const res = await fetch(PHP_API_BASE + 'types.php', {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast(typeId ? '业务类型更新成功' : '业务类型创建成功');
+                    closeTypeForm();
+                    await loadCaseTypes(true, true);
+                } else {
+                    showToast(result.message || '保存失败', 'error');
+                }
+            } catch (e) {
+                console.error('保存类型失败:', e);
+                showToast('保存失败，请检查网络连接', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 删除类型
+        async function deleteType(typeId) {
+            if (!confirm('确定要删除这个业务类型吗？此操作不可撤销。')) return;
+            showLoading();
+            try {
+                const res = await fetch(PHP_API_BASE + 'types.php?id=' + typeId, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.success) {
+                    showToast('业务类型删除成功');
+                    await loadCaseTypes(true, true);
+                } else {
+                    showToast(result.message || '删除失败', 'error');
+                }
+            } catch (e) {
+                console.error('删除失败:', e);
+                showToast('删除失败，请检查网络连接', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 排序: 上移/下移
+        async function moveType(id, direction) {
+            const types = caseTypes || [];
+            const index = types.findIndex(t => String(t.id) === String(id));
+            if (index < 0) return;
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= types.length) return;
+
+            // 交换 sort_order
+            const temp = types[index].sort_order;
+            types[index].sort_order = types[targetIndex].sort_order;
+            types[targetIndex].sort_order = temp;
+
+            // 交换数组位置
+            [types[index], types[targetIndex]] = [types[targetIndex], types[index]];
+            caseTypes = types;
+
+            // 本地重绘
+            renderTypeList();
+            renderFilterTypes();
+
+            // 保存到API - 一次批量POST所有排序数据
+            try {
+                const orderMap = types.map(t => ({ id: t.id, sort_order: t.sort_order }));
+                const response = await fetch(PHP_API_BASE + 'types-batch.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orders: orderMap })
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    if (!result.success) {
+                        console.warn('排序保存警告:', result.message);
+                        // 回退到逐个更新
+                        for (const item of orderMap) {
+                            await fetch(PHP_API_BASE + 'types.php', {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ id: item.id, sort_order: item.sort_order })
+                            });
+                        }
+                    }
+                } else {
+                    // API不存在，回退到逐个更新
+                    for (const item of orderMap) {
+                        await fetch(PHP_API_BASE + 'types.php', {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: item.id, sort_order: item.sort_order })
+                        });
+                    }
+                }
+                // 清除缓存，强制从服务器重新加载最新数据
+                typesCache = null;
+                typesCacheTime = 0;
+                await loadCaseTypes(false, true);
+                showToast('排序已更新');
+            } catch (e) {
+                console.error('保存排序失败:', e);
+                showToast('排序保存失败', 'error');
+            }
+        }
+
+        // 页面初始化标志,防止重复加载
+        let isPageInitialized = false;
+
+        // 初始化时加载业务类型和案例列表
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isPageInitialized) {
+                console.log('页面已初始化,跳过重复加载');
+                return;
+            }
+            isPageInitialized = true;
+
+            // 初始加载业务类型,不保留筛选值(避免与loadCases中的重置冲突)
+            loadCaseTypes(false).then(() => {
+                console.log('业务类型加载完成');
+            });
+
+            // 每次页面加载都强制刷新案例列表(避免从编辑页面返回时显示旧数据)
+            console.log('DOMContentLoaded: 开始加载案例列表...');
+            loadCases();
+
+            // 监听案例更新事件(从编辑页面返回时自动刷新)
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'cms_cases_updated') {
+                    console.log('检测到案例更新,自动刷新列表...');
+                    loadCases();
+                    showToast('案例已更新,列表已刷新');
+                }
+            });
+
+            // 页面获得焦点时也刷新(从编辑页面返回时)
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    console.log('页面重新可见,强制刷新数据...');
+                    loadCases();
+                }
+            });
+
+            // 监听pageshow事件,处理浏览器返回按钮的情况(包括bfcache)
+            window.addEventListener('pageshow', function(e) {
+                // 只有从bfcache恢复时才刷新,避免初始加载时重复刷新
+                if (e.persisted) {
+                    console.log('页面从bfcache恢复,强制刷新数据...');
+                    loadCases();
+                }
+            });
+        });
+
+        // 同步索引 - 清理无效条目
+        async function syncIndex() {
+            if (!confirm('确定要同步索引吗?这将清理索引中不存在对应文件的案例记录。')) {
+                return;
+            }
+
+            showLoading('正在同步索引...');
+
+            try {
+                const response = await fetch(PHP_API_BASE + 'sync-index.php', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                console.log('[Sync] 同步结果:', result);
+
+                if (result.success) {
+                    showToast(result.message);
+                    if (result.removedCount > 0) {
+                        // 如果有清理条目,刷新列表
+                        await loadCases();
+                    }
+                } else {
+                    showToast(result.message || '同步失败', 'error');
+                }
+            } catch (e) {
+                console.error('同步索引失败:', e);
+                showToast('同步失败,请检查网络连接', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // ========== 批量删除功能 ==========
+
+        // 获取所有选中的案例ID
+        function getSelectedCaseIds() {
+            const checkboxes = document.querySelectorAll('.card-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // 复选框状态变化
+        function onCaseCheckChange() {
+            const selectedIds = getSelectedCaseIds();
+            const batchBar = document.getElementById('batchBar');
+            const selectedCount = document.getElementById('selectedCount');
+            const selectAll = document.getElementById('selectAll');
+            const totalCount = document.querySelectorAll('.card-checkbox').length;
+
+            selectedCount.textContent = selectedIds.length;
+
+            if (selectedIds.length > 0) {
+                batchBar.classList.add('show');
+            } else {
+                batchBar.classList.remove('show');
+            }
+
+            // 更新全选复选框状态
+            if (selectAll) {
+                selectAll.checked = totalCount > 0 && selectedIds.length === totalCount;
+                selectAll.indeterminate = selectedIds.length > 0 && selectedIds.length < totalCount;
+            }
+
+            // 高亮选中的卡片
+            document.querySelectorAll('.case-card').forEach(card => {
+                const cb = card.querySelector('.card-checkbox');
+                if (cb && cb.checked) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        // 清除所有选择
+        function clearSelection() {
+            document.querySelectorAll('.card-checkbox').forEach(cb => {
+                cb.checked = false;
+            });
+            document.querySelectorAll('.case-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.getElementById('batchBar').classList.remove('show');
+        }
+
+        // 打开确认弹窗
+        function batchDelete() {
+            const selectedIds = getSelectedCaseIds();
+            if (selectedIds.length === 0) {
+                showToast('请先选择要删除的案例', 'warning');
+                return;
+            }
+
+            document.getElementById('confirmTitle').textContent = `确认删除 ${selectedIds.length} 个案例`;
+            document.getElementById('confirmText').textContent = `确定要删除选中的 ${selectedIds.length} 个案例吗？此操作不可恢复。`;
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        // 关闭确认弹窗
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        // 执行批量删除
+        async function executeBatchDelete() {
+            const selectedIds = getSelectedCaseIds();
+            if (selectedIds.length === 0) {
+                closeConfirmModal();
+                return;
+            }
+
+            closeConfirmModal();
+            showLoading('正在批量删除...');
+
+            let successCount = 0;
+            let failCount = 0;
+
+            // 逐个删除（API接受单个ID）
+            for (const caseId of selectedIds) {
+                try {
+                    const deleted = await deleteCaseFromAPI(caseId);
+                    if (deleted) {
+                        successCount++;
+                    } else {
+                        failCount++;
+                    }
+                } catch (e) {
+                    console.error('批量删除失败:', caseId, e);
+                    failCount++;
+                }
+            }
+
+            hideLoading();
+
+            if (failCount === 0) {
+                showToast(`成功删除 ${successCount} 个案例`);
+            } else if (successCount > 0) {
+                showToast(`删除完成: ${successCount} 成功, ${failCount} 失败`, 'warning');
+            } else {
+                showToast('删除失败,请检查网络连接', 'error');
+            }
+
+            clearSelection();
+            await loadCases();
+        }
+
+        // 打开批量修改分类弹窗
+        function openBatchCategoryModal() {
+            const selectedIds = getSelectedCaseIds();
+            if (selectedIds.length === 0) {
+                showToast('请先选择要修改分类的案例', 'error');
+                return;
+            }
+            // 加载业务类型列表
+            loadCategoryOptions();
+            document.getElementById('batchCategoryModal').classList.add('show');
+        }
+
+        // 关闭批量修改分类弹窗
+        function closeBatchCategoryModal() {
+            document.getElementById('batchCategoryModal').classList.remove('show');
+        }
+
+        // 加载分类选项
+        async function loadCategoryOptions() {
+            try {
+                console.log('[DEBUG] 开始加载业务类型列表...');
+                const response = await fetch(PHP_API_BASE + 'types.php');
+                console.log('[DEBUG] API响应状态:', response.status);
+                const result = await response.json();
+                console.log('[DEBUG] API返回数据:', result);
+                
+                const select = document.getElementById('batchCategorySelect');
+                select.innerHTML = '<option value="">请选择分类</option>';
+                
+                let types = [];
+                if (result.success && result.data) {
+                    types = result.data;
+                } else if (result.types) {
+                    types = result.types;
+                }
+                
+                console.log('[DEBUG] 找到业务类型数量:', types.length);
+                
+                types.forEach(type => {
+                    console.log('[DEBUG] 添加业务类型:', type.id, type.name);
+                    select.innerHTML += `<option value="${type.id}">${type.name}</option>`;
+                });
+                
+                console.log('[DEBUG] 业务类型列表加载完成');
+            } catch (error) {
+                console.error('[ERROR] 加载分类失败:', error);
+                alert('加载分类列表失败: ' + error.message);
+            }
+        }
+
+        // 确认批量修改分类
+        async function confirmBatchCategory() {
+            const selectedIds = getSelectedCaseIds();
+            const categorySelect = document.getElementById('batchCategorySelect');
+            const categoryId = categorySelect.value;
+            const categoryName = categorySelect.options[categorySelect.selectedIndex].text;
+            
+            if (selectedIds.length === 0) {
+                showToast('请先选择要修改分类的案例', 'error');
+                closeBatchCategoryModal();
+                return;
+            }
+            
+            if (!categoryId) {
+                showToast('请选择要修改的分类', 'error');
+                return;
+            }
+
+            closeBatchCategoryModal();
+            showLoading('正在批量修改分类...');
+
+            let successCount = 0;
+            let failCount = 0;
+
+            // 逐个修改分类
+            for (const caseId of selectedIds) {
+                try {
+                    // 获取当前案例数据以保留所有字段
+                    const caseItem = allCases.find(c => String(c.id) === String(caseId));
+                    if (!caseItem) {
+                        console.error('找不到案例:', caseId);
+                        failCount++;
+                        continue;
+                    }
+                    
+                    // 构建完整的案例数据，只修改分类
+                    const updateData = {
+                        ...caseItem,
+                        id: caseId,
+                        type: categoryName,
+                        status: caseItem.status || 'draft'
+                    };
+                    
+                    const response = await fetch('api/case/save.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updateData)
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        successCount++;
+                    } else {
+                        failCount++;
+                    }
+                } catch (e) {
+                    console.error('批量修改分类失败:', caseId, e);
+                    failCount++;
+                }
+            }
+
+            hideLoading();
+
+            if (failCount === 0) {
+                showToast(`成功修改 ${successCount} 个案例的分类`);
+            } else if (successCount > 0) {
+                showToast(`修改完成: ${successCount} 成功, ${failCount} 失败`, 'warning');
+            } else {
+                showToast('修改失败,请检查网络连接', 'error');
+            }
+
+            // 强制刷新业务类型缓存，确保筛选下拉显示最新分类
+            await loadCaseTypes(true, true);
+            clearSelection();
+            await loadCases();
+        }
+
+        // 全选/取消全选
+        function toggleSelectAll(checked) {
+            document.querySelectorAll('.card-checkbox').forEach(cb => {
+                cb.checked = checked;
+            });
+            updateBatchBar();
+        }
+
+        // 更新批量操作栏状态
+        function updateBatchBar() {
+            const selectedCount = document.querySelectorAll('.card-checkbox:checked').length;
+            const totalCount = document.querySelectorAll('.card-checkbox').length;
+            const batchBar = document.getElementById('batchBar');
+            const selectAll = document.getElementById('selectAll');
+            
+            document.getElementById('selectedCount').textContent = selectedCount;
+            
+            if (selectedCount > 0) {
+                batchBar.classList.add('show');
+            } else {
+                batchBar.classList.remove('show');
+            }
+            
+            // 更新全选复选框状态
+            if (selectAll) {
+                selectAll.checked = totalCount > 0 && selectedCount === totalCount;
+                selectAll.indeterminate = selectedCount > 0 && selectedCount < totalCount;
+            }
+            
+            // 高亮选中的卡片
+            document.querySelectorAll('.case-card').forEach(card => {
+                const checkbox = card.querySelector('.card-checkbox');
+                if (checkbox && checkbox.checked) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

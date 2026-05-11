@@ -1,0 +1,28 @@
+{
+    "id": "1778479682624",
+    "title": "测试a",
+    "type": "云信融资出表",
+    "city": "",
+    "amount": "",
+    "period": "",
+    "summary": "",
+    "detail": "测试",
+    "image": "uploads\/20260511_6a017247a13ad.png",
+    "coverImage": "uploads\/20260511_6a017247a13ad.png",
+    "images": [
+        "uploads\/20260511_6a017247a13ad.png"
+    ],
+    "highlights": [],
+    "process": [
+        "制定方案",
+        "资料过审",
+        "签订协议",
+        "费用结算",
+        "进款出款"
+    ],
+    "hasVideo": false,
+    "video": "",
+    "status": "published",
+    "createdAt": "2026-05-11 08:08:14",
+    "lastModified": "2026-05-11 08:08:14"
+}

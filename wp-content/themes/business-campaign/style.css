@@ -1,0 +1,181 @@
+/*
+Theme Name: Business Campaign
+Theme URI: https://awplife.com/wordpress-free-theme/awpbusinesspress/
+Template: awpbusinesspress
+Author: A WP Life
+Author URI: http://awplife.com/
+Description: Business Campaign is a clean, modern, and unique WordPress theme that is a beautiful design and unique features. it's a professional multipurpose WordPress theme that’s packed with powerful features and outstanding functionality. As well as sophisticated plus it has some exotic features like customization and clean code, advanced typography, sticky menu, logo upload, header image, Bootstrap 4 framework, built with SEO in mind, and theme info area besides being Mobile-ready, translation ready (WPML, Polylang) and it's built to be beautiful on all screen sizes. The theme is perfectly suited for business techup deal, consultant event, finance trade, corporate, freelancer consulting, agency, business promotion, corporate education, SEO, construction, online shop, photography, gym times, cafe store, music field, lawyer hub, restaurant, hotel startup, creative blog, magazine, travel agency and many other websites compatible. This theme supports the best Elementor page builder to create, edit, and update page designs as per the requirement. EarnPress also supports popular free and premium WordPress plugins such as Elementor, Yoast SEO, WooCommerce, Contact Form 7, Jetpack, Google Analytics, and much more. .
+Tags: blog, portfolio,news,grid-Layout,one-column,two-columns,three-columns,left-sidebar,right-sidebar,custom-background, custom-logo,custom-menu,featured-images,footer-widgets,full-width-template,post-formats,RTL-language-support,sticky-post,translation-ready
+Version: 0.0.6
+Tested up to: 6.6.1
+Requires PHP: 5.4
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GNU General Public License v2 or later
+Text Domain: business-campaign
+
+*/
+
+.site-menu-content{
+	background: rgb(25 33 39) !important;
+}
+
+/*Under Line Text*/
+.color-accent, .color-accent-hover:hover,
+.color-accent-hover:focus, :root .has-accent-color, 
+.has-drop-cap:not(:focus):first-letter, 
+.wp-block-button.is-style-outline, a {
+    color: #e22222;
+}
+
+
+#slider-demo.overlay-none .slider-caption .caption-content{
+	background-color: rgb(0 0 0 / 0%);
+}
+
+.service-one .post {
+    border-bottom: 1px solid #e7e7e7 !important;
+}
+.service-one .service-box .entry-title a{
+	color: #000 !important;
+}
+.service-one .service-box .entry-title a:hover{
+	color: #e22222 !important;
+}
+
+
+.service-one .post { 
+	background-color: #ffffff;
+	/* border-left: none; */
+	position: relative; 
+	margin: 0px 0 50px; 
+	padding: 50px 30px 50px; 
+	font-size: 1.000rem;
+	line-height: 1.75;
+	border-radius: 2px;
+	font-style: normal;
+	/* box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1); */
+	transition: 0.3s;
+	/* -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1); 
+	-moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+	-ms-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1); 
+	box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1); */
+	-webkit-transform: translateY(0px);
+	-ms-transform: translateY(0px);
+	transform: translateY(0px);	
+	border: 1px solid #e7e7e7;
+}
+.service-one .post:hover { 
+	-webkit-box-shadow: 0 20px 25px 0 rgba(0, 0, 0, 0.1); 
+	-moz-box-shadow: 0 20px 25px 0 rgba(0, 0, 0, 0.1);
+	-ms-box-shadow: 0 20px 25px 0 rgba(0, 0, 0, 0.1); 
+	box-shadow: 0 20px 25px 0 rgba(0, 0, 0, 0.1);
+	-webkit-transform: translateY(-7px);
+	-ms-transform: translateY(-7px);
+	transform: translateY(-7px);
+}
+
+.service-one .post:before {
+    position: absolute;
+    content: '';
+    bottom: 0px;
+    height: 4px;
+    width: 0px;
+    background-color: #5ca2df;
+    transition: all 500ms ease;
+    left: 0px;
+}
+.service-one .post:after {
+    position: absolute;
+    content: '';
+    bottom: 0px;
+    height: 4px;
+    width: 0px;
+    background-color: #e22222;
+    transition: all 500ms ease;
+    right: 0px;
+}
+.service-one .post:hover:after, 
+.service-one .post:hover:before {width: 100%;transition: all 500ms ease;}
+
+/* Testimonial Next Prev CSS */
+.testimonial-two .review:before {
+	background-color: #e22222 !important;
+}
+
+
+/*Calendar Next Prev CSS */
+.site-footer .calendar_wrap .wp-calendar-nav-prev a {
+	background: linear-gradient(to right, #ffc0009e, #ffc00026);
+	color: #fff;
+}
+.site-footer .calendar_wrap .wp-calendar-nav-prev a:hover {
+	background: linear-gradient(to right, #ffc00026, #ffc0005c);
+	color: #fff;
+}
+
+.site-footer .calendar_wrap .wp-calendar-nav-next a{
+	background: linear-gradient(to right, #ffc00026, #ffc0005c);
+	color: #fff;
+}
+
+.site-footer .calendar_wrap .wp-calendar-nav-next a:hover{
+	
+	background: linear-gradient(to right, #ffc0009e, #ffc00026);
+	color: #fff;
+}
+
+
+
+/*Home Interior Design 4 */
+
+@media (max-width: 768px){
+	#slider-demo.overlay-disable .slider-caption .title{
+		font-size: 2rem;
+	}
+	.slider-caption .subtitle{
+		margin-bottom: .5rem;
+		margin: 0 0 5px;
+	}
+	.m-top-40 {
+    margin-top: 20px !important;
+	}
+	.btn-large{
+		padding: 0.513rem 1.5rem;
+	}
+}
+
+@media (max-width: 480px){
+#slider-demo.overlay-disable .slider-caption .title {
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+	}
+	.slider-caption .subtitle{
+		margin-bottom: 0.9rem;
+	}
+	#slider-demo.overlay-disable .slider-caption .caption-content{
+		padding: 10px 10px 10px;
+	}
+	
+		#slider-demo.overlay-disable .slider-caption p {
+    font-size: .8rem;
+	}
+	.btn-large {
+		padding: 0.313rem 1rem;
+		font-size: 0.738rem;
+	}
+	.hero-slider h5{
+		font-size: .8rem;
+	}
+	.owl-theme .owl-nav.disabled+.owl-dots{
+		display:none;
+	}
+	
+	/*Theme Info*/
+	.contact-icon {
+		float: left !important;
+	}
+	.contact-info-module {
+		padding: 1.563rem 0rem !important;
+	}
+	
+}

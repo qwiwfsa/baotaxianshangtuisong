@@ -1,0 +1,73 @@
+.widget,
+.widget.ew-tabbed-recent-popular {
+	padding: 14px 15px;
+	margin-bottom: 7px;
+}
+
+.site-footer .footer-widget-area {
+    padding-bottom: 14px;
+    padding-top: 21px;
+}
+
+.footer-widget-area .widget-column,
+.footer-newsletter {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.sidebar {
+	padding: 21px 15px;
+}
+
+/* Make sure select elements fit in widgets. */
+.widget select {
+	max-width: 100%;
+}
+
+#footer-instagram .widget {
+	padding: 0;
+}
+
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper .default .item,
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper.default .item {
+	margin: 0;
+}
+
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper .default .item,
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper.default .item {
+	max-width: 16.66667%;
+}
+
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper .default .item:nth-child(3n+1),
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper.default .item:nth-child(3n+1) {
+	clear: none;
+}
+
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper .default .item:nth-child(6n+1),
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper.default .item:nth-child(6n+1) {
+    clear: both;
+}
+
+.widget .more-link {
+	margin-top: 14px;
+	display: inline-block;
+}
+
+.widget.menu-social-container ul,
+#secondary .widget.menu-social-container ul {
+	margin-left: -9px;
+}
+
+.not-found ul {
+	list-style: none;
+	margin-left: 0;
+}
+
+#footer-newsletter .ewnewsletter .section-heading-wrapper {
+	padding: 0;
+}
+
+#footer-newsletter .section-description p,
+.catch-instagram-feed-gallery-widget-wrapper li.item > a.pretty {
+	margin: 0;
+}

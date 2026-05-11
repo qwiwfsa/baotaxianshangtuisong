@@ -1,0 +1,698 @@
+﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo设置 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #3b82f6;
+            --sidebar-text: #cbd5e1;
+            --body-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--body-bg);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .cms-layout { display: flex; width: 100%; min-height: 100vh; }
+
+        .cms-sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            flex-shrink: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .cms-sidebar-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cms-sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .cms-sidebar-brand i { color: var(--sidebar-active); }
+
+        .cms-sidebar-nav { padding: 16px 0; }
+
+        .cms-nav-section { margin-bottom: 8px; }
+
+        .cms-nav-title {
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+        }
+
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .cms-nav-item:hover { background: var(--sidebar-hover); color: white; }
+        .cms-nav-item.active { background: var(--sidebar-active); color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+
+        .cms-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .cms-header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .cms-header-title { font-size: 20px; font-weight: 600; color: var(--text-primary); }
+
+        .cms-content { padding: 24px; max-width: 900px; }
+
+        .logo-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .logo-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .logo-card-header i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .logo-card-header h3 { font-size: 16px; color: var(--text-primary); }
+
+        .logo-card-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .logo-preview-area {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            min-height: 100px;
+        }
+
+        .logo-preview-area.has-logo {
+            border-style: solid;
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .logo-preview {
+            width: 120px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            padding: 8px;
+            flex-shrink: 0;
+        }
+
+        .logo-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .logo-placeholder {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .logo-form { flex: 1; }
+
+        .logo-form .form-group { margin-bottom: 12px; }
+
+        .logo-form label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .logo-form .file-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-form input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--primary-hover); }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover { background: #f3f4f6; }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover { background: #dc2626; }
+
+        .btn-sm { padding: 6px 12px; font-size: 13px; }
+
+        .logo-url-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-primary);
+            margin-top: 8px;
+        }
+
+        .logo-url-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .toast.show { transform: translateX(0); }
+        .toast-success { background: var(--success); }
+        .toast-error { background: var(--danger); }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .logo-preview-area { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- 侧边栏 -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>仪表板</span>
+                    </a>
+                    <a href="case-management.html" class="cms-nav-item" data-section="cases">
+                        <i class="fas fa-trophy"></i>
+                        <span>案例管理</span>
+                    </a>
+                    <a href="index.html" class="cms-nav-item" data-section="pages">
+                        <i class="fas fa-file-alt"></i>
+                        <span>页面管理</span>
+                    </a>
+                    <a href="nav-management.html" class="cms-nav-item" data-section="nav">
+                        <i class="fas fa-bars"></i>
+                        <span>导航菜单</span>
+                    </a>
+                    <a href="components/news/article-list.html" class="cms-nav-item" data-section="articles">
+                        <i class="fas fa-newspaper"></i>
+                        <span>文章管理</span>
+                    </a>
+                    <a href="faq-management.html" class="cms-nav-item" data-section="faq">
+                        <i class="fas fa-question-circle"></i>
+                        <span>FAQ管理</span>
+                    </a>
+                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>
+                    
+                    <a href="logo-settings.html" class="cms-nav-item active" data-section="logo">
+                        <i class="fas fa-image"></i>
+                        <span>Logo设置</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容 -->
+        <main class="cms-main">
+            <header class="cms-header">
+                <h1 class="cms-header-title">Logo设置</h1>
+            </header>
+
+            <div class="cms-content">
+                <!-- 提示信息 -->
+                <div class="logo-card" style="background:#eff6ff;border:1px solid #bfdbfe;">
+                    <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#1e40af;">
+                        <i class="fas fa-info-circle"></i>
+                        <span>在此管理网站的Logo图片。上传后请<a href="../index.html" target="_blank" style="color:#2563eb;">访问前台</a>查看效果。</span>
+                    </div>
+                </div>
+
+                <!-- 主Logo（页眉） -->
+                <div class="logo-card" id="card-header_logo">
+                    <div class="logo-card-header">
+                        <i class="fas fa-pen-nib"></i>
+                        <div>
+                            <h3>主Logo <span style="font-size:12px;color:var(--text-secondary);font-weight:400;">（网站左上角页眉Logo）</span></h3>
+                            <p>推荐尺寸：200x60px 以内，PNG格式（透明背景最佳）</p>
+                        </div>
+                    </div>
+                    <div class="logo-preview-area" id="preview-header_logo">
+                        <div class="logo-preview" id="img-preview-header_logo">
+                            <img src="" alt="主Logo预览" style="display:none;">
+                            <div class="logo-placeholder">暂无Logo</div>
+                        </div>
+                        <div class="logo-form">
+                            <div class="form-group">
+                                <label>上传新Logo</label>
+                                <div class="file-input-wrapper">
+                                    <button class="btn btn-outline btn-sm" onclick="document.getElementById('file-header_logo').click()">
+                                        <i class="fas fa-upload"></i> 选择文件
+                                    </button>
+                                    <span id="file-name-header_logo" style="font-size:13px;color:var(--text-secondary);">未选择文件</span>
+                                </div>
+                                <input type="file" id="file-header_logo" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" onchange="handleFileSelect('header_logo', this)">
+                            </div>
+                            <input type="text" class="logo-url-input" id="url-header_logo" placeholder="或输入图片URL" onchange="onUrlChange('header_logo')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部Logo -->
+                <div class="logo-card" id="card-footer_logo">
+                    <div class="logo-card-header">
+                        <i class="fas fa-list-alt"></i>
+                        <div>
+                            <h3>底部Logo <span style="font-size:12px;color:var(--text-secondary);font-weight:400;">（网站底部Footer Logo）</span></h3>
+                            <p>推荐尺寸：200x60px，建议使用白色/浅色版本以适配深色背景</p>
+                        </div>
+                    </div>
+                    <div class="logo-preview-area" id="preview-footer_logo">
+                        <div class="logo-preview" id="img-preview-footer_logo">
+                            <img src="" alt="底部Logo预览" style="display:none;">
+                            <div class="logo-placeholder">暂无Logo</div>
+                        </div>
+                        <div class="logo-form">
+                            <div class="form-group">
+                                <label>上传新Logo</label>
+                                <div class="file-input-wrapper">
+                                    <button class="btn btn-outline btn-sm" onclick="document.getElementById('file-footer_logo').click()">
+                                        <i class="fas fa-upload"></i> 选择文件
+                                    </button>
+                                    <span id="file-name-footer_logo" style="font-size:13px;color:var(--text-secondary);">未选择文件</span>
+                                </div>
+                                <input type="file" id="file-footer_logo" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" onchange="handleFileSelect('footer_logo', this)">
+                            </div>
+                            <input type="text" class="logo-url-input" id="url-footer_logo" placeholder="或输入图片URL" onchange="onUrlChange('footer_logo')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favicon -->
+                <div class="logo-card" id="card-favicon">
+                    <div class="logo-card-header">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h3>Favicon <span style="font-size:12px;color:var(--text-secondary);font-weight:400;">（浏览器标签页图标）</span></h3>
+                            <p>推荐尺寸：32x32px，ICO或PNG格式</p>
+                        </div>
+                    </div>
+                    <div class="logo-preview-area" id="preview-favicon">
+                        <div class="logo-preview" id="img-preview-favicon" style="width:60px;height:60px;">
+                            <img src="" alt="Favicon预览" style="display:none;">
+                            <div class="logo-placeholder">暂无</div>
+                        </div>
+                        <div class="logo-form">
+                            <div class="form-group">
+                                <label>上传新Favicon</label>
+                                <div class="file-input-wrapper">
+                                    <button class="btn btn-outline btn-sm" onclick="document.getElementById('file-favicon').click()">
+                                        <i class="fas fa-upload"></i> 选择文件
+                                    </button>
+                                    <span id="file-name-favicon" style="font-size:13px;color:var(--text-secondary);">未选择文件</span>
+                                </div>
+                                <input type="file" id="file-favicon" accept="image/png,image/jpeg,image/gif,image/x-icon,image/vnd.microsoft.icon" onchange="handleFileSelect('favicon', this)">
+                            </div>
+                            <input type="text" class="logo-url-input" id="url-favicon" placeholder="或输入图片URL" onchange="onUrlChange('favicon')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 后台Logo -->
+                <div class="logo-card" id="card-admin_logo">
+                    <div class="logo-card-header">
+                        <i class="fas fa-lock"></i>
+                        <div>
+                            <h3>后台Logo <span style="font-size:12px;color:var(--text-secondary);font-weight:400;">（CMS管理后台侧边栏Logo）</span></h3>
+                            <p>推荐尺寸：120x40px</p>
+                        </div>
+                    </div>
+                    <div class="logo-preview-area" id="preview-admin_logo">
+                        <div class="logo-preview" id="img-preview-admin_logo">
+                            <img src="" alt="后台Logo预览" style="display:none;">
+                            <div class="logo-placeholder">暂无Logo</div>
+                        </div>
+                        <div class="logo-form">
+                            <div class="form-group">
+                                <label>上传新Logo</label>
+                                <div class="file-input-wrapper">
+                                    <button class="btn btn-outline btn-sm" onclick="document.getElementById('file-admin_logo').click()">
+                                        <i class="fas fa-upload"></i> 选择文件
+                                    </button>
+                                    <span id="file-name-admin_logo" style="font-size:13px;color:var(--text-secondary);">未选择文件</span>
+                                </div>
+                                <input type="file" id="file-admin_logo" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" onchange="handleFileSelect('admin_logo', this)">
+                            </div>
+                            <input type="text" class="logo-url-input" id="url-admin_logo" placeholder="或输入图片URL" onchange="onUrlChange('admin_logo')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-bar">
+                    <button class="btn btn-outline" onclick="resetAll()">
+                        <i class="fas fa-undo"></i> 重置
+                    </button>
+                    <button class="btn btn-primary" onclick="saveAll()" id="btn-save">
+                        <i class="fas fa-save"></i> 保存所有设置
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+    const API_BASE = 'api';
+    
+    // 当前Logo设置缓存
+    let currentSettings = {};
+    // 追踪每个logo是否有未保存的变化
+    let pendingChanges = {};
+
+    // 页面加载时获取当前设置
+    document.addEventListener('DOMContentLoaded', loadSettings);
+
+    function loadSettings() {
+        fetch(API_BASE + '/logo-settings.php')
+            .then(r => r.json())
+            .then(res => {
+                if (res.code === 0 && res.data) {
+                    currentSettings = res.data;
+                    renderSettings(currentSettings);
+                }
+            })
+            .catch(err => {
+                console.error('加载Logo设置失败:', err);
+                showToast('加载Logo设置失败', 'error');
+            });
+    }
+
+    /**
+     * 将存储路径转换为后台预览路径
+     * 存储路径：./uploads/logo/xxx.png（相对于网站根目录）
+     * 预览路径：../uploads/logo/xxx.png（相对于admin/目录）
+     */
+    function toPreviewUrl(url) {
+        if (!url) return '';
+        // 如果以 ./ 开头，替换为 ../ （从admin/目录回退到根目录）
+        if (url.indexOf('./') === 0) {
+            return '..' + url.substring(1);
+        }
+        return url;
+    }
+
+    function renderSettings(settings) {
+        const fields = ['header_logo', 'footer_logo', 'favicon', 'admin_logo'];
+        fields.forEach(field => {
+            const url = settings[field] || '';
+            document.getElementById('url-' + field).value = url;
+            updatePreview(field, toPreviewUrl(url));
+        });
+    }
+
+    function updatePreview(field, url) {
+        const preview = document.getElementById('img-preview-' + field);
+        const placeholder = preview.querySelector('.logo-placeholder');
+        const img = preview.querySelector('img');
+        const area = document.getElementById('preview-' + field);
+        
+        if (url && url.trim()) {
+            img.src = url;
+            img.style.display = 'block';
+            if (placeholder) placeholder.style.display = 'none';
+            area.classList.add('has-logo');
+        } else {
+            img.style.display = 'none';
+            if (placeholder) placeholder.style.display = 'block';
+            area.classList.remove('has-logo');
+        }
+    }
+
+    function handleFileSelect(field, input) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        const label = document.getElementById('file-name-' + field);
+        label.textContent = file.name + ' (' + formatFileSize(file.size) + ')';
+        
+        // 自动上传
+        uploadFile(field, file);
+    }
+
+    function uploadFile(field, file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        const btn = document.querySelector('#card-' + field + ' .btn-outline');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="loading-spinner"></span> 上传中...';
+        btn.disabled = true;
+        
+        fetch(API_BASE + '/upload-logo.php', { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(res => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                if (res.code === 0 && res.data && res.data.url) {
+                    // 存储相对于网站根目录的路径，确保前台页面能正确显示
+                    const storeUrl = './' + res.data.url;
+                    // 预览时使用相对于后台页面的路径
+                    const previewUrl = '../' + res.data.url;
+                    document.getElementById('url-' + field).value = storeUrl;
+                    updatePreview(field, previewUrl);
+                    currentSettings[field] = storeUrl;
+                    pendingChanges[field] = true;
+                    showToast(field === 'favicon' ? 'Favicon' : 'Logo' + '上传成功，请点击保存', 'success');
+                } else {
+                    showToast('上传失败: ' + (res.msg || '未知错误'), 'error');
+                }
+            })
+            .catch(err => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showToast('上传失败: ' + err.message, 'error');
+            });
+    }
+
+    function onUrlChange(field) {
+        const url = document.getElementById('url-' + field).value.trim();
+        if (url) {
+            // 手动输入时，输入的路径存储为原始值，预览用转换后的路径
+            updatePreview(field, toPreviewUrl(url));
+            currentSettings[field] = url;
+            pendingChanges[field] = true;
+        } else {
+            updatePreview(field, '');
+            currentSettings[field] = '';
+            pendingChanges[field] = true;
+        }
+    }
+
+    function saveAll() {
+        const btn = document.getElementById('btn-save');
+        btn.innerHTML = '<span class="loading-spinner"></span> 保存中...';
+        btn.disabled = true;
+        
+        const fields = ['header_logo', 'footer_logo', 'favicon', 'admin_logo'];
+        const settings = {};
+        fields.forEach(f => {
+            settings[f] = document.getElementById('url-' + f).value.trim();
+        });
+        
+        fetch(API_BASE + '/logo-settings.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settings)
+        })
+        .then(r => r.json())
+        .then(res => {
+            btn.innerHTML = '<i class="fas fa-save"></i> 保存所有设置';
+            btn.disabled = false;
+            
+            if (res.code === 0) {
+                currentSettings = res.data || settings;
+                pendingChanges = {};
+                showToast('Logo设置已保存成功', 'success');
+            } else {
+                showToast('保存失败: ' + (res.msg || '未知错误'), 'error');
+            }
+        })
+        .catch(err => {
+            btn.innerHTML = '<i class="fas fa-save"></i> 保存所有设置';
+            btn.disabled = false;
+            showToast('保存失败: ' + err.message, 'error');
+        });
+    }
+
+    function resetAll() {
+        if (Object.keys(pendingChanges).length > 0) {
+            if (!confirm('有未保存的更改，确定要重置吗？')) return;
+        }
+        renderSettings(currentSettings);
+        pendingChanges = {};
+        ['header_logo', 'footer_logo', 'favicon', 'admin_logo'].forEach(f => {
+            document.getElementById('file-name-' + f).textContent = '未选择文件';
+            const fileInput = document.getElementById('file-' + f);
+            if (fileInput) fileInput.value = '';
+        });
+        showToast('已重置为已保存的设置', 'success');
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + 'B';
+        if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + 'KB';
+        return (bytes/(1024*1024)).toFixed(1) + 'MB';
+    }
+
+    function showToast(msg, type) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.className = 'toast toast-' + type + ' show';
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    </script>
+</body>
+</html>

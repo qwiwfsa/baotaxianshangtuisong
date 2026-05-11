@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑文章 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TinyMCE 富文本编辑器 (免API Key版本) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        
+        /* 头部 */
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 600; text-decoration: none; color: white; }
+        .header-right { display: flex; gap: 12px; }
+        .header-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; border: none; }
+        .header-btn:hover { background: rgba(255,255,255,0.2); }
+        .header-btn.success { background: #10b981; }
+        .header-btn.success:hover { background: #059669; }
+        
+        /* 主内容 */
+        .main { padding: 88px 24px 24px; max-width: 1200px; margin: 0 auto; }
+        
+        /* 表单样式 */
+        .form-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .form-section-title { font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 8px; }
+        .form-section-title i { color: #3b82f6; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 8px; }
+        .form-label .required { color: #ef4444; margin-left: 4px; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s; font-family: inherit; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        
+        .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        
+        /* 图片上传 */
+        .image-upload-area { border: 2px dashed #d1d5db; border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; background: #f9fafb; }
+        .image-upload-area:hover { border-color: #3b82f6; background: #eff6ff; }
+        .image-upload-area i { font-size: 32px; color: #9ca3af; margin-bottom: 8px; }
+        .image-upload-area p { font-size: 14px; color: #6b7280; }
+        .image-preview { max-width: 100%; max-height: 200px; border-radius: 8px; margin-top: 12px; display: block; }
+        
+        /* 开关 */
+        .switch-group { display: flex; align-items: center; gap: 12px; }
+        .switch { position: relative; width: 48px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #d1d5db; transition: 0.3s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; transition: 0.3s; border-radius: 50%; }
+        input:checked + .slider { background: #3b82f6; }
+        input:checked + .slider:before { transform: translateX(24px); }
+        
+        /* 底部操作栏 */
+        .editor-footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; z-index: 90; }
+        .footer-left { font-size: 14px; color: #6b7280; }
+        .footer-right { display: flex; gap: 12px; }
+        .btn { padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-secondary { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+        
+        /* 提示消息 */
+        .toast { position: fixed; top: 80px; right: 24px; padding: 16px 20px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px; z-index: 300; transform: translateX(150%); transition: transform 0.3s ease; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        
+        /* 加载状态 */
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.9); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .loading-overlay.show { display: flex; }
+        .loading-content { text-align: center; }
+        .loading-spinner { width: 48px; height: 48px; border: 3px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* TinyMCE */
+        .tox-tinymce { border-radius: 8px !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="./article-list.html" class="logo">
+            <i class="fas fa-arrow-left"></i>
+            <span id="pageTitle">新建文章</span>
+        </a>
+        <div class="header-right">
+            <button class="header-btn" onclick="saveAsDraft()">
+                <i class="fas fa-save"></i>
+                <span>保存草稿</span>
+            </button>
+            <button class="header-btn success" onclick="publishArticle()">
+                <i class="fas fa-upload"></i>
+                <span>发布文章</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- 基本信息 -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-info-circle"></i>
+                基本信息
+            </h3>
+            <div class="form-group">
+                <label class="form-label">文章标题 <span class="required">*</span></label>
+                <input type="text" class="form-input" id="title" placeholder="请输入文章标题">
+            </div>
+            <div class="form-group">
+                <label class="form-label">文章摘要</label>
+                <textarea class="form-textarea" id="summary" rows="3" placeholder="请输入文章摘要，留空将自动从内容提取"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">文章分类</label>
+                    <select class="form-select" id="category">
+                        <option value="0">请选择分类</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">排序</label>
+                    <input type="number" class="form-input" id="sortOrder" value="0" placeholder="数字越小越靠前">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">封面图片</label>
+                <div class="image-upload-area" id="uploadArea" onclick="document.getElementById('coverInput').click()">
+                    <div id="uploadPlaceholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>点击上传封面图片</p>
+                    </div>
+                    <img id="coverPreview" class="image-preview" style="display: none;">
+                </div>
+                <input type="file" id="coverInput" accept="image/*" style="display: none;">
+                <input type="hidden" id="coverImage">
+            </div>
+            <div class="form-group">
+                <label class="form-label">置顶文章</label>
+                <div class="switch-group">
+                    <label class="switch">
+                        <input type="checkbox" id="isTop">
+                        <span class="slider"></span>
+                    </label>
+                    <span style="font-size: 14px; color: #6b7280;">置顶后文章将显示在列表最前面</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文章内容 -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-edit"></i>
+                文章内容
+            </h3>
+            <div class="form-group">
+                <textarea id="contentEditor" rows="15"></textarea>
+            </div>
+        </div>
+
+        <!-- SEO设置 -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-search"></i>
+                SEO设置
+            </h3>
+            <div class="form-group">
+                <label class="form-label">SEO标题</label>
+                <input type="text" class="form-input" id="seoTitle" placeholder="搜索引擎显示的标题">
+            </div>
+            <div class="form-group">
+                <label class="form-label">SEO关键词</label>
+                <input type="text" class="form-input" id="seoKeywords" placeholder="多个关键词用逗号分隔">
+            </div>
+            <div class="form-group">
+                <label class="form-label">SEO描述</label>
+                <textarea class="form-textarea" id="seoDescription" rows="3" placeholder="搜索引擎显示的描述"></textarea>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部操作栏 -->
+    <div class="editor-footer">
+        <div class="footer-left" id="saveStatus">
+            <i class="fas fa-circle"></i>
+            <span>未保存</span>
+        </div>
+        <div class="footer-right">
+            <button class="btn btn-secondary" onclick="cancelEdit()">
+                <i class="fas fa-times"></i>
+                取消
+            </button>
+            <button class="btn btn-primary" onclick="saveAsDraft()">
+                <i class="fas fa-save"></i>
+                保存草稿
+            </button>
+            <button class="btn btn-success" onclick="publishArticle()">
+                <i class="fas fa-upload"></i>
+                发布文章
+            </button>
+        </div>
+    </div>
+
+    <!-- 加载状态 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div>正在保存...</div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // 初始化TinyMCE中文语言包（必须在tinymce加载前，在addI18n之前需要tinymce已经加载）
+        // 先加载tinymce再立即设置中文
+        const origOnload = window.onload;
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof tinymce !== 'undefined') {
+                tinymce.addI18n('zh_CN', {
+                    "File": "文件", "Edit": "编辑", "Insert": "插入", "View": "查看",
+                    "Format": "格式", "Table": "表格", "Tools": "工具", "Help": "帮助",
+                    "Image": "图片", "Link": "链接", "Source code": "源代码",
+                    "OK": "确定", "Cancel": "取消", "Save": "保存", "Delete": "删除",
+                    "Cut": "剪切", "Copy": "复制", "Paste": "粘贴", "Select all": "全选",
+                    "Bold": "加粗", "Italic": "斜体", "Underline": "下划线",
+                    "Strikethrough": "删除线", "Remove formatting": "清除格式",
+                    "Format Painter": "格式刷",
+                    "Align left": "左对齐", "Align center": "居中",
+                    "Align right": "右对齐", "Justify": "两端对齐",
+                    "Numbered list": "编号列表", "Bulleted list": "项目列表",
+                    "Decrease indent": "减少缩进", "Increase indent": "增加缩进",
+                    "Font": "字体", "Font size": "字号",
+                    "Text color": "文字颜色", "Background color": "背景色",
+                    "Redo": "重做", "Undo": "撤销",
+                    "Superscript": "上标", "Subscript": "下标",
+                    "Insert/edit image": "插入/编辑图片", "Upload": "上传",
+                    "Browse for an image": "浏览图片", "Alternative description": "替代文本",
+                    "Dimensions": "尺寸", "Width": "宽度", "Height": "高度",
+                    "Insert/edit link": "插入/编辑链接", "Text to display": "显示文字",
+                    "Url": "网址", "Open link in...": "打开链接", "Target": "目标",
+                    "None": "无", "New window": "新窗口", "Remove link": "移除链接",
+                    "Insert table": "插入表格", "Rows": "行", "Columns": "列",
+                    "Cell padding": "单元格内边距", "Cell spacing": "单元格间距",
+                    "Border": "边框", "Alignment": "对齐", "Caption": "标题",
+                    "Style": "样式", "Search": "搜索", "Replace": "替换",
+                    "Find and replace": "查找替换", "Close": "关闭",
+                    "Insert template": "插入模板", "Templates": "模板",
+                    "Document properties": "文档属性", "No color": "无色",
+                    "Custom color": "自定义颜色", "More colors": "更多颜色",
+                    "No": "否", "Yes": "是", "Are you sure?": "确定吗？",
+                    "Warning": "警告", "Error": "错误",
+                    "Drop an image here": "将图片拖放到此处",
+                    "Restore last draft": "恢复上次草稿",
+                    "Special characters": "特殊字符", "Source": "来源",
+                    "Insert code": "插入代码", "Language": "语言",
+                    "Keyboard shortcuts": "快捷键", "Media": "媒体",
+                    "Horizontal line": "水平线", "Page break": "分页符",
+                    "Nonbreaking space": "不间断空格", "Anchor": "锚点",
+                    "Regular": "常规", "Bold": "粗体", "Italic": "斜体",
+                    "Underline": "下划线", "Strikethrough": "删除线",
+                    "Forecolor": "文字颜色", "Backcolor": "背景色",
+                    "Formats": "格式", "Blocks": "区块",
+                    "Paragraph": "段落", "div": "层", "pre": "预格式化",
+                    "code": "代码", "Heading 1": "标题1", "Heading 2": "标题2",
+                    "Heading 3": "标题3", "Heading 4": "标题4", "Heading 5": "标题5",
+                    "Heading 6": "标题6", "Preformatted": "预格式化",
+                    "Add to Dictionary": "添加到词典"
+                });
+            }
+        });
+    </script>
+    <script>
+        let articleId = null;
+        let tinymceEditor = null;
+        let isDirty = false;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', async function() {
+            if (localStorage.getItem('cms_logged_in') !== 'true') {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // 初始化富文本编辑器并等待完成
+            await initEditor();
+
+            // 加载分类
+            await loadCategories();
+
+            // 检查是否是编辑模式
+            const urlParams = new URLSearchParams(window.location.search);
+            articleId = urlParams.get('id');
+
+            if (articleId) {
+                document.getElementById('pageTitle').textContent = '编辑文章';
+                await loadArticle(articleId);
+            }
+
+            // 绑定输入事件
+            bindInputEvents();
+            
+            // 绑定上传事件 - 确保DOM完全加载后再绑定
+            setTimeout(bindUploadEvents, 100);
+        });
+
+        // 初始化富文本编辑器
+        function initEditor() {
+            return new Promise((resolve) => {
+                tinymce.init({
+                    selector: '#contentEditor',
+                    plugins: 'lists link image code table media paste fontsize fontfamily advlist directionality hr searchreplace visualblocks',
+                    toolbar: 'undo redo | formatselect | fontfamily fontsize | lineheight | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | table | link image media | code fullscreen',
+                    toolbar_mode: 'wrap',
+                    menubar: false,
+                    height: 800,
+                    branding: false,
+                    promotion: false,
+                    language: 'zh-CN',
+                    language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@23.7.1/langs/zh_CN.js',
+                    statusbar: true,
+                    elementpath: true,
+                    resize: true,
+                    block_formats: '段落=p;标题1=h1;标题2=h2;标题3=h3;标题4=h4;标题5=h5;标题6=h6;预格式化=pre',
+                    font_size_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px 48px',
+                    font_family_formats: '思源黑体=Noto Sans SC, Source Han Sans SC, "Noto Sans SC";苹方=PingFang SC, "PingFang SC";微软雅黑=Microsoft YaHei, "Microsoft YaHei";阿里巴巴普惠体=Alibaba PuHuiTi, "Alibaba PuHuiTi";鸿蒙字体=HarmonyOS Sans, "HarmonyOS Sans";宋体=SimSun, SimSun, serif;黑体=SimHei, SimHei, sans-serif;楷体=KaiTi, KaiTi, serif;仿宋=FangSong, FangSong, serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Georgia=georgia,palatino;Impact=impact,chicago;Tahoma=tahoma,arial,helvetica,sans-serif;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva',
+                    lineheight_formats: "1.2 1.4 1.5 1.6 1.8 2.0",
+                    content_style: [
+                        'body {',
+                        '  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;',
+                        '  font-size: 16px;',
+                        '  line-height: 1.8;',
+                        '  color: #374151;',
+                        '  padding: 24px;',
+                        '  margin: 0;',
+                        '}',
+                        'p {',
+                        '  margin: 0 0 20px 0;',
+                        '  line-height: 1.8;',
+                        '}',
+                        'h1 { font-size: 28px; font-weight: 600; margin: 40px 0 20px; line-height: 1.4; color: #1f2937; }',
+                        'h2 { font-size: 24px; font-weight: 600; margin: 40px 0 20px; line-height: 1.4; color: #1f2937; padding-bottom: 12px; border-bottom: 2px solid #e5e7eb; }',
+                        'h3 { font-size: 20px; font-weight: 600; margin: 32px 0 16px; line-height: 1.4; color: #1f2937; }',
+                        'h4 { font-size: 18px; font-weight: 600; margin: 28px 0 14px; line-height: 1.4; color: #1f2937; }',
+                        'h5, h6 { font-size: 16px; font-weight: 600; margin: 24px 0 12px; line-height: 1.4; color: #1f2937; }',
+                        'ul, ol { margin: 0 0 20px 0; padding-left: 24px; }',
+                        'li { margin-bottom: 8px; line-height: 1.8; }',
+                        'blockquote { margin: 20px 0; padding: 16px 20px; border-left: 4px solid #2563eb; background: #f8faff; color: #4b5563; font-style: italic; }',
+                        'table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }',
+                        'td, th { border: 1px solid #d1d5db; padding: 10px 14px; text-align: left; }',
+                        'th { background: #f9fafb; font-weight: 600; }',
+                        'img { max-width: 100%; height: auto; border-radius: 4px; }',
+                        'a { color: #2563eb; text-decoration: underline; }',
+                        'code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }'
+                    ].join('\n'),
+                    table_toolbar: 'tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | tablemergecells tablesplitcells | tabledelete',
+                    table_default_attributes: { border: "0" },
+                    paste_remove_styles: false,
+                    paste_remove_styles_if_webkit: false,
+                    paste_strip_class_attributes: 'none',
+                    paste_retain_style_properties: true,
+                    paste_preprocess: function(plugin, args) {
+                        args.content = args.content.replace(/<br\s*\/?>\s*<br\s*\/?>/gi, '<p></p>');
+                        args.content = args.content.replace(/<(meta|link|style|script)[^>]*>[\s\S]*?<\/\1>/gi, '');
+                    },
+                    images_upload_handler: async function(blobInfo) {
+                        var formData = new FormData();
+                        formData.append('file', blobInfo.blob(), blobInfo.filename());
+                        try {
+                            var response = await fetch('../../api/upload.php', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            var result = await response.json();
+                            if (result.success === true && result.data && result.data.url) {
+                                return result.data.url;
+                            } else {
+                                console.log('上传失败:', result.message || '未知错误');
+                                return blobInfo.blobUri();
+                            }
+                        } catch (error) {
+                            console.log('上传失败:', error.message);
+                            return blobInfo.blobUri();
+                        }
+                    },
+                    automatic_uploads: true,
+                    file_picker_types: 'image',
+                    extended_valid_elements: 'span[*],i[*],em[*]',
+                    valid_elements: '*[*]',
+                    extended_elements: '*[*]',
+                    setup: function(editor) {
+                        tinymceEditor = editor;
+                        editor.on('init', function() {
+                            resolve(editor);
+                        });
+                        // 自定义文件选择器 — 支持视频上传
+                        editor.ui.registry.addButton('customMediaButton', {
+                            text: '上传视频',
+                            icon: 'video',
+                            onAction: function() {
+                                var input = document.createElement('input');
+                                input.setAttribute('type', 'file');
+                                input.setAttribute('accept', 'video/mp4,video/webm,video/ogg');
+                                input.onchange = function() {
+                                    var file = this.files[0];
+                                    var formData = new FormData();
+                                    formData.append('file', file, file.name);
+                                    fetch('../../api/upload.php', {
+                                        method: 'POST',
+                                        body: formData
+                                    }).then(function(resp) { return resp.json(); })
+                                    .then(function(result) {
+                                        if (result.success && result.data && result.data.url) {
+                                            editor.insertContent('<video src="' + result.data.url + '" controls width="100%" style="max-width: 100%;"></video>');
+                                        } else {
+                                            alert('视频上传失败: ' + (result.message || '未知错误'));
+                                        }
+                                    }).catch(function(err) {
+                                        alert('视频上传出错: ' + err.message);
+                                    });
+                                };
+                                input.click();
+                            }
+                        });
+                    },
+                    external_plugins: {}
+                });
+            });
+        }
+
+        // 加载分类
+        async function loadCategories() {
+            const select = document.getElementById('category');
+            
+            // 从API加载（唯一数据源）
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+                
+                const response = await fetch('../../api/news/categories.php', {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                const result = await response.json();
+                
+                if (result.success && result.data && result.data.length > 0) {
+                    // 清空现有选项（保留第一个"请选择分类"）
+                    while (select.options.length > 1) {
+                        select.remove(1);
+                    }
+                    
+                    result.data.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.id;
+                        option.textContent = cat.name;
+                        select.appendChild(option);
+                    });
+                    
+                    console.log('从API加载分类成功');
+                } else {
+                    console.log('API返回空分类数据');
+                }
+            } catch (error) {
+                console.log('API加载分类失败:', error);
+            }
+        }
+
+        // 加载文章详情 - 强制从MySQL数据库cms_articles表读取
+        // 禁止：从localStorage读取文章数据
+        async function loadArticle(id) {
+            showLoading('正在加载文章...');
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(`../../api/news/detail.php?id=${id}`, {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                // 检查响应状态
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API返回错误:', response.status, errorText);
+                    throw new Error(`服务器错误 (${response.status})`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const article = result.data;
+                    document.getElementById('title').value = article.title;
+                    document.getElementById('summary').value = article.summary || '';
+                    document.getElementById('category').value = article.category_id || 0;
+                    document.getElementById('sortOrder').value = article.sort_order || 0;
+                    document.getElementById('isTop').checked = article.is_top == 1;
+                    document.getElementById('seoTitle').value = article.seo_title || '';
+                    document.getElementById('seoKeywords').value = article.seo_keywords || '';
+                    document.getElementById('seoDescription').value = article.seo_description || '';
+                    
+                    if (article.cover_image) {
+                        document.getElementById('coverImage').value = article.cover_image;
+                        
+                        // API返回/开头的绝对路径（如 /uploads/xxx.jpg），需要补上网站子路径
+                        let previewSrc = article.cover_image;
+                        if (previewSrc.startsWith('/')) {
+                            // 绝对路径，补上网站根目录前缀
+                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+                            previewSrc = basePath.replace(/\/$/, '') + previewSrc;
+                        } else if (!previewSrc.startsWith('http') && !previewSrc.startsWith('data:')) {
+                            // 兼容旧数据：补上uploads目录
+                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+                            previewSrc = basePath.replace(/\/$/, '') + '/uploads/' + previewSrc;
+                        }
+                        
+                        // 隐藏占位符，显示图片
+                        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+                        if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
+                        
+                        const coverPreview = document.getElementById('coverPreview');
+                        coverPreview.src = previewSrc;
+                        coverPreview.style.display = 'block';
+                        coverPreview.style.margin = '0 auto';
+                        coverPreview.style.maxHeight = '200px';
+                    }
+                    
+                    // 等待编辑器初始化完成后再设置内容
+                    const setEditorContent = () => {
+                        if (tinymceEditor) {
+                            tinymceEditor.setContent(article.content || '');
+                        } else {
+                            // 如果编辑器还没初始化，等待一下再试
+                            setTimeout(setEditorContent, 100);
+                        }
+                    };
+                    setEditorContent();
+                    
+                    updateSaveStatus('saved');
+                }
+            } catch (error) {
+                console.error('API加载文章失败:', error);
+                
+                let errorMsg = '加载文章失败: ' + (error.message || '网络错误');
+                if (error.name === 'AbortError') {
+                    errorMsg = '加载超时，请检查服务器是否正常运行';
+                }
+                showToast(errorMsg, 'error');
+            }
+            
+            hideLoading();
+        }
+
+        // 验证图片文件
+        function validateImageFile(file) {
+            // 检查文件类型
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                return { valid: false, message: '只支持 JPG、PNG、GIF、WebP 格式的图片' };
+            }
+            
+            // 检查文件大小 (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                return { valid: false, message: '图片大小不能超过5MB' };
+            }
+            
+            // 检查文件是否为空
+            if (file.size === 0) {
+                return { valid: false, message: '图片文件为空' };
+            }
+            
+            return { valid: true };
+        }
+
+        // 处理封面上传
+        async function handleCoverUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // 验证文件
+            const validation = validateImageFile(file);
+            if (!validation.valid) {
+                showToast(validation.message, 'error');
+                return;
+            }
+
+            // 获取DOM元素
+            const coverImageInput = document.getElementById('coverImage');
+            const coverPreview = document.getElementById('coverPreview');
+            const uploadArea = document.querySelector('.image-upload-area');
+            
+            if (!coverImageInput || !coverPreview || !uploadArea) {
+                showToast('页面元素加载失败，请刷新页面重试', 'error');
+                console.error('DOM元素缺失:', { coverImageInput, coverPreview, uploadArea });
+                return;
+            }
+
+            // 显示上传状态 - 使用独立的上传指示器，不替换整个区域
+            let uploadIndicator = uploadArea.querySelector('.upload-indicator');
+            if (!uploadIndicator) {
+                uploadIndicator = document.createElement('div');
+                uploadIndicator.className = 'upload-indicator';
+                uploadIndicator.style.cssText = 'position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.9); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;';
+                uploadArea.style.position = 'relative';
+                uploadArea.appendChild(uploadIndicator);
+            }
+            uploadIndicator.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 32px; color: #3b82f6;"></i><p style="margin-top: 12px; color: #6b7280;">正在上传...</p>';
+            uploadIndicator.style.display = 'flex';
+
+            let uploaded = false;
+            let uploadTimeout;
+
+            try {
+                // 尝试上传到服务器（使用PHP上传接口）
+                console.log('开始上传图片到服务器...');
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('../../api/upload-simple.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                console.log('服务器响应:', response.status);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('上传结果:', result);
+                    
+                    if (result.success && result.data && result.data.url) {
+                        const imageUrl = result.data.url;
+                        coverImageInput.value = imageUrl;
+                        // 预览路径：补上网站子路径
+                        let previewUrl = imageUrl;
+                        if (previewUrl.startsWith('/')) {
+                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+                            previewUrl = basePath.replace(/\/$/, '') + previewUrl;
+                        } else if (!previewUrl.startsWith('http') && !previewUrl.startsWith('data:')) {
+                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+                            previewUrl = basePath.replace(/\/$/, '') + '/' + previewUrl;
+                        }
+                        
+                        // 隐藏占位符，显示图片
+                        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+                        if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
+                        
+                        coverPreview.src = previewUrl;
+                        coverPreview.style.display = 'block';
+                        coverPreview.style.margin = '0 auto';
+                        coverPreview.style.maxHeight = '200px';
+                        isDirty = true;
+                        updateSaveStatus('unsaved');
+                        uploaded = true;
+                        showToast('图片上传成功', 'success');
+                        
+                        // 隐藏上传指示器
+                        if (uploadIndicator) uploadIndicator.style.display = 'none';
+                        return; // 成功上传，直接返回
+                    }
+                }
+                
+                // 如果到这里，说明服务器上传失败
+                const errorText = await response.text();
+                console.error('服务器上传失败:', errorText);
+                throw new Error('服务器上传失败: ' + errorText);
+            } catch (error) {
+                console.error('服务器上传失败:', error);
+                
+                // 尝试使用Base64本地存储作为后备
+                try {
+                    showToast('服务器上传失败，正在使用本地存储...', 'info');
+                    
+                    const base64 = await fileToBase64(file);
+                    
+                    // 压缩图片以减小存储大小
+                    const compressed = await compressBase64Image(base64, 800, 0.7);
+                    
+                    coverImageInput.value = compressed;
+                    coverPreview.src = compressed;
+                    coverPreview.style.display = 'block';
+                    isDirty = true;
+                    updateSaveStatus('unsaved');
+                    uploaded = true;
+                    
+                    showToast('图片已保存到本地（Base64模式）', 'success');
+                } catch (base64Error) {
+                    console.error('Base64转换失败:', base64Error);
+                    showToast('图片上传失败: ' + error.message, 'error');
+                    showToast('提示：您可以不上传封面图片直接保存文章', 'info');
+                }
+            }
+            
+            // 隐藏上传指示器（服务器上传成功时）
+            if (uploadIndicator) {
+                uploadIndicator.style.display = 'none';
+            }
+        }
+        
+        // 压缩Base64图片
+        function compressBase64Image(base64, maxWidth, quality) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > maxWidth) {
+                        height = (maxWidth / width) * height;
+                        width = maxWidth;
+                    }
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const compressed = canvas.toDataURL('image/jpeg', quality);
+                    resolve(compressed);
+                };
+                img.onerror = reject;
+                img.src = base64;
+            });
+        }
+
+        // 文件转Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(new Error('文件读取失败'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 绑定上传事件
+        function bindUploadEvents() {
+            console.log('绑定上传事件...');
+            const uploadArea = document.querySelector('.image-upload-area');
+            const fileInput = document.getElementById('coverInput');
+            
+            console.log('uploadArea:', uploadArea);
+            console.log('fileInput:', fileInput);
+            
+            if (uploadArea && fileInput) {
+                // 使用 onclick 直接绑定，确保每次只有一个事件处理器
+                uploadArea.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('上传区域被点击');
+                    fileInput.click();
+                };
+                
+                // 绑定文件选择事件
+                fileInput.onchange = function(e) {
+                    console.log('文件被选择:', e.target.files);
+                    handleCoverUpload(e);
+                };
+                
+                console.log('上传事件绑定成功');
+            } else {
+                console.error('无法绑定上传事件：元素不存在');
+            }
+        }
+
+        // 绑定输入事件
+        function bindInputEvents() {
+            document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(input => {
+                input.addEventListener('input', () => {
+                    isDirty = true;
+                    updateSaveStatus('unsaved');
+                });
+            });
+            
+            document.getElementById('isTop').addEventListener('change', () => {
+                isDirty = true;
+                updateSaveStatus('unsaved');
+            });
+        }
+
+        // 更新保存状态
+        function updateSaveStatus(status) {
+            const statusEl = document.getElementById('saveStatus');
+            if (status === 'saved') {
+                statusEl.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i><span>已保存</span>';
+            } else if (status === 'unsaved') {
+                statusEl.innerHTML = '<i class="fas fa-circle" style="color: #f59e0b;"></i><span>有未保存的更改</span>';
+            } else if (status === 'saving') {
+                statusEl.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: #3b82f6;"></i><span>正在保存...</span>';
+            }
+        }
+
+        // 保存为草稿
+        function saveAsDraft() {
+            saveArticle('draft');
+        }
+
+        // 发布文章
+        function publishArticle() {
+            const title = document.getElementById('title').value.trim();
+            if (!title) {
+                showToast('请输入文章标题', 'error');
+                document.getElementById('title').focus();
+                return;
+            }
+            
+            if (confirm('确定要发布这篇文章吗？')) {
+                saveArticle('published');
+            }
+        }
+
+        // 验证图片数据是否有效
+        function isValidImageData(imageData) {
+            if (!imageData) return false;
+            if (typeof imageData !== 'string') return false;
+            // 检查是否是有效的Base64图片
+            if (imageData.startsWith('data:image')) {
+                // 检查Base64数据是否完整（至少要有头部和一部分数据）
+                return imageData.length > 100;
+            }
+            // 检查是否是有效的URL
+            if (imageData.startsWith('http://') || imageData.startsWith('https://') || imageData.startsWith('/')) {
+                return imageData.length > 10;
+            }
+            // 检查是否是相对路径
+            if (imageData.startsWith('images/')) {
+                return true;
+            }
+            return false;
+        }
+
+        // 保存文章 - 强制保存到MySQL数据库cms_articles表
+        // 禁止：任何localStorage保存逻辑
+        // 所有文章数据必须通过API写入数据库
+        async function saveArticle(status) {
+            const title = document.getElementById('title').value.trim();
+            if (!title) {
+                showToast('请输入文章标题', 'error');
+                document.getElementById('title').focus();
+                return;
+            }
+
+            showLoading('正在保存...');
+            updateSaveStatus('saving');
+
+            // 获取编辑器内容
+            let editorContent = '';
+            if (tinymceEditor) {
+                editorContent = tinymceEditor.getContent();
+                console.log('编辑器内容长度:', editorContent.length);
+            }
+
+            // 获取封面图片
+            const coverImageInput = document.getElementById('coverImage');
+            let coverImageValue = coverImageInput ? coverImageInput.value : '';
+            // 修复路径：将 ../../../uploads/ 转换为 uploads/ 保存到数据库
+            if (coverImageValue && coverImageValue.includes('uploads/')) {
+                const uploadsIndex = coverImageValue.indexOf('uploads/');
+                coverImageValue = coverImageValue.substring(uploadsIndex);
+            }
+            console.log('封面图片值长度:', coverImageValue ? coverImageValue.length : 0);
+
+            // 正确处理文章ID：强制转为整数，与数据库cms_articles表自增ID保持一致
+            let processedId = 0;
+            if (articleId) {
+                const idStr = String(articleId).trim();
+                // 只处理纯数字ID（来自数据库cms_articles表的自增ID）
+                if (/^\d+$/.test(idStr)) {
+                    processedId = parseInt(idStr, 10);
+                }
+                // 注意：不允许字符串ID，所有文章ID必须为数据库自增整数
+            }
+            
+            // 修复编辑器内容中的图片路径：相对路径转绝对路径
+            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+            editorContent = editorContent.replace(
+                /src="(\.\.\/|\.\.\/\.\.\/|\.\.\/\.\.\/\.\.\/)(uploads\/)/g,
+                'src="' + basePath.replace(/\/$/, '') + '/$2'
+            );
+            
+            const data = {
+                id: processedId,
+                title: title,
+                summary: document.getElementById('summary').value,
+                content: editorContent,
+                category_id: parseInt(document.getElementById('category').value) || 0,
+                cover_image: coverImageValue,
+                status: status,
+                is_top: document.getElementById('isTop').checked ? 1 : 0,
+                sort_order: parseInt(document.getElementById('sortOrder').value) || 0,
+                seo_title: document.getElementById('seoTitle').value,
+                seo_keywords: document.getElementById('seoKeywords').value,
+                seo_description: document.getElementById('seoDescription').value
+            };
+
+            console.log('准备发送的数据:', {
+                ...data,
+                cover_image: data.cover_image ? '(图片数据，长度:' + data.cover_image.length + ')' : '(无图片)'
+            });
+
+            try {
+                const apiUrl = '../../api/news/save.php';
+                console.log('请求API:', apiUrl);
+                console.log('当前页面路径:', window.location.href);
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5秒超时
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+
+                console.log('响应状态:', response.status, response.statusText);
+
+                // 检查响应状态
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('服务器返回错误:', response.status, errorText);
+                    throw new Error(`服务器错误 (${response.status}): ${errorText.substring(0, 200)}`);
+                }
+
+                const result = await response.json();
+                console.log('服务器响应:', result);
+                
+                if (result.success) {
+                    articleId = result.data.id;
+                    isDirty = false;
+                    updateSaveStatus('saved');
+                    showToast(status === 'published' ? '文章发布成功' : '草稿保存成功', 'success');
+                    
+                    // 更新URL
+                    if (!window.location.search.includes('id=')) {
+                        window.history.replaceState({}, '', `?id=${articleId}`);
+                        document.getElementById('pageTitle').textContent = '编辑文章';
+                    }
+                } else {
+                    showToast(result.message || '保存失败', 'error');
+                    updateSaveStatus('unsaved');
+                }
+            } catch (error) {
+                console.error('API请求失败:', error);
+                
+                // 错误详情提示
+                let errorMsg = '保存失败: ' + error.message;
+                if (error.name === 'AbortError') {
+                    errorMsg = '保存超时，请检查服务器是否正常运行';
+                } else if (error.message && error.message.includes('Failed to fetch')) {
+                    errorMsg = '无法连接到服务器，请检查数据库和PHP服务是否正常运行';
+                }
+                
+                showToast(errorMsg, 'error');
+                updateSaveStatus('unsaved');
+                
+                // 提示用户手动重试
+                showToast('提示：请确认PHP和MySQL服务已启动，稍后重试', 'info');
+            } finally {
+                // 确保无论成功失败，都隐藏加载状态
+                hideLoading();
+            }
+        }
+
+        // 取消编辑
+        function cancelEdit() {
+            if (isDirty) {
+                if (!confirm('有未保存的更改，确定要离开吗？')) {
+                    return;
+                }
+            }
+            window.location.href = './article-list.html';
+        }
+
+        // 显示加载
+        function showLoading(text) {
+            document.querySelector('.loading-content div:last-child').textContent = text;
+            document.getElementById('loadingOverlay').classList.add('show');
+        }
+
+        // 隐藏加载
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 页面离开提示
+        window.addEventListener('beforeunload', function(e) {
+            if (isDirty) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveAsDraft();
+            }
+        });
+    </script>
+</body>
+</html>

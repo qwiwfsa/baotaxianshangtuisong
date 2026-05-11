@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分类管理 - CMS管理后台</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        
+        /* 头部 */
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 600; text-decoration: none; color: white; }
+        .header-right { display: flex; gap: 12px; }
+        .header-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; border: none; }
+        .header-btn:hover { background: rgba(255,255,255,0.2); }
+        .header-btn.primary { background: #10b981; border-color: #10b981; }
+        .header-btn.primary:hover { background: #059669; }
+        
+        /* 主内容 */
+        .main { padding: 88px 24px 24px; max-width: 1000px; margin: 0 auto; }
+        
+        /* 分类列表 */
+        .category-list { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden; }
+        .category-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }
+        .category-title { font-size: 18px; font-weight: 600; color: #1f2937; }
+        
+        .category-table { width: 100%; border-collapse: collapse; }
+        .category-table th { text-align: left; padding: 14px 24px; font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        .category-table td { padding: 16px 24px; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+        .category-table tr:last-child td { border-bottom: none; }
+        .category-table tr:hover { background: #f9fafb; }
+        
+        .category-name { font-weight: 500; color: #1f2937; }
+        .category-desc { color: #6b7280; font-size: 13px; margin-top: 4px; }
+        
+        .category-actions { display: flex; gap: 8px; }
+        .action-btn { padding: 6px 12px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .action-btn.edit { background: #eff6ff; color: #3b82f6; }
+        .action-btn.edit:hover { background: #dbeafe; }
+        .action-btn.delete { background: #fef2f2; color: #ef4444; }
+        .action-btn.delete:hover { background: #fee2e2; }
+        
+        /* 空状态 */
+        .empty-state { text-align: center; padding: 60px 20px; }
+        .empty-state i { font-size: 48px; color: #d1d5db; margin-bottom: 16px; }
+        .empty-state p { color: #6b7280; }
+        
+        /* 模态框 */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 12px; width: 90%; max-width: 450px; overflow: hidden; }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 20px; color: #6b7280; cursor: pointer; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 12px; }
+        
+        .form-group { margin-bottom: 16px; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-label .required { color: #ef4444; }
+        .form-input, .form-textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .form-input:focus, .form-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .form-textarea { min-height: 80px; resize: vertical; }
+        
+        .btn { padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        
+        /* 提示消息 */
+        .toast { position: fixed; top: 80px; right: 24px; padding: 16px 20px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px; z-index: 300; transform: translateX(150%); transition: transform 0.3s ease; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        
+        /* 加载状态 */
+        .loading { text-align: center; padding: 40px; color: #6b7280; }
+        .loading i { font-size: 24px; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* 排序箭头按钮 */
+        .sort-arrows { display: flex; gap: 4px; }
+        .sort-btn { 
+            width: 28px; 
+            height: 28px; 
+            border: 1px solid #d1d5db; 
+            border-radius: 4px; 
+            background: white; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .sort-btn:hover:not(.disabled) { background: #f3f4f6; border-color: #3b82f6; color: #3b82f6; }
+        .sort-btn.disabled { opacity: 0.3; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="article-list.html" class="logo">
+            <i class="fas fa-arrow-left"></i>
+            <span>分类管理</span>
+        </a>
+        <div class="header-right">
+            <button class="header-btn primary" onclick="openEditModal()">
+                <i class="fas fa-plus"></i>
+                <span>新建分类</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="category-list">
+            <div class="category-header">
+                <h2 class="category-title">文章分类</h2>
+            </div>
+            <div id="categoryTable">
+                <div class="loading"><i class="fas fa-spinner"></i> 加载中...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 编辑模态框 -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">新建分类</h3>
+                <button class="modal-close" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="categoryId">
+                <div class="form-group">
+                    <label class="form-label">分类名称 <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="categoryName" placeholder="请输入分类名称">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">分类描述</label>
+                    <textarea class="form-textarea" id="categoryDesc" placeholder="请输入分类描述（可选）"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">排序</label>
+                    <input type="number" class="form-input" id="categorySort" value="0" placeholder="数字越小越靠前">
+                </div>
+                <div class="form-group" style="border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px;">
+                    <label class="form-label" style="font-weight: 600; color: #1f2937; margin-bottom: 12px;">SEO设置 <span style="font-weight: 400; color: #9ca3af; font-size: 12px;">（可选）</span></label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SEO标题</label>
+                    <input type="text" class="form-input" id="categorySeoTitle" placeholder="分类页面标题标签（title）">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SEO关键词</label>
+                    <input type="text" class="form-input" id="categorySeoKeywords" placeholder="多个关键词用英文逗号分隔">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SEO描述</label>
+                    <textarea class="form-textarea" id="categorySeoDesc" placeholder="分类页面meta description描述内容"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEditModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveCategory()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">确认删除</h3>
+                <button class="modal-close" onclick="closeDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>确定要删除这个分类吗？如果该分类下还有文章，将无法删除。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmDelete()" style="background: #ef4444;">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        let categories = [];
+        let currentCategoryId = null;
+
+        // 本地缓存版本号 - 修改此值将强制清除所有旧缓存
+        const CACHE_VERSION = '4';
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('cms_logged_in') !== 'true') {
+                window.location.href = '../login.html';
+                return;
+            }
+            // 每次打开页面都清除分类缓存，强制从API加载最新数据
+            localStorage.removeItem('cms_categories');
+            localStorage.setItem('cms_category_cache_version', CACHE_VERSION);
+            loadCategories();
+        });
+
+        // 加载分类列表
+        async function loadCategories() {
+            try {
+                const controller = new AbortController();
+                // 增加超时时间避免网络波动导致误判
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                // 强制禁用缓存
+                const response = await fetch('../../api/news/categories.php?_t=' + Date.now(), {
+                    signal: controller.signal,
+                    cache: 'no-store',
+                    headers: { 'Cache-Control': 'no-cache' }
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+
+                if (result.success && Array.isArray(result.data)) {
+                    // 将API返回的数据转换为数字ID
+                    categories = result.data.map(cat => ({
+                        ...cat,
+                        id: parseInt(cat.id, 10),
+                        sort_order: parseInt(cat.sort_order, 10)
+                    }));
+
+                    // 去重：按ID去重，保留第一个
+                    const seenIds = new Set();
+                    categories = categories.filter(cat => {
+                        if (seenIds.has(cat.id)) return false;
+                        seenIds.add(cat.id);
+                        return true;
+                    });
+
+                    renderCategories();
+                    console.log('从API加载分类成功，共', categories.length, '个分类');
+                    return;
+                } else {
+                    // API返回失败但无异常，使用空分类（不创建默认分类）
+                    console.warn('API返回分类数据无效:', result);
+                }
+            } catch (error) {
+                console.error('API加载分类失败:', error);
+            }
+
+            // API失败时尝试备用路径
+            try {
+                const controller2 = new AbortController();
+                const timeoutId2 = setTimeout(() => controller2.abort(), 5000);
+                
+                // 备用路径：直接从admin/api/news/加载
+                const response2 = await fetch('../api/news/categories.php?_t=' + Date.now(), {
+                    signal: controller2.signal,
+                    cache: 'no-store'
+                });
+                
+                clearTimeout(timeoutId2);
+                const result2 = await response2.json();
+                
+                if (result2.success && Array.isArray(result2.data) && result2.data.length > 0) {
+                    categories = result2.data.map(cat => ({
+                        ...cat,
+                        id: parseInt(cat.id, 10),
+                        sort_order: parseInt(cat.sort_order, 10)
+                    }));
+                    const seenIds = new Set();
+                    categories = categories.filter(cat => {
+                        if (seenIds.has(cat.id)) return false;
+                        seenIds.add(cat.id);
+                        return true;
+                    });
+                    renderCategories();
+                    console.log('从备用路径加载分类成功，共', categories.length, '个分类');
+                    return;
+                }
+            } catch (error2) {
+                console.error('备用路径加载也失败:', error2);
+            }
+
+            // 【关键修复】API失败时空分类显示，绝不自动创建默认分类
+            // 默认分类不应由前端自动创建，应由管理员手动添加
+            categories = [];
+            renderCategories();
+            console.log('API加载分类失败，显示空列表');
+        }
+
+        // 渲染分类列表
+        function renderCategories() {
+            const container = document.getElementById('categoryTable');
+            
+            if (categories.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <p>暂无分类，点击"新建分类"按钮创建</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 按排序值排序
+            categories.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+            
+            container.innerHTML = `
+                <table class="category-table">
+                    <thead>
+                        <tr>
+                            <th>分类名称</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${categories.map((cat, index) => `
+                            <tr>
+                                <td>
+                                    <div class="category-name">${cat.name}</div>
+                                    ${cat.description ? `<div class="category-desc">${cat.description}</div>` : ''}
+                                </td>
+                                <td>
+                                    <div class="sort-arrows">
+                                        <button class="sort-btn ${index === 0 ? 'disabled' : ''}" onclick="moveCategory(${cat.id}, -1)" title="上移">
+                                            <i class="fas fa-chevron-up"></i>
+                                        </button>
+                                        <button class="sort-btn ${index === categories.length - 1 ? 'disabled' : ''}" onclick="moveCategory(${cat.id}, 1)" title="下移">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="category-actions">
+                                        <button class="action-btn edit" onclick="editCategory(${cat.id})">
+                                            <i class="fas fa-edit"></i> 编辑
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteCategory(${cat.id})">
+                                            <i class="fas fa-trash"></i> 删除
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // 打开编辑模态框
+        function openEditModal() {
+            currentCategoryId = null;
+            document.getElementById('modalTitle').textContent = '新建分类';
+            document.getElementById('categoryId').value = '';
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryDesc').value = '';
+            document.getElementById('categorySort').value = '0';
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        // 关闭编辑模态框
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('show');
+        }
+
+        // 编辑分类
+        function editCategory(id) {
+            const category = categories.find(c => Number(c.id) === Number(id));
+            if (!category) return;
+            
+            currentCategoryId = id;
+            document.getElementById('modalTitle').textContent = '编辑分类';
+            document.getElementById('categoryId').value = id;
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('categoryDesc').value = category.description || '';
+            document.getElementById('categorySeoTitle').value = category.seo_title || '';
+            document.getElementById('categorySeoKeywords').value = category.seo_keywords || '';
+            document.getElementById('categorySeoDesc').value = category.seo_description || '';
+            document.getElementById('categorySort').value = category.sort_order;
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        // 保存分类
+        async function saveCategory() {
+            const name = document.getElementById('categoryName').value.trim();
+            const description = document.getElementById('categoryDesc').value.trim();
+            const seo_title = document.getElementById('categorySeoTitle').value.trim();
+            const seo_keywords = document.getElementById('categorySeoKeywords').value.trim();
+            const seo_description = document.getElementById('categorySeoDesc').value.trim();
+            const sortOrder = parseInt(document.getElementById('categorySort').value) || 0;
+            
+            if (!name) {
+                showToast('请输入分类名称', 'error');
+                return;
+            }
+
+            const data = {
+                name: name,
+                description: description,
+                seo_title: seo_title,
+                seo_keywords: seo_keywords,
+                seo_description: seo_description,
+                sort_order: sortOrder
+            };
+
+            // 如果是编辑，添加ID
+            if (currentCategoryId) {
+                data.id = currentCategoryId;
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+                
+                const response = await fetch('../../api/news/categories.php', {
+                    method: currentCategoryId ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(currentCategoryId ? '分类更新成功' : '分类创建成功', 'success');
+                    closeEditModal();
+                    loadCategories();
+                } else {
+                    showToast(result.message || '保存失败', 'error');
+                }
+            } catch (error) {
+                console.error('API保存失败，使用本地存储:', error);
+                
+                // 使用本地存储作为后备
+                if (currentCategoryId) {
+                    // 更新现有分类
+                    const index = categories.findIndex(c => Number(c.id) === Number(currentCategoryId));
+                    if (index !== -1) {
+                        categories[index] = { ...categories[index], ...data };
+                    }
+                } else {
+                    // 创建新分类
+                    const newId = categories.length > 0 ? Math.max(...categories.map(c => c.id)) + 1 : 1;
+                    categories.push({ ...data, id: newId });
+                }
+                
+                // 保存到本地存储
+                localStorage.setItem('cms_categories', JSON.stringify(categories));
+                
+                showToast(currentCategoryId ? '分类更新成功（本地模式）' : '分类创建成功（本地模式）', 'success');
+                closeEditModal();
+                renderCategories();
+            }
+        }
+
+        // 删除分类
+        function deleteCategory(id) {
+            currentCategoryId = id;
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        // 关闭删除模态框
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('show');
+            currentCategoryId = null;
+        }
+
+        // 确认删除
+        async function confirmDelete() {
+            if (!currentCategoryId) return;
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                const response = await fetch('../../api/news/categories.php', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: currentCategoryId }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast('分类删除成功', 'success');
+                    closeDeleteModal();
+                    // 清空localStorage缓存，强制从API重新加载
+                    localStorage.removeItem('cms_categories');
+                    await loadCategories();
+                } else {
+                    showToast(result.message || '删除失败', 'error');
+                    closeDeleteModal();
+                }
+            } catch (error) {
+                console.error('删除失败:', error);
+                showToast('删除失败，请检查网络连接', 'error');
+                closeDeleteModal();
+            }
+        }
+
+        // 移动分类排序
+        async function moveCategory(id, direction) {
+            const index = categories.findIndex(c => Number(c.id) === Number(id));
+            if (index === -1) return;
+            
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= categories.length) return;
+            
+            // 在数组中交换位置
+            const temp = categories[index];
+            categories[index] = categories[newIndex];
+            categories[newIndex] = temp;
+            
+            // 重新分配排序值（按数组顺序）
+            const batchData = categories.map((cat, idx) => ({
+                id: cat.id,
+                sort_order: idx
+            }));
+            categories.forEach((cat, idx) => {
+                cat.sort_order = idx;
+            });
+            
+            // 更新本地存储
+            localStorage.setItem('cms_categories', JSON.stringify(categories));
+            
+            // 重新渲染
+            renderCategories();
+            
+            // 尝试同步到服务器
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                // 批量更新所有分类的排序
+                const response = await fetch('../../api/news/categories.php', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ categories: batchData }),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                const result = await response.json();
+                if (result.success) {
+                    showToast('排序已更新', 'success');
+                } else {
+                    showToast('排序已本地保存，但同步服务器失败', 'error');
+                }
+            } catch (error) {
+                console.log('服务器同步失败，已保存到本地');
+                showToast('排序已本地保存', 'success');
+            }
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 键盘事件
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeEditModal();
+                closeDeleteModal();
+            }
+        });
+    </script>
+</body>
+</html>

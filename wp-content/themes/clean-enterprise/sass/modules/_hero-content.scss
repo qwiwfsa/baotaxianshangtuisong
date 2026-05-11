@@ -1,0 +1,51 @@
+.hero-content-wrapper.section,
+.why-choose-us-section.section,
+.contact-section.section,
+#footer-newsletter .widget,
+.slider-content-wrapper + .featured-content-section.section,
+.custom-header + .featured-content-section.section,
+body:not(.navigation-classic) .slider-content-wrapper + .featured-content-section.section,
+body:not(.navigation-classic) .custom-header + .featured-content-section.section {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.hero-content-wrapper .hentry,
+.contact-section .hentry {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    z-index: 2;
+}
+
+.hero-content-wrapper .entry-container,
+.contact-section .entry-container {
+	clear: both;
+	padding: 42px 30px;
+}
+
+.hero-content-wrapper .post-thumbnail,
+.why-choose-us-section .main-image,
+.contact-section .post-thumbnail {
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: "";
+    float: left;
+    margin: 0;
+    padding-bottom: 100%;
+    width: 100%;
+}
+
+.hero-content-wrapper .post-thumbnail,
+.contact-section .post-thumbnail {
+	background-position: center center;
+}
+
+.why-choose-us-section .main-image {
+	background-position: center top;
+}
+
+.cover-link {
+    display: block;
+    height: 100%;
+}

@@ -1,0 +1,58 @@
+@media screen and (min-width: 100em) {
+	.slider-content-wrapper .entry-container {
+	    padding: 140px 20px;
+	}
+
+	.has-header-video .custom-header .custom-header-content,
+	.home .custom-header .custom-header-content {
+		padding: 268px 65px;
+	}
+
+	.slider-content-wrapper .sub-title,
+	.home .custom-header .entry-title {
+		font-size: 70px;
+		font-size: 4.375rem;
+		line-height: 1.3333333333;
+	}
+
+	.section,
+	.why-choose-us-content-area,
+	.featured-content-section .wrapper {
+		padding-bottom: 56px;
+		padding-top: 77px;
+	}
+
+	body:not(.navigation-classic) .featured-content-section.section {
+		padding-top: 163px;
+	}
+
+	#footer-newsletter,
+	.testimonial-section.section,
+	.promotion-section.section {
+		padding-bottom: 105px;
+		padding-top: 105px;
+	}
+
+	.hero-content-wrapper .entry-container,
+	.contact-section .entry-container {
+		padding: 105px 105px 105px 65px;
+	}
+
+	.post-navigation .nav-previous,
+	.post-navigation .nav-next,
+	.site-content,
+	.two-columns-layout.content-left .site-content,
+	.two-columns-layout.content-right .site-content,
+	body:not(.home).content-modern .site-content .content-box,
+	body:not(.home).content-modern.two-columns-layout.content-left .site-content .content-box,
+	body:not(.home).content-modern.two-columns-layout.content-right .site-content .content-box {
+		padding-bottom: 56px;
+		padding-top: 56px;
+	}
+}
+
+@media screen and (min-width: 1920px) {
+	.slider-content-wrapper .entry-container {
+	    padding: 170px 0;
+	}
+}

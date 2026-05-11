@@ -1,0 +1,188 @@
+/*
+Theme Name: Appointment Red
+Theme URI: https://webriti.com/appointment-red-child-version-details-page-1/
+Author: webriti
+Author URI: https://www.webriti.com
+Description: A Business theme which is ideal for creating a corporate / business website. Appointment Red theme is a child theme of Appointment theme and is the Red color variation. The theme has several extra templates that make it even more powerful and it supports various locales.
+Tags: full-width-template, threaded-comments, two-columns, right-sidebar, left-sidebar, sticky-post, custom-menu, translation-ready, blog, footer-widgets, featured-images
+Template: appointment
+Version: 1.4
+Requires at least: 4.5
+Tested up to: 6.8
+Requires PHP: 5.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: appointment-red
+*/
+
+/*--------------------------------------------------------------
+  Navbar2 Classes
+--------------------------------------------------------------*/
+.navbar.navbar2 {
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+.navbar2.navbar-default {
+  background-color: rgba(0, 0, 0,0.5) !important;
+  border-color: transparent;
+}
+
+.slider2 .carousel-inner > .item > img {width: 100%;}
+.navbar-default.navbar2 .navbar-toggle .icon-bar{background-color: #ddd;}
+.navbar-default.navbar2 .navbar-toggle:hover .icon-bar,
+.navbar-default.navbar2 .navbar-toggle:focus .icon-bar {
+    background-color: #888;
+}
+@media (min-width:992px ) {
+	.navbar2.navbar-default .navbar-nav > li > a { color: #ffffff; }
+	.navbar2 .cart-header > a.cart-icon ,.navbar2 .search-box-outer a  {
+      color: #ffffff;
+    }
+    .navbar2 .cart-header {
+      border-left: 1px solid #ffffff;
+    }
+}
+@media (max-width: 991px) {
+  .navbar-default.navbar2 .navbar-collapse {
+    border-color: #ffffff;
+    padding: 0;
+  }
+  .navbar2 .navbar-nav {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 10px 0 0;
+  }
+}
+
+/*--------------------------------------------------------------
+  Sticky Menu Classes
+--------------------------------------------------------------*/
+.stickymenu{
+ position: fixed !important;
+ top: 0;
+ width: 100%;
+ box-shadow: 0 1px 3px rgba(255,255,255,0.1);
+ z-index: 999;
+ transition: 0.3s;
+ background-color: rgb(255, 255, 255,0.9) !important;
+}
+.stickymenu1{
+ display: none;
+ position: fixed !important;
+ top: 0;
+ width: 100%;
+ box-shadow: 0 1px 3px rgba(255,255,255,0.1);
+ z-index: 999;
+ background-color: rgb(255, 255, 255,0.9) !important;
+}
+
+.navbar.shrink{transition: 0.3s;}
+
+.navbar.shrink1 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(255,255,255,0.1);
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  transition: 0.3s;
+}
+
+.head-contact-social li > a > i {
+    color: #333!important;
+    }
+/*Service Section 3-------------------------------------------------------------------------------------------*/
+.service-section3 {
+    background: transparent;
+    margin: 0;
+    padding: 80px 0 30px;
+    width: 100%;
+}
+  .service-section3 .service-area{
+    margin-bottom: 32px;
+    padding: 23px 20px;
+    transition: 0.25s;
+    -webkit-transition: all 0.25s ease-in;
+    -moz-transition: all 0.25s ease-in;
+    transition: all 0.25s ease-in;
+    text-align: center;
+}
+.service-section3 .service-icon{
+	position: relative;
+    text-align: center;
+    margin: 0 auto 25px;
+    float: none;
+    width: auto;
+    padding: 0;
+}
+.service-section3 i.fa{
+    border-radius: 10%;
+    color: #fff;
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+    line-height: 1.9;
+    padding: 5px;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    }
+.service-section3 .media-body h3{display: block; margin: 0 0 19px;padding: 0;}
+.service-section3 .media-body p{display: block;overflow: hidden;margin: 0px;}
+ .service-section3 .service-area:hover{
+      color: #fff;
+    -webkit-transform: translateY(-7px);
+    -ms-transform: translateY(-7px);
+    transform: translateY(-7px);
+    -webkit-box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.1);
+}
+ .service-section3 .service-area:hover i.fa {
+    background: #f5f6fa;
+    -webkit-transform: scale3d(1.1, 1.1, 1);
+    transform: scale3d(1.1, 1.1, 1);
+}
+.service-section3 .service-area:hover .media-body h3,.service-section3 .service-area:hover p{color: #fff;}
+
+/*Service Section3*/
+.service-section3 .service-area i.fa, .service-section3 .service-area:hover {background: #db2723;}
+.service-section3 .service-area:hover i.fa {color: #db2723;}
+
+.service-section3 .col-md-4:nth-child(4) {
+  clear: both;
+}
+
+/*Red child*/
+#customize-controls #customize-control-appointment_options-header_layout_setting img {
+    margin: 2%;
+}
+.screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    word-wrap: normal !important;
+}
+.screen-reader-text:focus {
+     background-color: #f1f1f1;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+    clip: auto !important;
+    color: #21759b;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: auto;
+    left: 5px;
+    line-height: normal;
+    padding: 15px 23px 14px;
+    text-decoration: none;
+    top: 5px;
+    width: auto;
+    z-index: 100000;
+}
+@media only screen and (min-width: 200px) and (max-width: 991px) {body .navbar-toggler {background-color: #eee;}}

@@ -1,0 +1,58 @@
+#secondary ul,
+.site-footer ul {
+	list-style: none;
+	margin: 0;
+}
+
+#secondary ul li,
+.error404 .not-found ul li {
+	margin-bottom: 10px;
+}
+
+#secondary ul li > ul,
+.site-footer ul li > ul {
+	margin-top: 14px;
+}
+
+.widget_categories ul,
+.widget_archive ul,
+.ew-archive ul,
+.ew-category ul {
+	text-align: right;
+}
+
+.widget_categories ul li a,
+.widget_archive ul li a,
+.ew-archive ul li a,
+.ew-category ul li a {
+    float: left;
+}
+
+.widget a,
+.site-footer li a {
+    line-height: 2;
+    margin-bottom: 7px;
+}
+
+.ew-category .children {
+	clear: both;
+	float: none;
+}
+
+.tag-cloud-link {
+	margin: 3px;
+	padding: 5px 10px;
+}
+
+.sidebar .section-heading-wrapper {
+	padding: 0;
+	text-align: left;
+}
+
+.sidebar .ewnewsletter .widget-inner-wrap {
+	padding: 0;
+}
+
+#secondary.sidebar .ew-newsletter form {
+	margin-bottom: 21px;
+}

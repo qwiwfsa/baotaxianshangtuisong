@@ -1,0 +1,138 @@
+[
+    {
+        "id": "case_1777296851044",
+        "title": "某房地产企业",
+        "type": "工程亮资",
+        "city": "测试三",
+        "amount": "11亿元",
+        "image": "uploads\/20260428_69efe569f351a.jpg",
+        "coverImage": "uploads\/20260428_69efe569f351a.jpg",
+        "images": [
+            "uploads\/20260428_69efe569f351a.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-29 21:57:58",
+        "summary": "为企业提供大额摆账亮资服务，助力成功中标大型工程项目。"
+    },
+    {
+        "id": "case_1777296618774",
+        "title": "某大型集团公司",
+        "type": "企业摆账",
+        "city": "北京",
+        "amount": "5000万",
+        "image": "uploads\/20260428_69efe591a8ada.jpg",
+        "coverImage": "uploads\/20260428_69efe591a8ada.jpg",
+        "images": [
+            "uploads\/20260428_69efe591a8ada.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-28 18:52:59",
+        "summary": "协助企业完成募集账户资金归还，确保合规运营，维护企业信用评级。"
+    },
+    {
+        "id": "case_1777296718376",
+        "title": "某物流科技企业",
+        "type": "",
+        "city": "测试二",
+        "amount": "5000万元",
+        "image": "uploads\/20260428_69efe5303e212.jpg",
+        "coverImage": "uploads\/20260428_69efe5303e212.jpg",
+        "images": [
+            "uploads\/20260428_69efe5303e212.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-28 00:37:38",
+        "summary": "置换云信票据，提供灵活融资方案，解决企业短期资金周转需求。"
+    },
+    {
+        "id": "case_1777297531614",
+        "title": "某连锁零售企业",
+        "type": "",
+        "city": "测试五",
+        "amount": "1.5亿元",
+        "image": "uploads\/20260428_69efe5568ea59.jpg",
+        "coverImage": "uploads\/20260428_69efe5568ea59.jpg",
+        "images": [
+            "uploads\/20260428_69efe5568ea59.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-28 00:38:17",
+        "summary": "一、官方标准定义 云信 = 中企云链平台发行的电子债权凭证 全称：数字化应收账款债权凭证 由央企、国企、大型核心企业签发 基于真实贸易背景、线上应付账款确权 具备可拆分、可流转、可融资、可贴现、到期刚性兑付四大属性"
+    },
+    {
+        "id": "case_1777298492653",
+        "title": "某上市制造企业",
+        "type": "企业摆账",
+        "city": "北京",
+        "amount": "5.8亿元",
+        "image": "uploads\/20260428_69efe75776f9a.jpg",
+        "coverImage": "uploads\/20260428_69efe75776f9a.jpg",
+        "images": [
+            "uploads\/20260428_69efe75776f9a.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-28 01:12:05",
+        "summary": "为上市公司股东提供股票解质押过桥资金，成功化解质押风险，保障企业正常运营。"
+    },
+    {
+        "id": "case_1777298570787",
+        "title": "现金亮资",
+        "type": "企业摆账",
+        "city": "北京",
+        "amount": "三千万",
+        "image": "uploads\/20260427_69efb18e8687a.jpg",
+        "coverImage": "uploads\/20260427_69efb18e8687a.jpg",
+        "images": [
+            "uploads\/20260427_69efb18e8687a.jpg",
+            "uploads\/20260427_69efb19af3aa8.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-29 15:57:15",
+        "summary": "今日我们出资现金来辅助企业拿工程拿项目，解决没有足够的现金流来证明资金实力问题。"
+    },
+    {
+        "id": "case_1777301653905",
+        "title": "某高新技术企业",
+        "type": "",
+        "city": "测试七",
+        "amount": "2亿元",
+        "image": "uploads\/20260427_69efbc9dcf100.jpg",
+        "coverImage": "uploads\/20260427_69efbc9dcf100.jpg",
+        "images": [
+            "uploads\/20260427_69efbc9dcf100.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-27 22:45:01",
+        "summary": "提供月末、季末银行存款冲量服务，帮助企业优化财务报表。"
+    },
+    {
+        "id": "case_test_001",
+        "title": "某上市公司过桥融资",
+        "type": "企业过桥",
+        "city": "北京",
+        "amount": "5亿",
+        "summary": "为某上市公司提供过桥融资服务，帮助其顺利完成资金周转。",
+        "image": "uploads\/20260427_69efbc447d775.jpg",
+        "coverImage": "uploads\/20260427_69efbc447d775.jpg",
+        "images": [
+            "uploads\/20260427_69efbc447d775.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-28 01:10:57"
+    },
+    {
+        "id": "case_1777327823526",
+        "title": "某酒店老板",
+        "type": "工程亮资",
+        "city": "北京",
+        "amount": "1亿",
+        "summary": "这位老板在领导面前展示了现金资金实力，完成了大量批油项目赚的盆满钵满。",
+        "image": "uploads\/20260428_69efe5a609ecf.jpg",
+        "coverImage": "uploads\/20260428_69efe5a609ecf.jpg",
+        "images": [
+            "uploads\/20260428_69efe5a609ecf.jpg"
+        ],
+        "status": "published",
+        "lastModified": "2026-04-28 00:45:25"
+    }
+]

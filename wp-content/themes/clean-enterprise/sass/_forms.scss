@@ -1,0 +1,84 @@
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button {
+	border: 0;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.catch-instagram-feed-gallery-widget-wrapper .instagram-button .button,
+.woocommerce a.load-more.button,
+.posts-navigation .nav-links a,
+.pagination .prev.page-numbers,
+.pagination .next.page-numbers,
+.site-main #infinite-handle span button,
+.slider-content-wrapper .more-link,
+.hero-content-wrapper .more-link,
+.view-all-button .more-link,
+.promotion-headline-wrapper .more-link,
+.recent-blog-content-wrapper .more-recent-posts .more-link,
+.custom-header .more-link,
+.more-recent-posts .more-link,
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+	border-radius: 6px;
+	line-height: 1;
+	padding: 14px 28px;
+	text-transform: capitalize;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea {
+	padding: 10px 14px;
+	width: 100%;
+}
+
+textarea {
+	width: 100%;
+}
+
+.post-password-form input[type="submit"],
+.testimonial-section .entry-content,
+.testimonial-section .entry-summary,
+.breadcrumb-area {
+	margin-top: 21px;
+}
+
+.content-area .entry-content .contact-form input[type="text"],
+.content-area .entry-content .contact-form input[type="email"],
+.content-area .entry-content .contact-form textarea,
+.content-area .contact-form input[type="url"] {
+	max-width: 100%;
+	width: 100%;
+}
+
+form p label {
+	margin-bottom: 14px;
+}
+
+form p label span {
+	display: inline-block;
+	margin-top: 14px;
+}

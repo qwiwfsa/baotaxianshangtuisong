@@ -1,0 +1,874 @@
+/* ========================================
+   Yao资金网官网 - 成功案例页面新样式
+   版本：v1.0 优化版
+   ======================================== */
+
+/* ========================================
+   筛选区域样式
+   ======================================== */
+
+.cases-filter-section {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-card);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    min-width: 70px;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-btn {
+    padding: 8px 18px;
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+}
+
+.filter-btn:hover {
+    background: var(--border-light);
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+/* ========================================
+   案例卡片网格布局
+   ======================================== */
+
+.cases-grid-new {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+/* 案例卡片样式 */
+.case-card-new {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all var(--transition-normal) var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.case-card-new:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(30, 58, 138, 0.12);
+    border-color: rgba(30, 58, 138, 0.15);
+}
+
+/* 案例图片区域 - 9:16竖版比例 */
+.case-card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+}
+
+.case-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal) ease;
+}
+
+.case-card-new:hover .case-card-image img {
+    transform: scale(1.05);
+}
+
+.case-card-image .case-card-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 案例内容区域 */
+.case-card-content {
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.case-card-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.case-card-summary {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 16px;
+    flex: 1;
+}
+
+/* 案例元信息 */
+.case-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid var(--border-light);
+    margin-bottom: 16px;
+}
+
+.case-card-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.case-card-location i {
+    color: var(--color-accent);
+}
+
+.case-card-amount {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* 查看详情链接 */
+.case-card-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background: var(--color-primary);
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all var(--transition-fast) ease;
+    text-align: center;
+}
+
+.case-card-link:hover {
+    background: #1e40af;
+    gap: 10px;
+}
+
+.case-card-link i {
+    font-size: 12px;
+}
+
+/* 空状态 */
+.cases-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+/* ========================================
+   加载更多按钮
+   ======================================== */
+
+.cases-load-more {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.btn-load-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+}
+
+.btn-load-more:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.btn-load-more i {
+    font-size: 12px;
+}
+
+/* ========================================
+   案例统计区域
+   ======================================== */
+
+.cases-stats-section {
+    margin-top: 60px;
+}
+
+.cases-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.cases-stat-box {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-normal) ease;
+}
+
+.cases-stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.cases-stat-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 100%);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    margin: 0 auto 16px;
+}
+
+.cases-stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 6px;
+    line-height: 1;
+}
+
+.cases-stat-label {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ========================================
+   案例详情页样式
+   ======================================== */
+
+/* 返回导航 */
+.case-detail-nav {
+    background: var(--bg-secondary);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.case-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast) ease;
+}
+
+.case-back-link:hover {
+    color: var(--color-primary);
+}
+
+.case-back-link i {
+    font-size: 12px;
+}
+
+/* 详情内容区 */
+.case-detail-content {
+    padding: 48px 0 80px;
+    background: var(--bg-secondary);
+}
+
+.case-detail-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 32px;
+}
+
+/* 左侧主要内容 */
+.case-detail-main {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    box-shadow: var(--shadow-card);
+}
+
+.case-detail-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.case-detail-tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.case-detail-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.case-detail-tag-outline {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+.case-detail-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+.case-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.case-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.case-meta-item i {
+    color: var(--color-accent);
+}
+
+/* 详情内容区块 */
+.case-detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.case-detail-section {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.case-detail-section:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.case-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.case-section-title i {
+    color: var(--color-primary);
+}
+
+.case-section-text {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+/* 项目成果 */
+.case-results {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.case-result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.case-result-item i {
+    color: #10b981;
+    font-size: 16px;
+}
+
+/* 右侧侧边栏 */
+.case-detail-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 信息卡片 */
+.case-info-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+}
+
+.case-info-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.case-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.case-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.case-info-label {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.case-info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.case-info-highlight {
+    color: var(--color-primary);
+    font-size: 16px;
+}
+
+/* CTA卡片 */
+.case-cta-card {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e40af 100%);
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    color: white;
+    text-align: center;
+}
+
+.case-cta-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.case-cta-desc {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+    background: white;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+}
+
+.btn-block:hover {
+    background: var(--bg-secondary);
+}
+
+.case-cta-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.case-cta-phone i {
+    font-size: 16px;
+}
+
+/* 相关案例 */
+.case-related-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+}
+
+.case-related-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.case-related-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.case-related-item {
+    display: block;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast) ease;
+}
+
+.case-related-item:hover {
+    background: var(--color-primary);
+}
+
+.case-related-type {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.case-related-item:hover .case-related-type {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.case-related-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.case-related-item:hover .case-related-name {
+    color: white;
+}
+
+.case-related-amount {
+    font-size: 13px;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.case-related-item:hover .case-related-amount {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.case-related-empty {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 20px;
+}
+
+/* 案例导航 */
+.case-detail-nav-section {
+    background: white;
+    padding: 32px 0;
+    border-top: 1px solid var(--border-light);
+}
+
+.case-nav-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.case-nav-prev,
+.case-nav-next {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-fast) ease;
+}
+
+.case-nav-prev:hover,
+.case-nav-next:hover {
+    background: var(--color-primary);
+}
+
+.case-nav-next {
+    text-align: right;
+    align-items: flex-end;
+}
+
+.case-nav-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.case-nav-prev:hover .case-nav-label,
+.case-nav-next:hover .case-nav-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.case-nav-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.case-nav-prev:hover .case-nav-title,
+.case-nav-next:hover .case-nav-title {
+    color: white;
+}
+
+/* ========================================
+   响应式设计
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .cases-grid-new {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cases-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .case-detail-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-detail-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .case-related-card {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .cases-filter-section {
+        padding: 20px 24px;
+    }
+    
+    .filter-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .filter-label {
+        min-width: auto;
+    }
+    
+    .cases-grid-new {
+        grid-template-columns: 1fr;
+    }
+    
+    .cases-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .cases-stat-box {
+        padding: 24px 16px;
+    }
+    
+    .cases-stat-number {
+        font-size: 24px;
+    }
+    
+    .case-detail-main {
+        padding: 24px;
+    }
+    
+    .case-detail-title {
+        font-size: 22px;
+    }
+    
+    .case-detail-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .case-results {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-detail-sidebar {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-nav-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-nav-next {
+        text-align: left;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .cases-filter-section {
+        padding: 16px 20px;
+    }
+    
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+    
+    .case-card-content {
+        padding: 16px 20px 20px;
+    }
+    
+    .case-card-image {
+        height: 180px;
+    }
+    
+    .case-card-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .case-card-summary {
+        -webkit-line-clamp: 2;
+        font-size: 13px;
+    }
+    
+    .case-card-link {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .cases-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .cases-stat-box {
+        padding: 20px 12px;
+    }
+    
+    .cases-stat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+    
+    .cases-stat-number {
+        font-size: 20px;
+    }
+    
+    .cases-stat-label {
+        font-size: 12px;
+    }
+    
+    .case-detail-main {
+        padding: 20px;
+    }
+    
+    .case-detail-title {
+        font-size: 20px;
+    }
+    
+    .case-section-title {
+        font-size: 16px;
+    }
+    
+    .case-detail-nav-section {
+        padding: 20px 0;
+    }
+    
+    .case-nav-prev,
+    .case-nav-next {
+        padding: 16px;
+    }
+}

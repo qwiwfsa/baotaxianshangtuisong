@@ -1,0 +1,830 @@
+/*
+Theme Name: Enovia
+Author: Themes Daddy
+Author URI: https://themesdaddy.com/
+Theme URI: https://themesdaddy.com/themes/enovia-free/
+Description: Lightning Fast Speed & Responsive Theme. Enovia is a responsive and fully customizable theme to create any kind of websites. The advanced admin panel will enable you to customize it without any technical knowledge. This theme is lightweight, it will enable you to create almost any type of website such a blog, portfolio, acting and shooting industry, total trendy news, newspaper, mega magazine, fashion, dark themes, petcare, animals wildlife, wooden architecture, plumbing contractor, painting estate, interior design, rooms furniture, home decoration, green floral nature, construction, corporate, multiple agency, business promotion, dark variation, industries, Beauty & spa salons, photography, gym, fitness, health, medical, startups, business agencies, law firms, travel, NGO, charity, yoga, kids education, training institute, university portal, restaurant, meta shop, quick magazines, mutual fund, finance, accounting, consulting ,travel agency website. Theme is fully compatible with popular WordPress plugins like Elementor Page Builder, Slider, Carousal, Beaver Builder, Brizy, Visual Composer, Divi, SiteOrigin, Gutenberg, Block-Enabled, WooCommerce, WPML, Yoast SEO, Shortcode, Jetpack, Contact Form 7, Mailchimp for WordPress, bbPress, Demo Importer, WPForms and more. Your WordPress website will never be let down with this theme. View the demo of Enovia Pro https://demo.themesdaddy.com/enovia-pro/
+Tags: one-column, two-columns, right-sidebar, flexible-header, custom-background, custom-header, custom-menu, editor-style, featured-images, footer-widgets, post-formats, theme-options, threaded-comments, rtl-language-support, translation-ready, full-width-template, custom-logo, blog, e-commerce, portfolio
+Version: 1.0.88
+Tested up to: 6.9
+Requires PHP: 5.4
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GNU General Public License v2 or later
+Text Domain: enovia
+Slug: enovia
+Template: flixita
+*/
+
+
+:root {
+    --bs-primary: #f70032;
+    --bs-primary-dark:#c9022a;
+    --bs-primary-light: #f63c62;
+    --bs-primary-shadow:rgb(0 123 255 / 0.5);
+    --bs-secondary:#214462;
+    --bs-secondary-dark: #000000; 
+	--bs-font-sans-serif:"Quicksand",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.enovia-theme .main-navigation .navbar-area {
+    justify-content: center;
+}
+
+
+
+.enovia-theme .main-navbar .main-menu > li.dropdown > a:before {
+    right: 8px;
+}
+
+.enovia-theme .main-navigation {
+    min-height: 70px;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.enovia-theme .main-menu-right > ul > li {
+    display: flex;
+    align-items: center;
+    min-height: 4.25rem;
+}
+
+
+
+.enovia-theme .mid-header {
+    min-height: 100px;
+}
+
+.enovia-theme .logo a,
+.enovia-theme .mobile-logo a, 
+.enovia-theme .site-title {
+    line-height: 1;
+}
+
+.enovia-theme .main-header .contact-icon,
+.enovia-theme .main-header .contact-area:hover .contact-icon i, 
+.enovia-theme .main-header .contact-area:focus-within .contact-icon i,
+.enovia-theme .mid-header .widget_social_widget li a:hover i,
+.enovia-theme .mid-header .widget_social_widget li a:focus i{
+	border-radius: 5px;
+}
+
+.enovia-theme .main-header  .contact-corn,
+.enovia-theme .main-header .contact-area .contact-icon i,
+.enovia-theme .main-header .widget_social_widget li a	{
+	border-radius: 5px;
+}
+	
+	
+.main-mobile-menu .main-menu-right {
+	margin-right: 1.2rem;
+}
+
+@media (min-width: 992px){
+	.enovia-theme .main-navbar:not(.breadcrumb-menu) .main-menu > li > a, 
+	.enovia-theme .main-menu-right > ul > li {
+		line-height: 4.25rem;
+		 border-right: 1px solid rgba(0, 0, 0, 0.1);
+		 padding: 0rem 1.3rem 0rem 1rem;
+	}
+
+	.enovia-theme .main-navbar:not(.breadcrumb-menu) .main-menu > li:first-child > a {
+		border-left: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	.enovia-theme .main-header .mid-header .contact-corn,
+	.enovia-theme .main-header .mid-header .widget_social_widget li a	{
+		background: var(--bs-primary);
+		color: var(--bs-white);
+	}
+	
+	.enovia-theme .main-header .contact-area:hover .contact-icon i, 
+	.enovia-theme .main-header .contact-area:focus-within .contact-icon i,
+	.enovia-theme .mid-header .widget_social_widget li a:hover i,
+	.enovia-theme .mid-header .widget_social_widget li a:focus i{
+		border:1px solid var(--bs-primary);
+		background: var(--bs-white);
+		color: var(--bs-primary);
+	}
+	.enovia-theme .main-header .mid-header .row {
+		align-items: center;
+	}
+	.enovia-theme .main-header .mid-header .header-widget {
+		margin-top: 1rem;
+	}
+	.enovia-theme .main-menu-right > ul {
+		padding-left: unset;
+	}
+	
+	.enovia-theme  .mid-header .logo {
+		text-align: center;
+	}
+	.enovia-theme  .mid-header .widget-right {
+		display: inherit;
+	}
+	.enovia-theme .slider-section + .info-section-4 {
+        margin-top: -3.55rem !important;
+    }
+}
+
+@media (max-width: 991px){
+	.enovia-theme .mid-header {
+		background: var(--bs-secondary);
+	}
+	.enovia-theme .mid-header .widget-left, 
+	.enovia-theme .mid-header .widget-right {
+		display: block;
+	}
+	.enovia-theme .mid-header .header-widget .widget.widget-contact:not(.widget_social_widget ) a {
+		color: #fff;
+	}
+}
+
+@media (max-width: 600px){
+	.main-mobile-menu .main-menu-right li.button-area{
+		display: none;
+	}
+}
+.btn-style-three .btn.btn-primary {
+    transition: 0s;
+}
+
+.btn-style-three .btn:before, .btn-style-three .btn:after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 0%;
+  background-color: var(--bs-white);
+  z-index: -1;
+  -webkit-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+
+.btn-style-three .btn:before {
+  left: 0;
+  border-radius: 0 20px 20px 0;
+}
+
+.btn-style-three .btn:after {
+  right: 0;
+  border-radius: 20px 0 0 20px;
+}
+
+.btn-style-three .btn:hover,
+.btn-style-three .btn:focus {
+  color: var(--bs-secondary);
+  box-shadow: none;
+}
+
+.btn-style-three .btn:hover::before, .btn-style-three .btn:hover:after,
+.btn-style-three .btn:focus::before, .btn-style-three .btn:focus:after {
+  width: 51%;
+  border-radius: 0;
+}
+
+.enovia-theme .btn.btn-like-icon {
+    padding-right: 2.75rem;
+}
+
+.enovia-theme .main-content h4 {
+    border-left: 5px solid var(--bs-primary);
+    border-right: 5px solid var(--bs-primary);
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0;
+    color: var(--bs-secondary);
+    background: var(--bs-white);
+	padding: 3px 10px;
+}
+
+
+.enovia-theme .main-content h4:before {
+    display:none;
+}
+
+.enovia-theme .info-section-4 {
+	position: relative;
+	z-index:1;
+}
+
+.enovia-theme .info-section-4 .widget-contact {
+    position: relative;
+	border-bottom:none;
+	border-radius: 0;
+}
+
+.enovia-theme .info-section-4 .widget-contact .info-img img {
+    min-height: 300px;
+    object-fit: cover;
+}
+
+.enovia-theme .info-section-4  .info-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 50px 20px 25px;
+    z-index: 0;
+    -webkit-transition: .3s cubic-bezier(.24,.74,.58,1);
+    -khtml-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    -moz-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    -ms-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    -o-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    transition: .3s cubic-bezier(.24,.74,.58,1);
+    transform-origin: bottom center;
+    -webkit-transform-origin: bottom center;
+}
+
+
+.enovia-theme .info-section-4  .info-meta:before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bs-primary);
+    clip-path: polygon(0 30%, 100% 0, 100% 100%, 25% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 25% 100%, 0 100%);
+    -moz-clip-path: polygon(0 30%, 100% 0, 100% 100%, 25% 100%, 0 100%);
+    -ms-clip-path: polygon(0 30%, 100% 0, 100% 100%, 25% 100%, 0 100%);
+    -o-clip-path: polygon(0 30%, 100% 0, 100% 100%, 25% 100%, 0 100%);
+    -webkit-transition: .3s cubic-bezier(.24,.74,.58,1);
+    -khtml-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    -moz-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    -ms-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    -o-transition: .3s cubic-bezier(.24, .74, .58, 1);
+    transition: .3s cubic-bezier(.24,.74,.58,1);
+    opacity: .9;
+}
+
+.enovia-theme .info-section-4 .info-icon-img-wrap {
+    position: absolute;
+    top: -38px;
+    left: 50%;
+	transform: translate(-50%, 0);
+    width: 76px;
+    height: 76px;
+    border-radius: 76px;
+    background-color: #fff;
+    border: 3px solid var(--bs-primary);
+	margin: 0;
+	-webkit-box-shadow: 0 5px 10px 0 rgb(204 204 204 / 34%);
+    box-shadow: 0 5px 10px 0 rgb(204 204 204 / 34%);
+    text-align: center;
+}
+
+.enovia-theme .info-section-4 .info-content .info-icon-img-wrap {
+    position: relative;
+    text-align: center;
+    top: unset;
+	transform: translate(-50%, 0);
+}
+
+.enovia-theme .info-section-4  .info-icon-img-wrap i {
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    right: 0;
+	transform: translateY(-50%);
+    width: 40px;
+	font-size: 40px;
+    color: var(--bs-primary);
+}
+
+.enovia-theme .info-section-4  .info-title {
+    margin-bottom: 0 !important;
+	text-align: center;
+}
+
+
+.enovia-theme .info-section-4 .info-content .info-title,
+.enovia-theme .info-section-4 .info-content .info-excerpt, 
+.enovia-theme .info-section-4 .info-content a {
+    margin-top: 5px;
+}
+
+.enovia-theme .info-section-4 .info-title a{
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    color:var(--bs-white);
+	text-decoration: none;
+}
+
+.enovia-theme .info-section-4  .info-meta .info-title a::before{
+	display:none;
+}
+
+.enovia-theme .info-section-4 .info-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    background-color: var(--bs-primary);
+    display: block;
+    align-items: center;
+    transform: scaleY(0);
+    opacity: 0;
+    transform-origin: bottom center;
+    transition: .3s cubic-bezier(.24,.74,.58,1);
+    z-index: 1;
+    text-align: center;
+}
+
+.enovia-theme .info-section-4 .info-content .info-excerpt p{
+	color: var(--bs-white);
+    text-align: center;
+}
+
+.enovia-theme .info-section-4 .widget-contact:hover  .info-meta{
+    opacity: 0;
+    transform: scaleY(0);
+}
+
+.enovia-theme .info-section-4 .widget-contact:hover .info-content {
+    -webkit-transform: scaleY(1);
+    -khtml-transform: scaleY(1);
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+    transform: scaleY(1);
+    opacity: 1;
+    -webkit-transition-delay: .12s;
+    -moz-transition-delay: .12s;
+    transition-delay: .12s;
+}
+
+.enovia-theme.btn-style-three .info-section-4 .widget-contact .btn.btn-white,
+.enovia-theme.btn-style-three .info-section-4 .widget-contact .btn.btn-white:hover, 
+.enovia-theme.btn-style-three .info-section-4 .widget-contact .btn.btn-white:focus {
+    color: var(--bs-primary);
+    background: var(--bs-white);
+    border-radius: 0;
+	position:relative;
+	text-decoration:none;
+}
+
+.enovia-theme .info-section-4 .widget-contact:hover .info-icon-img-wrap:after{
+	border:none;
+}
+
+
+.enovia-theme .service-section {
+    padding: 8.75rem 0;
+}
+
+.enovia-theme .service-content {
+    padding: 4.5rem 1.563rem 2.188rem;
+	z-index: 2;
+    position: relative;
+}
+
+.enovia-theme .service-inner:hover .service-icon-img-wrap:after{
+	display:none;
+}
+.enovia-theme .service-icon-img-wrap {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    background-color: var(--bs-primary);
+    text-align: center;
+    margin: 0px;
+    box-shadow: none;
+    border-radius: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.enovia-theme .service-inner .service-title {
+    text-align: left;
+}
+
+.enovia-theme .service-inner .service-content {
+    text-align: left;
+}
+.enovia-theme .service-inner h3.service-title {
+    font-size: 22px;
+    margin: 15px 0px !important;
+}
+
+.enovia-theme .service-excerpt p {
+	position: relative;
+	margin-bottom: 25px;
+}
+.enovia-theme .service-icon-img-wrap:after{
+    border: 4px dashed var(--bs-white);
+}
+
+.enovia-theme .service-section .service-box {
+    position: relative;
+}
+
+.enovia-theme .service-section .service-img {
+    position: absolute;
+    content: "";
+    right: 0;
+    bottom: 0;
+    width: 80px;
+    height: 80px;
+    transition: .5s;
+    opacity: 0;
+    z-index: -1;
+}
+
+.enovia-theme .service-section .service-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.enovia-theme .service-section .service-inner:hover .service-img {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    z-index: 0;
+}
+
+.enovia-theme .service-inner:hover .service-title a, 
+.enovia-theme .service-inner:hover .service-excerpt p, 
+.enovia-theme .service-inner:hover .post-more a {
+    color: var(--bs-white);
+}
+
+
+.enovia-theme .service-section .service-inner {
+    position: relative;
+	border-bottom: none;
+}
+
+.enovia-theme .service-inner::before {
+    content: '';
+    position: absolute;
+    height: 42%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    z-index: 99;
+    -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    opacity: 0;
+}
+
+.enovia-theme .service-section .service-inner:hover:before {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.enovia-theme .service-inner .fbox-number {
+    position: absolute;
+    font-size: 22px;
+    line-height: 40px;
+    height: 40px;
+    width: 40px;
+    top: 10px;
+    right: 10px;
+    font-weight: 600;
+    background: var(--bs-primary);
+    color: var(--bs-white);
+    border-radius: 50px;
+	text-align: center;
+	opacity: 0.3;
+}
+
+.enovia-theme .service-inner:hover .fbox-number {
+    opacity: 1;
+}
+
+.enovia-theme .service-inner .service-icon-img-wrap i {
+    color: var(--bs-white);
+}
+
+.enovia-theme .service-inner .service-title a::before {
+	display:none;
+}
+
+@media (min-width: 992px){
+	.above-header:before {
+		width: 42%;
+	}
+	.above-header:after {
+		left: 42%;
+	}
+}
+
+@media (min-width: 1600px){
+	.above-header:after {
+		transform: rotate(26deg);
+	}
+}
+
+.footer-main .widget .wp-block-heading {
+    color: var(--bs-white);
+    margin-bottom: 1.375rem;
+    padding-bottom: 15px;
+    position: relative;
+    font-size: 1.25rem;
+}
+
+.footer-main .widget .wp-block-heading:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: -40px;
+    margin: auto;
+    width: 35px;
+    height: 2px;
+    background-color: var(--bs-primary);
+}
+
+.footer-main .widget .wp-block-heading::first-letter {
+    color: var(--bs-primary);
+}
+
+.footer-main .textwidget address a {
+    text-decoration: none;
+}
+
+.post-date:focus-within:before {
+    background: var(--bs-secondary) !important;
+}
+
+.post-details-outer .post-title-head {
+    margin-top: 2.5rem;
+}
+
+.blog-inner .bottom-meta .post-author a:focus {
+    color: var(--bs-primary);
+}
+
+.post-comment .comments-count:focus{
+	color: var(--bs-primary);
+}
+
+.footer-main button.wp-block-search__button.wp-element-button:hover,
+.footer-main button.wp-block-search__button.wp-element-button:focus{
+    border: 2px solid var(--bs-primary);
+}
+
+.service-section{
+    z-index: 0;
+}
+
+.wp-block-calendar table{
+	margin: 0;
+	text-align: center;
+}
+
+.woocommerce span.onsale {
+    z-index: 1;
+}
+
+.shopping-cart .cart-items .item-name {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.shopping-cart .shopping-cart-items a.remove {
+    transform: translateY(10px);
+}
+
+.woocommerce div.product form.cart .variations th {
+    background: inherit;
+    color: inherit;
+}
+
+.woocommerce div.product form.cart .button {
+    background: var(--bs-primary);
+}
+
+.woocommerce div.product form.cart .button:hover, 
+.woocommerce div.product form.cart .button:focus {
+    background: var(--bs-secondary);
+}
+
+.wp-block-latest-comments {
+    padding: 0;
+}
+
+a.wp-block-latest-posts__post-title {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--bs-secondary);
+}
+
+.woocommerce table.shop_attributes tr:nth-child(even) th {
+    color: var(--bs-secondary);
+}
+
+.single-product .product .product_meta > span a {
+    text-decoration: none;
+}
+
+.woocommerce table.shop_attributes td {
+    padding: 0 1rem;
+}
+
+.woocommerce-Reviews .comment-form {
+    display: block;
+}
+
+.woocommerce table.shop_table td a {
+    text-decoration: none;
+}
+
+.sidebar .widget .wp-block-latest-comments {
+    padding: 1.8rem;
+}
+
+table.wc-block-cart-items .wc-block-cart-items__row .wc-block-components-product-name {
+    text-decoration: none;
+}
+
+.sidebar .wp-block-file {
+    padding: 1.8rem;
+}
+
+.sidebar .wp-block-code {
+    padding: 1.8rem;
+}
+
+.wp-block-file a {
+    text-decoration: none;
+}
+
+.wp-block-file.has-background {
+    padding: 0.5rem;
+}
+
+.wp-block-details.has-background {
+    padding: 0.5rem;
+}
+
+.wp-block-image .alignleft figcaption {
+    text-align: left;
+}
+
+.wp-block-image .alignright figcaption {
+    text-align: right;
+}
+
+.wp-block-button a {
+    text-decoration: none;
+}
+
+.wp-block-archives li {
+    list-style: none;
+}
+
+.wp-block-archives li a {
+    text-decoration: none;
+}
+
+.wp-block-archives {
+    padding-left: 0;
+}
+
+.wp-block-categories {
+    padding-left: 0;
+}
+
+.wp-block-categories li {
+    list-style: none;
+}
+
+.wp-block-categories li a {
+    text-decoration: none;
+}
+
+.wp-block-latest-comments a {
+    text-decoration: none;
+}
+
+.wp-block-latest-comments.has-background {
+    padding: 10px;
+}
+
+a.wp-block-latest-posts__post-title:hover, 
+a.wp-block-latest-posts__post-title:focus {
+    color: var(--bs-primary);
+}
+
+.wp-block-latest-posts.wp-block-latest-posts__list.has-background li {
+    padding: 1rem;
+}
+
+.wp-block-categories li a {
+    color: var(--bs-secondary);
+}
+
+.wp-block-categories li a:hover, 
+.wp-block-categories li a:focus {
+    color: var(--bs-primary);
+}
+
+.footer-main .wp-block-calendar td {
+    color: var(--bs-secondary);
+}
+
+.wp-block-loginout.has-background {
+    padding: 1rem;
+}
+
+.wp-block-loginout a {
+    text-decoration: none;
+}
+
+.wp-block-post-author.has-background {
+    padding: 1rem;
+}
+
+.wp-block-post-author img {
+    border-radius: 100%;
+}
+
+.wp-block-site-title a {
+    text-decoration: none;
+}
+
+.wp-block-page-list {
+	padding: 0;
+}
+
+.wp-block-image .alignleft figcaption {
+	text-align: left;
+}
+
+.wp-block-image figcaption {
+	text-align: center;
+}
+
+.wp-block-embed figcaption {
+    text-align: center;
+}
+
+.wp-block-site-title.has-background {
+    padding: 1rem;
+}
+
+.wp-block-site-tagline.has-background {
+    padding: 1rem;
+}
+
+.wp-block-post-title a:hover, 
+.wp-block-post-title a:focus {
+    color: var(--bs-primary);
+}
+
+.wp-block-categories li a {
+    color: var(--bs-secondary);
+}
+
+.is-large.wc-block-cart .wc-block-cart__totals-title {
+	font-size: 2.5rem;
+}
+
+table.wc-block-cart-items .wc-block-cart-items_row .wc-block-cart-itemquantity .wc-block-cart-item_remove-link {
+    text-decoration: none;
+}
+
+.sidebar .wp-block-latest-comments li a {
+    color: var(--bs-secondary);
+}
+
+.sidebar .wp-block-latest-comments li a:hover,
+.sidebar .wp-block-latest-comments li a:focus {
+    color: var(--bs-primary);
+}
+
+.woocommerce table.shop_table td a {
+	text-decoration: none;
+}
+
+.footer-main .widget li a:focus {
+    outline: none;
+}
+
+.sidebar .widget li a:focus {
+	outline: none;
+}
+
+.wp-block-avatar img {
+    border-radius: 100%;
+}
+
+.wp-block-post-title a {
+    text-decoration: none;
+} 
+
+.shopping-cart .cart-items .item-name {
+    color: var(--bs-secondary);
+} 
+
+.shopping-cart ul.cart-items li a {
+    text-decoration: none;
+}

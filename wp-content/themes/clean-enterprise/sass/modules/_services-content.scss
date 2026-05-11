@@ -1,0 +1,61 @@
+.services-section .entry-container {
+	padding: 28px;
+}
+
+.services-section .post-thumbnail a,
+.team-section .post-thumbnail {
+	position: relative;
+}
+
+.services-section .post-thumbnail a:after {
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.services-section .post-thumbnail a:after,
+.contact-section .site-social li a {
+	border-radius: 50%;
+	cursor: pointer;
+	display: block;
+	height: 50px;
+	padding: 11px;
+	width: 50px;
+	text-align: center;
+	z-index: 2;
+}
+
+.services-section .post-thumbnail a:before,
+.team-section .post-thumbnail .artist-social-profile {
+	content: "";
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+/** Team section **/
+
+.team-section .post-thumbnail .artist-social-profile ul.social-links-menu {
+    left: 50%;
+	position: absolute;
+	margin: 0;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+}
+
+.team-section .post-thumbnail .artist-social-profile .menu-social-container li a:before {
+	padding: 6px;
+	margin: 0 5px;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+}
+.team-section .post-thumbnail a:after,
+.team-section .post-thumbnail .artist-social-profile .social-links-menu li a svg {
+	display: none;
+}

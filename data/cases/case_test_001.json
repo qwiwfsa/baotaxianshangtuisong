@@ -1,0 +1,27 @@
+{
+    "id": "case_test_001",
+    "title": "某上市公司过桥融资",
+    "type": "企业过桥",
+    "city": "北京",
+    "summary": "为某上市公司提供过桥融资服务，帮助其顺利完成资金周转。",
+    "amount": "5亿",
+    "period": "15天",
+    "year": "2024",
+    "image": "uploads\/20260427_69efbc447d775.jpg",
+    "coverImage": "uploads\/20260427_69efbc447d775.jpg",
+    "images": [
+        "uploads\/20260427_69efbc447d775.jpg"
+    ],
+    "hasVideo": false,
+    "video": "",
+    "detail": "<p>该上市公司因业务扩展需要短期资金周转，我们提供了专业的过桥融资服务。<\/p><p>在整个服务过程中，我们专业的团队全程跟进，确保资金安全、合规、高效地流转。<\/p>",
+    "highlights": [
+        "3个工作日内完成尽调并放款",
+        "资金规模5亿元，满足企业需求",
+        "帮助企业维护信用评级",
+        "专业团队全程跟进"
+    ],
+    "process": [],
+    "status": "published",
+    "lastModified": "2026-04-28 01:10:57"
+}

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖拽式编辑器 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tiny.cloud/1/76nkh5wzglziwmwm86ep2n2tmjylmr27pihsz99jggy8numw/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <link rel="stylesheet" href="builder.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        
+        /* 头部 */
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 600; text-decoration: none; color: white; }
+        .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.3); }
+        .header-right { display: flex; gap: 12px; }
+        .header-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; border: none; }
+        .header-btn:hover { background: rgba(255,255,255,0.2); }
+        .header-btn.primary { background: #10b981; border-color: #10b981; }
+        .header-btn.primary:hover { background: #059669; }
+        .header-btn.danger { background: #ef4444; border-color: #ef4444; }
+        .header-btn.danger:hover { background: #dc2626; }
+        
+        /* 底部操作栏 */
+        .editor-footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; z-index: 1000; }
+        .footer-left { font-size: 14px; color: #6b7280; }
+        .footer-right { display: flex; gap: 12px; }
+        .btn { padding: 8px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-secondary { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+        
+        /* 提示消息 */
+        .toast { position: fixed; top: 80px; right: 24px; padding: 16px 20px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px; z-index: 3000; transform: translateX(150%); transition: transform 0.3s ease; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        
+        /* 加载状态 */
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .loading-overlay.show { display: flex; }
+        .loading-content { text-align: center; }
+        .loading-spinner { width: 48px; height: 48px; border: 3px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* 预览模态框 */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 12px; width: 90%; max-width: 1200px; height: 90%; display: flex; flex-direction: column; overflow: hidden; }
+        .modal-header { padding: 16px 24px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; background: #f9fafb; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 20px; color: #6b7280; cursor: pointer; }
+        .modal-body { flex: 1; overflow: auto; padding: 0; }
+        .preview-frame { width: 100%; height: 100%; border: none; }
+        
+        /* 页面选择器 */
+        .page-selector { display: flex; align-items: center; gap: 12px; }
+        .page-selector select { padding: 8px 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.1); color: white; font-size: 14px; }
+        .page-selector select option { background: #1e3a8a; color: white; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-arrow-left"></i>
+                <span>拖拽式编辑器</span>
+            </a>
+            <div class="header-divider"></div>
+            <div class="page-selector">
+                <select id="pageSelect" onchange="changePage()">
+                    <option value="">选择要编辑的页面</option>
+                    <option value="index">首页</option>
+                    <option value="services">业务范围</option>
+                    <option value="cases">成功案例</option>
+                    <option value="contact">联系我们</option>
+                    <option value="news">行业资讯</option>
+                </select>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" onclick="clearCanvas()">
+                <i class="fas fa-trash"></i>
+                <span>清空</span>
+            </button>
+            <button class="header-btn" onclick="previewPage()">
+                <i class="fas fa-eye"></i>
+                <span>预览</span>
+            </button>
+            <button class="header-btn primary" onclick="savePage()">
+                <i class="fas fa-save"></i>
+                <span>保存</span>
+            </button>
+            <button class="header-btn danger" onclick="publishPage()">
+                <i class="fas fa-upload"></i>
+                <span>发布</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="builderContainer" style="padding-top: 64px; padding-bottom: 60px; height: 100vh;">
+        <!-- 编辑器将在这里渲染 -->
+    </main>
+
+    <!-- 底部操作栏 -->
+    <div class="editor-footer">
+        <div class="footer-left" id="saveStatus">
+            <i class="fas fa-circle"></i>
+            <span>未保存</span>
+        </div>
+        <div class="footer-right">
+            <button class="btn btn-secondary" onclick="loadTemplate()">
+                <i class="fas fa-file-import"></i>
+                加载模板
+            </button>
+            <button class="btn btn-secondary" onclick="exportHTML()">
+                <i class="fas fa-code"></i>
+                导出HTML
+            </button>
+        </div>
+    </div>
+
+    <!-- 预览模态框 -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-eye" style="color: #3b82f6; margin-right: 8px;"></i>
+                    页面预览
+                </h3>
+                <button class="modal-close" onclick="closePreview()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe class="preview-frame" id="previewFrame"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载状态 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div id="loadingText">正在加载...</div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script src="../components/component-config.js"></script>
+    <script src="../components/component-renderer.js"></script>
+    <script src="builder.js"></script>
+    <script>
+        let currentPage = '';
+        let isDirty = false;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('cms_logged_in') !== 'true') {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // 初始化编辑器
+            initBuilder('builderContainer', {
+                onChange: (components) => {
+                    isDirty = true;
+                    updateSaveStatus('unsaved');
+                },
+                onSave: (components) => {
+                    console.log('Components saved:', components);
+                }
+            });
+
+            // 检查URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageId = urlParams.get('page');
+            if (pageId) {
+                document.getElementById('pageSelect').value = pageId;
+                loadPage(pageId);
+            }
+        });
+
+        // 切换页面
+        function changePage() {
+            const pageId = document.getElementById('pageSelect').value;
+            if (!pageId) return;
+            
+            if (isDirty) {
+                if (!confirm('当前页面有未保存的更改，确定要切换吗？')) {
+                    document.getElementById('pageSelect').value = currentPage;
+                    return;
+                }
+            }
+            
+            loadPage(pageId);
+            window.history.replaceState({}, '', `?page=${pageId}`);
+        }
+
+        // 加载页面
+        async function loadPage(pageId) {
+            showLoading('正在加载页面...');
+            currentPage = pageId;
+            
+            try {
+                // 首先尝试从localStorage加载
+                const savedData = localStorage.getItem(`cms_builder_${pageId}`);
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    if (parsed.sections && Array.isArray(parsed.sections)) {
+                        const components = parsed.sections.map(section => ({
+                            id: section.section_id || `comp_${Date.now()}_${Math.random()}`,
+                            category: section.category || 'basic',
+                            type: section.type || 'text',
+                            data: section.content || {}
+                        }));
+                        builder.setData(components);
+                        isDirty = false;
+                        updateSaveStatus('saved');
+                        hideLoading();
+                        return;
+                    }
+                }
+                
+                // 尝试从API加载
+                try {
+                    const response = await fetch(`../api/load.php?page=${pageId}`);
+                    const result = await response.json();
+                    
+                    if (result.success && result.data && result.data.sections) {
+                        // 转换数据格式
+                        const components = result.data.sections.map(section => ({
+                            id: section.section_id || `comp_${Date.now()}_${Math.random()}`,
+                            category: section.category || 'basic',
+                            type: section.type || 'text',
+                            data: section.content || {}
+                        }));
+                        
+                        builder.setData(components);
+                    } else {
+                        builder.clear();
+                    }
+                } catch (apiError) {
+                    console.log('API加载失败，使用空画布:', apiError);
+                    builder.clear();
+                }
+                
+                isDirty = false;
+                updateSaveStatus('saved');
+            } catch (error) {
+                console.error('加载页面失败:', error);
+                showToast('加载页面失败', 'error');
+                builder.clear();
+            }
+            
+            hideLoading();
+        }
+
+        // 清空画布
+        function clearCanvas() {
+            if (!confirm('确定要清空所有组件吗？')) return;
+            builder.clear();
+            isDirty = true;
+            updateSaveStatus('unsaved');
+        }
+
+        // 预览页面
+        function previewPage() {
+            const html = builder.exportHTML();
+            
+            // 创建完整的HTML页面
+            const fullHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面预览</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; line-height: 1.6; color: #333; }
+        img { max-width: 100%; height: auto; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* 组件基础样式 */
+        .component-text { margin: 16px 0; }
+        .component-image { margin: 16px 0; }
+        .component-button { margin: 16px 0; }
+        .component-button .btn { display: inline-block; padding: 12px 24px; border-radius: 6px; cursor: pointer; transition: all 0.2s; border: none; font-size: 14px; }
+        .component-button .btn-primary { background: #3b82f6; color: white; }
+        .component-button .btn-secondary { background: #6b7280; color: white; }
+        .component-button .btn-success { background: #10b981; color: white; }
+        .component-button .btn-danger { background: #ef4444; color: white; }
+        .component-button .btn-outline { border: 2px solid #3b82f6; color: #3b82f6; background: transparent; }
+        .component-button .btn-small { padding: 8px 16px; font-size: 12px; }
+        .component-button .btn-large { padding: 16px 32px; font-size: 16px; }
+        
+        .component-image-text { display: flex; gap: 24px; margin: 24px 0; }
+        .component-image-text.layout-image-left { flex-direction: row; }
+        .component-image-text.layout-image-right { flex-direction: row-reverse; }
+        .component-image-text.layout-image-top { flex-direction: column; }
+        .component-image-text .image-text-image img { width: 100%; border-radius: 8px; }
+        .component-image-text .image-text-title { font-size: 20px; margin-bottom: 12px; }
+        
+        .component-image-list .image-grid { display: grid; gap: 16px; }
+        .component-image-list .image-item img { width: 100%; border-radius: 8px; }
+        .component-image-list .image-caption { display: block; text-align: center; margin-top: 8px; font-size: 14px; color: #6b7280; }
+        
+        .component-carousel { position: relative; margin: 24px 0; }
+        .component-carousel .carousel-container { position: relative; overflow: hidden; }
+        .component-carousel .carousel-slide { display: none; }
+        .component-carousel .carousel-slide.active { display: block; }
+        .component-carousel .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .component-carousel .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+        .component-carousel .carousel-dots .dot { width: 10px; height: 10px; border-radius: 50%; background: #d1d5db; cursor: pointer; }
+        .component-carousel .carousel-dots .dot.active { background: #3b82f6; }
+        .component-carousel .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.8); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .component-carousel .carousel-arrow.carousel-prev { left: 16px; }
+        .component-carousel .carousel-arrow.carousel-next { right: 16px; }
+        
+        .component-tabs .tabs-header { display: flex; border-bottom: 2px solid #e5e7eb; }
+        .component-tabs .tab-btn { padding: 12px 24px; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .component-tabs .tab-btn.active { border-bottom-color: var(--active-color, #3b82f6); color: var(--active-color, #3b82f6); }
+        .component-tabs .tab-pane { display: none; padding: 16px 0; }
+        .component-tabs .tab-pane.active { display: block; }
+        
+        .component-tabs-vertical { display: flex; gap: 24px; }
+        .component-tabs-vertical .tabs-vertical-header { display: flex; flex-direction: column; border-right: 2px solid #e5e7eb; }
+        .component-tabs-vertical .tab-vertical-btn { padding: 12px 16px; border: none; background: none; cursor: pointer; text-align: left; border-right: 2px solid transparent; margin-right: -2px; }
+        .component-tabs-vertical .tab-vertical-btn.active { border-right-color: var(--active-color, #3b82f6); color: var(--active-color, #3b82f6); background: #eff6ff; }
+        .component-tabs-vertical .tab-vertical-pane { display: none; }
+        .component-tabs-vertical .tab-vertical-pane.active { display: block; }
+        
+        .component-columns { display: grid; }
+        .component-columns .column-item { min-height: 50px; }
+        
+        .component-container { margin: 16px 0; }
+        .component-fullwidth { margin: 24px 0; }
+        
+        .component-collapse .collapse-item, .component-accordion .accordion-item { border: 1px solid #e5e7eb; margin-bottom: 8px; border-radius: 6px; }
+        .component-collapse .collapse-header, .component-accordion .accordion-header { padding: 12px 16px; background: #f9fafb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .component-collapse .collapse-content, .component-accordion .accordion-content { padding: 16px; border-top: 1px solid #e5e7eb; }
+        
+        .component-form, .component-message { max-width: 600px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .component-form .form-group, .component-message .form-group { margin-bottom: 16px; }
+        .component-form label, .component-message label { display: block; margin-bottom: 6px; font-weight: 500; }
+        .component-form input, .component-form textarea, .component-form select, .component-message input, .component-message textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+        .component-form button, .component-message button { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        
+        .component-search { margin: 16px 0; }
+        .component-search .search-form { display: flex; }
+        .component-search .search-input { flex: 1; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 6px 0 0 6px; border-right: none; }
+        .component-search .search-btn { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 0 6px 6px 0; cursor: pointer; }
+        
+        .component-share { margin: 16px 0; }
+        .component-share .share-buttons { display: flex; gap: 8px; justify-content: center; }
+        .component-share .share-btn { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; }
+        .component-share .share-btn.wechat { background: #07c160; }
+        .component-share .share-btn.weibo { background: #e6162d; }
+        .component-share .share-btn.qq { background: #12b7f5; }
+        .component-share .share-btn.qzone { background: #ffc028; }
+        .component-share .share-btn.link { background: #6b7280; }
+        
+        .component-qrcode { text-align: center; padding: 24px; }
+        .component-qrcode .qrcode-title { margin-bottom: 16px; }
+        .component-qrcode img { border-radius: 8px; }
+        
+        .component-vote { max-width: 500px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .component-vote .vote-title { margin-bottom: 20px; }
+        .component-vote .vote-option { display: flex; align-items: center; gap: 12px; padding: 12px; margin-bottom: 8px; background: #f9fafb; border-radius: 6px; cursor: pointer; }
+        .component-vote .vote-option input { width: 18px; height: 18px; }
+        .component-vote button { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; margin-right: 12px; }
+        
+        .component-login { max-width: 400px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .component-login .login-title { text-align: center; margin-bottom: 20px; }
+        .component-login .form-group { margin-bottom: 16px; }
+        .component-login label { display: block; margin-bottom: 6px; font-weight: 500; }
+        .component-login input { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; }
+        .component-login button { width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .component-login .login-links { display: flex; justify-content: space-between; margin-top: 16px; font-size: 14px; }
+        .component-login .login-links a { color: #3b82f6; text-decoration: none; }
+        
+        .component-chat { position: fixed; bottom: 20px; z-index: 999; }
+        .component-chat .chat-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 24px; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .component-chat .chat-wechat { background: white; padding: 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        
+        .component-video { margin: 24px 0; }
+        .component-video video { width: 100%; border-radius: 8px; }
+        
+        .component-image-tabs { display: flex; gap: 24px; }
+        .component-image-tabs.layout-left { flex-direction: row; }
+        .component-image-tabs.layout-top { flex-direction: column; }
+        .component-image-tabs .image-tabs-nav { display: flex; gap: 12px; }
+        .component-image-tabs.layout-left .image-tabs-nav { flex-direction: column; }
+        .component-image-tabs .image-tab-item { cursor: pointer; text-align: center; }
+        .component-image-tabs .image-tab-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .component-image-tabs .image-tab-pane { display: none; }
+        .component-image-tabs .image-tab-pane.active { display: block; }
+    </style>
+</head>
+<body>
+    ${html}
+</body>
+</html>`;
+            
+            const blob = new Blob([fullHtml], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            document.getElementById('previewFrame').src = url;
+            document.getElementById('previewModal').classList.add('show');
+        }
+
+        // 关闭预览
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('show');
+            document.getElementById('previewFrame').src = '';
+        }
+
+        // 保存页面
+        async function savePage() {
+            if (!currentPage) {
+                showToast('请先选择要编辑的页面', 'error');
+                return;
+            }
+
+            showLoading('正在保存...');
+            
+            const components = builder.getData();
+            const data = {
+                page: currentPage,
+                sections: components.map(comp => ({
+                    section_id: comp.id,
+                    category: comp.category,
+                    type: comp.type,
+                    content: comp.data
+                }))
+            };
+            
+            try {
+                // 保存到localStorage
+                localStorage.setItem(`cms_builder_${currentPage}`, JSON.stringify(data));
+                
+                // 同时保存到文件（通过API）
+                try {
+                    const response = await fetch('../api/save.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    if (!result.success) {
+                        console.warn('API保存失败:', result.message);
+                    }
+                } catch (apiError) {
+                    console.log('API保存失败（可能API不存在）:', apiError);
+                }
+                
+                isDirty = false;
+                updateSaveStatus('saved');
+                showToast('保存成功', 'success');
+            } catch (error) {
+                console.error('保存失败:', error);
+                showToast('保存失败', 'error');
+            }
+            
+            hideLoading();
+        }
+
+        // 发布页面
+        async function publishPage() {
+            if (!currentPage) {
+                showToast('请先选择要编辑的页面', 'error');
+                return;
+            }
+
+            if (!confirm('确定要发布这个页面吗？')) return;
+
+            showLoading('正在发布...');
+            
+            try {
+                // 先保存
+                await savePage();
+                
+                // 调用发布API
+                const response = await fetch('../api/publish.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ page: currentPage })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('页面发布成功', 'success');
+                } else {
+                    showToast(result.message || '发布失败', 'error');
+                }
+            } catch (error) {
+                console.error('发布失败:', error);
+                showToast('发布失败', 'error');
+            }
+            
+            hideLoading();
+        }
+
+        // 加载模板
+        function loadTemplate() {
+            // 预定义一些常用模板
+            const templates = {
+                hero: [
+                    { id: 'comp_1', category: 'layout', type: 'fullWidth', data: { bgColor: '#1e3a8a', padding: '80px', contentWidth: '1200px' } },
+                    { id: 'comp_2', category: 'basic', type: 'text', data: { content: '<h1 style="color: white; text-align: center;">欢迎来到我们的网站</h1>', align: 'center', color: '#ffffff', fontSize: '32px' } },
+                    { id: 'comp_3', category: 'basic', type: 'text', data: { content: '<p style="color: rgba(255,255,255,0.8); text-align: center;">专业提供资金服务解决方案</p>', align: 'center', color: '#ffffff', fontSize: '18px' } },
+                    { id: 'comp_4', category: 'basic', type: 'button', data: { text: '了解更多', link: '#', type: 'primary', size: 'large', align: 'center', newWindow: false } }
+                ],
+                services: [
+                    { id: 'comp_1', category: 'basic', type: 'text', data: { content: '<h2 style="text-align: center;">我们的服务</h2>', align: 'center', color: '#1f2937', fontSize: '28px' } },
+                    { id: 'comp_2', category: 'layout', type: 'columns', data: { columns: '3', gap: '24px', equalHeight: true } },
+                    { id: 'comp_3', category: 'basic', type: 'imageText', data: { image: '../../images/service1.jpg', title: '上市公司类', content: '短拆、股票解质押过桥等服务', layout: 'image-top', imageWidth: '100%' } },
+                    { id: 'comp_4', category: 'basic', type: 'imageText', data: { image: '../../images/service2.jpg', title: '企业摆账', content: '长短期定存摆账、云信票据实摆', layout: 'image-top', imageWidth: '100%' } },
+                    { id: 'comp_5', category: 'basic', type: 'imageText', data: { image: '../../images/service3.jpg', title: '银行存款', content: '时点冲量、日均业务、月末冲量', layout: 'image-top', imageWidth: '100%' } }
+                ],
+                news: [
+                    { id: 'comp_1', category: 'basic', type: 'text', data: { content: '<h2>最新资讯</h2>', align: 'left', color: '#1f2937', fontSize: '28px' } },
+                    { id: 'comp_2', category: 'basic', type: 'articleList', data: { category: 'all', limit: '6', showImage: true, showDate: true, showSummary: true, layout: 'card' } }
+                ]
+            };
+            
+            const templateName = prompt('请选择模板：hero（首屏）、services（服务展示）、news（文章列表）');
+            if (templates[templateName]) {
+                if (isDirty && !confirm('当前页面有未保存的更改，加载模板将覆盖现有内容，确定要继续吗？')) {
+                    return;
+                }
+                builder.setData(templates[templateName]);
+                isDirty = true;
+                updateSaveStatus('unsaved');
+            }
+        }
+
+        // 导出HTML
+        function exportHTML() {
+            const html = builder.exportHTML();
+            
+            // 创建完整的HTML页面
+            const fullHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导出的页面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; line-height: 1.6; color: #333; }
+        img { max-width: 100%; height: auto; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* 组件基础样式 */
+        .component-text { margin: 16px 0; }
+        .component-image { margin: 16px 0; }
+        .component-button { margin: 16px 0; }
+        .component-button .btn { display: inline-block; padding: 12px 24px; border-radius: 6px; cursor: pointer; transition: all 0.2s; border: none; font-size: 14px; }
+        .component-button .btn-primary { background: #3b82f6; color: white; }
+        .component-button .btn-secondary { background: #6b7280; color: white; }
+        .component-button .btn-success { background: #10b981; color: white; }
+        .component-button .btn-danger { background: #ef4444; color: white; }
+        .component-button .btn-outline { border: 2px solid #3b82f6; color: #3b82f6; background: transparent; }
+        .component-button .btn-small { padding: 8px 16px; font-size: 12px; }
+        .component-button .btn-large { padding: 16px 32px; font-size: 16px; }
+        
+        .component-image-text { display: flex; gap: 24px; margin: 24px 0; }
+        .component-image-text.layout-image-left { flex-direction: row; }
+        .component-image-text.layout-image-right { flex-direction: row-reverse; }
+        .component-image-text.layout-image-top { flex-direction: column; }
+        .component-image-text .image-text-image img { width: 100%; border-radius: 8px; }
+        .component-image-text .image-text-title { font-size: 20px; margin-bottom: 12px; }
+        
+        .component-image-list .image-grid { display: grid; gap: 16px; }
+        .component-image-list .image-item img { width: 100%; border-radius: 8px; }
+        .component-image-list .image-caption { display: block; text-align: center; margin-top: 8px; font-size: 14px; color: #6b7280; }
+        
+        .component-carousel { position: relative; margin: 24px 0; }
+        .component-carousel .carousel-container { position: relative; overflow: hidden; }
+        .component-carousel .carousel-slide { display: none; }
+        .component-carousel .carousel-slide.active { display: block; }
+        .component-carousel .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .component-carousel .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+        .component-carousel .carousel-dots .dot { width: 10px; height: 10px; border-radius: 50%; background: #d1d5db; cursor: pointer; }
+        .component-carousel .carousel-dots .dot.active { background: #3b82f6; }
+        .component-carousel .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.8); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .component-carousel .carousel-arrow.carousel-prev { left: 16px; }
+        .component-carousel .carousel-arrow.carousel-next { right: 16px; }
+        
+        .component-tabs .tabs-header { display: flex; border-bottom: 2px solid #e5e7eb; }
+        .component-tabs .tab-btn { padding: 12px 24px; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .component-tabs .tab-btn.active { border-bottom-color: var(--active-color, #3b82f6); color: var(--active-color, #3b82f6); }
+        .component-tabs .tab-pane { display: none; padding: 16px 0; }
+        .component-tabs .tab-pane.active { display: block; }
+        
+        .component-tabs-vertical { display: flex; gap: 24px; }
+        .component-tabs-vertical .tabs-vertical-header { display: flex; flex-direction: column; border-right: 2px solid #e5e7eb; }
+        .component-tabs-vertical .tab-vertical-btn { padding: 12px 16px; border: none; background: none; cursor: pointer; text-align: left; border-right: 2px solid transparent; margin-right: -2px; }
+        .component-tabs-vertical .tab-vertical-btn.active { border-right-color: var(--active-color, #3b82f6); color: var(--active-color, #3b82f6); background: #eff6ff; }
+        .component-tabs-vertical .tab-vertical-pane { display: none; }
+        .component-tabs-vertical .tab-vertical-pane.active { display: block; }
+        
+        .component-columns { display: grid; }
+        .component-columns .column-item { min-height: 50px; }
+        
+        .component-container { margin: 16px 0; }
+        .component-fullwidth { margin: 24px 0; }
+        
+        .component-collapse .collapse-item, .component-accordion .accordion-item { border: 1px solid #e5e7eb; margin-bottom: 8px; border-radius: 6px; }
+        .component-collapse .collapse-header, .component-accordion .accordion-header { padding: 12px 16px; background: #f9fafb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .component-collapse .collapse-content, .component-accordion .accordion-content { padding: 16px; border-top: 1px solid #e5e7eb; }
+        
+        .component-form, .component-message { max-width: 600px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .component-form .form-group, .component-message .form-group { margin-bottom: 16px; }
+        .component-form label, .component-message label { display: block; margin-bottom: 6px; font-weight: 500; }
+        .component-form input, .component-form textarea, .component-form select, .component-message input, .component-message textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+        .component-form button, .component-message button { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        
+        .component-search { margin: 16px 0; }
+        .component-search .search-form { display: flex; }
+        .component-search .search-input { flex: 1; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 6px 0 0 6px; border-right: none; }
+        .component-search .search-btn { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 0 6px 6px 0; cursor: pointer; }
+        
+        .component-share { margin: 16px 0; }
+        .component-share .share-buttons { display: flex; gap: 8px; justify-content: center; }
+        .component-share .share-btn { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; }
+        .component-share .share-btn.wechat { background: #07c160; }
+        .component-share .share-btn.weibo { background: #e6162d; }
+        .component-share .share-btn.qq { background: #12b7f5; }
+        .component-share .share-btn.qzone { background: #ffc028; }
+        .component-share .share-btn.link { background: #6b7280; }
+        
+        .component-qrcode { text-align: center; padding: 24px; }
+        .component-qrcode .qrcode-title { margin-bottom: 16px; }
+        .component-qrcode img { border-radius: 8px; }
+        
+        .component-vote { max-width: 500px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .component-vote .vote-title { margin-bottom: 20px; }
+        .component-vote .vote-option { display: flex; align-items: center; gap: 12px; padding: 12px; margin-bottom: 8px; background: #f9fafb; border-radius: 6px; cursor: pointer; }
+        .component-vote .vote-option input { width: 18px; height: 18px; }
+        .component-vote button { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; margin-right: 12px; }
+        
+        .component-login { max-width: 400px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .component-login .login-title { text-align: center; margin-bottom: 20px; }
+        .component-login .form-group { margin-bottom: 16px; }
+        .component-login label { display: block; margin-bottom: 6px; font-weight: 500; }
+        .component-login input { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; }
+        .component-login button { width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .component-login .login-links { display: flex; justify-content: space-between; margin-top: 16px; font-size: 14px; }
+        .component-login .login-links a { color: #3b82f6; text-decoration: none; }
+        
+        .component-chat { position: fixed; bottom: 20px; z-index: 999; }
+        .component-chat .chat-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 24px; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .component-chat .chat-wechat { background: white; padding: 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        
+        .component-video { margin: 24px 0; }
+        .component-video video { width: 100%; border-radius: 8px; }
+        
+        .component-image-tabs { display: flex; gap: 24px; }
+        .component-image-tabs.layout-left { flex-direction: row; }
+        .component-image-tabs.layout-top { flex-direction: column; }
+        .component-image-tabs .image-tabs-nav { display: flex; gap: 12px; }
+        .component-image-tabs.layout-left .image-tabs-nav { flex-direction: column; }
+        .component-image-tabs .image-tab-item { cursor: pointer; text-align: center; }
+        .component-image-tabs .image-tab-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .component-image-tabs .image-tab-pane { display: none; }
+        .component-image-tabs .image-tab-pane.active { display: block; }
+    </style>
+</head>
+<body>
+    ${html}
+</body>
+</html>`;
+            
+            // 创建下载
+            const blob = new Blob([fullHtml], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `page-${currentPage || 'export'}-${new Date().toISOString().slice(0,10)}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('HTML已导出', 'success');
+        }
+
+        // 更新保存状态
+        function updateSaveStatus(status) {
+            const statusEl = document.getElementById('saveStatus');
+            if (status === 'saved') {
+                statusEl.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i><span>已保存</span>';
+            } else if (status === 'unsaved') {
+                statusEl.innerHTML = '<i class="fas fa-circle" style="color: #f59e0b;"></i><span>有未保存的更改</span>';
+            }
+        }
+
+        // 显示加载
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.add('show');
+        }
+
+        // 隐藏加载
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                savePage();
+            }
+        });
+
+        // 页面离开提示
+        window.addEventListener('beforeunload', function(e) {
+            if (isDirty) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+</body>
+</html>

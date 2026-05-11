@@ -1,0 +1,82 @@
+.sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
+	min-height:100px;
+	padding:5px 0;
+}
+.customizer_layout {
+	background: linear-gradient(124deg, #e2e2e2 0%, #fbfbfb 41%, #dedede 75%);
+	border-width: 3px;
+	border-style: solid;
+	-webkit-border-image:
+	  -webkit-gradient(linear, 0 0, 0 100%, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
+	-webkit-border-image:
+	  -webkit-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+	-moz-border-image:
+	  -moz-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+	-o-border-image:
+	  -o-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+	border-image:
+	  linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.sortable li {
+	margin: 5px 0px 5px 15px;
+	padding: 7px;
+	width: 80%;
+	background-color: #fff;
+	border: 2px solid #000;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 800;
+}
+.customize-control #enable li {
+	border: 2px solid #07b7a5;
+}
+.customize-control #disable li {
+	border: 2px solid #c75c3a;
+}
+
+
+.background_active { border: 1px solid #f1c40f !important; border-radius: 2px;}
+ /*
+#customize-control-theme_color  input[type=radio], /* #customize-control-awpbusinesspress_layout_style input[type=radio],
+#customize-control-theme_style_type input[type=radio],
+#customize-control-predefined_back_image input[type=radio] {display:none !important;}
+#customize-control-front_page_data input, #customize-control-front_page_data label{display:none !important;}
+ */
+#customize-control-awpbusinesspress_homepage_template_design label { max-width: 100% !important;}
+
+
+.customize-control-checkbox .focus-select input,
+.customize-control-nav_menu_auto_add .focus-select input,
+.customize-control-radio .focus-select input {
+	margin-right: -20px;
+	margin-left: 3px;
+	margin-top: -38px;
+}
+.customize-control-radio .focus-select-large input {
+	margin-right: -20px;
+	margin-left: 0px;
+	margin-top: -38px;
+}
+
+.focus-select input[type=radio]:checked:before {
+	width: 35px;
+	height: 3px;
+	margin-top: 29px;
+	box-shadow: 0px 3px 10px 0px #3477b0ad;
+}
+
+.focus-select-large input[type=radio]:checked:before {
+	width: 60px;
+	height: 2px;
+	margin-top: 29px;
+	box-shadow: 0px 3px 10px 0px #3477b0ad;
+}
+
+#customize-controls .focus-select img {
+	margin-top: 5px;
+}

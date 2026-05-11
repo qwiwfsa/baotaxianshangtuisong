@@ -1,0 +1,18 @@
+.entry-breadcrumbs a {
+	margin-right: 21px;
+}
+
+.entry-breadcrumbs a,
+.breadcrumb-current {
+	display: inline-block;
+}
+
+.entry-breadcrumbs a:after {
+	right: -14px;
+	top: -1px;
+}
+
+.entry-breadcrumbs a:after,
+.author-link:after {
+	transform: rotate(270deg);
+}

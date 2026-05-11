@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Yao资金网常见问题 - 解答您关于资金业务的常见疑问">
+    <meta name="keywords" content="常见问题,亮资业务,过桥资金,摆账业务,云信融资出表,FAQ">
+    <title>常见问题 - Yao资金网</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/page-custom.css?v=20260504">
+    <!-- Logo动态加载 -->
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open('GET','admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector('.logo img');
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector('.footer-logo img');
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                        if(resp.data.favicon){
+                            var lk=document.querySelector('link[rel="icon"]')||document.querySelector('link[rel="shortcut icon"]');
+                            if(!lk){lk=document.createElement('link');lk.rel='icon';document.head.appendChild(lk);}
+                            lk.href=fixPath(resp.data.favicon);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
+    <script>
+    (function() {
+        var pageName = window.location.pathname.split('/').pop() || 'index.html';
+        // 有分类参数时不覆盖默认SEO，留给分类SEO同步处理
+        if (!new URLSearchParams(window.location.search).has('cat')) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        if (data && data.code === 0 && data.data) {
+                            var seo = data.data;
+                            if (seo.page_title) document.title = seo.page_title;
+                            if (seo.meta_keywords) {
+                                var kw = document.querySelector('meta[name="keywords"]');
+                                if (kw) kw.content = seo.meta_keywords;
+                            }
+                            if (seo.meta_description) {
+                                var desc = document.querySelector('meta[name="description"]');
+                                if (desc) desc.content = seo.meta_description;
+                            }
+                        }
+                    } catch(e) {}
+                }
+            };
+            xhr.send();
+        }
+    })();
+    </script>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <script>
+    // 强制刷新页面版本（绕过缓存）
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            names.forEach(function(name) { caches.delete(name); });
+        });
+    }
+    </script>
+
+    <script>
+    (function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p;}}})();
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+            <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="faq.html" class="nav-link active" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+            </ul>
+
+            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- 页面标题区 -->
+        <section class="page-header">
+            <div class="page-header-container">
+                <div class="page-header-badge">
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQ</span>
+                </div>
+                <h1 class="page-header-title">常见问题</h1>
+                <p class="page-header-subtitle">解答您关于资金业务的常见疑问</p>
+            </div>
+        </section>
+
+        <!-- FAQ内容 -->
+        <section class="page-content">
+            <div class="section-container">
+                
+                <!-- FAQ搜索 -->
+                <div class="editable-section" data-section="faq-search">
+                    <div class="faq-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="faq-search-input" placeholder="搜索问题关键词...">
+                        <button class="faq-search-btn">搜索</button>
+                    </div>
+                </div>
+
+                <!-- FAQ分类（JS动态渲染） -->
+                <div class="editable-section" data-section="faq-categories">
+                    <div class="faq-categories" id="faqCategoryButtons">
+                        <div class="faq-category-item active" data-category="all">
+                            <i class="fas fa-th-large"></i>
+                            <span>全部问题</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ列表（JS动态渲染） -->
+                <div class="editable-section" data-section="faq-list">
+                    <div class="faq-custom-container"></div>
+                </div>
+
+                <!-- 更多问题 -->
+                <div class="editable-section" data-section="faq-more">
+                    <div class="faq-more-box">
+                        <div class="faq-more-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="faq-more-content">
+                            <h3>还有其他问题？</h3>
+                            <p>欢迎随时联系我们的专业顾问，我们将竭诚为您解答</p>
+                        </div>
+                        <div class="contact-button-wrapper">
+                            <button class="btn btn-primary" id="faqConsultBtn">
+                                <i class="fas fa-phone-alt"></i>
+                                联系我们
+                            </button>
+                            <span id="faqPhoneDisplay" style="display:none;font-size:18px;font-weight:700;color:#1e3a8a;letter-spacing:2px;white-space:nowrap;">13552883008</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 右侧边浮动电话按钮 -->
+    <div class="chat-widget" id="chatWidget" aria-label="联系电话">
+        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="拨打电话" aria-expanded="false">
+            <i class="fas fa-phone-alt" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- 动态加载FAQ数据 -->
+    <script>
+    (function() {
+        var categoryIcons = {'liangzi':'fa-lightbulb','guoqiao':'fa-exchange-alt','baizhang':'fa-university','receivable':'fa-file-invoice-dollar','deposit':'fa-landmark','general':'fa-info-circle'};
+        var catContainer = document.getElementById('faqCategoryButtons');
+        var faqContainer = document.querySelector('.faq-custom-container');
+
+        // 默认SEO
+        var defaultSEO = {
+            title: '常见问题 - Yao资金网',
+            keywords: '常见问题,亮资业务,过桥资金,摆账业务,云信融资出表,FAQ',
+            description: 'Yao资金网常见问题 - 解答您关于资金业务的常见疑问'
+        };
+
+        // 加载FAQ数据
+        function loadFAQ() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'api/faq-data.php?t=' + Date.now(), true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
+                        var result = JSON.parse(xhr.responseText);
+                        if (result && result.data && result.data.length > 0) {
+                            renderAll(result.data, result.categories, result.categories_order);
+                        }
+                    } catch(e) {
+                        console.error('FAQ数据解析失败:', e);
+                    }
+                }
+            };
+            xhr.onerror = function() {
+                console.error('FAQ数据加载失败');
+            };
+            xhr.send();
+        }
+
+        // 渲染分类按钮
+        function renderCategories(categoriesOrder) {
+            if (!catContainer) return;
+            var html = '<div class="faq-category-item active" data-category="all"><i class="fas fa-th-large"></i><span>全部问题</span></div>';
+            if (categoriesOrder && categoriesOrder.length > 0) {
+                categoriesOrder.forEach(function(item) {
+                    var k = item.key;
+                    var label = item.label || k;
+                    var icon = categoryIcons[k] || 'fa-circle';
+                    html += '<div class="faq-category-item" data-category="' + k + '"><i class="fas ' + icon + '"></i><span>' + label + '</span></div>';
+                });
+            }
+            catContainer.innerHTML = html;
+            bindCategoryEvents();
+        }
+
+        // 渲染FAQ列表
+        function renderFAQs(faqs, categoriesOrder) {
+            if (!faqContainer) return;
+            // 分组
+            var grouped = {};
+            faqs.forEach(function(f) {
+                var c = f.category || 'general';
+                if (!grouped[c]) grouped[c] = [];
+                grouped[c].push(f);
+            });
+
+            var html = '';
+            var catKeys = categoriesOrder && categoriesOrder.length > 0 
+                ? categoriesOrder.map(function(item) { return item.key; })
+                : Object.keys(grouped);
+
+            catKeys.forEach(function(cat) {
+                var items = grouped[cat] || [];
+                var label = '';
+                if (categoriesOrder) {
+                    for (var i = 0; i < categoriesOrder.length; i++) {
+                        if (categoriesOrder[i].key === cat) { label = categoriesOrder[i].label; break; }
+                    }
+                }
+                if (!label) label = cat;
+                var icon = categoryIcons[cat] || 'fa-question';
+                html += '<div class="faq-custom-category" data-category="' + cat + '"><h3 class="faq-custom-category-title"><i class="fas ' + icon + '"></i> ' + label + '</h3><div class="faq-custom-list">';
+                if (items.length > 0) {
+                    items.forEach(function(faq) {
+                        html += '<details class="faq-custom-item"><summary class="faq-custom-question"><span>' + faq.question + '</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer">' + faq.answer + '</div></details>';
+                    });
+                } else {
+                    html += '<p style="padding:20px;color:#9ca3af;text-align:center;">该分类下暂无问题</p>';
+                }
+                html += '</div></div>';
+            });
+
+            faqContainer.innerHTML = html;
+        }
+
+        // 渲染全部
+        function renderAll(faqs, categories, categoriesOrder) {
+            renderCategories(categoriesOrder);
+            renderFAQs(faqs, categoriesOrder);
+
+            // 如果有URL分类参数，自动激活对应分类
+            var urlParams = new URLSearchParams(window.location.search);
+            var activeCat = urlParams.get('cat');
+            if (activeCat) {
+                var targetBtn = document.querySelector('.faq-category-item[data-category="' + activeCat + '"]');
+                if (targetBtn) {
+                    targetBtn.click();
+                }
+            }
+        }
+
+        // 绑定分类点击事件（含SEO同步）
+        function bindCategoryEvents() {
+            var catItems = document.querySelectorAll('#faqCategoryButtons .faq-category-item');
+            for (var i = 0; i < catItems.length; i++) {
+                catItems[i].addEventListener('click', function() {
+                    var cat = this.dataset.category;
+                    // 更新active状态
+                    var items = document.querySelectorAll('#faqCategoryButtons .faq-category-item');
+                    for (var j = 0; j < items.length; j++) {
+                        items[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+
+                    // 筛选FAQ分类
+                    var cats = document.querySelectorAll('.faq-custom-category');
+                    for (var k = 0; k < cats.length; k++) {
+                        cats[k].style.display = (cat === 'all' || cats[k].dataset.category === cat) ? 'block' : 'none';
+                    }
+
+                    // 更新URL
+                    var url = new URL(window.location.href);
+                    if (cat === 'all') {
+                        url.searchParams.delete('cat');
+                    } else {
+                        url.searchParams.set('cat', cat);
+                    }
+                    history.pushState({}, '', url.toString());
+
+                    // SEO同步
+                    syncCategorySEO(cat);
+                });
+            }
+        }
+
+        // 分类SEO同步
+        function syncCategorySEO(cat) {
+            if (cat === 'all') {
+                // 恢复默认SEO
+                document.title = defaultSEO.title;
+                var kw = document.querySelector('meta[name="keywords"]');
+                if (kw) kw.content = defaultSEO.keywords;
+                var desc = document.querySelector('meta[name="description"]');
+                if (desc) desc.content = defaultSEO.description;
+                return;
+            }
+
+            // 异步获取分类SEO
+            var seoXhr = new XMLHttpRequest();
+            seoXhr.open('GET', 'api/faq-category-seo.php?cat=' + encodeURIComponent(cat), true);
+            seoXhr.onload = function() {
+                if (seoXhr.status === 200) {
+                    try {
+                        var resp = JSON.parse(seoXhr.responseText);
+                        if (resp.code === 0 && resp.data) {
+                            var seo = resp.data;
+                            document.title = seo.seo_title + ' - Yao资金网';
+                            var kw = document.querySelector('meta[name="keywords"]');
+                            if (kw) kw.content = seo.seo_keywords;
+                            var desc = document.querySelector('meta[name="description"]');
+                            if (desc) desc.content = seo.seo_description;
+                        }
+                    } catch(e) {}
+                }
+            };
+            seoXhr.send();
+        }
+
+        // 启动
+        loadFAQ();
+    })();
+    </script>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="uploads/logo.png?v=20260502041100" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、云信融资出表等全方位资金服务</p>
+                </div>
+                <div class="footer-nav" data-footer-group="quick_links">
+                    <h4 class="footer-nav-title">快速链接</h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="services.html">业务范围</a></li>
+                        <li><a href="cases.html">成功案例</a></li>
+                        <li><a href="advantages.html">服务优势</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav" data-footer-group="service_links">
+                    <h4 class="footer-nav-title">更多内容</h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="news.php">行业资讯</a></li>
+                        <li><a href="faq.html">常见问题</a></li>
+                        <li><a href="contact.html">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav" data-footer-group="contact">
+                    <h4 class="footer-nav-title">联系方式</h4>
+                    <ul class="footer-nav-list">
+                        <li><i class="fas fa-phone"></i> 13552883008</li>
+                        <li><i class="fas fa-user"></i> 王总</li>
+                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 Yao资金网 版权所有</p>
+                <p class="footer-disclaimer">投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="admin/assets/cms.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // 显示/隐藏电话号码
+        function showPhoneNumber() {
+            const phoneDisplay = document.getElementById('phone-display');
+            if (phoneDisplay.style.display === 'none') {
+                phoneDisplay.style.display = 'inline-block';
+            } else {
+                phoneDisplay.style.display = 'none';
+            }
+        }
+    </script>
+    
+    <!-- CMS Editor -->
+    <script>
+        (function() {
+            console.log('[CMS] 初始化检查...');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const isEditMode = urlParams.get('edit') === 'true';
+            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
+            
+            console.log('[CMS] 编辑模式:', isEditMode);
+            console.log('[CMS] 登录状态:', isLoggedIn);
+            
+            if (isEditMode && isLoggedIn) {
+                console.log('[CMS] 开始加载编辑器...');
+                
+                const editorCss = document.createElement('link');
+                editorCss.rel = 'stylesheet';
+                editorCss.href = 'admin/editor.css';
+                editorCss.onerror = function() {
+                    console.error('[CMS] 编辑器样式加载失败');
+                };
+                document.head.appendChild(editorCss);
+                
+                const editorScript = document.createElement('script');
+                editorScript.src = 'admin/editor.js';
+                editorScript.onload = function() {
+                    console.log('[CMS] 编辑器脚本加载成功');
+                };
+                editorScript.onerror = function() {
+                    console.error('[CMS] 编辑器脚本加载失败');
+                };
+                document.body.appendChild(editorScript);
+            } else if (isEditMode && !isLoggedIn) {
+                console.log('[CMS] 未登录，重定向到登录页');
+                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
+            }
+        })();
+
+        // 联系我们按钮交互
+        (function() {
+            const btn = document.getElementById('faqConsultBtn');
+            const phone = document.getElementById('faqPhoneDisplay');
+            if (!btn || !phone) return;
+            
+            let isPhoneVisible = false;
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                btn.style.display = 'none';
+                phone.style.display = 'inline';
+                isPhoneVisible = true;
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!isPhoneVisible) return;
+                const wrapper = document.querySelector('.contact-button-wrapper');
+                if (wrapper && wrapper.contains(e.target)) return;
+                
+                phone.style.display = 'none';
+                btn.style.display = '';
+                isPhoneVisible = false;
+            });
+        })();
+    </script>
+</body>
+</html>

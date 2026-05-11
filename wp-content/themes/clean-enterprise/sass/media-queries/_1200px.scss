@@ -1,0 +1,296 @@
+@media screen and (min-width: 75em) {
+	h1,
+	.custom-header .entry-title {
+		font-size: 54px;
+		font-size: 3.375rem;
+	}
+
+	h2,
+	.section-title,
+	.hero-content-wrapper .entry-title,
+	.footer-instagram .widget-title,
+	.promotion-headline-wrapper .entry-title,
+	.singular-content-wrap .entry-title,
+	.stats-section .entry-title,
+	.contact-section .entry-title {
+		font-size: 42px;
+		font-size: 2.625rem;
+	}
+
+	h3 {
+		font-size: 32px;
+		font-size: 2rem;
+	}
+
+	.site-title {
+	    font-size: 36px;
+	    font-size: 2.25rem;
+	}
+
+	.slider-content-wrapper .entry-summary,
+	.slider-content-wrapper .entry-content,
+	.home .custom-header .entry-summary {
+		font-size: 21px;
+		font-size: 1.3125rem;
+	}
+
+	.site-branding {
+		padding: 28px 65px;
+	}
+
+	.header-top-left-content,
+	.header-top-right-content,
+	.site-branding,
+	.site-header-right,
+	.posts-navigation,
+	.pagination,
+	.featured-content-section,
+	.featured-content-section .section-content-wrapper.layout-two .hentry,
+	.featured-content-section .section-content-wrapper.layout-three .hentry,
+	.featured-content-section .section-content-wrapper.layout-four .hentry,
+	body:not(.home).content-modern .site-content > .wrapper,
+	.section-heading-wrap,
+	.section-heading-wrapper,
+	.footer-instagram .widget-title,
+	.site-info .wrapper,
+	.site-info .footer-content,
+	.custom-header .custom-header-content,
+	.no-results,
+	#sec-site-navigation {
+		padding-left: 65px;
+		padding-right: 65px;
+	}
+
+	body:not(.home).content-modern .site-content .content-box,
+	.slider-content-wrapper + .featured-content-section,
+	.custom-header + .featured-content-section {
+		margin-top: -56px;
+	}
+
+	.slider-content-wrapper .cycle-pager {
+		bottom: 84px;
+	}
+
+	.slider-content-wrapper .entry-title,
+	.home .custom-header .entry-content {
+		font-size: 35px;
+		font-size: 2.1875rem;
+	}
+
+	.site-branding,
+	 .navigation-classic .site-branding {
+		text-align: left;
+	}
+
+	.slider-content-wrapper:hover .cycle-prev {
+		left: 25px;
+	}
+
+	.slider-content-wrapper:hover .cycle-next {
+		right: 25px;
+	}
+
+	.has-header-video.no-header-media-text .wp-custom-header {
+		padding-bottom: 325px;
+		padding-top: 325px;
+	}
+
+	.custom-header .custom-header-content {
+		padding-bottom: 172px;
+		padding-top: 172px;
+	}
+
+	.entry-content,
+	.entry-summary,
+	.slider-content-wrapper .entry-summary,
+	.slider-content-wrapper .entry-content {
+		margin-top: 21px;
+	}
+
+	.post-thumbnail,
+	.entry-header .entry-meta,
+	.entry-footer .entry-meta span span {
+		margin-bottom: 28px;
+	}
+
+	.more-button {
+		margin-top: 35px;
+	}
+
+	.section-content-wrapper.layout-three,
+	.section-content-wrapper.layout-one,
+	.section-content-wrapper.layout-two,
+	.section-content-wrapper.layout-four,
+	.section-content-wrapper.layout-five,
+	.singular-content-wrap,
+	.content-area .section-content-wrapper,
+	.footer-widget-area .widget-column,
+	.sidebar {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+
+	body:not(.home).content-modern .singular-content-wrap,
+	body:not(.home).content-modern .content-area .section-content-wrapper,
+	body:not(.home).content-modern .sidebar {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.sidebar .widget.ew-tabbed-recent-popular,
+	.section-content-wrapper.layout-one .hentry,
+	.section-content-wrapper.layout-two .hentry,
+	.section-content-wrapper.layout-three .hentry,
+	.section-content-wrapper.layout-four .hentry,
+	.section-content-wrapper.layout-five .hentry,
+	.singular-content-wrap .hentry,
+	.archive-content-wrap .hentry,
+	.recent-blog-content-wrapper .hentry,
+	.woocommerce-posts-wrapper,
+	.widget,
+	.error404 .not-found {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+
+	.post-navigation .nav-previous,
+	.post-navigation .nav-next,
+	.site-content,
+	.two-columns-layout.content-left .site-content,
+	.two-columns-layout.content-right .site-content,
+	body:not(.home).content-modern .site-content .content-box,
+	body:not(.home).content-modern.two-columns-layout.content-left .site-content .content-box,
+	body:not(.home).content-modern.two-columns-layout.content-right .site-content .content-box {
+		padding-bottom: 21px;
+		padding-top: 21px;
+	}
+
+	.singular-content-wrap,
+	.archive-content-wrap,
+	.two-columns-layout.content-right .singular-content-wrap,
+	.two-columns-layout.content-left .singular-content-wrap,
+	.two-columns-layout.content-right .archive-content-wrap,
+	.two-columns-layout.content-left .archive-content-wrap {
+		padding-bottom: 49px;
+		padding-top: 49px;
+	}
+
+	.sidebar {
+		padding-bottom: 35px;
+		padding-top: 35px;
+	}
+
+	.section,
+	.why-choose-us-content-area,
+	.featured-content-section .wrapper {
+		padding-bottom: 21px;
+		padding-top: 63px;
+	}
+
+	#footer-newsletter,
+	.testimonial-section.section,
+	.promotion-section.section {
+		padding-bottom: 70px;
+		padding-top: 70px;
+	}
+
+	.hero-content-wrapper .entry-container,
+	.contact-section .entry-container {
+		padding: 70px 70px 70px 65px;
+	}
+
+	.section-heading-wrap,
+	.section-heading-wrapper,
+	.footer-instagram .widget-title {
+		padding-bottom: 49px;
+	}
+
+	.hero-content-wrapper .entry-container.full-width,
+	.contact-section .entry-container.full-width {
+		padding-right: 65px;
+	}
+
+	.author-info,
+	.post-navigation,
+	.ctis-finished-notice {
+		margin-top: 56px;
+	}
+
+	.hentry,
+	.view-all-button {
+		margin-bottom: 49px;
+	}
+
+	.sidebar .widget {
+		margin-bottom: 28px;
+	}
+
+	.entry-footer .entry-meta,
+	.comments-area {
+		padding-top: 56px;
+	}
+
+	.team-section .entry-container {
+		padding: 42px;
+	}
+
+	.site-footer .footer-widget-area {
+		padding-top: 49px;
+		padding-bottom: 42px;
+	}
+
+	.promotion-section .wrapper {
+		padding: 63px 130px;
+	}
+
+	.promotion-section .view-all-button,
+	#footer-instagram .catch-instagram-feed-gallery-widget-wrapper .instagram-button .button,
+	.comments-area {
+		margin-top: 49px;
+	}
+
+	.testimonial-section .section-content-wrapper.layout-one .cycle-prev {
+		left: -74px;
+	}
+
+	.testimonial-section .section-content-wrapper.layout-one .cycle-next {
+		right: -74px;
+	}
+
+	.testimonial-section .entry-container {
+	    padding: 60px 65px;
+	}
+
+	.testimonial-section .section-content-wrapper.layout-one .entry-container {
+		padding: 70px 98px;
+	}
+
+	.testimonial-section .section-content-wrapper.layout-one {
+		padding: 0;
+	}
+
+	.testimonial-section .entry-content,
+	.testimonial-section .entry-summary {
+		margin-top: 28px;
+	}
+
+	body:not(.navigation-classic) .featured-content-section.section {
+		padding-top: 128px;
+	}
+
+	.portfolio-section.section .hentry {
+		margin-bottom: 42px;
+	}
+
+	.header-top-right-content {
+	    padding-left: 0;
+	}
+
+	.header-top-left-content {
+		padding-right: 0;
+	}
+	
+	.header-top-right-content {
+	    margin-left: auto;
+	}
+}

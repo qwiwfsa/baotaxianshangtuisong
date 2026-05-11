@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "过桥",
+        "description": "企业短期资金周转过桥服务",
+        "color": "#3b82f6",
+        "sort_order": 1
+    },
+    {
+        "id": 2,
+        "name": "摆账",
+        "description": "企业摆账、显账服务",
+        "color": "#10b981",
+        "sort_order": 2
+    },
+    {
+        "id": 3,
+        "name": "亮资",
+        "description": "企业亮资、资金证明服务",
+        "color": "#f59e0b",
+        "sort_order": 3
+    },
+    {
+        "id": 4,
+        "name": "冲量",
+        "description": "银行存款冲量服务",
+        "color": "#ef4444",
+        "sort_order": 4
+    },
+    {
+        "id": 5,
+        "name": "定增",
+        "description": "上市公司定向增发服务",
+        "color": "#8b5cf6",
+        "sort_order": 5
+    },
+    {
+        "id": 6,
+        "name": "应收账款",
+        "description": "应收账款融资服务",
+        "color": "#06b6d4",
+        "sort_order": 5
+    }
+]

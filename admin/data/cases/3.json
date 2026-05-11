@@ -1,0 +1,22 @@
+{
+    "id": "3",
+    "title": "企业摆账服务",
+    "type": "企业摆账",
+    "city": "某民营企业",
+    "amount": "5000万",
+    "period": "30天",
+    "summary": "提供企业资金证明摆账服务",
+    "detail": "提供企业资金证明摆账服务",
+    "image": "uploads\/20260505_69f9c970c5c47.jpg",
+    "coverImage": "uploads\/20260505_69f9c970c5c47.jpg",
+    "images": [
+        "uploads\/20260505_69f9c970c5c47.jpg"
+    ],
+    "highlights": [],
+    "process": [],
+    "hasVideo": false,
+    "video": "",
+    "status": "published",
+    "createdAt": "2026-05-06 06:16:22",
+    "lastModified": "2026-05-06 06:16:22"
+}

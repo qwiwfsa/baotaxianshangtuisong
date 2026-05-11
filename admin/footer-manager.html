@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页脚管理 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f3f4f6; min-height: 100vh; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: #1e293b; color: white; position: fixed; left: 0; top: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+        .cms-sidebar-header { padding: 24px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { display: flex; align-items: center; gap: 12px; }
+        .cms-sidebar-brand i { font-size: 28px; color: #3b82f6; }
+        .cms-sidebar-brand span { font-size: 20px; font-weight: 600; }
+        .cms-sidebar-nav { padding: 16px 0; }
+        .cms-nav-section { margin-bottom: 8px; }
+        .cms-nav-title { padding: 12px 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+        .cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; }
+        .cms-nav-item:hover { background: #334155; color: white; }
+        .cms-nav-item.active { background: #3b82f6; color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+        .cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+        .cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .cms-header-left { display: flex; align-items: center; gap: 16px; }
+        .cms-header-title { font-size: 20px; font-weight: 600; color: #1f2937; }
+        .cms-header-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .cms-header-btn:hover { background: linear-gradient(135deg, #1e40af, #2563eb); }
+        .cms-header-btn-sm { padding: 8px 16px; font-size: 13px; }
+        .cms-content { padding: 24px; }
+        .cms-notice { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; font-size: 14px; color: #1e40af; display: flex; align-items: flex-start; gap: 12px; }
+        .cms-notice i { font-size: 18px; margin-top: 1px; }
+        .footer-group { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; overflow: hidden; }
+        .footer-group-header { padding: 16px 24px; background: #f8fafc; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .footer-group-header h3 { font-size: 16px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px; }
+        .footer-group-header i { font-size: 14px; color: #9ca3af; transition: transform 0.2s; }
+        .footer-group-header.collapsed i.fa-chevron-down { transform: rotate(-90deg); }
+        .footer-group-body { padding: 0; }
+        .footer-group-body.collapsed { display: none; }
+        .field-item { display: flex; align-items: center; padding: 14px 24px; border-bottom: 1px solid #f3f4f6; gap: 12px; }
+        .field-item:last-child { border-bottom: none; }
+        .field-label { width: 120px; min-width: 120px; font-size: 13px; font-weight: 500; color: #6b7280; }
+        .field-input { flex: 1; padding: 9px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .field-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .field-textarea { flex: 1; padding: 9px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; min-height: 60px; resize: vertical; transition: all 0.2s; font-family: inherit; }
+        .field-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .field-url { width: 200px; min-width: 160px; padding: 9px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .field-url:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .field-actions { display: flex; gap: 6px; min-width: 70px; justify-content: flex-end; }
+        .field-btn { padding: 7px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; border: none; transition: all 0.2s; }
+        .field-btn-save { background: #eff6ff; color: #3b82f6; }
+        .field-btn-save:hover { background: #dbeafe; }
+        .field-btn-delete { background: #fef2f2; color: #ef4444; }
+        .field-btn-delete:hover { background: #fee2e2; }
+        .field-btn-add { background: #f0fdf4; color: #16a34a; }
+        .field-btn-add:hover { background: #dcfce7; }
+        .link-item-row { display: flex; align-items: center; gap: 8px; flex: 1; }
+        .toast { position: fixed; top: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: white; font-size: 14px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideIn 0.3s ease; }
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.7); z-index: 500; align-items: center; justify-content: center; }
+        .loading-overlay.show { display: flex; }
+        .loading-spinner { width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) {
+            .cms-sidebar { width: 60px; }
+            .cms-sidebar-brand span, .cms-nav-item span, .cms-nav-title { display: none; }
+            .cms-nav-item { justify-content: center; padding: 12px; }
+            .cms-main { margin-left: 60px; }
+            .field-item { flex-wrap: wrap; }
+            .field-label { width: 100%; margin-bottom: 4px; }
+            .field-url { width: 100%; }
+            .link-item-row { flex-wrap: wrap; }
+        }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; }
+        .btn-primary:hover { background: linear-gradient(135deg, #1e40af, #2563eb); }
+        .btn-danger { background: #fef2f2; color: #dc2626; }
+        .btn-danger:hover { background: #fee2e2; }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- 侧边栏 -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表板</span></a>
+                    <a href="logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+                    <a href="case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>案例管理</span></a>
+                    <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面管理</span></a>
+                    <a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+                    <a href="footer-manager.html" class="cms-nav-item active" data-section="footer"><i class="fas fa-list-alt"></i><span>页脚管理</span></a>
+                    <a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+                    <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="cms-main">
+            <header class="cms-header">
+                <div class="cms-header-left">
+                    <h1 class="cms-header-title">页脚管理</h1>
+                </div>
+                <button class="cms-header-btn" onclick="saveAllFooter()">
+                    <i class="fas fa-save"></i>
+                    <span>保存所有修改</span>
+                </button>
+            </header>
+
+            <div class="cms-content">
+                <!-- 页面说明 -->
+                <div class="cms-notice">
+                    <i class="fas fa-info-circle"></i>
+                    <div>在这里管理网站页脚的所有内容。修改后点击「保存所有修改」按钮生效。<br>
+                    <strong>分组说明：</strong>品牌信息 → 企业简介文案 | 快速链接 → 导航链接 | 业务链接 → 服务链接 | 联系方式 → 电话/邮箱/联系人 | 底部信息 → 版权声明/免责文案。</div>
+                </div>
+
+                <!-- 分组配置 -->
+                <div id="footerGroups"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        // ========== 分组定义 ==========
+        const GROUP_CONFIG = [
+            {
+                key: 'brand',
+                label: '品牌信息',
+                icon: 'fas fa-building',
+                linkType: false,
+                fields: [
+                    { key: 'company_desc', label: '企业简介文案', type: 'textarea' }
+                ]
+            },
+            {
+                key: 'quick_links',
+                label: '快速链接',
+                icon: 'fas fa-link',
+                linkType: true,
+                fieldLabel: '链接名称',
+                fields: [] // 动态从数据库加载
+            },
+            {
+                key: 'service_links',
+                label: '业务链接',
+                icon: 'fas fa-briefcase',
+                linkType: true,
+                fieldLabel: '业务名称',
+                fields: []
+            },
+            {
+                key: 'contact',
+                label: '联系方式',
+                icon: 'fas fa-phone',
+                linkType: false,
+                fields: [
+                    { key: 'phone', label: '手机号', type: 'text' },
+                    { key: 'contact_person', label: '联系人', type: 'text' },
+                    { key: 'email', label: '邮箱', type: 'text' }
+                ]
+            },
+            {
+                key: 'bottom',
+                label: '底部信息',
+                icon: 'fas fa-copyright',
+                linkType: false,
+                fields: [
+                    { key: 'copyright_text', label: '版权声明文字', type: 'text' },
+                    { key: 'disclaimer_text', label: '风险提示免责文案', type: 'textarea' }
+                ]
+            }
+        ];
+
+        let footerData = {}; // { groupKey: [items] }
+        let pendingDeletes = []; // [{group_key, item_key}] 待删除列表
+
+        // ========== 数据加载 ==========
+        async function loadFooterData() {
+            showLoading(true);
+            try {
+                const resp = await fetch('api/footer-data.php?t=' + Date.now());
+                const result = await resp.json();
+                if (result.code === 0 && result.data) {
+                    // 按group_key分组
+                    footerData = {};
+                    result.data.forEach(item => {
+                        const gk = item.group_key;
+                        if (!footerData[gk]) footerData[gk] = [];
+                        footerData[gk].push(item);
+                    });
+                    renderGroups();
+                } else {
+                    showToast('加载页脚数据失败: ' + (result.msg || '未知错误'), 'error');
+                }
+            } catch (e) {
+                console.error('加载页脚数据失败:', e);
+                showToast('加载页脚数据失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ========== 渲染 ==========
+        function renderGroups() {
+            const container = document.getElementById('footerGroups');
+            container.innerHTML = GROUP_CONFIG.map(group => renderGroup(group)).join('');
+        }
+
+        function renderGroup(group) {
+            const items = footerData[group.key] || [];
+            const fieldsHtml = group.linkType ? renderLinkFields(group, items) : renderStaticFields(group, items, group.fields);
+
+            // 先展开状态
+            const isCollapsed = false;
+
+            return `
+                <div class="footer-group" data-group="${group.key}">
+                    <div class="footer-group-header" onclick="toggleGroup(this)">
+                        <h3><i class="${group.icon}"></i> ${group.label} <span style="font-weight:400;font-size:13px;color:#9ca3af;">（${items.length}项）</span></h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="footer-group-body">
+                        ${fieldsHtml}
+                        ${group.linkType ? `
+                        <div style="padding: 12px 24px; border-top: 1px solid #f3f4f6;">
+                            <button class="btn btn-primary btn-sm" onclick="addLinkItem('${group.key}')">
+                                <i class="fas fa-plus"></i> 添加${group.fieldLabel || '链接'}
+                            </button>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderStaticFields(group, items, fieldDefs) {
+            return fieldDefs.map(fd => {
+                const item = items.find(i => i.item_key === fd.key);
+                const val = item ? (item.item_value || '') : '';
+                const url = item ? (item.item_url || '') : '';
+                const id = item ? item.id : 'new_' + fd.key;
+                return `
+                    <div class="field-item" data-id="${id}" data-group="${group.key}" data-key="${fd.key}">
+                        <div class="field-label">${fd.label}</div>
+                        <div class="link-item-row">
+                            ${fd.type === 'textarea'
+                                ? `<textarea class="field-textarea" oninput="updateField('${group.key}','${fd.key}',this.value)">${escapeHtml(val)}</textarea>`
+                                : `<input type="text" class="field-input" value="${escapeHtml(val)}" oninput="updateField('${group.key}','${fd.key}',this.value)">`
+                            }
+                            ${fd.key === 'phone' || fd.key === 'email' || fd.key === 'contact_person' ? '' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderLinkFields(group, items) {
+            return items.map(item => {
+                // 显示名称为空时回退到item_label（数据库显示名保存在item_label中）
+                const val = item.item_value || item.item_label || '';
+                const url = item.item_url || '';
+                return `
+                    <div class="field-item" data-id="${item.id}" data-group="${group.key}" data-key="${item.item_key}">
+                        <div class="field-label">${escapeHtml(item.item_label)}</div>
+                        <div class="link-item-row">
+                            <input type="text" class="field-input" placeholder="显示名称" value="${escapeHtml(val)}" oninput="updateLinkField('${group.key}','${item.item_key}','value',this.value)">
+                            <input type="text" class="field-url" placeholder="链接URL" value="${escapeHtml(url)}" oninput="updateLinkField('${group.key}','${item.item_key}','url',this.value)">
+                        </div>
+                        <div class="field-actions">
+                            <button class="field-btn field-btn-delete" onclick="deleteLinkItem('${group.key}','${item.item_key}')" title="删除">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ========== 数据操作 ==========
+        let pendingChanges = {};
+
+        function updateField(groupKey, itemKey, value) {
+            // 同步更新 footerData（保证前台渲染时使用已修改的值）
+            if (footerData[groupKey]) {
+                const item = footerData[groupKey].find(i => i.item_key === itemKey);
+                if (item) item.item_value = value;
+            }
+            if (!pendingChanges[groupKey]) pendingChanges[groupKey] = {};
+            if (!pendingChanges[groupKey][itemKey]) pendingChanges[groupKey][itemKey] = {};
+            pendingChanges[groupKey][itemKey].item_value = value;
+            pendingChanges[groupKey][itemKey].item_key = itemKey;
+            pendingChanges[groupKey][itemKey].group_key = groupKey;
+        }
+
+        function updateLinkField(groupKey, itemKey, field, value) {
+            // 同步更新 footerData（保证前台渲染时使用已修改的值）
+            if (footerData[groupKey]) {
+                const item = footerData[groupKey].find(i => i.item_key === itemKey);
+                if (item) item[field === 'value' ? 'item_value' : 'item_url'] = value;
+            }
+            if (!pendingChanges[groupKey]) pendingChanges[groupKey] = {};
+            if (!pendingChanges[groupKey][itemKey]) pendingChanges[groupKey][itemKey] = {};
+            const f = field === 'value' ? 'item_value' : 'item_url';
+            pendingChanges[groupKey][itemKey][f] = value;
+            pendingChanges[groupKey][itemKey].item_key = itemKey;
+            pendingChanges[groupKey][itemKey].group_key = groupKey;
+            // 同步保存 item_value 和 item_label 的一致性：当编辑任意链接字段时，也确保 item_value 被记录
+            if (field === 'url' && !pendingChanges[groupKey][itemKey].item_value && footerData[groupKey]) {
+                const item = footerData[groupKey].find(i => i.item_key === itemKey);
+                if (item && item.item_value) {
+                    pendingChanges[groupKey][itemKey].item_value = item.item_value;
+                }
+            }
+        }
+
+        function addLinkItem(groupKey) {
+            const timestamp = Date.now();
+            const newKey = groupKey + '_new_' + timestamp;
+            const label = prompt('请输入' + (GROUP_CONFIG.find(g => g.key === groupKey)?.fieldLabel || '链接') + '名称：');
+            if (!label) return;
+
+            // 添加到本地数据
+            const newItem = {
+                id: 'new_' + timestamp,
+                group_key: groupKey,
+                item_key: newKey,
+                item_label: label,
+                item_value: label,
+                item_url: '#',
+                sort_order: 999
+            };
+
+            if (!footerData[groupKey]) footerData[groupKey] = [];
+            footerData[groupKey].push(newItem);
+
+            // 记录变更
+            if (!pendingChanges[groupKey]) pendingChanges[groupKey] = {};
+            if (!pendingChanges[groupKey][newKey]) pendingChanges[groupKey][newKey] = {};
+            pendingChanges[groupKey][newKey].item_value = label;
+            pendingChanges[groupKey][newKey].item_url = '#';
+            pendingChanges[groupKey][newKey].item_key = newKey;
+            pendingChanges[groupKey][newKey].item_label = label;
+            pendingChanges[groupKey][newKey].group_key = groupKey;
+            pendingChanges[groupKey][newKey].is_new = '1';
+
+            renderGroups();
+            showToast('已添加：' + label, 'success');
+        }
+
+        async function deleteLinkItem(groupKey, itemKey) {
+            if (!confirm('确定要删除该链接吗？')) return;
+
+            showLoading(true);
+            try {
+                const resp = await fetch('api/footer-data.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'action=delete&item_key=' + encodeURIComponent(itemKey) + '&group_key=' + encodeURIComponent(groupKey)
+                });
+                const result = await resp.json();
+                if (result.code === 0) {
+                    // 从本地删除
+                    const idx = (footerData[groupKey] || []).findIndex(i => i.item_key === itemKey);
+                    if (idx !== -1) footerData[groupKey].splice(idx, 1);
+                    // 清除待保存变更
+                    if (pendingChanges[groupKey] && pendingChanges[groupKey][itemKey]) {
+                        delete pendingChanges[groupKey][itemKey];
+                    }
+                    renderGroups();
+                    showToast('删除成功', 'success');
+                } else {
+                    showToast('删除失败: ' + (result.msg || '未知错误'), 'error');
+                }
+            } catch (e) {
+                showToast('删除失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ========== 保存所有修改 ==========
+        async function saveAllFooter() {
+            showLoading(true);
+            try {
+                // 收集所有变更
+                const changedItems = [];
+                Object.keys(pendingChanges).forEach(gk => {
+                    Object.keys(pendingChanges[gk]).forEach(ik => {
+                        const ch = pendingChanges[gk][ik];
+                        // 从 footerData 补充缺少的字段（防止更新后丢数据）
+                        if (footerData[gk]) {
+                            const orig = footerData[gk].find(i => i.item_key === ik);
+                            if (orig) {
+                                if (!ch.item_label) ch.item_label = orig.item_label;
+                                if (!ch.item_value) ch.item_value = orig.item_value || '';
+                            }
+                        }
+                        changedItems.push(ch);
+                    });
+                });
+
+                if (changedItems.length === 0) {
+                    showToast('没有需要保存的修改', 'error');
+                    showLoading(false);
+                    return;
+                }
+
+                const resp = await fetch('api/footer-data.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'action=save_batch&data=' + encodeURIComponent(JSON.stringify(changedItems))
+                });
+                const result = await resp.json();
+                if (result.code === 0) {
+                    showToast('保存成功！共更新 ' + (result.count || changedItems.length) + ' 项', 'success');
+                    pendingChanges = {};
+                    // 重新加载数据
+                    await loadFooterData();
+                } else {
+                    showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
+                }
+            } catch (e) {
+                showToast('保存失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ========== 工具函数 ==========
+        function toggleGroup(el) {
+            el.classList.toggle('collapsed');
+            const body = el.nextElementSibling;
+            body.classList.toggle('collapsed');
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('show', show);
+        }
+
+        function showToast(message, type = 'success') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-' + type;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ========== 初始化 ==========
+        document.addEventListener('DOMContentLoaded', loadFooterData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+/*
+* Author: awpbusinesspress Template
+* Created by: (A WP Life)
+* Copyright (c) 2018, Inc.
+* Date: 10 June, 2018
+* http://awplife.com/
+* Name: skin-default.css
+*/
+
+
+/*--------------------------------------------------------------*/
+/*	Navbar
+/*--------------------------------------------------------------*/
+
+/* .navbar-custom .navbar-brand {
+	color: #5ca2df !important;
+} */
+
+
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav .open > a,
+.navbar-custom .navbar-nav .open > a:focus,
+.navbar-custom .navbar-nav .open > a:hover {
+	color: #5ca2df;
+}
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+	color: #5ca2df;
+}
+
+.menu-button, .menu-button:hover, .menu-button:active, .menu-button:focus {
+	color: #5ca2df;
+}
+
+/*--------------------------------------------------------------*/
+/*	Cart Icon
+/*--------------------------------------------------------------*/
+
+.shopping-cart:hover > a { color: #5ca2df; }
+.shopping-cart > a .cart-total { background-color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Default Html Elements
+/*--------------------------------------------------------------*/
+
+a:hover, a:focus, a:active { color: #5ca2df; }
+blockquote:before { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Footer Copyrights - Site Info
+/*--------------------------------------------------------------*/
+
+.site-info a:hover, .site-info a:focus { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Header Top Info
+/*--------------------------------------------------------------*/
+
+.header-top { background-color: #5ca2df; }
+.header-contact-info li i.top-icon { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*  Owl Carousel Next Prev
+/*--------------------------------------------------------------*/
+
+.owl-carousel .owl-prev:hover,
+.owl-carousel .owl-next:hover {
+	background-color: #5ca2df;
+}
+
+/*--------------------------------------------------------------*/
+/*	Owl Carousel Paginations / Dots
+/*--------------------------------------------------------------*/
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+	background: rgba(110, 168, 217, 1);
+}
+.testimonial-two .owl-theme .owl-dots .owl-dot.active span,
+.testimonial-two .owl-theme .owl-dots .owl-dot:hover span {
+	background: rgba(110, 168, 217, 1);
+}
+
+/*--------------------------------------------------------------*/
+/*	Section And Mixed Element Css
+/*--------------------------------------------------------------*/
+
+.divider-line { color: #5ca2df; }
+.theme-default { background-color: #5ca2df; }
+.text-default { color: #5ca2df; }
+.btn-animation:before {	background-color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Top Contact Info Callout - Top And Bottom
+/*--------------------------------------------------------------*/
+
+.top-contact-info { background-color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Service Section - One
+/*--------------------------------------------------------------*/
+
+.service-one .post:before { background: #5ca2df; }
+.service-icon i { color: #5ca2df; }
+.service-one .post:hover .more-link,
+.service-one .post:focus .more-link {
+	background-color: #5ca2df;
+	color: #fff;
+	border: 2px solid #5ca2df;
+}
+
+/*--------------------------------------------------------------*/
+/*	Core Service Section
+/*--------------------------------------------------------------*/
+
+.core-service .icon i { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Portfolio Section
+/*--------------------------------------------------------------*/
+
+.portfolio .owl-carousel:hover .owl-prev:hover,
+.portfolio .owl-carousel:hover .owl-next:hover {
+	background-color: #5ca2df;
+}
+.portfolio .post .entry-title a:hover { color: #5ca2df; }
+
+
+.portfolio-two .post .post-thumbnail .thumbnail-showcase-icons a:hover,
+.portfolio-two .post .post-thumbnail .thumbnail-showcase-icons a:focus {
+	background-color: #5ca2df;
+	border: 2px solid #5ca2df;
+	color: #fff;
+}
+
+
+/*--------------------------------------------------------------*/
+/*	Portfolio Filters Links
+/*--------------------------------------------------------------*/
+
+.portfolio-filters li a:before {
+	background-color: #5ca2df;
+}
+
+/*--------------------------------------------------------------*/
+/*	Section Header
+/*--------------------------------------------------------------*/
+
+.entry-header .entry-title > a:hover,
+.entry-header .entry-title > a:focus,
+.entry-header .entry-title > a:active { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Page Title Section
+/*--------------------------------------------------------------*/
+
+.page-breadcrumb > li a:hover, .page-breadcrumb > li a:focus,
+.page-breadcrumb > li.active { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Testimonial Section
+/*--------------------------------------------------------------*/
+
+.testimonial { background-color: #5ca2df; }
+.review .wt-content:before { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Testimonial Section - Two
+/*--------------------------------------------------------------*/
+
+.testimonial-two .name > a:hover { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	About Us
+/*--------------------------------------------------------------*/
+
+.about-img-holder img {
+	border-radius: 2px;
+	-webkit-box-shadow: -30px -30px 0px 0px #5ca2df;
+	-moz-box-shadow: -30px -30px 0px 0px #5ca2df;
+	box-shadow: -30px -30px 0px 0px #5ca2df;
+}
+
+/*--------------------------------------------------------------*/
+/*	Team Section
+/*--------------------------------------------------------------*/
+
+.team-module:hover .team-caption { border-bottom: 2px solid #5ca2df; }
+.team-overlay { background: rgba(110, 168, 217, 0.7); }
+
+/*--------------------------------------------------------------*/
+/*  Blog Section
+/*--------------------------------------------------------------*/
+
+.blog .entry-meta a:hover, .blog .entry-meta a:focus { color: #5ca2df; }
+/* .blog .entry-meta .entry-date a { color: #5ca2df !important; } */
+.byline .author:before, .entry-date:before,
+.comments-link:before, .cat-links:before,
+.tag-links:before {
+	color: #5ca2df;
+}
+.more-link:hover, .more-link:focus { border: 2px solid #5ca2df; }
+.more-link:before { background-color: #5ca2df; }
+.blog-author .designation { color: #5ca2df; }
+.reply a:hover, .reply a:focus { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Sidebars & Widgets Section
+/*--------------------------------------------------------------*/
+
+.widget .widget-title { border-left: 3px solid #5ca2df; }
+.widget a:hover, .widget a:focus { color: #5ca2df; }
+.widget i.icon { color: #5ca2df; }
+.widget .post .entry-meta .entry-date a { color: #5ca2df; }
+.widget .tagcloud a:hover { background-color: #5ca2df; border: 1px solid #5ca2df;}
+.widget #wp-calendar caption { background-color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	404 Error Page
+/*--------------------------------------------------------------*/
+
+.error-404 i { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Contact Page
+/*--------------------------------------------------------------*/
+
+.contact-area:before {
+	border-top-color: #5ca2df;
+	border-bottom-color: #5ca2df;
+}
+.contact-area:after {
+	border-left-color: #5ca2df;
+	border-right-color: #5ca2df;
+}
+.contact-area i.fa { color: #5ca2df; }
+
+/*--------------------------------------------------------------*/
+/*	Page Scroll Up
+/*--------------------------------------------------------------*/
+
+.page-scroll-up {
+	background-color: #5ca2df;
+}
+.page-scroll-up:hover, .page-scroll-up:focus {
+	background-color: #5ca2df;
+}
+
+.sponsors img:hover {
+	border: 1px solid #5ca2df;
+}
+.team-caption .designation {
+	color: #5ca2df;
+}
+.blog .post:before {
+	background-color: #5ca2df ;
+}
+/* .service-one .post {
+	border-bottom: 4px solid #5ca2df;
+	border: 1px solid #e7e7e7;
+} */
+.footer {
+	border-top: 3px solid #5ca2df;
+}
+.contact-info-module:hover .contact-icon {
+	border: 3px solid #5ca2df;
+}
+.team-avatar .team-social-icons a:hover {
+	color: #5ca2df;
+}
+
+.testimonial-two .review:before {
+	background-color: #5ca2df;
+}
+
+.team-module-two:before {
+	background-color: #5ca2df;
+}
+
+.team-module-two .team-social-icons a:hover{
+	color: #5ca2df;
+}
+figure.portfolio-snipone:before {
+	background-color:  #5ca2df;
+	border-right: 1px solid  #5ca2df;
+}
+figure.portfolio-snipone i:hover{
+	color:  #5ca2df;
+}
+
+.portfolio-snipone a:hover{
+	color: #5ca2df;
+}
+/*--------------------------------------------------------------*/
+/*	Contact Form 7 button
+/*--------------------------------------------------------------*/
+
+button:hover, button:focus,
+input[type="button"]:hover,
+input[type="button"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+	background: #5ca2df;
+}
+
+/*--------------------------------------------------------------*/
+/*	Woocommerce Custom CSS
+/*--------------------------------------------------------------*/
+
+.woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt {
+	background-color: #5ca2df;
+}
+
+.woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover {
+	background-color: #5ca2df;
+}
+.woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button{
+	background-color: #5ca2df;
+}
+
+.woocommerce span.onsale {
+	background-color: #5ca2df;
+}
+
+.product_list_widget ins {
+	background: #5ca2df ;
+}
+.woocommerce-message::before {
+	color: #5ca2df;
+}
+.woocommerce-message{
+	border-top-color: #5ca2df;
+}
+
+.woocommerce-section {
+	background-color: #5ca2df;
+}
+
+/* Fixing */
+/* .site-description {
+	color: #fff;
+} */
+
+body .footer li {
+ color: #fff;
+
+}
+.blog .post  {
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+}
+
+.page-title-module .content-center {
+	top: 70%;
+}
+
+#gallery-1 .gallery-caption {
+	text-align: left;
+}
+
+.wpcf7 .wpcf7-form label {
+	display: block;
+}
+
+.post-content .wpcf7-submit {
+	border-radius: 50px;
+	padding: 0.99rem 1.5rem;
+}

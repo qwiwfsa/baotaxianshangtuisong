@@ -1,0 +1,819 @@
+﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO设置 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #3b82f6;
+            --sidebar-text: #cbd5e1;
+            --body-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--body-bg);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .cms-layout { display: flex; width: 100%; min-height: 100vh; }
+
+        .cms-sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            flex-shrink: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .cms-sidebar-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cms-sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .cms-sidebar-brand i { color: var(--sidebar-active); }
+
+        .cms-sidebar-nav { padding: 16px 0; }
+
+        .cms-nav-section { margin-bottom: 8px; }
+
+        .cms-nav-title {
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+        }
+
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .cms-nav-item:hover { background: var(--sidebar-hover); color: white; }
+        .cms-nav-item.active { background: var(--sidebar-active); color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+
+        .cms-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .cms-header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .cms-header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cms-content { padding: 24px; max-width: 1100px; }
+
+        .seo-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .seo-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .seo-card-header i {
+            font-size: 22px;
+            color: var(--primary);
+        }
+
+        .seo-card-header h3 { font-size: 16px; color: var(--text-primary); }
+        .seo-card-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .form-label .char-count {
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .form-textarea { resize: vertical; min-height: 60px; }
+
+        .char-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .char-hint.warning { color: var(--warning); }
+        .char-hint.danger { color: var(--danger); }
+
+        /* 页面列表表格 */
+        .page-table-wrap {
+            overflow-x: auto;
+        }
+
+        .page-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .page-table thead th {
+            background: #f8fafc;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+
+        .page-table tbody td {
+            padding: 10px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+        }
+
+        .page-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .page-table .page-name {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .page-table .page-name small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .page-table input[type="text"],
+        .page-table textarea {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .page-table input[type="text"]:focus,
+        .page-table textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+        }
+
+        .page-table textarea {
+            min-height: 36px;
+            resize: vertical;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--primary-hover); }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover { background: #f3f4f6; }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover { background: #059669; }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .toast.show { transform: translateX(0); }
+        .toast-success { background: var(--success); }
+        .toast-error { background: var(--danger); }
+        .toast-info { background: var(--primary); }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        .search-box {
+            margin-bottom: 16px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 36px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-box-wrap {
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .badge-global { background: #dbeafe; color: #1d4ed8; }
+        .badge-page { background: #f3f4f6; color: #6b7280; }
+        .badge-custom { background: #fef3c7; color: #b45309; }
+
+        .section-divider {
+            margin: 24px 0;
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .cms-content { padding: 16px; }
+            .page-table { font-size: 12px; }
+            .page-table thead th, .page-table tbody td { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- 侧边栏 -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>仪表板</span>
+                    </a>
+                    <a href="logo-settings.html" class="cms-nav-item" data-section="logo">
+                        <i class="fas fa-image"></i>
+                        <span>Logo设置</span>
+                    </a>
+                    <a href="seo-settings.html" class="cms-nav-item active" data-section="seo">
+                        <i class="fas fa-search"></i>
+                        <span>SEO设置</span>
+                    </a>
+                    <a href="case-management.html" class="cms-nav-item" data-section="cases">
+                        <i class="fas fa-trophy"></i>
+                        <span>案例管理</span>
+                    </a>
+                    <a href="index.html" class="cms-nav-item" data-section="pages">
+                        <i class="fas fa-file-alt"></i>
+                        <span>页面管理</span>
+                    </a>
+                    <a href="nav-management.html" class="cms-nav-item" data-section="nav">
+                        <i class="fas fa-bars"></i>
+                        <span>导航菜单</span>
+                    </a>
+                    <a href="components/news/article-list.html" class="cms-nav-item" data-section="articles">
+                        <i class="fas fa-newspaper"></i>
+                        <span>文章管理</span>
+                    </a>
+                    <a href="faq-management.html" class="cms-nav-item" data-section="faq">
+                        <i class="fas fa-question-circle"></i>
+                        <span>FAQ管理</span>
+                    </a>
+                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>
+                    
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容 -->
+        <main class="cms-main">
+            <header class="cms-header">
+                <h1 class="cms-header-title">
+                    <i class="fas fa-search"></i>
+                    SEO设置
+                </h1>
+            </header>
+
+            <div class="cms-content">
+                <!-- 提示信息 -->
+                <div class="seo-card" style="background:#eff6ff;border:1px solid #bfdbfe;">
+                    <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#1e40af;">
+                        <i class="fas fa-info-circle"></i>
+                        <span>在此配置全站SEO元数据。整站设置为全局默认值，各页面可单独覆盖。保存后请<a href="../index.html" target="_blank" style="color:#2563eb;">访问前台</a>查看效果。</span>
+                    </div>
+                </div>
+
+                <!-- 整站统一设置 -->
+                <div class="seo-card">
+                    <div class="seo-card-header">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h3>整站统一设置 <span class="badge badge-global">全局默认</span></h3>
+                            <p>以下设置为所有页面的默认值。如果页面未单独设置，将使用全局默认值。</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            网站标题 <span class="char-count">（<span id="globalTitleCount">0</span>/100）</span>
+                        </label>
+                        <input type="text" class="form-input" id="global_title" placeholder="例如：Yoo资金网 - 专业资金服务商" maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            网站关键词 <span class="char-count">（<span id="globalKeywordsCount">0</span>/200）</span>
+                        </label>
+                        <textarea class="form-textarea" id="global_keywords" rows="2" placeholder="关键词用逗号分隔，例如：北京亮资,上市公司过桥,企业摆账" maxlength="200"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            网站描述 <span class="char-count">（<span id="globalDescCount">0</span>/500）</span>
+                        </label>
+                        <textarea class="form-textarea" id="global_description" rows="3" placeholder="网站描述，150-200字以内最佳" maxlength="500"></textarea>
+                    </div>
+                </div>
+
+                <!-- 页面单独设置 -->
+                <div class="seo-card">
+                    <div class="seo-card-header">
+                        <i class="fas fa-pages"></i>
+                        <div>
+                            <h3>各页面单独设置 <span class="badge badge-page">页面级</span></h3>
+                            <p>为每个前台页面单独设置SEO信息。留空则使用整站默认值。</p>
+                        </div>
+                    </div>
+
+                    <div class="search-box">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="pageSearch" placeholder="搜索页面..." oninput="filterPages()">
+                        </div>
+                    </div>
+
+                    <div class="page-table-wrap">
+                        <table class="page-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:120px;min-width:100px;">页面</th>
+                                    <th>页面标题</th>
+                                    <th style="width:30%;min-width:180px;">关键词</th>
+                                    <th style="width:35%;min-width:200px;">描述</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pageSettingsBody">
+                                <!-- 由JS动态生成 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-bar">
+                    <button class="btn btn-outline" onclick="loadSettings()">
+                        <i class="fas fa-undo"></i> 重置
+                    </button>
+                    <button class="btn btn-primary" onclick="saveAll()" id="btn-save">
+                        <i class="fas fa-save"></i> 保存所有设置
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+    const API_BASE = 'api';
+    const MAX_TITLE = 100;
+    const MAX_KEYWORDS = 200;
+    const MAX_DESC = 500;
+
+    // 前台页面列表
+    const frontPages = [
+        { id: 'index.html', name: '首页', icon: 'fa-home' },
+        { id: 'services.html', name: '业务范围', icon: 'fa-briefcase' },
+        { id: 'cases.html', name: '成功案例', icon: 'fa-trophy' },
+        { id: 'case-detail.html', name: '案例详情', icon: 'fa-file-alt' },
+        { id: 'advantages.html', name: '服务优势', icon: 'fa-star' },
+        { id: 'news.html', name: '行业资讯', icon: 'fa-newspaper' },
+        { id: 'news-detail.html', name: '文章详情', icon: 'fa-file-text' },
+        { id: 'faq.html', name: '常见问题', icon: 'fa-question-circle' },
+        { id: 'contact.html', name: '联系我们', icon: 'fa-phone' },
+        { id: 'privacy.html', name: '隐私政策', icon: 'fa-shield-alt' },
+        { id: 'compliance.html', name: '合规声明', icon: 'fa-balance-scale' },
+        { id: 'sitemap.html', name: '网站地图', icon: 'fa-sitemap' },
+        { id: 'faq_new.html', name: 'FAQ（新版）', icon: 'fa-comments' },
+        { id: 'test-api.html', name: 'API测试', icon: 'fa-flask' },
+        { id: 'test-news-load.html', name: '新闻加载测试', icon: 'fa-vial' },
+        { id: 'readme.html', name: 'README', icon: 'fa-book' }
+    ];
+
+    let seoData = {};
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化字符计数
+        document.getElementById('global_title').addEventListener('input', function() {
+            updateCharCount('global_title', 'globalTitleCount', MAX_TITLE);
+        });
+        document.getElementById('global_keywords').addEventListener('input', function() {
+            updateCharCount('global_keywords', 'globalKeywordsCount', MAX_KEYWORDS);
+        });
+        document.getElementById('global_description').addEventListener('input', function() {
+            updateCharCount('global_description', 'globalDescCount', MAX_DESC);
+        });
+
+        // 加载设置
+        loadSettings();
+    });
+
+    function loadSettings() {
+        const btn = document.getElementById('btn-save');
+        btn.innerHTML = '<span class="loading-spinner"></span> 加载中...';
+        btn.disabled = true;
+
+        fetch(API_BASE + '/seo-settings.php?t=' + Date.now())
+            .then(r => r.json())
+            .then(res => {
+                btn.innerHTML = '<i class="fas fa-save"></i> 保存所有设置';
+                btn.disabled = false;
+
+                if (res.code === 0 && res.data) {
+                    seoData = {};
+                    if (Array.isArray(res.data)) {
+                        res.data.forEach(item => {
+                            seoData[item.page_id] = item;
+                        });
+                    }
+                    renderSettings();
+                } else {
+                    showToast('加载失败: ' + (res.msg || '未知错误'), 'error');
+                }
+            })
+            .catch(err => {
+                btn.innerHTML = '<i class="fas fa-save"></i> 保存所有设置';
+                btn.disabled = false;
+                showToast('加载失败: ' + err.message, 'error');
+            });
+    }
+
+    function renderSettings() {
+        // 渲染整站设置
+        const global = seoData['global'] || {};
+        document.getElementById('global_title').value = global.page_title || '';
+        document.getElementById('global_keywords').value = global.meta_keywords || '';
+        document.getElementById('global_description').value = global.meta_description || '';
+
+        updateCharCount('global_title', 'globalTitleCount', MAX_TITLE);
+        updateCharCount('global_keywords', 'globalKeywordsCount', MAX_KEYWORDS);
+        updateCharCount('global_description', 'globalDescCount', MAX_DESC);
+
+        // 渲染页面列表
+        const tbody = document.getElementById('pageSettingsBody');
+        tbody.innerHTML = frontPages.map(page => {
+            const settings = seoData[page.id] || {};
+            const hasCustom = seoData[page.id] !== undefined;
+            return `
+                <tr class="page-row" data-page="${page.id}">
+                    <td>
+                        <span class="page-name">
+                            <i class="fas ${page.icon}" style="margin-right:4px;"></i>${page.name}
+                            <small>${page.id}</small>
+                        </span>
+                        ${hasCustom ? '<span class="badge badge-custom" style="margin-top:4px;display:inline-block;">已设置</span>' : ''}
+                    </td>
+                    <td>
+                        <input type="text" class="page-title-input" 
+                               data-page="${page.id}" 
+                               value="${escapeHtml(settings.page_title || '')}" 
+                               placeholder="留空使用全局默认" 
+                               maxlength="${MAX_TITLE}"
+                               oninput="onPageInput('${page.id}')">
+                    </td>
+                    <td>
+                        <textarea class="page-keywords-input" 
+                                  data-page="${page.id}" 
+                                  placeholder="留空使用全局默认" 
+                                  maxlength="${MAX_KEYWORDS}"
+                                  oninput="onPageInput('${page.id}')">${escapeHtml(settings.meta_keywords || '')}</textarea>
+                    </td>
+                    <td>
+                        <textarea class="page-desc-input" 
+                                  data-page="${page.id}" 
+                                  placeholder="留空使用全局默认" 
+                                  maxlength="${MAX_DESC}"
+                                  oninput="onPageInput('${page.id}')">${escapeHtml(settings.meta_description || '')}</textarea>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function onPageInput(pageId) {
+        // 标记已修改
+        const row = document.querySelector(`.page-row[data-page="${pageId}"]`);
+        if (row) {
+            const title = row.querySelector('.page-title-input').value.trim();
+            const keywords = row.querySelector('.page-keywords-input').value.trim();
+            const desc = row.querySelector('.page-desc-input').value.trim();
+            
+            const badge = row.querySelector('.badge-custom');
+            if (title || keywords || desc) {
+                if (!badge) {
+                    const td = row.querySelector('td:first-child');
+                    const span = document.createElement('span');
+                    span.className = 'badge badge-custom';
+                    span.style.cssText = 'margin-top:4px;display:inline-block;';
+                    span.textContent = '已设置';
+                    td.appendChild(span);
+                }
+            } else {
+                if (badge) badge.remove();
+            }
+        }
+    }
+
+    function filterPages() {
+        const keyword = document.getElementById('pageSearch').value.trim().toLowerCase();
+        const rows = document.querySelectorAll('.page-row');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(keyword) ? '' : 'none';
+        });
+    }
+
+    function saveAll() {
+        // 表单验证
+        const globalTitle = document.getElementById('global_title').value.trim();
+        const globalKeywords = document.getElementById('global_keywords').value.trim();
+        const globalDesc = document.getElementById('global_description').value.trim();
+
+        if (globalTitle.length > MAX_TITLE) {
+            showToast('网站标题不能超过' + MAX_TITLE + '个字符', 'error');
+            return;
+        }
+        if (globalKeywords.length > MAX_KEYWORDS) {
+            showToast('网站关键词不能超过' + MAX_KEYWORDS + '个字符', 'error');
+            return;
+        }
+        if (globalDesc.length > MAX_DESC) {
+            showToast('网站描述不能超过' + MAX_DESC + '个字符', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('btn-save');
+        btn.innerHTML = '<span class="loading-spinner"></span> 保存中...';
+        btn.disabled = true;
+
+        // 收集整站设置
+        const settings = [
+            {
+                page_id: 'global',
+                page_title: globalTitle,
+                meta_keywords: globalKeywords,
+                meta_description: globalDesc
+            }
+        ];
+
+        // 收集各页面设置
+        frontPages.forEach(page => {
+            const row = document.querySelector(`.page-row[data-page="${page.id}"]`);
+            if (!row) return;
+
+            const title = row.querySelector('.page-title-input').value.trim();
+            const keywords = row.querySelector('.page-keywords-input').value.trim();
+            const desc = row.querySelector('.page-desc-input').value.trim();
+
+            if (title || keywords || desc) {
+                settings.push({
+                    page_id: page.id,
+                    page_title: title,
+                    meta_keywords: keywords,
+                    meta_description: desc
+                });
+            }
+        });
+
+        fetch(API_BASE + '/seo-settings.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ settings: settings })
+        })
+        .then(r => r.json())
+        .then(res => {
+            btn.innerHTML = '<i class="fas fa-save"></i> 保存所有设置';
+            btn.disabled = false;
+
+            if (res.code === 0) {
+                showToast('SEO设置保存成功！', 'success');
+                // 重新加载，回填预览
+                loadSettings();
+            } else {
+                showToast('保存失败: ' + (res.msg || '未知错误'), 'error');
+            }
+        })
+        .catch(err => {
+            btn.innerHTML = '<i class="fas fa-save"></i> 保存所有设置';
+            btn.disabled = false;
+            showToast('保存失败: ' + err.message, 'error');
+        });
+    }
+
+    function updateCharCount(inputId, countId, max) {
+        const input = document.getElementById(inputId);
+        const count = document.getElementById(countId);
+        const len = input.value.length;
+        count.textContent = len;
+
+        const hint = count.closest('.char-count');
+        if (hint) {
+            hint.className = 'char-count';
+            if (len > max * 0.9) hint.classList.add('warning');
+            if (len >= max) hint.classList.add('danger');
+        }
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function showToast(msg, type) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.className = 'toast toast-' + type + ' show';
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    </script>
+</body>
+</html>

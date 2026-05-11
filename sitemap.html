@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yaoʽվͼٵվĸҳ档">
+    <meta name="robots" content="noindex, follow">
+    <title>վͼ - Yaoʽ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .sitemap-page {
+            padding: 120px 0 80px;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+        }
+        
+        .sitemap-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .sitemap-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .sitemap-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        
+        .sitemap-content {
+            background: white;
+            padding: 48px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .sitemap-section {
+            margin-bottom: 32px;
+        }
+        
+        .sitemap-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sitemap-category {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sitemap-category i {
+            color: var(--color-primary);
+        }
+        
+        .sitemap-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .sitemap-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            transition: all var(--transition-fast) ease;
+        }
+        
+        .sitemap-item:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateX(4px);
+        }
+        
+        .sitemap-item i {
+            color: var(--color-accent);
+            transition: color var(--transition-fast) ease;
+        }
+        
+        .sitemap-item:hover i {
+            color: white;
+        }
+        
+        .sitemap-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: inherit;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            gap: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .sitemap-page {
+                padding: 100px 0 60px;
+            }
+            
+            .sitemap-title {
+                font-size: 28px;
+            }
+            
+            .sitemap-content {
+                padding: 28px;
+            }
+            
+            .sitemap-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Logo̬ -->
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open('GET','admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector('.logo img');
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector('.footer-logo img');
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                        if(resp.data.favicon){
+                            var lk=document.querySelector('link[rel="icon"]')||document.querySelector('link[rel="shortcut icon"]');
+                            if(!lk){lk=document.createElement('link');lk.rel='icon';document.head.appendChild(lk);}
+                            lk.href=fixPath(resp.data.favicon);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
+<script>
+(function() {
+    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                if (data && data.code === 0 && data.data) {
+                    var seo = data.data;
+                    if (seo.page_title) document.title = seo.page_title;
+                    if (seo.meta_keywords) {
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw) kw.content = seo.meta_keywords;
+                    }
+                    if (seo.meta_description) {
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc) desc.content = seo.meta_description;
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+})();
+</script>
+<script>
+(function() {
+    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                if (data && data.code === 0 && data.data) {
+                    var seo = data.data;
+                    if (seo.page_title) document.title = seo.page_title;
+                    if (seo.meta_keywords) {
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw) kw.content = seo.meta_keywords;
+                    }
+                    if (seo.meta_description) {
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc) desc.content = seo.meta_description;
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+})();
+</script>
+</head>
+<body>
+    <!-- 򻯵 -->
+    <nav class="navbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light);">
+        <div class="navbar-container">
+<a href="index.html" class="logo" aria-label="Yaoʽҳ"><img src="uploads/logo.png?v=20260502040820" alt="Yaoʽ" style="height:48px;width:auto;"></a>
+            <a href="index.html" class="btn btn-outline">ҳ</a>
+        </div>
+    </nav>
+
+    <main class="sitemap-page">
+        <div class="sitemap-container">
+            <header class="sitemap-header">
+                <h1 class="sitemap-title">վͼ</h1>
+            </header>
+            
+            <div class="sitemap-content">
+                <section class="sitemap-section">
+                    <h2 class="sitemap-category">
+                        <i class="fas fa-home"></i>
+                        Ҫҳ
+                    </h2>
+                    <div class="sitemap-list">
+                        <a href="index.html" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ҳ</span>
+                        </a>
+                        <a href="index.html#services" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ҵΧ</span>
+                        </a>
+                        <a href="index.html#cases" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ɹ</span>
+                        </a>
+                        <a href="index.html#advantages" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link"></span>
+                        </a>
+                        <a href="index.html#about" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link"></span>
+                        </a>
+                        <a href="index.html#testimonials" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ͻ</span>
+                        </a>
+                        <a href="index.html#news" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ҵѶ</span>
+                        </a>
+                        <a href="index.html#faq" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link"></span>
+                        </a>
+                        <a href="index.html#contact" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ϵ</span>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="sitemap-section">
+                    <h2 class="sitemap-category">
+                        <i class="fas fa-briefcase"></i>
+                        ҵ
+                    </h2>
+                    <div class="sitemap-list">
+                        <a href="index.html#services" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">й˾ҵ</span>
+                        </a>
+                        <a href="index.html#services" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">ҵ/˰</span>
+                        </a>
+                        <a href="index.html#services" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">дҵ</span>
+                        </a>
+                        <a href="index.html#services" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">Ӧ˿</span>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="sitemap-section">
+                    <h2 class="sitemap-category">
+                        <i class="fas fa-file-alt"></i>
+                        ɺϹ
+                    </h2>
+                    <div class="sitemap-list">
+                        <a href="privacy.html" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">˽</span>
+                        </a>
+                        <a href="compliance.html" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">Ϲ</span>
+                        </a>
+                        <a href="sitemap.html" class="sitemap-item">
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sitemap-link">վͼ</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+            
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                ҳ
+            </a>
+        </div>
+    </main>
+
+    <!-- ҳ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="uploads/logo.png?v=20260502041100" alt="Yaoʽ" style="height:48px;width:auto;"></div>
+                    <p class="footer-desc">רҵʽҵ̣ṩй˾šҵˡдӦ˿ʵȫλʽ</p>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">ٵ</h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">ҳ</a></li>
+                        <li><a href="services.html">ҵΧ</a></li>
+                        <li><a href="cases.html">ɹ</a></li>
+                        <li><a href="advantages.html"></a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">Ϣ</h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="news.php">ҵѶ</a></li>
+                        <li><a href="faq.html"></a></li>
+                        <li><a href="contact.html">ϵ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">ϵʽ</h4>
+                    <ul class="footer-nav-list">
+                        <li><i class="fas fa-phone"></i> 13552883008</li>
+                        <li><i class="fas fa-user"></i> </li>
+                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2014-2024 Yaoʽ Ȩ</p>
+            </div>
+        </div>
+    </footer>
+    
+        <!-- CMS Editor -->
+    <script>
+        // ǷҪر༭
+        (function() {
+            console.log('[CMS] ʼ...');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const isEditMode = urlParams.get('edit') === 'true';
+            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
+            
+            console.log('[CMS] ༭ģʽ:', isEditMode);
+            console.log('[CMS] ¼״̬:', isLoggedIn);
+            
+            if (isEditMode && isLoggedIn) {
+                console.log('[CMS] ʼر༭...');
+                
+                // ر༭ʽ
+                const editorCss = document.createElement('link');
+                editorCss.rel = 'stylesheet';
+                editorCss.href = 'admin/editor.css';
+                editorCss.onerror = function() {
+                    console.error('[CMS] ༭ʽʧ');
+                };
+                document.head.appendChild(editorCss);
+                
+                // ر༭ű
+                const editorScript = document.createElement('script');
+                editorScript.src = 'admin/editor.js';
+                editorScript.onload = function() {
+                    console.log('[CMS] ༭űسɹ');
+                };
+                editorScript.onerror = function() {
+                    console.error('[CMS] ༭űʧ');
+                };
+                document.body.appendChild(editorScript);
+            } else if (isEditMode && !isLoggedIn) {
+                console.log('[CMS] δ¼ض򵽵¼ҳ');
+                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
+            }
+        })();
+    </script>
+    <script src="admin/assets/cms.js"></script>
+</body>
+</html>
+

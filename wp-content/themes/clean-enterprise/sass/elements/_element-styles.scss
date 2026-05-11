@@ -1,0 +1,690 @@
+/* Text Alignment */
+.header-top-content,
+.section-heading-wrapper,
+.section-heading-wrap,
+.archive .page-header,
+.search .page-header,
+.error404 .not-found .page-header,
+.breadcrumb-area,
+.author-info,
+.post-navigation,
+.gallery-item,
+.wp-caption-text,
+.content-area #infinite-handle,
+.pagination,
+.posts-navigation,
+.featured-content-section .hentry,
+#scrollup,
+.site-info,
+.recent-blog-content-wrapper .more-recent-posts,
+.more-link,
+.view-all-button,
+.custom-header,
+.footer-newsletter,
+.footer-instagram .widget-title,
+.hero-content-wrapper .entry-container.full-width,
+.contact-section .entry-container.full-width,
+.comments-title,
+.team-section .hentry,
+.why-choose-us-section.section:not(.has-main-image) .section-heading-wrapper,
+.why-choose-us-section .hentry {
+	text-align: center;
+}
+
+.header-top-left-content {
+	text-align: left;
+}
+
+.site-title a,
+.entry-title a,
+.entry-meta a,
+.more-link,
+.site-title,
+.menu-wrapper a,
+.site-contact li a,
+.quote-button a,
+ins,
+table a,
+.nav-links a,
+.author-info a,
+.widget a,
+.comment-body a,
+.breadcrumb-area a,
+.copyright a,
+#scrollup,
+.contact-details li a,
+.page-links a,
+.button {
+	text-decoration: none;
+}
+.site-title,
+.main-navigation a,
+.entry-category,
+.entry-meta,
+cite,
+.main-navigation .menu-toggle,
+.site-main #infinite-handle span button,
+.widget-title,
+.essential-widgets .widget-title,
+.widgettitle,
+.comment-reply-link,
+#cancel-comment-reply-link,
+.sticky-label,
+.post-navigation .nav-subtitle,
+.site-contact ul h3,
+.comment-metadata,
+.copyright,
+.stats-section .entry-title,
+form p label {
+	text-transform: uppercase;
+}
+
+.site-title,
+.slider-content-wrapper .entry-title,
+.home .custom-header .entry-content,
+.home .custom-header .entry-summary,
+.footer-instagram .widget-title,
+.post-navigation .nav-title,
+.custom-header-content .entry-meta,
+.widget .hentry .entry-title,
+.main-navigation ul ul a,
+.entry-title + .entry-meta,
+.breadcrumb-area span {
+	text-transform: capitalize;
+}
+
+/* Letter Spacing */
+.site-footer .widget-title,
+.sticky-label,
+.comment-reply-link,
+#cancel-comment-reply-link,
+.post-navigation .nav-subtitle,
+.copyright {
+	letter-spacing: 0.1em;
+}
+
+blockquote cite {
+	letter-spacing: 0.05em;
+}
+
+/* Font Weight */
+.main-navigation ul ul a,
+.posted-at,
+.cat-in,
+.comments-num,
+.author-label,
+.entry-title + .entry-meta,
+.breadcrumb-area,
+.woocommerce .breadcrumb-area .woocommerce-breadcrumb {
+	font-weight: 400;
+}
+
+.slider-content-wrapper .entry-title,
+.home .custom-header .entry-content,
+.home .custom-header .entry-summary {
+	font-weight: 500;
+}
+
+.entry-title,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.more-link,
+.pagination .next,
+.pagination .prev,
+.posts-navigation .nav-links a,
+.site-contact,
+.site-primary-menu a,
+.main-navigation a,
+blockquote,
+.entry-category,
+.entry-meta,
+.widget-title,
+.widgettitle,
+.essential-widgets .widget-title,
+.nav-title,
+.author-link,
+.author-title,
+.comment-author .url,
+#reply-title,
+.comments-title,
+.sticky-label,
+#infinite-handle span button,
+#infinite-handle span button:focus,
+#infinite-handle span button:hover,
+.woocommerce a.load-more.button,
+.widget-area .essential-widgets .tagcloud a,
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce ul.products li.product .woocommerce-loop-category__title,
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product h3 {
+	font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+h4,
+h4,
+h6,
+dt,
+.site-title,
+.drop-cap:first-letter,
+.post-navigation .nav-subtitle,
+.comment-reply-link,
+.hero-content-wrapper .entry-title,
+.footer-instagram .widget-title,
+.promotion-headline-wrapper .entry-title,
+.singular-content-wrap .entry-title,
+.stats-section .entry-title,
+.slider-content-wrapper .sub-title,
+.contact-section .entry-title,
+.custom-header .entry-title,
+form p label {
+	font-weight: 700;
+}
+
+/* Border */
+#search-container input,
+fieldset,
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea,
+select,
+.tag-cloud-link,
+.wp-custom-header-video-button {
+	border: 1px solid;
+}
+
+.services-section .entry-container,
+.post-navigation .nav-links,
+.featured-content-section .hentry {
+	border-bottom: 1px solid;
+}
+
+tbody tr,
+// .is-open .menu-inside-wrapper,
+.post-navigation .nav-links,
+.comment-body,
+.section + .site-content,
+.recent-blog-content-wrapper,
+.sidebar,
+.site-header-right {
+	border-top: 1px solid;
+}
+
+.team-section .entry-container,
+.featured-content-section .wrapper {
+	border-bottom: 3px solid;
+}
+
+/* Display */
+.entry-footer .entry-meta span span,
+.more-button,
+.author-link,
+.main-navigation a,
+#social-search-wrapper .menu-social-container a,
+.main-navigation .menu-toggle,
+.main-navigation.is-open ul,
+.post-navigation .nav-subtitle,
+#site-navigation.is-open #search-container,
+#sec-site-navigation.is-open #sec-search-container,
+.menu-open .site-primary-menu .main-navigation.toggled .menu-social-container,
+.menu-open .nav-search-wrap .site-header-right,
+.aligncenter,
+.bypostauthor,
+.widget_categories ul li,
+.widget_archive ul li,
+.ew-archive ul li,
+.ew-category ul li,
+.section,
+#footer-instagram,
+#footer-newsletter,
+.sticky,
+.entry-footer .tags-links,
+.entry-footer .cat-links,
+.entry-footer .edit-link,
+.pagination .prev.page-numbers,
+.pagination .next.page-numbers,
+.custom-logo,
+.wp-caption img[class*="wp-image-"],
+.gallery-caption,
+.portfolio-section .post-thumbnail a,
+.custom-header:before,
+.no-header-media-text .custom-header img,
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before,
+.custom-header .custom-header-content {
+	display: block;
+}
+
+.main-navigation ul,
+.main-navigation ul.sub-menu,
+.main-navigation ul.children,
+.main-navigation.is-open .menu-toggle .fa-bars,
+.main-navigation .menu-toggle .fa-times,
+#search-toggle,
+#sec-search-toggle,
+#search-container,
+.site-primary-menu .menu-social-container,
+.says,
+.scrolled-logo-link,
+#secondary .dropdown-toggle,
+.site-footer .dropdown-toggle,
+.updated:not(.published),
+.portfolio-section .hentry .more-button,
+.custom-header img,
+.menu-social-container .dropdown-toggle,
+.woocommerce-products-header,
+.menu-open .nav-search-wrap .site-header-right,
+.header-top-left-content li span span {
+	display: none;
+}
+
+.header-top-content ul li,
+.menu-social-container li,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.posts-navigation .nav-links a,
+.site-main #infinite-handle span button,
+.slider-content-wrapper .more-link,
+.hero-content-wrapper .more-link,
+.view-all-button .more-link,
+.promotion-headline-wrapper .more-link,
+.recent-blog-content-wrapper .more-recent-posts .more-link,
+.custom-header .more-link,
+.main-navigation.is-open .menu-toggle .fa-times,
+.comment-reply-link,
+.tag-cloud-link,
+.sticky-label,
+.entry-footer .entry-meta span a,
+.comment-edit-link,
+.custom-logo-link,
+.gallery-item,
+.cycle-pager span,
+form p label {
+	display: inline-block;
+}
+
+.sidebar .widget #subbutton,
+.main-navigation li,
+.post-navigation .nav-previous,
+.post-navigation .nav-next,
+.ew-newsletter form,
+.search-form,
+.entry-breadcrumbs a,
+.comment-body,
+.comment-respond,
+.section,
+#footer-instagram,
+#footer-newsletter,
+.below-site-header,
+.slider-content-wrapper,
+.slider-content-wrapper .entry-container,
+.custom-header .custom-header-content,
+.featured-content-section .hentry,
+.services-section .hentry,
+.portfolio-section .hentry-inner,
+.team-section .hentry,
+.footer-widget-area .widget-column,
+.footer-widget-area.three,
+.sidebar .widget,
+.custom-header,
+.team-section .hentry-inner,
+.site-header-main,
+.testimonial-section .section-content-wrapper {
+	position: relative;
+}
+
+.main-navigation .dropdown-toggle,
+.search-submit,
+#subbutton,
+.entry-breadcrumbs a:after,
+#cancel-comment-reply-link,
+#cancel-comment-reply-link:before,
+.menu-open .site-overlay,
+.slider-content-wrapper .slider-image img,
+.slider-content-wrapper .slider-image:before,
+.slider-content-wrapper .cycle-pager,
+.slider-content-wrapper .cycle-prev,
+.slider-content-wrapper .cycle-next,
+.custom-header:before,
+body:not(.no-header-media-text) .custom-header:after,
+.has-header-video .custom-header-media video,
+.has-header-video .custom-header-media iframe,
+.wp-custom-header-video-button,
+.custom-header-media .wp-custom-header-video-play:before,
+.custom-header-media .wp-custom-header-video-pause:before,
+.portfolio-section .entry-container {
+	position: absolute;
+}
+
+.wrapper,
+.site-header-main,
+.boxed-layout #page,
+.custom-logo,
+.custom-header .custom-header-content,
+.custom-header {
+	margin: 0 auto;
+}
+
+/* Opacity */
+.site-overlay,
+.slider-content-wrapper .cycle-prev,
+.slider-content-wrapper .cycle-next,
+.portfolio-section .hentry .more-button,
+.custom-header .wp-custom-header-video-button,
+.services-section .post-thumbnail a:before,
+.team-section .post-thumbnail a:before,
+.services-section .post-thumbnail a:after,
+.team-section .post-thumbnail a:after {
+	opacity: 0;
+}
+
+.post-thumbnail img:hover,
+.post-thumbnail img:focus,
+#subbutton:hover,
+#subbutton:focus {
+	opacity: 0.85;
+}
+
+.menu-open .site-overlay,
+.slider-content-wrapper:hover .cycle-prev,
+.slider-content-wrapper:hover .cycle-next,
+.custom-header:hover .wp-custom-header-video-button,
+.custom-header:focus .wp-custom-header-video-button,
+.services-section .post-thumbnail img:hover,
+.services-section .post-thumbnail img:focus,
+.services-section .post-thumbnail:hover a:before,
+.team-section .post-thumbnail img:hover,
+.team-section .post-thumbnail img:focus,
+.team-section .post-thumbnail:hover a:before,
+.services-section .post-thumbnail:hover a:after,
+.team-section .post-thumbnail:hover a:after {
+	opacity: 1;
+}
+
+/* Margin/Padding */
+.site-description,
+.entry-content > :last-child,
+.entry-summary > :last-child,
+.page-content > :last-child,
+.comment-content > :last-child,
+.textwidget > :last-child,
+blockquote > :last-child,
+.taxonomy-description > :last-child,
+.widget-area .wrapper > :last-child,
+.widget > :last-child,
+.widget li:last-child,
+.widget embed:last-child,
+.widget iframe:last-child,
+.widget object:last-child,
+.widget video:last-child,
+#colophon .widget li:last-child,
+.entry-footer > :last-child,
+.slider-content-wrapper .entry-container > :last-child,
+.comment-form > :last-child,
+.widget .widget-wrapper > :last-child,
+.widget .ads-code-wrap .hentry:last-child,
+form input:last-of-type,
+.widget-area .widget.essential-widgets.ewnewsletter input:last-of-type,
+.site-footer .widget li:last-child,
+.content-classic .singular-content-wrap >:last-child,
+.archive .page-header >:last-child,
+.search .page-header >:last-child,
+.archive  .archive-description p:last-child,
+#secondary ul li:last-child,
+.site-footer ul li:last-child,
+.woocommerce .breadcrumb-area .woocommerce-breadcrumb,
+.author-description >:last-child,
+.post-password-form >:last-child,
+.no-comments,
+.form-submit,
+.entry-content form >:last-child,
+form p:last-of-type,
+.entry-footer .entry-meta span:last-child,
+.slider-content-wrapper .hentry,
+.section-title,
+.entry-title,
+.comment-reply-title,
+.page-title,
+.author-title,
+.hero-content-wrapper .hentry,
+.view-all-button,
+.slider-content-wrapper .sub-title,
+.footer-instagram .widget-title,
+#footer-newsletter #subbox,
+#footer-newsletter .widget > p,
+.instagram-button,
+.site-info .menu-social-container li,
+.sidebar .widget:last-child,
+.infinity-end .content-area .section-content-wrapper .hentry:last-of-type .hentry-inner,
+.infinity-end .recent-blog-content-wrapper .section-content-wrapper .hentry:last-of-type .hentry-inner,
+.widget-area .widget .hentry:last-child,
+.widget-area .widget .hentry .entry-meta,
+.more-recent-posts,
+.widget-area .essential-widgets,
+.services-section .post-thumbnail,
+.entry-title + .entry-meta,
+.team-section .post-thumbnail,
+.portfolio-section .post-thumbnail,
+.why-choose-us-content-area .post-thumbnail,
+.stats-section .post-thumbnail,
+.promotion-section .hentry,
+.entry-header .entry-title + .entry-meta,
+.contact-details li:last-child,
+.contact-section .hentry {
+	margin-bottom: 0;
+}
+
+.section-title,
+.entry-title,
+.widget-title,
+.essential-widgets .widget-title,
+.widgettitle,
+.widgettitle,
+.comments-title,
+.comment-reply-title,
+.page-title,
+.author-title,
+.view-all-button .more-button,
+.single .content-area .hentry .entry-content,
+.page .content-area .hentry .entry-content,
+.recent-blog-content-wrapper .more-recent-posts .more-button {
+	margin-top: 0;
+}
+
+.section-description,
+#footer-newsletter .widget > p,
+.widget .entry-header .entry-meta,
+.entry-title + .entry-meta,
+.stats-section .post-thumbnail,
+.contact-description {
+	margin-top: 7px;
+}
+
+.widget .byline .author span {
+	margin-right: 0;
+}
+
+.author-title,
+.author-avatar,
+.post-navigation .nav-subtitle,
+.comment-reply-title,
+.contact-details li,
+.not-found .search-form,
+.why-choose-us-content-area .post-thumbnail {
+	margin-bottom: 21px;
+}
+
+.entry-content,
+.entry-summary {
+	margin-top: 14px;
+}
+
+.stats-section .entry-content,
+.stats-section .entry-summary {
+	margin-top: 7px;
+}
+
+.entry-header .entry-meta,
+.post-thumbnail,
+.widget-title,
+.sticky-label,
+.essential-widgets .widget-title,
+.widgettitle,
+.entry-footer .entry-meta span span,
+.custom-header .entry-header {
+	margin-bottom: 21px;
+}
+
+table caption,
+.archive .page-header,
+.search .page-header {
+	padding-bottom: 21px;
+}
+
+.section-content-wrapper,
+.singular-content-wrap,
+.no-results,
+.posts-navigation,
+.promotion-section,
+.testimonial-section .section-content-wrapper.layout-one,
+.pagination,
+.featured-content-section,
+.featured-content-section .section-content-wrapper.layout-three,
+body:not(.home).content-modern .site-content > .wrapper {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+#footer-newsletter .hentry,
+.posts-navigation .nav-next,
+.author-link,
+.ctis-finished-notice,
+.more-button {
+	margin-top: 28px;
+}
+
+.hentry,
+.view-all-button {
+	margin-bottom: 35px;
+}
+
+.hero-content .hentry {
+	margin-bottom: 21px;
+}
+
+.entry-footer .entry-meta > span {
+	margin-bottom: 28px;
+}
+
+.entry-footer .entry-meta,
+.error404 .not-found .page-header,
+.comments-area,
+.no-comments {
+	padding-top: 35px;
+}
+
+.section,
+.two-columns-layout.content-right .singular-content-wrap,
+.two-columns-layout.content-left .singular-content-wrap,
+.two-columns-layout.content-right .archive-content-wrap,
+.two-columns-layout.content-left .archive-content-wrap,
+.featured-content-section .hentry {
+	padding-bottom: 35px;
+}
+
+.author-info,
+.post-navigation,
+.promotion-section .view-all-button,
+#footer-instagram .catch-instagram-feed-gallery-widget-wrapper .instagram-button .button,
+.comments-area {
+	margin-top: 35px;
+}
+
+.widget.essential-widgets.ewnewsletter #subbox {
+	border-radius: 6px;
+	// line-height: 1;
+	padding-bottom: 16px;
+	padding-right: 138px;
+	padding-top: 16px;
+}
+
+#footer-newsletter .widget.essential-widgets.ewnewsletter #subbox {
+	border: 0;
+}
+
+.ewnewsletter .ew-newsletter-wrap #subbutton {
+	border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    bottom: 0;
+    line-height: 1;
+    margin: 0;
+    padding: 21px 28px;
+    right: 0;
+}
+
+.slider-content-wrapper.section,
+.error404 .not-found .page-content .widget:last-child {
+	padding-bottom: 0;
+}
+
+body:not(.home).blog .content-area .section-heading-wrapper,
+.post-navigation + .comments-area,
+.slider-content-wrapper.section {
+	padding-top: 0;
+}
+
+.promotion-section .section-heading-wrapper,
+.featured-content-section .section-content-wrapper.layout-three .hentry,
+.not-found .widget {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.woocommerce .products .star-rating {
+	margin-bottom: 14px;
+}
+
+.product_list_widget .star-rating {
+	margin: 14px 0;
+}
+
+.woocommerce.widget_product_search button {
+	margin-top: 21px;
+}
+
+#footer-newsletter {
+	padding-bottom: 35px;
+    padding-top: 35px;
+}
+
+#footer-instagram .widget {
+	margin: 0;
+}
+
+.sidebar .widget.ewnewsletter .ew-newsletter-wrap #subbutton {
+	border-radius: 6px;
+}

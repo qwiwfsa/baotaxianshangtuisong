@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "title": "Orange",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "color": "#324a34 ",
+          "name": "Secondary Color",
+          "slug": "secondary-color"
+        },
+        {
+          "color": "#ff7714 ",
+          "name": "accent Color",
+          "slug": "accent-color"
+        },
+        {
+          "name": "Light Color",
+          "slug": "light-color",
+          "color": "#fff"
+        },
+        {
+          "name": "Background Color",
+          "slug": "background-color",
+          "color": "#F5F0ED"
+        },
+        {
+          "name": "Dark Color",
+          "slug": "dark-color",
+          "color": "#000"
+        },
+        {
+          "name": "Paragraph Color Light",
+          "slug": "paragraph-color-light",
+          "color": "#6B6B6B"
+        },
+        {
+          "name": "Text Color",
+          "slug": "text-color",
+          "color": "#3F3F3F"
+        },
+        {
+          "name": "Paragraph Color Dark",
+          "slug": "paragraph-color-dark",
+          "color": "#333333"
+        },
+        {
+          "name": "Body",
+          "color": "#FAFAFA",
+          "slug": "body"
+        },
+        {
+          "name": "Transparent",
+          "color": "transparent",
+          "slug": "transparent"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "blocks": {
+      "core/paragraph": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--inter)"
+        }
+      },
+      "core/list": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--inter)"
+        }
+      }
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--montserrat)"
+        }
+      }
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--montserrat)",
+      "fontStyle": "normal",
+      "fontWeight": "400",
+      "lineHeight": "1.5"
+    }
+  }
+}

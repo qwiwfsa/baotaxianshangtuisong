@@ -1,0 +1,584 @@
+# Translation of Themes - Appointment in Chinese (China)
+# This file is distributed under the same license as the Themes - Appointment package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2019-04-01 16:37:11+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: zh_CN\n"
+"Project-Id-Version: Themes - Appointment\n"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "Appointment"
+msgstr "Appointment"
+
+#: functions/breadcrumbs/breadcrumbs.php:55
+msgid "Archive by category"
+msgstr "分类归档："
+
+#: functions/breadcrumbs/breadcrumbs.php:123
+msgid "Posts tagged"
+msgstr "标签："
+
+#: functions/breadcrumbs/breadcrumbs.php:128
+msgid "Articles posted by"
+msgstr "作者："
+
+#: admin/tab-pages/useful_plugins.php:61
+msgid "This section is often used to display Latest News, Announcements and Events type content."
+msgstr "此区域通常用于显示最新新闻、公告和事件类型内容。"
+
+#: admin/tab-pages/useful_plugins.php:30
+msgid "There are beautifully styled navigation/menus in the Appointment theme. You can make multi level menus, which means you can create sub menus."
+msgstr "Appointment主题中有精美风格的导航/菜单。您可以创建多级菜单，创建子菜单。"
+
+#: admin/tab-pages/useful_plugins.php:46
+msgid "You can display any number of Services on the Homepage, with thousands of FontAwesome icons available. You can also display a set of services on a separate page by using the service-related page templates."
+msgstr "您可以在主页上显示无数的服务，与成千上万的FontAwesome提供的图标。您还可以通过使用与服务相关的页面模板，在单独的页面上显示一组服务。"
+
+#: admin/tab-pages/useful_plugins.php:10
+msgid "Why Upgrade to Pro?"
+msgstr "为何升级成Pro版？"
+
+#: admin/tab-pages/free_vs_pro.php:71
+msgid "With the help of WPML, you can make a Multilingual Website."
+msgstr "随着WPML的帮助下，您可以做一个多语种站点。"
+
+#: category.php:9
+msgid "Category Archive"
+msgstr "分类归档"
+
+#: functions/widgets/appointment_info_widget.php:14
+msgid "WBR : Info Widget"
+msgstr "WBR：信息小工具"
+
+#: functions/customizer/customizer-copyright.php:77
+msgid "Hide footer social icons"
+msgstr "隐藏页脚社交图标"
+
+#: tag.php:11
+msgid "Tag Archive"
+msgstr "标签归档"
+
+#: functions/customizer/customizer_theme_style.php:24
+msgid "Enable custom color skin"
+msgstr "自定义颜色皮"
+
+#: functions/widgets/sidebars.php:9 functions/widgets/sidebars.php:11
+msgid "Sidebar widget area"
+msgstr "边栏小工具区"
+
+#: comments.php:90
+msgid "Logout"
+msgstr "登出"
+
+#: admin/tab-pages/free_vs_pro.php:87
+msgid "Slider [Unlimited Slides], Widget Area Below Slider, Services [6 Services], Callout Section, Latest News"
+msgstr "幻灯器[无限幻灯片]，幻灯器下方的小工具区，服务[6服务]，标注部分，最新消息"
+
+#: admin/tab-pages/free_vs_pro.php:88
+msgid "Homepage Template and Full-Width Page Template"
+msgstr "主页模板和全宽度页面模板"
+
+#: admin/tab-pages/free_vs_pro.php:101
+msgid "WordPress Support Forum"
+msgstr "WordPress支持论坛"
+
+#: admin/tab-pages/free_vs_pro.php:114
+msgid "About Us, Services, Portfolio, Blog Left & Right Sidebars, Blog Full Width, Page Full Width, Contact Page and much more."
+msgstr "关于我们，服务，文件夹，博客左跟右边栏，全宽度博客，全宽度页面，联系页面，还有更多页面模版。"
+
+#: admin/tab-pages/useful_plugins.php:83
+msgid "We provide good knowledgebase articles which will help you to create effective websites. You can visit these articles via our <a href='https://webriti.com/help/category/themes/appointment/' target='_blank'>Help Section</a>."
+msgstr "我们提供了很好的知识库文章，可以帮助您创建有效的站点。您可以通过我们的<a href='https://webriti.com/help/category/themes/appointment/' target='_blank'>帮助部分</a>访问这些文章。"
+
+#: functions/customizer/customizer_typography.php:1182
+msgid "Button Text"
+msgstr "按钮文字"
+
+#: functions/customizer/customizer-copyright.php:112
+#: functions/customizer/customizer-copyright.php:147
+#: functions/customizer/customizer-copyright.php:181
+#: functions/customizer/customizer-copyright.php:215
+#: functions/customizer/customizer-header.php:75
+#: functions/customizer/customizer-header.php:109
+#: functions/customizer/customizer-header.php:143
+msgid "Open link in new tab"
+msgstr "在新标签页打开链接"
+
+#: 404.php:9 functions/breadcrumbs/breadcrumbs.php:131 index-banner.php:11
+msgid "Error 404"
+msgstr "404错误"
+
+#: author.php:12
+msgid "Author Archive"
+msgstr "作者归档"
+
+#: comments.php:25
+msgid "Posted on"
+msgstr "发布于"
+
+#: comments.php:70
+msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+msgstr "要发表评论，您必须先<a href=\"%s\">登录</a>。"
+
+#: comments.php:77
+msgid "Name"
+msgstr "名称"
+
+#: comments.php:89
+msgid "Leave your message"
+msgstr "留下您的信息"
+
+#: admin/inc/class-webriti-about-page.php:281
+msgid "CREATE TRUSTWORTHY WEBSITES"
+msgstr "创建可信赖的网站"
+
+#: admin/tab-pages/emailcourse.php:17
+msgid "A website exists for one and ONLY one reason:"
+msgstr "网站存在的唯一理由："
+
+#: admin/tab-pages/emailcourse.php:18
+msgid "To bring you more business."
+msgstr "为您引来更多的生意。"
+
+#: admin/tab-pages/emailcourse.php:21
+msgid "Think of your website as a hardworking salesman who works 24/7 and never asks for a raise!"
+msgstr "请考虑您的网站是一个很勤奋的推销员工作24 / 7，从不要求加薪！"
+
+#: admin/tab-pages/emailcourse.php:24
+msgid "In this email course I deliver 4 highly actionable tips on how you can build a website which is trustworthy and which, in turn, brings more business to you."
+msgstr "在这个电子邮件课程，我提供了4个高度可操作的技巧如何建立一个值得信赖的网站，为您引来更多的业务。"
+
+#: admin/tab-pages/emailcourse.php:31
+msgid "JOIN COURSE"
+msgstr "参与课程"
+
+#: admin/tab-pages/video-detail.php:23 admin/tab-pages/video-detail.php:40
+#: admin/tab-pages/video-detail.php:52 admin/tab-pages/video-detail.php:61
+msgid "Customize"
+msgstr "自定义"
+
+#: admin/tab-pages/free_vs_pro.php:12
+msgid "Features"
+msgstr "特色"
+
+#: admin/tab-pages/free_vs_pro.php:20
+msgid "Frontpage Sections"
+msgstr "首页区域"
+
+#: admin/tab-pages/free_vs_pro.php:21
+msgid "You will find a number of sections on the front page."
+msgstr "您会在首页找到很多区域。"
+
+#: admin/tab-pages/free_vs_pro.php:24
+msgid "Page Templates Support"
+msgstr "页面模板支持"
+
+#: admin/tab-pages/free_vs_pro.php:25
+msgid "Various Page Templates included in the Appointment Premium Theme"
+msgstr "Appointment Premium主题中包含各种页面模板"
+
+#: admin/tab-pages/free_vs_pro.php:31
+msgid "Mobile Friendly"
+msgstr "适用于移动端"
+
+#: admin/tab-pages/free_vs_pro.php:32
+msgid "Responsive layout in all devices"
+msgstr "响应布局。 适用于各种设备。"
+
+#: admin/tab-pages/free_vs_pro.php:35
+msgid "Contact Form Support"
+msgstr "联系标支持"
+
+#: admin/tab-pages/free_vs_pro.php:38 admin/tab-pages/useful_plugins.php:14
+msgid "SEO Friendly URL"
+msgstr "SEO友好URL"
+
+#: admin/tab-pages/free_vs_pro.php:39
+msgid "This feature allows you to rename the custom post type slug names in the URL."
+msgstr "此功能允许您重命名URL中的自定义帖子类型别名。"
+
+#: admin/tab-pages/free_vs_pro.php:42 admin/tab-pages/useful_plugins.php:75
+msgid "Multiple Color Schemes"
+msgstr "多色彩方案"
+
+#: admin/tab-pages/free_vs_pro.php:43
+msgid "Enjoy using the 13 preset color schemes. You can also create custom skins without adding any code."
+msgstr "享受13种预设色彩方案。您还可以在不添加任何代码的情况下创建自定义外皮。"
+
+#: admin/tab-pages/free_vs_pro.php:50
+msgid "Google Maps"
+msgstr "Google地图"
+
+#: admin/tab-pages/free_vs_pro.php:51
+msgid "Display your Shop and Business location on your website using Google Maps."
+msgstr "在您的站点上使用Google Maps显示您商店和商业的地点。"
+
+#: admin/tab-pages/free_vs_pro.php:54
+msgid "Portfolio"
+msgstr "作品集"
+
+#: admin/tab-pages/free_vs_pro.php:55
+msgid "Present your project/portfolio collection with 2 column, 3 column and 4 column layouts. You can also display your project/portfolio by category."
+msgstr "用2列、3列或4列布局呈现您的项目/作品集集合。您还可以按类别显示项目/作品集。"
+
+#: admin/tab-pages/free_vs_pro.php:58
+msgid "About Us Page"
+msgstr "关于我们页面"
+
+#: admin/tab-pages/free_vs_pro.php:59
+msgid "Show team members, your clients and custom content added in the WordPress editor."
+msgstr "显示在WordPress编辑器中添加的团队成员，您的客户和自定义内容。"
+
+#: admin/tab-pages/free_vs_pro.php:62
+msgid "Services Page"
+msgstr "服务页面"
+
+#: admin/tab-pages/free_vs_pro.php:63
+msgid "Show all your services in a single place."
+msgstr "在一个地方展示您所有的服务。"
+
+#: admin/tab-pages/free_vs_pro.php:66
+msgid "Testimonial / Review Section"
+msgstr "褒奖/评论区段"
+
+#: admin/tab-pages/free_vs_pro.php:67
+msgid "Show user feedback on the Homepage and Services page."
+msgstr "在主页和服务页面上显示用户反馈。"
+
+#: admin/tab-pages/free_vs_pro.php:70
+msgid "WPML / Polylang Support"
+msgstr "支持WPML / Polylang"
+
+#: admin/tab-pages/free_vs_pro.php:74 admin/tab-pages/free_vs_pro.php:129
+msgid "Support Forum"
+msgstr "支持论坛"
+
+#: admin/tab-pages/free_vs_pro.php:75
+msgid "Get instant 24/7 support on our Support Forum."
+msgstr "在我们的支持论坛上获得即时24/7支持。"
+
+#: admin/tab-pages/free_vs_pro.php:137
+msgid "Get Appointment PRO Now!"
+msgstr "现在获取Appointment PRO版本！"
+
+#: admin/tab-pages/getting-started.php:58
+msgid "Useful Links"
+msgstr "有用的链接"
+
+#: admin/tab-pages/getting-started.php:64
+msgid "Lite Demo"
+msgstr "展示Lite版本"
+
+#: admin/tab-pages/getting-started.php:78
+msgid "Premium Theme Details"
+msgstr "高级主题详情"
+
+#: admin/tab-pages/getting-started.php:74
+msgid "Your feedback is valuable to us"
+msgstr "您的反馈对我们是有价值的"
+
+#: admin/tab-pages/useful_plugins.php:15
+msgid "This feature helps you to rename the slug name from the URL, allowing you to make it SEO friendly."
+msgstr "此功能允许您重命名URL中的类型别名，让URL更有SEO友好。"
+
+#: admin/tab-pages/useful_plugins.php:21
+msgid "Top Header Section"
+msgstr "页眉顶部设置"
+
+#: admin/tab-pages/useful_plugins.php:29
+msgid "Multi Level Navigation"
+msgstr "多层次的导航"
+
+#: admin/tab-pages/useful_plugins.php:36
+msgid "Caption Slider"
+msgstr "字幕幻灯"
+
+#: admin/tab-pages/useful_plugins.php:37
+msgid "You can create unlimited slides which you can control via the settings in Appearance >> Customize. The slider supports various post formats like Standard, Aside, Quote, Chat and Video."
+msgstr "您可以创建无限制的幻灯片，您可以通过外观>>自定义中的设置进行控制。幻灯器支持各种文章格式，如标准，旁白，报价，聊天和视频。"
+
+#: admin/tab-pages/useful_plugins.php:44
+msgid "Service Features"
+msgstr "服务特性"
+
+#: admin/tab-pages/useful_plugins.php:52
+msgid "Portfolio Features"
+msgstr "作品集特性"
+
+#: admin/tab-pages/useful_plugins.php:60
+msgid "Latest News Section"
+msgstr "最新消息区段"
+
+#: admin/tab-pages/useful_plugins.php:22
+msgid "In the premium version you will get a top header sidebar area where you can use any widget - all the widgets are styled. We have created a number of widgets in the theme which you can use here. Specifically, use the Appointment Info Widget for showing your email ID, contact number or any other info of your choice."
+msgstr "在高级版本中，您将获得一个顶部标题侧边栏区域，您可以在其中使用任何小工具 - 所有小工具都是样式化的。我们在主题中创建了许多您可以使用的小工具。具体来说，使用Appointment Info Widget（Appointment 信息小工具）显示您的电子邮件地址，联系电话号码或您选择的任何其他信息。"
+
+#: admin/tab-pages/useful_plugins.php:53
+msgid "Showcase any number of projects. This theme provides you with an option to create 2, 3, 4 column grid layouts by using the portfolio 2, 3, 4 column layout templates, respectively. If you have a number of projects to present then these templates are the answer. You can also create categorized portfolios, which display all the portfolio categories in a single place. In fact, we have coded this theme so that you can create any number of different portfolios."
+msgstr "展示任何项目。这个主题为您提供了一个选项，可以使用组合2, 3, 4列布局模板创建2, 3, 4列网格布局。如果您有许多项目要呈现，那么这些模板就是答案。您还可以创建分类投资组合，在一个地方显示所有作品集合类别。事实上，我们已经编写了这个主题，以便您可以创建任意数量的不同作品集。"
+
+#: admin/tab-pages/useful_plugins.php:67
+msgid "Testimonial Feature"
+msgstr "褒奖特性"
+
+#: admin/tab-pages/useful_plugins.php:68
+msgid "Testimonials are a powerful way to gain credibility. You can display testimonials with a carousel effect."
+msgstr "褒奖是获得信誉的有力途径。您可以以带有轮播效果来显示褒奖。"
+
+#: admin/tab-pages/useful_plugins.php:76
+msgid "You will get 13 preset color schemes and you can even create your own favorite color schemes using the Custom Color Setting in the Customizer."
+msgstr "您将获得13种预设颜色方案，您甚至可以使用自定义程序中的自定义颜色设置创建自己喜欢的颜色方案。"
+
+#: admin/tab-pages/useful_plugins.php:82
+msgid "Well Documented"
+msgstr "文档很齐全"
+
+#: admin/tab-pages/useful_plugins.php:91
+msgid "Building a website with our custom widgets is very simple. Just place them inside the available sidebar or even in the content."
+msgstr "用我们的自定义小工具构建一个站点是非常简单。只需将它们放在可用的边栏或内容中即可。"
+
+#: admin/tab-pages/useful_plugins.php:97
+msgid "Translation Ready"
+msgstr "支持多国语言翻译"
+
+#: admin/tab-pages/useful_plugins.php:98
+msgid "The theme supports yet another famous plugin: WPML. With the help of this support you can create a website available in multiple languages."
+msgstr "主题支持另一个著名的插件：WPML。在这个插件的帮助下，您可以创建一个多语言的站点。"
+
+#: admin/inc/class-webriti-about-page.php:107
+msgid "Get started with Appointment Lite"
+msgstr "开始使用Appointment Lite"
+
+#: admin/inc/class-webriti-about-page.php:238
+msgid "Getting Started"
+msgstr "开始设置"
+
+#. Template Name of the theme
+msgid "Home Page"
+msgstr "首页"
+
+#. Template Name of the theme
+msgid "Fullwidth"
+msgstr "全宽"
+
+#: single.php:17
+msgid "About the author"
+msgstr "关于作者"
+
+#: functions/customizer/customizer-header.php:181 header.php:90 header.php:101
+#: searchform.php:2
+msgid "Search"
+msgstr "搜索"
+
+#: search.php:17
+msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
+msgstr "抱歉，没有符合您搜索条件的结果。请换其它关键词再试。"
+
+#: search.php:15
+msgid "Nothing Found"
+msgstr "未找到"
+
+#: functions.php:114
+msgid "Primary Menu"
+msgstr "主菜单"
+
+#: functions/widgets/sidebars.php:18 functions/widgets/sidebars.php:20
+msgid "Footer widget area"
+msgstr "页脚小工具区"
+
+#: functions/customizer/customizer-news.php:86
+#: functions/widgets/appointment_info_widget.php:88
+msgid "Description"
+msgstr "描述"
+
+#: functions/widgets/appointment_info_widget.php:84
+msgid "FontAwesome icon"
+msgstr "FontAwesome图标"
+
+#: functions/customizer/customizer-news.php:71
+#: functions/customizer/customizer_typography.php:477
+#: functions/widgets/appointment_info_widget.php:81
+msgid "Title"
+msgstr "标题"
+
+#: functions/widgets/appointment_info_widget.php:17
+msgid "Appointment theme information widget"
+msgstr "Appointment主题信息小工具"
+
+#: child_theme_compatible.php:26 functions/breadcrumbs/breadcrumbs.php:33
+#: functions/menu/default_menu_walker.php:20 index-banner.php:19
+msgid "Home"
+msgstr "首页"
+
+#: appointment_theme_setup_data.php:30
+msgid "slide"
+msgstr "滑动效果"
+
+#: appointment_theme_setup_data.php:29
+msgid "Uncategorized"
+msgstr "未分类"
+
+#: functions/customizer/customizer-pro-feature.php:65
+msgid "UPGRADE TO PRO"
+msgstr "升级到Pro版本"
+
+#: functions/customizer/customizer-copyright.php:95
+#: functions/customizer/customizer-header.php:58
+msgid "Facebook URL"
+msgstr "Facebook 网址"
+
+#: functions/customizer/customizer-copyright.php:130
+#: functions/customizer/customizer-header.php:92
+msgid "Twitter URL"
+msgstr "Twitter 网址"
+
+#: functions/customizer/customizer-copyright.php:198
+msgid "Skype URL"
+msgstr "Skype的URL"
+
+#: functions/customizer/customizer-copyright.php:47
+msgid "Hide copyright text"
+msgstr "隐藏版权文字"
+
+#: functions/customizer/customizer-copyright.php:56
+msgid "Social Links"
+msgstr "社交网络链接"
+
+#: functions/customizer/customizer-copyright.php:164
+#: functions/customizer/customizer-header.php:126
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
+
+#: functions.php:168 functions/breadcrumbs/breadcrumbs.php:136
+#: functions/breadcrumbs/breadcrumbs.php:142
+msgid "Page"
+msgstr "页"
+
+#: functions/template-tag.php:23 index-news.php:61
+msgid "By"
+msgstr "通过"
+
+#: content-single.php:17 content.php:17 functions.php:193 functions.php:209
+msgid "Read More"
+msgstr "阅读更多"
+
+#: comments.php:95
+msgid "Leave a Reply"
+msgstr "发表评论"
+
+#: comments.php:92
+msgid "Send Message"
+msgstr "发送信息"
+
+#: comments.php:90
+msgid "Logout from this Account"
+msgstr "登出这个帐号"
+
+#: comments.php:90
+msgid "Logged in as"
+msgstr "以以下身份登陆"
+
+#: comments.php:78
+msgid "Email"
+msgstr "电子邮件"
+
+#: comments.php:63
+msgid "Comments are closed."
+msgstr "评论已关闭。"
+
+#: comments.php:57
+msgid "Newer Comments &rarr;"
+msgstr "较新评论 &rarr;"
+
+#: comments.php:56
+msgid "&larr; Older Comments"
+msgstr "&larr; 早期评论"
+
+#: comments.php:55
+msgid "Comment navigation"
+msgstr "评论导航"
+
+#: comments.php:48
+msgid "No Comments so far"
+msgstr "目前为止没有评论"
+
+#: comments.php:48
+msgid "1 Comment so far"
+msgstr "目前为止有一条评论"
+
+#: comments.php:48
+msgid "Comments so far"
+msgstr "条评论"
+
+#: comments.php:33
+msgid "Your comment is awaiting moderation."
+msgstr "您的评论正等待审核。"
+
+#: comments.php:30
+msgid "Edit"
+msgstr "编辑"
+
+#: comments.php:13
+msgid "Reply"
+msgstr "回复"
+
+#: comments.php:2
+msgid "This post is password protected. Enter the password to view any comments."
+msgstr "这篇文章受密码保护。输入密码以查看评论。"
+
+#: admin/tab-pages/free-pro-demo.php:163 content-single.php:28
+msgid "Next"
+msgstr "继续"
+
+#: archive.php:21
+msgid "Blog Archive"
+msgstr "博客归档"
+
+#: archive.php:10
+msgid "Daily Archive"
+msgstr "按日归档"
+
+#: archive.php:13
+msgid "Monthly Archive"
+msgstr "月度归档"
+
+#: archive.php:17
+msgid "Yearly Archive"
+msgstr "年度归档"
+
+#: 404.php:12
+msgid "Go Back"
+msgstr "返回"
+
+#: 404.php:10
+msgid "Oops! Page not found"
+msgstr "出错了！未找到页面"
+
+#: 404.php:11
+msgid "We are sorry, but the page you are looking for does not exist."
+msgstr "非常抱歉，您正在找的页面不存在。"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://www.webriti.com"
+msgstr "https://www.webriti.com"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "Webriti"
+msgstr "Webriti"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://webriti.com/appointment-wordpress-theme-1/"
+msgstr "https://webriti.com/appointment-wordpress-theme-1/"

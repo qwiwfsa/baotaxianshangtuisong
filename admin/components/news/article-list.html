@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章管理 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        
+        /* CMS侧边栏布局 */
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+        .cms-sidebar-header { padding: 20px 24px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .cms-sidebar-brand i { font-size: 24px; color: #3b82f6; }
+        .cms-sidebar-brand span { font-size: 18px; font-weight: 600; color: white; }
+        .cms-sidebar-nav { padding: 16px 0; }
+        .cms-nav-section { margin-bottom: 8px; }
+        .cms-nav-title { padding: 12px 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+        .cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; }
+        .cms-nav-item:hover { background: #334155; color: white; }
+        .cms-nav-item.active { background: #3b82f6; color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+        .cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+
+        /* CMS头部 */
+        .cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .cms-header-left { display: flex; align-items: center; gap: 16px; }
+        .cms-header-title { font-size: 20px; font-weight: 600; color: #1f2937; }
+        .cms-header-right { display: flex; align-items: center; gap: 12px; }
+        .cms-header-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: #f3f4f6; border: none; border-radius: 8px; color: #374151; font-size: 14px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .cms-header-btn:hover { background: #e5e7eb; }
+        .cms-header-btn-primary { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; }
+        .cms-header-btn-primary:hover { background: linear-gradient(135deg, #1e40af, #2563eb); }
+        .cms-content { padding: 24px; }
+        
+        /* 工具栏 */
+        .toolbar { background: white; border-radius: 12px; padding: 20px; margin-bottom: 24px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .search-box { flex: 1; min-width: 200px; position: relative; }
+        .search-box input { width: 100%; padding: 10px 14px 10px 40px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+        .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+        .filter-select { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; min-width: 120px; }
+        
+        /* 批量操作工具栏 */
+        .batch-bar { display: none; align-items: center; gap: 16px; padding: 12px 16px; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 8px; margin-bottom: 16px; }
+        .batch-bar.show { display: flex; }
+        .batch-bar .selected-count { font-size: 14px; color: #4338ca; font-weight: 500; }
+        .batch-bar .btn-batch-delete { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .batch-bar .btn-batch-delete:hover { background: #dc2626; }
+        .batch-bar .btn-batch-category { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; margin-left: auto; }
+        .batch-bar .btn-batch-category:hover { background: #2563eb; }
+        .batch-delete-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+        .batch-delete-btn:hover { background: #fee2e2; border-color: #fca5a5; }
+        .batch-delete-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* 文章卡片复选框 */
+        .article-card { position: relative; }
+        .article-card .card-checkbox { position: absolute; top: 8px; left: 8px; z-index: 10; width: 20px; height: 20px; accent-color: #3b82f6; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+        .article-card:hover .card-checkbox { opacity: 1; }
+        .article-card .card-checkbox:checked { opacity: 1; }
+        .article-card.selected { outline: 2px solid #3b82f6; outline-offset: -2px; background: #f0f9ff; }
+        
+        /* 文章网格 */
+        .article-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; }
+        .article-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: all 0.2s; }
+        .article-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .article-image { width: 100%; height: 100px; object-fit: contain; background: #f3f4f6; }
+        .article-content { padding: 10px; }
+        .article-title { font-size: 13px; font-weight: 600; color: #1f2937; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .article-summary { font-size: 12px; color: #6b7280; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 6px; }
+        .article-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #9ca3af; flex-wrap: wrap; }
+        .article-meta span { display: flex; align-items: center; gap: 4px; }
+        .article-status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+        .status-published { background: #d1fae5; color: #059669; }
+        .status-draft { background: #fef3c7; color: #d97706; }
+        .article-actions { display: flex; gap: 4px; padding: 8px 10px; border-top: 1px solid #e5e7eb; }
+        .action-btn { flex: 1; padding: 4px 6px; border: none; border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 2px; }
+        .action-btn.edit { background: #eff6ff; color: #3b82f6; }
+        .action-btn.edit:hover { background: #dbeafe; }
+        .action-btn.delete { background: #fef2f2; color: #ef4444; }
+        .action-btn.delete:hover { background: #fee2e2; }
+        .action-btn.view { background: #f3f4f6; color: #6b7280; }
+        .action-btn.view:hover { background: #e5e7eb; }
+        
+        /* 空状态 */
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-state i { font-size: 64px; color: #d1d5db; margin-bottom: 16px; }
+        .empty-state h3 { font-size: 18px; color: #374151; margin-bottom: 8px; }
+        .empty-state p { color: #6b7280; }
+        
+        /* 分页 */
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 32px; }
+        .page-btn { padding: 8px 16px; border: 1px solid #d1d5db; background: white; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .page-btn:hover { background: #f3f4f6; }
+        .page-btn.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* 模态框 */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 12px; width: 90%; max-width: 500px; overflow: hidden; }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 20px; color: #6b7280; cursor: pointer; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 12px; }
+        
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+        .form-input { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+        .btn { padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; border: none; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        
+        /* 加载状态 */
+        .loading { text-align: center; padding: 40px; }
+        .loading i { font-size: 32px; color: #3b82f6; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* 提示消息 */
+        .toast { position: fixed; top: 80px; right: 24px; padding: 16px 20px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px; z-index: 300; transform: translateX(150%); transition: transform 0.3s ease; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="../../dashboard.html" class="cms-nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>仪表板</span>
+                    </a>
+                    <a href="../../case-management.html" class="cms-nav-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>案例管理</span>
+                    </a>
+                    <a href="../../index.html" class="cms-nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>页面管理</span>
+                    </a>
+                    <a href="../../nav-management.html" class="cms-nav-item">
+                        <i class="fas fa-bars"></i>
+                        <span>导航菜单</span>
+                    </a>
+                    <a href="article-list.html" class="cms-nav-item active">
+                        <i class="fas fa-newspaper"></i>
+                        <span>文章管理</span>
+                    </a>
+                    <a href="../../faq-management.html" class="cms-nav-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>常见问题</span>
+                    </a>
+                    <a href="../../footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        
+        <main class="cms-main">
+            <!-- 顶部栏 -->
+            <header class="cms-header">
+                <div class="cms-header-left">
+                    <h1 class="cms-header-title">文章管理</h1>
+                </div>
+                <div class="cms-header-right">
+                    <a href="category.html" class="cms-header-btn">
+                        <i class="fas fa-folder"></i>
+                        <span>分类管理</span>
+                    </a>
+                    <button class="cms-header-btn cms-header-btn-primary" onclick="openEditModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>新建文章</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="cms-content">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="搜索文章标题...">
+                    </div>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="0">全部分类</option>
+                    </select>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="all">全部状态</option>
+                        <option value="published">已发布</option>
+                        <option value="draft">草稿</option>
+                    </select>
+                </div>
+
+                <!-- 批量操作工具栏 -->
+                <div class="batch-bar" id="batchBar">
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;">
+                        <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this.checked)" style="width:18px;height:18px;accent-color:#3b82f6;cursor:pointer;">
+                        <span>全选</span>
+                    </label>
+                    <span class="selected-count" id="selectedCount">已选择 0 篇</span>
+                    <button class="btn-batch-category" onclick="openBatchCategoryModal()" id="batchCategoryBtn" disabled>
+                        <i class="fas fa-folder-open"></i> 批量修改分类
+                    </button>
+                    <button class="btn-batch-delete" onclick="openBatchDeleteModal()" id="batchDeleteBtn" disabled>
+                        <i class="fas fa-trash-alt"></i> 批量删除
+                    </button>
+                </div>
+
+                <div id="articleList">
+                    <div class="loading"><i class="fas fa-spinner"></i></div>
+                </div>
+
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 删除确认模态框（单篇） -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">确认删除</h3>
+                <button class="modal-close" onclick="closeDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteModalMessage">确定要删除这篇文章吗？删除后无法恢复。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmDelete()" style="background: #ef4444;">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量删除确认模态框 -->
+    <div class="modal-overlay" id="batchDeleteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">批量删除确认</h3>
+                <button class="modal-close" onclick="closeBatchDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="batchDeleteModalMessage">确定要删除选中的文章吗？删除后无法恢复。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBatchDeleteModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmBatchDelete()" style="background: #ef4444;">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量修改分类模态框 -->
+    <div class="modal-overlay" id="batchCategoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">批量修改分类</h3>
+                <button class="modal-close" onclick="closeBatchCategoryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">请选择要修改的分类：</p>
+                <select id="batchCategorySelect" class="filter-select" style="width: 100%;">
+                    <option value="">请选择分类</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBatchCategoryModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmBatchCategory()">确认修改</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let currentArticleId = null;
+        let categories = [];
+        let isLoading = false; // 加载锁，防止重复加载
+        let isRendering = false; // 渲染锁，防止重复渲染
+        let eventsBound = false; // 事件绑定标记，防止重复绑定
+        
+        // 分类缓存版本号 - 与category.html保持一致
+        const CATEGORY_CACHE_VERSION = '4';
+        
+        // 清除过期分类缓存
+        (function clearStaleCache() {
+            // 每次加载页面都清除分类缓存，强制从API获取最新数据
+            localStorage.removeItem('cms_categories');
+            localStorage.setItem('cms_category_cache_version', CATEGORY_CACHE_VERSION);
+        })();
+        
+        // 防抖函数
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+        
+        // 节流函数
+        function throttle(func, limit) {
+            let inThrottle;
+            return function(...args) {
+                if (!inThrottle) {
+                    func.apply(this, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', async function() {
+            if (localStorage.getItem('cms_logged_in') !== 'true') {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            // 确保事件只绑定一次
+            if (!eventsBound) {
+                bindEvents();
+                eventsBound = true;
+            }
+            
+            // 先加载分类，再加载文章列表
+            await loadCategories();
+            await doLoadArticles();
+        });
+        
+        // 绑定事件（确保只执行一次）
+        function bindEvents() {
+            // 搜索框防抖处理
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', debounce(function() {
+                    currentPage = 1;
+                    debouncedLoadArticles();
+                }, 500));
+            }
+            
+            // 分类筛选
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', function() {
+                    console.log('分类筛选变化:', this.value);
+                    currentPage = 1;
+                    debouncedLoadArticles();
+                });
+            }
+            
+            // 状态筛选
+            const statusFilter = document.getElementById('statusFilter');
+            if (statusFilter) {
+                statusFilter.addEventListener('change', function() {
+                    console.log('状态筛选变化:', this.value);
+                    currentPage = 1;
+                    debouncedLoadArticles();
+                });
+            }
+        }
+
+        // 渲染分类下拉菜单
+        function renderCategorySelect(categories) {
+            const select = document.getElementById('categoryFilter');
+            if (!select) return;
+            
+            // 清空现有选项（保留第一个"全部分类"）
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            if (!categories || categories.length === 0) {
+                console.log('没有分类数据');
+                return;
+            }
+            
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = cat.name;
+                select.appendChild(option);
+            });
+            console.log('分类下拉菜单已渲染，共' + categories.length + '个分类');
+        }
+
+        // 加载分类 - 统一使用API数据源
+        async function loadCategories() {
+            const select = document.getElementById('categoryFilter');
+            if (!select) return;
+            
+            // 先尝试从API加载（唯一数据源）
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch('../../api/news/categories.php?_t=' + Date.now(), {
+                    signal: controller.signal,
+                    cache: 'no-store'
+                });
+                
+                clearTimeout(timeoutId);
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    categories = result.data;
+                    renderCategorySelect(categories);
+                    console.log('从API加载分类成功，共' + categories.length + '个分类');
+                    return;
+                }
+            } catch (error) {
+                console.log('API加载分类失败:', error);
+            }
+            
+            // API失败时，使用空分类（绝不使用缓存或创建默认分类）
+            categories = [];
+            renderCategorySelect(categories);
+            console.log('API加载分类失败，使用空分类');
+        }
+
+        // 注意：不再使用本地存储加载文章列表
+        // 所有文章数据统一从数据库读取
+
+        // 加载文章列表（使用防抖）
+        const debouncedLoadArticles = debounce(async function() {
+            await doLoadArticles();
+        }, 300);
+        
+        // 实际加载文章列表
+        async function doLoadArticles() {
+            // 防止重复加载
+            if (isLoading) {
+                console.log('加载被锁定，跳过本次加载');
+                return;
+            }
+            isLoading = true;
+            
+            const category = document.getElementById('categoryFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const keyword = document.getElementById('searchInput').value;
+            
+            console.log('开始加载文章列表 - 分类:', category, '状态:', status, '关键词:', keyword);
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(`../../api/news/list.php?page=${currentPage}&limit=16&category=${category}&status=${status}&keyword=${encodeURIComponent(keyword)}`, {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderArticles(result.data);
+                    renderPagination(result.pagination);
+                } else {
+                    console.error('API返回失败:', result);
+                    showToast(result.message || '加载文章列表失败', 'error');
+                }
+            } catch (error) {
+                console.error('API加载文章失败:', error);
+                
+                let errorMsg = '加载失败: ' + (error.message || '网络错误');
+                if (error.name === 'AbortError') {
+                    errorMsg = '加载超时，请检查服务器是否正常运行';
+                }
+                showToast(errorMsg, 'error');
+            } finally {
+                isLoading = false; // 释放加载锁
+            }
+        }
+        
+        // 对外暴露的加载函数（直接调用doLoadArticles，避免重复防抖）
+        async function loadArticles() {
+            return doLoadArticles();
+        }
+
+        // 渲染文章列表
+        function renderArticles(articles) {
+            // 渲染锁，防止重复渲染
+            if (isRendering) {
+                console.log('渲染被锁定，跳过本次渲染');
+                return;
+            }
+            isRendering = true;
+            
+            const container = document.getElementById('articleList');
+            
+            if (articles.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>暂无文章</h3>
+                        <p>点击"新建文章"按钮创建第一篇文章</p>
+                    </div>
+                `;
+                // 释放渲染锁
+                isRendering = false;
+                return;
+            }
+
+            // 处理封面路径：绝对路径（/开头）补网站子目录
+            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+            const getCoverSrc = (cover) => {
+                if (!cover) return '';
+                if (cover.startsWith('http') || cover.startsWith('data:')) return cover;
+                if (cover.startsWith('/')) return cover;
+                if (cover.startsWith('uploads/')) return '/' + cover;
+                return cover;
+            };
+            container.innerHTML = `<div class="article-grid">
+                ${articles.map(article => `
+                    <div class="article-card" data-id="${article.id}">
+                        <input type="checkbox" class="card-checkbox" value="${article.id}" onchange="updateBatchBar()">
+                        <img src="${getCoverSrc(article.cover_image) || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22100%22%3E%3Crect fill=%22%23f3f4f6%22 width=%22200%22 height=%22100%22/%3E%3Ctext fill=%22%239ca3af%22 font-size=%2212%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3E%E6%9A%82%E6%97%A0%E5%B0%81%E9%9D%A2%3C/text%3E%3C/svg%3E'}" alt="${article.title}" class="article-image" onerror="this.style.display='none'">
+                        <div class="article-content">
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-summary">${article.summary || '暂无摘要'}</p>
+                            <div class="article-meta">
+                                <span><i class="fas fa-folder"></i> ${article.category_name || '未分类'}</span>
+                                <span><i class="fas fa-eye"></i> ${article.view_count}</span>
+                                <span class="article-status status-${article.status}">${article.status === 'published' ? '已发布' : '草稿'}</span>
+                            </div>
+                        </div>
+                        <div class="article-actions">
+                            <button class="action-btn view" onclick="viewArticle('${article.id}')" title="预览">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" onclick="editArticle('${article.id}')" title="编辑">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="deleteArticle('${article.id}')" title="删除">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>`;
+            
+            // 渲染完成后释放渲染锁
+            isRendering = false;
+        }
+        
+        // 渲染分页
+        function renderPagination(pagination) {
+            const container = document.getElementById('pagination');
+            let html = '';
+            
+            html += `<button class="page-btn" onclick="goToPage(${pagination.page - 1})" ${pagination.page <= 1 ? 'disabled' : ''}>上一页</button>`;
+            
+            for (let i = 1; i <= pagination.totalPages; i++) {
+                if (i === 1 || i === pagination.totalPages || (i >= pagination.page - 2 && i <= pagination.page + 2)) {
+                    html += `<button class="page-btn ${i === pagination.page ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                } else if (i === pagination.page - 3 || i === pagination.page + 3) {
+                    html += `<span class="page-btn" disabled>...</span>`;
+                }
+            }
+            
+            html += `<button class="page-btn" onclick="goToPage(${pagination.page + 1})" ${pagination.page >= pagination.totalPages ? 'disabled' : ''}>下一页</button>`;
+            
+            container.innerHTML = html;
+        }
+
+        // 跳转页面
+        function goToPage(page) {
+            currentPage = page;
+            loadArticles();
+        }
+
+        // 搜索处理（已在bindEvents中绑定防抖事件，此函数保留供HTML调用）
+        function handleSearch() {
+            // 防抖逻辑已在bindEvents中处理，此处仅作为HTML调用的兼容接口
+            console.log('搜索事件触发（防抖已应用）');
+        }
+
+        // 新建文章
+        function openEditModal() {
+            window.location.href = 'article-edit.html';
+        }
+
+        // 编辑文章
+        function editArticle(id) {
+            window.location.href = `article-edit.html?id=${id}`;
+        }
+
+        // 预览文章
+        function viewArticle(id) {
+            window.open(`/news-detail.php?id=${id}`, '_blank');
+        }
+
+        // 删除文章 - 打开确认对话框
+        function deleteArticle(id) {
+            console.log('删除文章，ID:', id);
+            currentArticleId = id;
+            document.getElementById('deleteModalMessage').textContent = '确定要删除这篇文章吗？删除后无法恢复。';
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        // 关闭删除模态框
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('show');
+            currentArticleId = null;
+        }
+
+        // 确认删除
+        async function confirmDelete() {
+            if (!currentArticleId) {
+                console.error('没有选中要删除的文章ID');
+                return;
+            }
+
+            console.log('确认删除文章，ID:', currentArticleId);
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch('../../api/news/delete.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: currentArticleId }),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast('删除成功', 'success');
+                    closeDeleteModal();
+                    loadArticles();
+                    return;
+                } else {
+                    showToast(result.message || '删除失败', 'error');
+                    closeDeleteModal();
+                    return;
+                }
+            } catch (error) {
+                console.error('API删除失败:', error);
+                
+                let errorMsg = '删除失败: ' + (error.message || '网络错误');
+                if (error.name === 'AbortError') {
+                    errorMsg = '删除超时，请检查服务器是否正常运行';
+                }
+                showToast(errorMsg, 'error');
+                closeDeleteModal();
+            }
+        }
+
+        // ========== 批量删除功能 ==========
+
+        // 获取所有已选中的文章ID
+        function getSelectedIds() {
+            const checkboxes = document.querySelectorAll('.card-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // 更新批量操作栏状态
+        function updateBatchBar() {
+            const selectedIds = getSelectedIds();
+            const count = selectedIds.length;
+            const batchBar = document.getElementById('batchBar');
+            const selectedCount = document.getElementById('selectedCount');
+            const batchDeleteBtn = document.getElementById('batchDeleteBtn');
+            const batchCategoryBtn = document.getElementById('batchCategoryBtn');
+
+            // 更新已选数量
+            selectedCount.textContent = `已选择 ${count} 篇`;
+
+            // 切换批量栏显示
+            if (count > 0) {
+                batchBar.classList.add('show');
+                if (batchDeleteBtn) batchDeleteBtn.disabled = false;
+                if (batchCategoryBtn) batchCategoryBtn.disabled = false;
+            } else {
+                batchBar.classList.remove('show');
+                if (batchDeleteBtn) batchDeleteBtn.disabled = true;
+                if (batchCategoryBtn) batchCategoryBtn.disabled = true;
+            }
+
+            // 高亮选中的卡片
+            document.querySelectorAll('.article-card').forEach(card => {
+                const checkbox = card.querySelector('.card-checkbox');
+                if (checkbox && checkbox.checked) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+
+            // 更新全选复选框状态
+            const allCheckboxes = document.querySelectorAll('.card-checkbox');
+            const selectAll = document.getElementById('selectAll');
+            if (selectAll) {
+                const checkedCount = document.querySelectorAll('.card-checkbox:checked').length;
+                selectAll.checked = allCheckboxes.length > 0 && checkedCount === allCheckboxes.length;
+                selectAll.indeterminate = checkedCount > 0 && checkedCount < allCheckboxes.length;
+            }
+        }
+
+        // 全选/取消全选
+        function toggleSelectAll(checked) {
+            document.querySelectorAll('.card-checkbox').forEach(cb => {
+                cb.checked = checked;
+            });
+            updateBatchBar();
+        }
+
+        // 打开批量删除确认对话框
+        function openBatchDeleteModal() {
+            const selectedIds = getSelectedIds();
+            if (selectedIds.length === 0) {
+                showToast('请先选择要删除的文章', 'error');
+                return;
+            }
+            document.getElementById('batchDeleteModalMessage').textContent = `确定要删除选中的 ${selectedIds.length} 篇文章吗？此操作不可撤销。`;
+            document.getElementById('batchDeleteModal').classList.add('show');
+        }
+
+        // 关闭批量删除确认对话框
+        function closeBatchDeleteModal() {
+            document.getElementById('batchDeleteModal').classList.remove('show');
+        }
+
+        // 确认批量删除
+        async function confirmBatchDelete() {
+            const selectedIds = getSelectedIds();
+            if (selectedIds.length === 0) {
+                showToast('请先选择要删除的文章', 'error');
+                closeBatchDeleteModal();
+                return;
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const response = await fetch('../../api/news/delete.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ids: selectedIds.map(id => parseInt(id)) }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(`成功删除 ${selectedIds.length} 篇文章`, 'success');
+                    closeBatchDeleteModal();
+                    // 取消全选
+                    const selectAll = document.getElementById('selectAll');
+                    if (selectAll) selectAll.checked = false;
+                    // 重新加载列表
+                    loadArticles();
+                } else {
+                    showToast(result.message || '批量删除失败', 'error');
+                    closeBatchDeleteModal();
+                }
+            } catch (error) {
+                console.error('API批量删除失败:', error);
+                let errorMsg = '批量删除失败: ' + (error.message || '网络错误');
+                if (error.name === 'AbortError') {
+                    errorMsg = '删除超时，请检查服务器是否正常运行';
+                }
+                showToast(errorMsg, 'error');
+                closeBatchDeleteModal();
+            }
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 打开批量修改分类对话框
+        function openBatchCategoryModal() {
+            const selectedIds = getSelectedIds();
+            if (selectedIds.length === 0) {
+                showToast('请先选择要修改分类的文章', 'error');
+                return;
+            }
+            // 加载分类列表
+            loadCategoryOptions();
+            document.getElementById('batchCategoryModal').classList.add('show');
+        }
+
+        // 关闭批量修改分类对话框
+        function closeBatchCategoryModal() {
+            document.getElementById('batchCategoryModal').classList.remove('show');
+        }
+
+        // 加载分类选项
+        async function loadCategoryOptions() {
+            try {
+                console.log('[DEBUG] 开始加载分类列表...');
+                const response = await fetch('../../../api/categories.php');
+                console.log('[DEBUG] API响应状态:', response.status);
+                const result = await response.json();
+                console.log('[DEBUG] API返回数据:', result);
+                
+                const select = document.getElementById('batchCategorySelect');
+                select.innerHTML = '<option value="">请选择分类</option>';
+                
+                let categories = [];
+                if (result.success && result.categories) {
+                    categories = result.categories;
+                } else if (result.data) {
+                    categories = result.data;
+                }
+                
+                console.log('[DEBUG] 找到分类数量:', categories.length);
+                
+                categories.forEach(cat => {
+                    console.log('[DEBUG] 添加分类:', cat.id, cat.name);
+                    select.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                });
+                
+                console.log('[DEBUG] 分类列表加载完成');
+            } catch (error) {
+                console.error('[ERROR] 加载分类失败:', error);
+                alert('加载分类列表失败: ' + error.message);
+            }
+        }
+
+        // 确认批量修改分类
+        async function confirmBatchCategory() {
+            const selectedIds = getSelectedIds();
+            const categoryId = document.getElementById('batchCategorySelect').value;
+            
+            if (selectedIds.length === 0) {
+                showToast('请先选择要修改分类的文章', 'error');
+                closeBatchCategoryModal();
+                return;
+            }
+            
+            if (!categoryId) {
+                showToast('请选择要修改的分类', 'error');
+                return;
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const response = await fetch('../../api/news/update-category.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        ids: selectedIds.map(id => parseInt(id)),
+                        category_id: parseInt(categoryId)
+                    }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(`成功修改 ${selectedIds.length} 篇文章的分类`, 'success');
+                    closeBatchCategoryModal();
+                    // 取消全选
+                    const selectAll = document.getElementById('selectAll');
+                    if (selectAll) selectAll.checked = false;
+                    updateBatchBar();
+                    // 重新加载列表
+                    loadArticles();
+                } else {
+                    showToast(result.message || '批量修改分类失败', 'error');
+                    closeBatchCategoryModal();
+                }
+            } catch (error) {
+                console.error('API批量修改分类失败:', error);
+                let errorMsg = '批量修改分类失败: ' + (error.message || '网络错误');
+                if (error.name === 'AbortError') {
+                    errorMsg = '请求超时，请检查服务器是否正常运行';
+                }
+                showToast(errorMsg, 'error');
+                closeBatchCategoryModal();
+            }
+        }
+    </script>
+</body>
+</html>

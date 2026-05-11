@@ -1,0 +1,720 @@
+/**
+ * CMS可视化编辑器样式
+ * Yao资金网网站内容管理系统
+ */
+
+/* ==================== 编辑器工具栏 ==================== */
+.cms-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cms-toolbar-left,
+.cms-toolbar-center,
+.cms-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cms-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #1e3a8a;
+}
+
+.cms-logo i {
+    font-size: 24px;
+    color: #3b82f6;
+}
+
+.cms-divider {
+    width: 1px;
+    height: 24px;
+    background: #e5e7eb;
+}
+
+.cms-page-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.cms-page-info i {
+    color: #9ca3af;
+}
+
+/* 按钮样式 */
+.cms-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    outline: none;
+}
+
+.cms-btn-primary {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+}
+
+.cms-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.cms-btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.cms-btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.cms-btn-text {
+    background: transparent;
+    color: #6b7280;
+    padding: 8px 12px;
+}
+
+.cms-btn-text:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.cms-btn-danger {
+    color: #dc2626;
+}
+
+.cms-btn-danger:hover {
+    background: #fef2f2;
+}
+
+.cms-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cms-user {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.cms-user i {
+    font-size: 20px;
+    color: #3b82f6;
+}
+
+/* ==================== 属性面板 ==================== */
+.cms-property-panel,
+.cms-module-panel {
+    position: fixed;
+    top: 60px;
+    right: -400px;
+    width: 380px;
+    height: calc(100vh - 60px);
+    background: #ffffff;
+    border-left: 1px solid #e5e7eb;
+    z-index: 9998;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cms-property-panel.show,
+.cms-module-panel.show {
+    right: 0;
+}
+
+.cms-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.cms-panel-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cms-panel-header h3 i {
+    color: #3b82f6;
+}
+
+.cms-panel-close {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.cms-panel-close:hover {
+    color: #374151;
+}
+
+.cms-panel-content {
+    padding: 20px;
+}
+
+/* ==================== 属性组 ==================== */
+.cms-property-group {
+    margin-bottom: 24px;
+}
+
+.cms-property-group h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.cms-property-item {
+    margin-bottom: 12px;
+}
+
+.cms-property-item label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.cms-property-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.cms-input,
+.cms-textarea,
+.cms-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: white;
+}
+
+.cms-input:focus,
+.cms-textarea:focus,
+.cms-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.cms-input-small {
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+.cms-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.cms-textarea.cms-code {
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 12px;
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+.cms-color-picker {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.cms-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #eff6ff;
+    color: #3b82f6;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: monospace;
+}
+
+.cms-property-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cms-property-actions .cms-btn {
+    flex: 1;
+    justify-content: center;
+}
+
+/* ==================== 空状态 ==================== */
+.cms-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #9ca3af;
+}
+
+.cms-empty-state i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.cms-empty-state p {
+    font-size: 14px;
+}
+
+/* ==================== 模块面板 ==================== */
+.cms-module-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.cms-module-item {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cms-module-item:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    transform: translateY(-2px);
+}
+
+.cms-module-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cms-module-icon i {
+    font-size: 24px;
+    color: #3b82f6;
+}
+
+.cms-module-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* ==================== 元素工具栏 ==================== */
+.cms-element-toolbar {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 6px;
+    z-index: 10000;
+}
+
+.cms-element-toolbar.show {
+    display: flex;
+}
+
+.cms-tool-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    transition: all 0.2s;
+}
+
+.cms-tool-btn:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.cms-tool-btn-danger:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* ==================== 编辑指示器 ==================== */
+.cms-edit-indicator {
+    position: fixed;
+    display: none;
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 10000;
+    pointer-events: none;
+    animation: fadeInOut 2s ease;
+}
+
+.cms-edit-indicator.show {
+    display: block;
+}
+
+.cms-indicator-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; transform: translateY(5px); }
+    20%, 80% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== 选中状态 ==================== */
+.cms-selected {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: 2px !important;
+    position: relative;
+}
+
+.cms-selected::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px dashed #3b82f6;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* ==================== 内联编辑器 ==================== */
+.cms-inline-editor {
+    width: 100%;
+    min-height: 60px;
+    padding: 12px;
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    resize: vertical;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cms-inline-editor:focus {
+    outline: none;
+}
+
+/* ==================== 通知消息 ==================== */
+.cms-notification {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1f2937;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 10001;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cms-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.cms-notification-success {
+    background: #10b981;
+}
+
+.cms-notification-error {
+    background: #dc2626;
+}
+
+.cms-notification-info {
+    background: #3b82f6;
+}
+
+/* ==================== 登录提示 ==================== */
+.cms-login-prompt {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.cms-prompt-content {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 360px;
+}
+
+.cms-prompt-content i {
+    font-size: 48px;
+    color: #3b82f6;
+    margin-bottom: 16px;
+}
+
+.cms-prompt-content p {
+    font-size: 16px;
+    color: #374151;
+    margin-bottom: 24px;
+}
+
+.cms-prompt-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.cms-prompt-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* ==================== 预览模式 ==================== */
+.cms-preview-mode .cms-toolbar,
+.cms-preview-mode .cms-property-panel,
+.cms-preview-mode .cms-module-panel,
+.cms-preview-mode .cms-element-toolbar,
+.cms-preview-mode .cms-edit-indicator {
+    display: none !important;
+}
+
+.cms-preview-mode body {
+    padding-top: 0 !important;
+}
+
+/* ==================== 模块样式 ==================== */
+.cms-module-text {
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.cms-module-heading {
+    margin: 20px 0;
+}
+
+.cms-module-image {
+    margin: 20px 0;
+}
+
+.cms-module-image img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.cms-module-video {
+    margin: 20px 0;
+}
+
+.video-placeholder {
+    background: #1f2937;
+    border-radius: 12px;
+    padding: 60px;
+    text-align: center;
+    color: white;
+}
+
+.video-placeholder i {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.cms-module-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.cms-module-card .card-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.cms-module-card .card-icon i {
+    font-size: 28px;
+    color: white;
+}
+
+.cms-module-button {
+    margin: 10px;
+}
+
+.cms-module-divider {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cms-module-stats {
+    margin: 20px 0;
+}
+
+/* ==================== 可编辑区域提示 ==================== */
+.section-edit-hint {
+    display: none;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-edit-hint i {
+    font-size: 14px;
+}
+
+/* 登录后显示编辑提示 */
+body.cms-logged-in .section-edit-hint {
+    display: flex;
+}
+
+/* ==================== 页面调整 ==================== */
+body:has(.cms-toolbar) {
+    padding-top: 60px;
+}
+
+body:has(.cms-toolbar) .navbar {
+    top: 60px;
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 768px) {
+    .cms-toolbar {
+        padding: 0 12px;
+    }
+
+    .cms-toolbar-center {
+        gap: 8px;
+    }
+
+    .cms-btn span {
+        display: none;
+    }
+
+    .cms-property-panel,
+    .cms-module-panel {
+        width: 100%;
+        right: -100%;
+    }
+
+    .cms-module-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cms-user span {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .cms-toolbar-left .cms-page-info {
+        display: none;
+    }
+
+    .cms-module-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

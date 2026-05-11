@@ -1,0 +1,46 @@
+{
+    "packages": [
+        {
+            "name": "codemanas/theme-info",
+            "version": "dev-dependency",
+            "version_normalized": "dev-dependency",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:codemanas/theme-info.git",
+                "reference": "8d4ea303282d62f0b78a0f68d861956693a1b984"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codemanas/theme-info/zipball/8d4ea303282d62f0b78a0f68d861956693a1b984",
+                "reference": "8d4ea303282d62f0b78a0f68d861956693a1b984",
+                "shasum": ""
+            },
+            "time": "2024-08-14T06:18:28+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Codemanas\\ThemeInfo\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-3-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "codemanas",
+                    "email": "info@codemanas.com"
+                }
+            ],
+            "description": "Theme Info for Codemanas themes",
+            "support": {
+                "source": "https://github.com/codemanas/theme-info/tree/dependency",
+                "issues": "https://github.com/codemanas/theme-info/issues"
+            },
+            "install-path": "../codemanas/theme-info"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

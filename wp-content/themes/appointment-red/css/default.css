@@ -1,0 +1,141 @@
+/*Theme Menus*/
+.navbar .navbar-nav > .open > a,
+.navbar .navbar-nav > .open > a:hover,
+.navbar .navbar-nav > .open > a:focus,
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+	color: #db2723;
+}
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus, 
+.dropdown-menu, 
+.dropdown-menu .active > a,
+.dropdown-menu .active > a:hover,
+.dropdown-menu .active > a:focus {
+    background-color: #db2723 !important;
+}
+.navbar-default {
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #db2723;
+    color: #fff !important;
+}
+.dropdown-menu > li > a { border-bottom: 1px solid #c8221e !important; }
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus { background-color: #c8221e !important; }
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover { color: #db2723 !important; } 
+}
+@media only screen and (min-width: 200px) and (max-width: 480px) {
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover { color: #db2723 !important; }
+}
+
+/*Background colors */
+.callout-btn2, a.hrtl-btn, 
+.project-scroll-btn li:hover, 
+a.works-btn, 
+.blog-btn-sm, 
+a.more-link,
+.top-contact-detail-section,
+.clients-btn-lg, .team-showcase-overlay, .blog-post-date-area .date, .blog-post-date-area .date, .blog-btn-lg, .blogdetail-btn a:hover, .cont-btn a:hover, .sidebar-widget > .input-group > .input-group-addon, .sidebar-widget > .input-group > .input-group-addon, .sidebar-widget-tags a:hover, .navigation.pagination .nav-links .page-numbers.current,  .navigation.pagination .nav-links a:hover, a.error-btn, .hc_scrollup, .tagcloud a:hover, .form-submit input, .media-body input[type=submit], .sidebar-widget input[type=submit], .footer-widget-column input[type=submit], .blogdetail-btn, .cont-btn button, .orange-widget-column > .input-group > .input-group-addon, .orange-widget-column-tags a:hover, .slider-btn-sm, .slide-btn-sm, .slider-sm-area a.more-link, .blog-pagination span.current, .wpcf7-submit, .page-title-section, ins 
+{ 
+	background-color: #db2723; 
+}
+
+/* Font Colors */
+.service-icon i,.portfolio-caption:hover h4 a, .portfolio-tabs li.active > a, .portfolio-tabs li > a:hover, .testmonial-area h4, .blog-post-sm a:hover, .blog-tags-sm a:hover, .blog-sm-area h3 > a:hover, .blog-sm-area h3 > a:focus, .footer-contact-icon i, .footer-addr-icon, .footer-blog-post:hover h3 a , .footer-widget-tags a:hover, .footer-widget-column ul li a:hover, .footer-copyright p a:hover, .page-breadcrumb > li.active a, .about-section h2 > span, .blog-post-lg a:hover, .blog-tags-lg a:hover, .blog-lg-area-full h3 > a:hover, .blog-author span, .comment-date a:hover, .reply a, .reply a:hover, .sidebar-blog-post:hover h3 a, ul.post-content li:hover a, .error-404 h1, .media-body th a:hover, .media-body dd a:hover, .media-body li a:hover, .blog-post-info-detail a:hover, .comment-respond a:hover, /* .blog-lg-area-left p > a, .blog-lg-area-right p > a, .blog-lg-area-full p > a, */ .blogdetail-btn a, .cont-btn a, .blog-lg-area-left h3 > a:hover, .blog-lg-area-right h3 > a:hover, .blog-lg-area-full h3 > a:hover, .sidebar-widget > ul > li > a:hover, 
+.sidebar-widget table th, 
+.footer-widget-column table th,  
+.top-header-widget table th, 
+.top-contact-detail-section table th, 
+blockquote a, 
+blockquote a:hover, 
+blockquote a:focus, 
+#calendar_wrap table > thead > tr > th, 
+#calendar_wrap a, 
+table tbody a, 
+table tbody a:hover,
+table tbody a:focus,
+.textwidget a:hover, 
+.format-quote p:before,
+td#prev a, td#next a,
+dl > dd > a, dl > dd > a:hover,
+.rsswidget:hover, 
+.recentcomments a:hover, 
+p > a, 
+p > a:hover,
+ul > li > a:hover, tr.odd a, tr.even a, 
+p.wp-caption-text a, 
+.footer-copyright a, .footer-copyright a:hover    
+{ 
+	color: #db2723; 
+}
+
+/* Border colors */
+.footer-widget-tags a:hover , .sidebar-widget > .input-group > .input-group-addon, .sidebar-widget-tags a:hover, .blog-pagination a:hover, .blog-pagination a.active, .tagcloud a:hover, .media-body input[type=submit], .sidebar-widget input[type=submit], .footer-widget-column input[type=submit]  
+{ 
+	border: 1px solid #db2723; 
+} 
+.footer-copyright-section {	border-bottom: 5px solid #db2723; }
+.team-area:hover .team-caption { border-bottom: 2px solid #db2723; }
+.blog-lg-box img { border-bottom: 3px solid #db2723; }
+blockquote {border-left: 5px solid #db2723;}
+
+/* Box Shadow*/
+.callout-btn2, a.hrtl-btn, a.works-btn, .blog-btn-sm, .more-link, .blogdetail-btn a, .cont-btn a, a.error-btn, .form-submit input, .blogdetail-btn, .cont-btn button, .slider-btn-sm , .slider-sm-area a.more-link, .format-video-btn-sm, .slide-btn-sm, .wpcf7-submit, 
+.post-password-form input[type="submit"], input[type="submit"], .clients-btn-lg { box-shadow: 0 3px 0 0 #c8221e; }
+
+/* Image Background */
+.testimonial-section, .contact-detail-section { background: url("../images/bg1.jpg") repeat fixed 0 0 rgba(0, 0, 0, 0); }
+.testimonial-section .overlay, .contact-detail-section .overlay { background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7); }
+.author-box img {background-color: #2a2a2a;}
+.top-header-widget { background-color: #21202e;}
+
+.header-contact-info2 a {
+    color: #ffffff;
+}
+@media (min-width: 1101px){
+.navbar2.navbar-default .navbar-nav > .open > a {
+    color: #db2723;
+}}
+.navbar2 .logo-link-url .navbar-brand .appointment_title_head,.navbar2 .logo-link-url p {
+    color: #ffffff;
+}
+
+.dropdown-menu > li > a {
+    border-bottom: 1px solid #c8221e !important;
+    background-color: #db2723 !important;
+}
+/*===== WP 5.8 Wigets =====*/
+.sidebar-widget li a:hover,.sidebar-widget li a:focus{
+    color: #db2723;
+}
+.wp-block-calendar a {
+ color: #db2723;
+}
+.sidebar-widget .wp-block-tag-cloud a:hover,.footer-widget-section .wp-block-tag-cloud a:hover{
+    background-color: #db2723;
+    border: 1px solid #db2723;
+    color: #fff;
+}
+.wp-block-latest-comments__comment-meta a:hover {
+    color: #db2723;
+}
+/*post navigation -------------------------------------------------------------------------------------------*/
+.post .nav-subtitle {
+    color: #db2723;
+}
+.post .nav-title:hover,.post .nav-title:focus{color:#db2723;}
+/*Related Post Section-------------------------------------------------------------------------------------------*/
+.related-blog-post-sm a:hover,.related-post-caption h4 a:hover,.related-blog-post-author .blog-admin-lg a:hover{color: #db2723;}
+.related-post-scroll-btn li a:hover {background-color: #db2723;} 
+.related-blog-post-sm i{color: #db2723;}
+.related-post-image{border-bottom: 2px solid #db2723;}
+.sidebar-widget h1:before,.sidebar-widget h2:before,.sidebar-widget h3:before,.sidebar-widget h4:before,.sidebar-widget h5:before,.sidebar-widget h6:before,.sidebar-widget .wp-block-search .wp-block-search__label:before,
+.footer-widget-section h1:before,.footer-widget-section h2:before,.footer-widget-section h3:before,.footer-widget-section h4:before,.footer-widget-section h5:before,.footer-widget-section h6:before,.footer-widget-section .wp-block-search .wp-block-search__label:before,h3.footer-widget-title:before{width: 60px;background: #db2723;z-index:2;}
+body.wp-child-theme-appointment-red .search-form input[type="submit"] {
+    background-color: #db2723;
+    border: 1px solid #db2723;
+}

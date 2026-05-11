@@ -1,0 +1,45 @@
+/*
+Name: bootstrap-smartmenus.css
+*/
+
+.navbar-header-wrap .site-branding-text .site-title a {
+	color: #fff;
+}
+.navbar-header-wrap .site-branding-text .site-description {
+	color: #ddd;
+}
+.navbar.navbar-header-wrap.header-fixed-top .site-branding-text .site-title a {
+	color: #01012F;
+}
+.navbar.navbar-header-wrap.header-fixed-top .site-branding-text .site-description {
+	color: #545454;
+}
+
+.navbar.navbar-header-wrap .navbar-toggler {
+	border-color: rgba(255, 255, 255, 1);
+}
+.navbar.navbar-header-wrap .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+.navbar.navbar-header-wrap.header-fixed-top .navbar-toggler {
+	border-color: rgba(1, 1, 47, 1);	
+}
+.navbar.navbar-header-wrap.header-fixed-top .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(1, 1, 47, 1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+@media (min-width: 992px){
+	.navbar.header-fixed-top .site-branding-text {
+		margin-top: 0.8rem;
+		margin-bottom: 0.8rem;
+	}
+}
+@media (max-width: 991px) { 
+	.navbar .site-branding-text {
+		margin-top: 0rem;
+		margin-bottom: 0.290rem;
+	}
+	.navbar.header-fixed-top .site-branding-text {
+		margin-top: 0.2rem;
+		margin-bottom: 0.2rem;
+	}
+}

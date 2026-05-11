@@ -1,0 +1,705 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.3/theme.json",
+  "version": 2,
+  "customTemplates": [
+    {
+      "name": "splash",
+      "title": "Splash/Blank Canvas",
+      "postTypes": ["post", "page"]
+    },
+    {
+      "name": "no-title",
+      "title": "No title",
+      "postTypes": ["post", "page"]
+    },
+    {
+      "name": "single-with-sidebar",
+      "title": "Single With Sidebar",
+      "postTypes": ["post", "page"]
+    }
+  ],
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "background": true,
+      "custom": true,
+      "customDuotone": true,
+      "customGradient": true,
+      "defaultDuotone": true,
+      "defaultGradients": true,
+      "defaultPalette": true,
+      "duotone": [],
+      "gradients": [],
+      "palette": [
+        {
+          "name": "Secondary Color",
+          "slug": "secondary-color",
+          "color": "#133A69"
+        },
+        {
+          "name": "accent Color",
+          "slug": "accent-color",
+          "color": "#3F93FC"
+        },
+        {
+          "name": "Light Color",
+          "slug": "light-color",
+          "color": "#fff"
+        },
+        {
+          "name": "Background Color",
+          "slug": "background-color",
+          "color": "#F5F0ED"
+        },
+        {
+          "name": "Dark Color",
+          "slug": "dark-color",
+          "color": "#000"
+        },
+        {
+          "name": "Paragraph Color Light",
+          "slug": "paragraph-color-light",
+          "color": "#6B6B6B"
+        },
+        {
+          "name": "Text Color",
+          "slug": "text-color",
+          "color": "#3F3F3F"
+        },
+        {
+          "name": "Paragraph Color Dark",
+          "slug": "paragraph-color-dark",
+          "color": "#333333"
+        },
+        {
+          "name": "Body",
+          "color": "#FAFAFA",
+          "slug": "body"
+        },
+        {
+          "name": "Transparent",
+          "color": "transparent",
+          "slug": "transparent"
+        }
+      ],
+      "text": true,
+      "link": true
+    },
+    "custom": {
+      "cm-enterprise-box-shadow-light": "0px 0px 4px 0px rgba(74,74,74,0.25)",
+      "fontWeight": {
+        "thin": 100,
+        "extra-light": 200,
+        "light": 300,
+        "regular": 400,
+        "medium": 500,
+        "semi-bold": 600,
+        "bold": 700,
+        "extra-bold": 800,
+        "black": 900
+      },
+      "line-height": {
+        "tiny": 1.15,
+        "small": 1.2,
+        "medium": 1.4,
+        "normal": 1.6
+      }
+    },
+    "layout": {
+      "contentSize": "720px",
+      "wideSize": "1200px"
+    },
+    "border": {
+      "radius": true
+    },
+    "shadow": {
+      "defaultPresets": true,
+      "presets": []
+    },
+    "spacing": {
+      "customSpacingSize": true,
+      "spacingScale": {
+        "steps": 0
+      },
+      "spacingSizes": [
+        {
+          "name": "1",
+          "size": "1rem",
+          "slug": "10"
+        },
+        {
+          "name": "2",
+          "size": "min(1.5rem, 2vw)",
+          "slug": "20"
+        },
+        {
+          "name": "3",
+          "size": "min(2.5rem, 3vw)",
+          "slug": "30"
+        },
+        {
+          "name": "4",
+          "size": "min(4rem, 5vw)",
+          "slug": "40"
+        },
+        {
+          "name": "5",
+          "size": "min(6.5rem, 8vw)",
+          "slug": "50"
+        },
+        {
+          "name": "6",
+          "size": "min(10.5rem, 13vw)",
+          "slug": "60"
+        }
+      ],
+      "units": ["%", "px", "em", "rem", "vh", "vw"]
+    },
+    "typography": {
+      "writingMode": true,
+      "customFontSize": true,
+      "fluid": true,
+      "dropCap": true,
+      "fontFamilies": [
+        {
+          "fontFace": [
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "100",
+              "src": ["file:./assets/fonts/inter/Inter-Thin.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "200",
+              "src": ["file:./assets/fonts/inter/Inter-ExtraLight.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "300",
+              "src": ["file:./assets/fonts/inter/Inter-Light.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/inter/Inter-Regular.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "src": ["file:./assets/fonts/inter/Inter-Medium.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "src": ["file:./assets/fonts/inter/Inter-SemiBold.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "src": ["file:./assets/fonts/inter/Inter-Bold.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "800",
+              "src": ["file:./assets/fonts/inter/Inter-ExtraBold.woff2"]
+            },
+            {
+              "fontFamily": "Inter",
+              "fontStyle": "normal",
+              "fontWeight": "900",
+              "src": ["file:./assets/fonts/inter/Inter-Black.woff2"]
+            }
+          ],
+          "fontFamily": "'Inter', sans-serif",
+          "name": "Inter",
+          "slug": "inter"
+        },
+        {
+          "fontFace": [
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "100",
+              "src": [
+                "file:./assets/fonts/poppins/pxiGyp8kv8JHgFVrLPTecnFBGPaTSQ.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "200",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLFj_V15vFP-KUEg.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "300",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLDz8V15vFP-KUEg.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/poppins/pxiEyp8kv8JHgFVrFJXUc1NECPY.woff2"]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLGT9V15vFP-KUEg.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLEj6V15vFP-KUEg.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLCz7V15vFP-KUEg.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "800",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLDD4V15vFP-KUEg.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Poppins",
+              "fontStyle": "normal",
+              "fontWeight": "900",
+              "src": [
+                "file:./assets/fonts/poppins/pxiByp8kv8JHgFVrLBT5V15vFP-KUEg.woff2"
+              ]
+            }
+          ],
+          "fontFamily": "'Poppins', sans-serif",
+          "name": "Poppins",
+          "slug": "poppins"
+        },
+
+        {
+          "fontFace": [
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "100",
+              "src": ["file:./assets/fonts/montserrat/Montserrat-Thin.woff2"]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "200",
+              "src": [
+                "file:./assets/fonts/montserrat/Montserrat-ExtraLight.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "300",
+              "src": ["file:./assets/fonts/montserrat/Montserrat-Light.woff2"]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/montserrat/Montserrat-Regular.woff2"]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "src": ["file:./assets/fonts/montserrat/Montserrat-Medium.woff2"]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "src": [
+                "file:./assets/fonts/montserrat/Montserrat-SemiBold.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "src": ["file:./assets/fonts/montserrat/Montserrat-Bold.woff2"]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "800",
+              "src": [
+                "file:./assets/fonts/montserrat/Montserrat-ExtraBold.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontStyle": "normal",
+              "fontWeight": "900",
+              "src": ["file:./assets/fonts/montserrat/Montserrat-Black.woff2"]
+            }
+          ],
+          "fontFamily": "'Montserrat', sans-serif",
+          "name": "Montserrat",
+          "slug": "montserrat"
+        },
+        {
+          "fontFace": [
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "100",
+              "src": ["file:./assets/fonts/raleway/Raleway-Thin.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "200",
+              "src": ["file:./assets/fonts/raleway/Raleway-ExtraLight.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "300",
+              "src": ["file:./assets/fonts/raleway/Raleway-Light.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "src": ["file:./assets/fonts/raleway/Raleway-Regular.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "500",
+              "src": ["file:./assets/fonts/raleway/Raleway-Medium.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "src": ["file:./assets/fonts/raleway/Raleway-SemiBold.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "src": ["file:./assets/fonts/raleway/Raleway-Bold.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "800",
+              "src": ["file:./assets/fonts/raleway/Raleway-ExtraBold.woff2"]
+            },
+            {
+              "fontFamily": "Raleway",
+              "fontStyle": "normal",
+              "fontWeight": "900",
+              "src": ["file:./assets/fonts/raleway/Raleway-Black.woff2"]
+            }
+          ],
+          "fontFamily": "'Raleway', sans-serif",
+          "name": "Raleway",
+          "slug": "raleway"
+        },
+        {
+          "fontFamily": "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif",
+          "name": "System Sans-serif",
+          "slug": "system-sans-serif"
+        },
+        {
+          "fontFamily": "Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol",
+          "name": "System Serif",
+          "slug": "system-Serif"
+        }
+      ],
+      "fontSizes": [
+        {
+          "name": "ES",
+          "size": "16px",
+          "slug": "extra-small"
+        },
+        {
+          "name": "S",
+          "size": "18px",
+          "slug": "small"
+        },
+        {
+          "fluid": {
+            "max": "20px",
+            "min": "18px"
+          },
+          "name": "SM",
+          "size": "clamp(18px, 1.5vw, 20px)",
+          "slug": "small-medium"
+        },
+        {
+          "fluid": {
+            "max": "22px",
+            "min": "18px"
+          },
+          "name": "M",
+          "size": "clamp(18px, 2.0vw, 22px)",
+          "slug": "medium"
+        },
+        {
+          "fluid": {
+            "max": "24px",
+            "min": "20px"
+          },
+          "name": "ML",
+          "size": "clamp(20px, 2.5vw, 24px)",
+          "slug": "medium-large"
+        },
+        {
+          "fluid": {
+            "max": "36px",
+            "min": "24px"
+          },
+          "name": "L",
+          "size": "clamp(24px, 3vw, 36px)",
+          "slug": "large"
+        },
+        {
+          "fluid": {
+            "max": "48px",
+            "min": "32px"
+          },
+          "name": "XL",
+          "size": "clamp(32px, 3.6vw, 48px)",
+          "slug": "x-large"
+        },
+        {
+          "fluid": {
+            "max": "56px",
+            "min": "40px"
+          },
+          "name": "2XL",
+          "size": "clamp(40px, 4.2vw, 56px)",
+          "slug": "xx-large"
+        },
+        {
+          "fluid": {
+            "max": "64px",
+            "min": "48px"
+          },
+          "name": "3XL",
+          "size": "clamp(48px, 5.4vw, 64px)",
+          "slug": "xxx-large"
+        },
+        {
+          "fluid": {
+            "max": "72px",
+            "min": "48px"
+          },
+          "name": "4XL",
+          "size": "clamp(48px, 6.6vw, 72px)",
+          "slug": "xxxx-large"
+        },
+        {
+          "fluid": {
+            "max": "130px",
+            "min": "54px"
+          },
+          "name": "banner-large",
+          "size": "clamp(54px, 10.8vw, 130px)",
+          "slug": "banner-large"
+        }
+      ],
+      "fontStyle": true,
+      "fontWeight": true,
+      "letterSpacing": true,
+      "textDecoration": true,
+      "textTransform": true
+    },
+    "useRootPaddingAwareAlignments": true
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--light-color)"
+    },
+    "blocks": {
+      "core/button": {
+        "spacing": {
+          "padding": {
+            "bottom": "0.6rem",
+            "left": "1rem",
+            "right": "1rem",
+            "top": "0.6rem"
+          }
+        },
+        "border": {
+          "radius": "4px"
+        },
+        "variations": {
+          "outline": {
+            "border": {
+              "color": "var(--wp--preset--color--accent-color)",
+              "style": "solid",
+              "width": "2px"
+            },
+            "color": {
+              "text": "var(--wp--preset--color--accent-color)"
+            }
+          }
+        }
+      },
+      "core/paragraph": {
+        "elements": {
+          "link": {
+            "typography": {
+              "fontWeight": "var(--wp--custom--font-weight--medium)"
+            }
+          }
+        },
+        "typography": {
+          "fontSize": "16px",
+          "fontWeight": "var(--wp--custom--font-weight--regular)",
+          "fontFamily": "var(--wp--preset--font-family--poppins)",
+          "lineHeight": "var(--wp--custom--line-height--normal)"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--paragraph-color-dark)"
+        }
+      },
+      "core/list": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--normal)",
+          "fontWeight": "var(--wp--custom--font-weight--regular)",
+          "fontFamily": "var(--wp--preset--font-family--poppins)"
+        },
+        "color": {
+          "text": "var(--wp--preset--color--paragraph-color-dark)"
+        },
+        "spacing": {
+          "padding": {
+            "top": "0.375rem",
+            "bottom": "0.375rem",
+            "left": "0",
+            "right": "0"
+          }
+        }
+      },
+      "core/post-excerpt": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--normal)",
+          "fontWeight": "var(--wp--custom--font-weight--regular)",
+          "fontFamily": "var(--wp--preset--font-family--poppins)"
+        }
+      },
+      "core/categories": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--normal)",
+          "fontWeight": "var(--wp--custom--font-weight--light)",
+          "fontFamily": "var(--wp--preset--font-family--poppins)"
+        }
+      }
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "var(--wp--preset--color--accent-color)"
+        }
+      },
+      "h1": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--xxxx-large)",
+          "fontWeight": "600",
+          "lineHeight": "1.3"
+        }
+      },
+      "h2": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--x-large)",
+          "fontWeight": "600",
+          "lineHeight": "1.3"
+        }
+      },
+      "h3": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--large)",
+          "fontWeight": "600",
+          "lineHeight": "1.3"
+        }
+      },
+      "h4": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--medium-large)",
+          "fontWeight": "600",
+          "lineHeight": "1.2"
+        }
+      },
+      "h5": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--small-medium)",
+          "fontWeight": "600",
+          "lineHeight": "1.2"
+        }
+      },
+      "h6": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--small)",
+          "fontWeight": "600",
+          "lineHeight": "1.2"
+        }
+      },
+      "heading": {
+        "color": {
+          "text": "var(--wp--preset--color--black-color)"
+        },
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--poppins)"
+        }
+      }
+    },
+    "spacing": {
+      "blockGap": "0px",
+      "padding": {
+        "left": "var(--wp--preset--spacing--50)",
+        "right": "var(--wp--preset--spacing--50)"
+      }
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--poppins)",
+      "fontStyle": "normal",
+      "fontWeight": "500",
+      "lineHeight": "1.5"
+    }
+  },
+  "templateParts": [
+    {
+      "area": "header",
+      "name": "header"
+    },
+    {
+      "area": "footer",
+      "name": "footer"
+    }
+  ]
+}

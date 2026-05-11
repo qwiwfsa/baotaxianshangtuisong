@@ -1,0 +1,24 @@
+{
+    "id": "case_1777296851044",
+    "title": "某房地产企业",
+    "type": "工程亮资",
+    "city": "测试三",
+    "summary": "为企业提供大额摆账亮资服务，助力成功中标大型工程项目。",
+    "amount": "11亿元",
+    "period": "测试三",
+    "year": "2026",
+    "image": "uploads\/20260428_69efe569f351a.jpg",
+    "coverImage": "uploads\/20260428_69efe569f351a.jpg",
+    "images": [
+        "uploads\/20260428_69efe569f351a.jpg"
+    ],
+    "hasVideo": false,
+    "video": "",
+    "detail": "为企业提供大额摆账亮资服务，助力成功中标大型工程项目。",
+    "highlights": [
+        "测试十"
+    ],
+    "process": [],
+    "status": "published",
+    "lastModified": "2026-04-29 21:57:58"
+}

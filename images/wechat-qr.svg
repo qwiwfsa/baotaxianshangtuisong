@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <!-- 背景 -->
+  <rect width="200" height="200" fill="#ffffff"/>
+  
+  <!-- 外边框 -->
+  <rect x="10" y="10" width="180" height="180" fill="none" stroke="#333" stroke-width="4"/>
+  
+  <!-- 左上角定位图案 -->
+  <rect x="20" y="20" width="50" height="50" fill="#333"/>
+  <rect x="28" y="28" width="34" height="34" fill="#fff"/>
+  <rect x="35" y="35" width="20" height="20" fill="#333"/>
+  
+  <!-- 右上角定位图案 -->
+  <rect x="130" y="20" width="50" height="50" fill="#333"/>
+  <rect x="138" y="28" width="34" height="34" fill="#fff"/>
+  <rect x="145" y="35" width="20" height="20" fill="#333"/>
+  
+  <!-- 左下角定位图案 -->
+  <rect x="20" y="130" width="50" height="50" fill="#333"/>
+  <rect x="28" y="138" width="34" height="34" fill="#fff"/>
+  <rect x="35" y="145" width="20" height="20" fill="#333"/>
+  
+  <!-- 模拟数据区域 -->
+  <g fill="#333">
+    <!-- 一些随机方块模拟二维码数据 -->
+    <rect x="80" y="20" width="10" height="10"/>
+    <rect x="100" y="20" width="10" height="10"/>
+    <rect x="80" y="40" width="10" height="10"/>
+    <rect x="110" y="40" width="10" height="10"/>
+    <rect x="90" y="60" width="10" height="10"/>
+    <rect x="110" y="60" width="10" height="10"/>
+    
+    <rect x="20" y="80" width="10" height="10"/>
+    <rect x="40" y="80" width="10" height="10"/>
+    <rect x="60" y="90" width="10" height="10"/>
+    <rect x="80" y="80" width="10" height="10"/>
+    <rect x="100" y="90" width="10" height="10"/>
+    <rect x="120" y="80" width="10" height="10"/>
+    <rect x="140" y="90" width="10" height="10"/>
+    <rect x="160" y="80" width="10" height="10"/>
+    <rect x="180" y="90" width="10" height="10"/>
+    
+    <rect x="80" y="100" width="10" height="10"/>
+    <rect x="110" y="110" width="10" height="10"/>
+    <rect x="90" y="120" width="10" height="10"/>
+    
+    <rect x="80" y="140" width="10" height="10"/>
+    <rect x="100" y="150" width="10" height="10"/>
+    <rect x="120" y="140" width="10" height="10"/>
+    <rect x="140" y="150" width="10" height="10"/>
+    <rect x="160" y="140" width="10" height="10"/>
+    <rect x="180" y="150" width="10" height="10"/>
+    
+    <rect x="80" y="170" width="10" height="10"/>
+    <rect x="110" y="170" width="10" height="10"/>
+    <rect x="140" y="180" width="10" height="10"/>
+  </g>
+  
+  <!-- 中间微信图标 -->
+  <circle cx="100" cy="100" r="25" fill="#07C160"/>
+  <text x="100" y="108" text-anchor="middle" fill="#fff" font-size="20" font-family="Arial">微</text>
+</svg>

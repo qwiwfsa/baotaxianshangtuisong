@@ -1,0 +1,20 @@
+{
+    "page": "services",
+    "pageTitle": "业务范围",
+    "pageSubtitle": "专业资金服务，助力企业发展",
+    "listedTitle": "上市公司类",
+    "listedContent": "<p>为上市公司提供全方位的资金解决方案，包括短拆、股票解质押过桥、募集账户归还过桥等服务。</p>",
+    "listedImage": "images/service-listed.jpg",
+    "baizhangTitle": "企业/个人摆账",
+    "baizhangContent": "<p>提供长短期定存摆账、云信票据实摆、过账实趴等服务，满足企业各类资金展示需求。</p>",
+    "baizhangImage": "images/service-baizhang.jpg",
+    "depositTitle": "银行存款类",
+    "depositContent": "<p>提供时点冲量、日均业务、月末冲量、定期存款等服务，帮助企业优化财务报表。</p>",
+    "depositImage": "images/service-deposit.jpg",
+    "receivableTitle": "应收账款融资",
+    "receivableContent": "<p>通过置换云信票据、融资贴现等方式，帮助企业盘活应收账款，解决资金周转问题。</p>",
+    "receivableImage": "images/service-receivable.jpg",
+    "lastModified": "2026-04-21 05:50:00",
+    "published": true,
+    "publishedAt": "2026-04-21 05:50:00"
+}
