@@ -1,817 +1,827 @@
-﻿﻿﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>编辑FAQ - 宏都资本CMS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- TinyMCE 富文本编辑器 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
-    <style>
-        .tox-tinymce { border-radius: 8px !important; }
-        .tox .tox-dialog { z-index: 100000 !important; }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: #f3f4f6;
-            min-height: 100vh;
-        }
-
-        /* 布局 */
-        .cms-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* 侧边栏 */
-        .cms-sidebar {
-            width: 260px;
-            background: #1e293b;
-            color: white;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .cms-sidebar-header {
-            padding: 24px;
-            border-bottom: 1px solid #334155;
-        }
-
-        .cms-sidebar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cms-sidebar-brand i {
-            font-size: 28px;
-            color: #3b82f6;
-        }
-
-        .cms-sidebar-brand span {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .cms-sidebar-nav {
-            padding: 16px 0;
-        }
-
-        .cms-nav-section {
-            margin-bottom: 8px;
-        }
-
-        .cms-nav-title {
-            padding: 12px 24px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #94a3b8;
-        }
-
-        .cms-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .cms-nav-item:hover {
-            background: #334155;
-            color: white;
-        }
-
-        .cms-nav-item.active {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .cms-nav-item i {
-            width: 20px;
-            text-align: center;
-        }
-
-        /* 主内容区 */
-        .cms-main {
-            flex: 1;
-            margin-left: 260px;
-            min-height: 100vh;
-        }
-
-        /* 顶部栏 */
-        .cms-header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .cms-header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .cms-header-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .cms-breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .cms-breadcrumb a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-
-        .cms-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        .cms-header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cms-header-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: #f3f4f6;
-            border: none;
-            border-radius: 8px;
-            color: #374151;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .cms-header-btn:hover {
-            background: #e5e7eb;
-        }
-
-        .cms-header-btn-primary {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            color: white;
-        }
-
-        .cms-header-btn-primary:hover {
-            background: linear-gradient(135deg, #1e40af, #2563eb);
-        }
-
-        .cms-header-btn-success {
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: white;
-        }
-
-        .cms-header-btn-success:hover {
-            background: linear-gradient(135deg, #047857, #059669);
-        }
-
-        /* 内容区域 */
-        .cms-content {
-            padding: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* 表单样式 */
-        .form-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-
-        .form-card-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #f9fafb;
-        }
-
-        .form-card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-card-title i {
-            color: #3b82f6;
-        }
-
-        .form-card-body {
-            padding: 24px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-label .required {
-            color: #ef4444;
-            margin-left: 4px;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 200px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-
-        .form-hint {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 6px;
-        }
-
-        /* 底部操作栏 */
-        .form-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            padding-top: 24px;
-            border-top: 1px solid #e5e7eb;
-            margin-top: 24px;
-        }
-
-        /* 提示消息 */
-        .toast {
-            position: fixed;
-            top: 80px;
-            right: 24px;
-            padding: 16px 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 300;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-
-        .toast.error {
-            border-left: 4px solid #ef4444;
-        }
-
-        .toast i {
-            font-size: 20px;
-        }
-
-        /* 撤回重做按钮样式 */
-        .history-btn-group {
-            display: flex;
-            gap: 8px;
-            margin-right: 12px;
-        }
-        .history-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: #f3f4f6;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            color: #374151;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .history-btn:hover:not(:disabled) {
-            background: #e5e7eb;
-            border-color: #9ca3af;
-        }
-        .history-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .history-btn i {
-            font-size: 12px;
-        }
-        
-        /* 响应式 */
-        @media (max-width: 768px) {
-            .cms-sidebar {
-                transform: translateX(-100%);
-            }
-
-            .cms-main {
-                margin-left: 0;
-            }
-
-            .form-footer {
-                flex-direction: column;
-            }
-
-            .form-footer .cms-header-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="cms-layout">
-        <!-- 侧边栏 -->
-        <aside class="cms-sidebar">
-            <div class="cms-sidebar-header">
-                <div class="cms-sidebar-brand">
-                    <i class="fas fa-cog"></i>
-                    <span>CMS管理后台</span>
-                </div>
-            </div>
-            
-            <nav class="cms-sidebar-nav">
-                <div class="cms-nav-section">
-                    <div class="cms-nav-title">主要</div>
-                    <a href="dashboard.html" class="cms-nav-item">
-                        <i class="fas fa-home"></i>
-                        <span>仪表板</span>
+﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑FAQ - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TinyMCE 富文本编辑器 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+    <style>
+        .tox-tinymce { border-radius: 8px !important; }
+        .tox .tox-dialog { z-index: 100000 !important; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+
+        /* 布局 */
+        .cms-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏 */
+        .cms-sidebar {
+            width: 260px;
+            background: #1e293b;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .cms-sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .cms-sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cms-sidebar-brand i {
+            font-size: 28px;
+            color: #3b82f6;
+        }
+
+        .cms-sidebar-brand span {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .cms-sidebar-nav {
+            padding: 16px 0;
+        }
+
+        .cms-nav-section {
+            margin-bottom: 8px;
+        }
+
+        .cms-nav-title {
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+        }
+
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .cms-nav-item:hover {
+            background: #334155;
+            color: white;
+        }
+
+        .cms-nav-item.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .cms-nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* 主内容区 */
+        .cms-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* 顶部栏 */
+        .cms-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .cms-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cms-header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .cms-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .cms-breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .cms-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .cms-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cms-header-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .cms-header-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .cms-header-btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+
+        .cms-header-btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        .cms-header-btn-success {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+        }
+
+        .cms-header-btn-success:hover {
+            background: linear-gradient(135deg, #047857, #059669);
+        }
+
+        /* 内容区域 */
+        .cms-content {
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 表单样式 */
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .form-card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .form-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-card-title i {
+            color: #3b82f6;
+        }
+
+        .form-card-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        /* 底部操作栏 */
+        .form-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 24px;
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 300;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .toast i {
+            font-size: 20px;
+        }
+
+        /* 撤回重做按钮样式 */
+        .history-btn-group {
+            display: flex;
+            gap: 8px;
+            margin-right: 12px;
+        }
+        .history-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            color: #374151;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .history-btn:hover:not(:disabled) {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+        .history-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .history-btn i {
+            font-size: 12px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .cms-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .cms-main {
+                margin-left: 0;
+            }
+
+            .form-footer {
+                flex-direction: column;
+            }
+
+            .form-footer .cms-header-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- 侧边栏 -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>仪表板</span>
+                    </a>
+                    <a href="logo-settings.html" class="cms-nav-item">
+                        <i class="fas fa-image"></i>
+                        <span>Logo设置</span>
+                    </a>
+                    <a href="case-management.html" class="cms-nav-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>案例管理</span>
+                    </a>
+                    <a href="index.html" class="cms-nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>页面管理</span>
                     </a>
-                    <a href="logo-settings.html" class="cms-nav-item">
-                        <i class="fas fa-image"></i>
-                        <span>Logo设置</span>
+                    <a href="page-manager.html" class="cms-nav-item" data-section="page-manager">
+                        <i class="fas fa-list"></i>
+                        <span>页面列表</span>
                     </a>
-                    <a href="case-management.html" class="cms-nav-item">
-                        <i class="fas fa-trophy"></i>
-                        <span>案例管理</span>
+                    <a href="visual-page-builder.html" class="cms-nav-item" data-section="visual-builder">
+                        <i class="fas fa-pen-ruler"></i>
+                        <span>页面设计</span>
                     </a>
-                    <a href="index.html" class="cms-nav-item">
-                        <i class="fas fa-file-alt"></i>
-                        <span>页面管理</span>
-                    </a>
-                    <a href="nav-management.html" class="cms-nav-item">
-                        <i class="fas fa-bars"></i>
-                        <span>导航菜单</span>
-                    </a>
-                    <a href="components/news/article-list.html" class="cms-nav-item">
-                        <i class="fas fa-newspaper"></i>
-                        <span>文章管理</span>
-                    </a>
-                    <a href="faq-management.html" class="cms-nav-item active">
-                        <i class="fas fa-question-circle"></i>
-                        <span>常见问题</span>
-                    </a>
-                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
-                        <i class="fas fa-list-alt"></i>
-                        <span>页脚管理</span>
-                    </a>
-                    
 
-                </div>
-            </nav>
-        </aside>
-
-        <!-- 主内容区 -->
-        <main class="cms-main">
-            <!-- 顶部栏 -->
-            <header class="cms-header">
-                <div class="cms-header-left">
-                    <div class="cms-breadcrumb">
-                        <a href="dashboard.html">首页</a>
-                        <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
-                        <a href="faq-management.html">FAQ管理</a>                    
-                        <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
-                        <span id="pageTitle">编辑FAQ</span>
-                    </div>
-                </div>
-                <div class="cms-header-right">
-                    <div class="history-btn-group">
-                        <button class="history-btn" id="undoBtn" onclick="undo()" disabled>
-                            <i class="fas fa-undo"></i> 撤回
-                        </button>
-                        <button class="history-btn" id="redoBtn" onclick="redo()" disabled>
-                            <i class="fas fa-redo"></i> 重做
-                        </button>
-                        <button class="history-btn" onclick="resetFAQ()">
-                            <i class="fas fa-rotate-left"></i> 重置
-                        </button>
-                    </div>
-                    <button class="cms-header-btn" onclick="goBack()">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>返回列表</span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- 内容区域 -->
-            <div class="cms-content">
-                <div class="form-card">
-                    <div class="form-card-header">
-                        <h3 class="form-card-title">
-                            <i class="fas fa-edit"></i>
-                            FAQ信息
-                        </h3>
-                    </div>
-                    <div class="form-card-body">
-                        <input type="hidden" id="faqId">
-                        
-                        <div class="form-group">
-                            <label class="form-label">问题 <span class="required">*</span></label>
-                            <input type="text" class="form-input" id="faqQuestion" placeholder="请输入问题">
-                            <p class="form-hint">建议问题简洁明了，便于用户搜索</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">分类</label>
-                            <select class="form-select" id="faqCategory">
-                                <option value="general">一般问题</option>
-                                <option value="service">服务相关</option>
-                                <option value="process">业务流程</option>
-                                <option value="fee">费用相关</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">回答 <span class="required">*</span></label>
-                            <textarea class="form-textarea" id="faqAnswer" rows="8" placeholder="请输入回答内容" style="display:none;"></textarea>
-                            <div id="faqAnswerEditor"></div>
-                            <p class="form-hint">回答应详细、准确，帮助用户解决问题。支持富文本编辑（粗体、表格、颜色等）</p>
-                        </div>
-
-                        <div class="form-footer">
-                            <button class="cms-header-btn" onclick="goBack()">
-                                <i class="fas fa-times"></i>
-                                取消
-                            </button>
-                            <button class="cms-header-btn cms-header-btn-success" onclick="saveFAQ()">
-                                <i class="fas fa-save"></i>
-                                保存
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- 提示消息 -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">操作成功</span>
-    </div>
-
-    <script>
-        // TinyMCE 编辑器实例
-        let faqEditor = null;
-        
-        // 分类标签
-        const categoryLabels = {
-            'general': '一般问题',
-            'service': '服务相关',
-            'process': '业务流程',
-            'fee': '费用相关'
-        };
-        
-        // 操作历史栈（用于撤回/重做功能）
-        let undoStack = [];
-        let redoStack = [];
-        const MAX_HISTORY_SIZE = 50;
-        let originalFAQ = null; // 保存原始数据用于重置
-        
-        // 获取编辑器内容（兼容TinyMCE和纯文本）
-        function getAnswerContent() {
-            if (faqEditor && faqEditor.getContent) {
-                return faqEditor.getContent();
-            }
-            return document.getElementById('faqAnswer').value;
-        }
-        
-        // 设置编辑器内容（兼容TinyMCE和纯文本）
-        function setAnswerContent(content) {
-            if (faqEditor && faqEditor.setContent) {
-                faqEditor.setContent(content || '');
-            } else {
-                document.getElementById('faqAnswer').value = content || '';
-            }
-        }
-        
-        // 保存当前状态到历史栈
-        function saveStateToHistory() {
-            const state = {
-                question: document.getElementById('faqQuestion').value,
-                answer: getAnswerContent(),
-                category: document.getElementById('faqCategory').value
-            };
-            
-            // 如果栈已满，移除最旧的状态
-            if (undoStack.length >= MAX_HISTORY_SIZE) {
-                undoStack.shift();
-            }
-            
-            undoStack.push(state);
-            
-            // 清空重做栈（新操作后重做栈失效）
-            redoStack = [];
-            
-            // 更新按钮状态
-            updateUndoRedoButtons();
-        }
-        
-        // 更新撤回/重做按钮状态
-        function updateUndoRedoButtons() {
-            const undoBtn = document.getElementById('undoBtn');
-            const redoBtn = document.getElementById('redoBtn');
-            
-            if (undoBtn) {
-                undoBtn.disabled = undoStack.length === 0;
-            }
-            if (redoBtn) {
-                redoBtn.disabled = redoStack.length === 0;
-            }
-        }
-        
-        // 撤回上一步操作
-        function undo() {
-            if (undoStack.length === 0) return;
-            
-            // 将当前状态保存到重做栈
-            const currentState = {
-                question: document.getElementById('faqQuestion').value,
-                answer: getAnswerContent(),
-                category: document.getElementById('faqCategory').value
-            };
-            redoStack.push(currentState);
-            
-            // 从历史栈弹出上一步状态并恢复
-            const previousState = undoStack.pop();
-            document.getElementById('faqQuestion').value = previousState.question;
-            setAnswerContent(previousState.answer);
-            document.getElementById('faqCategory').value = previousState.category;
-            
-            // 更新按钮状态
-            updateUndoRedoButtons();
-            
-            showToast('已撤回上一步操作', 'success');
-        }
-        
-        // 重做操作
-        function redo() {
-            if (redoStack.length === 0) return;
-            
-            // 将当前状态保存到历史栈
-            const currentState = {
-                question: document.getElementById('faqQuestion').value,
-                answer: getAnswerContent(),
-                category: document.getElementById('faqCategory').value
-            };
-            undoStack.push(currentState);
-            
-            // 从重做栈弹出状态并恢复
-            const nextState = redoStack.pop();
-            document.getElementById('faqQuestion').value = nextState.question;
-            setAnswerContent(nextState.answer);
-            document.getElementById('faqCategory').value = nextState.category;
-            
-            // 更新按钮状态
-            updateUndoRedoButtons();
-            
-            showToast('已重做操作', 'success');
-        }
-        
-        // 重置为原始数据
-        function resetFAQ() {
-            if (!originalFAQ) {
-                showToast('没有可重置的原始数据', 'error');
-                return;
-            }
-            
-            if (!confirm('确定要重置为原始数据吗？这将丢失所有未保存的修改。')) {
-                return;
-            }
-            
-            // 保存当前状态到历史栈
-            saveStateToHistory();
-            
-            // 恢复原始数据
-            document.getElementById('faqQuestion').value = originalFAQ.question;
-            setAnswerContent(originalFAQ.answer);
-            document.getElementById('faqCategory').value = originalFAQ.category;
-            
-            showToast('已重置为原始数据', 'success');
-        }
-        
-        // 初始化TinyMCE编辑器
-        function initEditor() {
-            return new Promise((resolve) => {
-                tinymce.init({
-                    selector: '#faqAnswerEditor',
-                    plugins: 'lists link table',
-                    toolbar: 'undo redo | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright | bullist numlist | table | removeformat',
-                    menubar: false,
-                    height: 350,
-                    branding: false,
-                    promotion: false,
-                    setup: function(editor) {
-                        faqEditor = editor;
-                        editor.on('change', function() {
-                            // 在编辑器内容变化时自动保存历史状态
-                        });
-                        editor.on('init', function() {
-                            resolve(editor);
-                        });
-                    }
-                });
-            });
-        }
-
-        // 初始化
-        document.addEventListener('DOMContentLoaded', async function() {
-            // 初始化TinyMCE编辑器
-            await initEditor();
-            
-            // 获取URL参数
-            const urlParams = new URLSearchParams(window.location.search);
-            const faqId = urlParams.get('id');
-            
-            if (faqId) {
-                document.getElementById('faqId').value = faqId;
-                document.getElementById('pageTitle').textContent = '编辑FAQ';
-                await loadFAQ(faqId);
-            } else {
-                document.getElementById('pageTitle').textContent = '新建FAQ';
-            }
-        });
-
-        // 加载FAQ数据
-                // 加载FAQ数据（从服务器API）
-        async function loadFAQ(id) {
-            try {
-                const response = await fetch('../admin/api/faq-data.php?id=' + id + '&t=' + Date.now());
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.code === 0 && result.data) {
-                        let faq = null;
-                        if (Array.isArray(result.data)) {
-                            faq = result.data.find(f => String(f.id) === String(id));
-                        } else if (result.data.id) {
-                            faq = result.data;
-                        }
-                        if (faq) {
-                            document.getElementById('faqQuestion').value = faq.question || '';
-                            setAnswerContent(faq.answer || '');
-                            document.getE        // 保存FAQ（保存到服务器API）
-        async function saveFAQ() {
-            const id = document.getElementById('faqId').value;
-            const question = document.getElementById('faqQuestion').value.trim();
-            const answer = getAnswerContent().trim();
-            const category = document.getElementById('faqCategory').value;
-            if (!question) {
-                showToast('请输入问题', 'error');
-                document.getElementById('faqQuestion').focus();
-                return;
-            }
-            if (!answer || answer === '<p></p>' || answer === '<p><br></p>') {
-                showToast('请输入回答', 'error');
-                if (faqEditor && faqEditor.focus) {
-                    faqEditor.focus();
-                }
-                return;
-            }
-            // 保存到服务器API
-            const formData = new FormData();
-            formData.append('action', 'save');
-            if (id) formData.append('id', id);
-            formData.append('question', question);
-            formData.append('answer', answer);
-            formData.append('category', category);
-            try {
-                const response = await fetch('../admin/api/faq-save.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.code === 0) {
-                        showToast(id ? 'FAQ更新成功' : 'FAQ添加成功', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'faq-management.html';
-                        }, 1000);
-                    } else {
-                        showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
-                    }
-                } else {
-                    showToast('保存失败: 服务器错误', 'error');
-                }
-            } catch (e) {
-                console.error('保存FAQ失败:', e);
-                showToast('保存失败: ' + e.message, 'error');
-            }
-        }
-
-        // 初始化function goBack() {
-            window.location.href = 'faq-management.html';
-        }
-
-        // 显示提示
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toast.className = `toast ${type}`;
-            toastMessage.textContent = message;
-            
-            const icon = toast.querySelector('i');
-            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // 键盘快捷键
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                if (e.key === 's') {
-                    e.preventDefault();
-                    saveFAQ();
-                } else if (e.key === 'z' && !e.shiftKey) {
-                    // Ctrl+Z 撤回
-                    e.preventDefault();
-                    undo();
-                } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
-                    // Ctrl+Y 或 Ctrl+Shift+Z 重做
-                    e.preventDefault();
-                    redo();
-                }
-            }
-        });
-    </script>
-</body>
+
+                    <a href="nav-management.html" class="cms-nav-item">
+                        <i class="fas fa-bars"></i>
+                        <span>导航菜单</span>
+                    </a>
+                    <a href="components/news/article-list.html" class="cms-nav-item">
+                        <i class="fas fa-newspaper"></i>
+                        <span>文章管理</span>
+                    </a>
+                    <a href="faq-management.html" class="cms-nav-item active">
+                        <i class="fas fa-question-circle"></i>
+                        <span>常见问题</span>
+                    </a>
+                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>
+                    
+
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="cms-main">
+            <!-- 顶部栏 -->
+            <header class="cms-header">
+                <div class="cms-header-left">
+                    <div class="cms-breadcrumb">
+                        <a href="dashboard.html">首页</a>
+                        <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
+                        <a href="faq-management.html">FAQ管理</a>                    
+                        <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
+                        <span id="pageTitle">编辑FAQ</span>
+                    </div>
+                </div>
+                <div class="cms-header-right">
+                    <div class="history-btn-group">
+                        <button class="history-btn" id="undoBtn" onclick="undo()" disabled>
+                            <i class="fas fa-undo"></i> 撤回
+                        </button>
+                        <button class="history-btn" id="redoBtn" onclick="redo()" disabled>
+                            <i class="fas fa-redo"></i> 重做
+                        </button>
+                        <button class="history-btn" onclick="resetFAQ()">
+                            <i class="fas fa-rotate-left"></i> 重置
+                        </button>
+                    </div>
+                    <button class="cms-header-btn" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>返回列表</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="cms-content">
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <h3 class="form-card-title">
+                            <i class="fas fa-edit"></i>
+                            FAQ信息
+                        </h3>
+                    </div>
+                    <div class="form-card-body">
+                        <input type="hidden" id="faqId">
+                        
+                        <div class="form-group">
+                            <label class="form-label">问题 <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="faqQuestion" placeholder="请输入问题">
+                            <p class="form-hint">建议问题简洁明了，便于用户搜索</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">分类</label>
+                            <select class="form-select" id="faqCategory">
+                                <option value="general">一般问题</option>
+                                <option value="service">服务相关</option>
+                                <option value="process">业务流程</option>
+                                <option value="fee">费用相关</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">回答 <span class="required">*</span></label>
+                            <textarea class="form-textarea" id="faqAnswer" rows="8" placeholder="请输入回答内容" style="display:none;"></textarea>
+                            <div id="faqAnswerEditor"></div>
+                            <p class="form-hint">回答应详细、准确，帮助用户解决问题。支持富文本编辑（粗体、表格、颜色等）</p>
+                        </div>
+
+                        <div class="form-footer">
+                            <button class="cms-header-btn" onclick="goBack()">
+                                <i class="fas fa-times"></i>
+                                取消
+                            </button>
+                            <button class="cms-header-btn cms-header-btn-success" onclick="saveFAQ()">
+                                <i class="fas fa-save"></i>
+                                保存
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // TinyMCE 编辑器实例
+        let faqEditor = null;
+        
+        // 分类标签
+        const categoryLabels = {
+            'general': '一般问题',
+            'service': '服务相关',
+            'process': '业务流程',
+            'fee': '费用相关'
+        };
+        
+        // 操作历史栈（用于撤回/重做功能）
+        let undoStack = [];
+        let redoStack = [];
+        const MAX_HISTORY_SIZE = 50;
+        let originalFAQ = null; // 保存原始数据用于重置
+        
+        // 获取编辑器内容（兼容TinyMCE和纯文本）
+        function getAnswerContent() {
+            if (faqEditor && faqEditor.getContent) {
+                return faqEditor.getContent();
+            }
+            return document.getElementById('faqAnswer').value;
+        }
+        
+        // 设置编辑器内容（兼容TinyMCE和纯文本）
+        function setAnswerContent(content) {
+            if (faqEditor && faqEditor.setContent) {
+                faqEditor.setContent(content || '');
+            } else {
+                document.getElementById('faqAnswer').value = content || '';
+            }
+        }
+        
+        // 保存当前状态到历史栈
+        function saveStateToHistory() {
+            const state = {
+                question: document.getElementById('faqQuestion').value,
+                answer: getAnswerContent(),
+                category: document.getElementById('faqCategory').value
+            };
+            
+            // 如果栈已满，移除最旧的状态
+            if (undoStack.length >= MAX_HISTORY_SIZE) {
+                undoStack.shift();
+            }
+            
+            undoStack.push(state);
+            
+            // 清空重做栈（新操作后重做栈失效）
+            redoStack = [];
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+        }
+        
+        // 更新撤回/重做按钮状态
+        function updateUndoRedoButtons() {
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            
+            if (undoBtn) {
+                undoBtn.disabled = undoStack.length === 0;
+            }
+            if (redoBtn) {
+                redoBtn.disabled = redoStack.length === 0;
+            }
+        }
+        
+        // 撤回上一步操作
+        function undo() {
+            if (undoStack.length === 0) return;
+            
+            // 将当前状态保存到重做栈
+            const currentState = {
+                question: document.getElementById('faqQuestion').value,
+                answer: getAnswerContent(),
+                category: document.getElementById('faqCategory').value
+            };
+            redoStack.push(currentState);
+            
+            // 从历史栈弹出上一步状态并恢复
+            const previousState = undoStack.pop();
+            document.getElementById('faqQuestion').value = previousState.question;
+            setAnswerContent(previousState.answer);
+            document.getElementById('faqCategory').value = previousState.category;
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+            
+            showToast('已撤回上一步操作', 'success');
+        }
+        
+        // 重做操作
+        function redo() {
+            if (redoStack.length === 0) return;
+            
+            // 将当前状态保存到历史栈
+            const currentState = {
+                question: document.getElementById('faqQuestion').value,
+                answer: getAnswerContent(),
+                category: document.getElementById('faqCategory').value
+            };
+            undoStack.push(currentState);
+            
+            // 从重做栈弹出状态并恢复
+            const nextState = redoStack.pop();
+            document.getElementById('faqQuestion').value = nextState.question;
+            setAnswerContent(nextState.answer);
+            document.getElementById('faqCategory').value = nextState.category;
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+            
+            showToast('已重做操作', 'success');
+        }
+        
+        // 重置为原始数据
+        function resetFAQ() {
+            if (!originalFAQ) {
+                showToast('没有可重置的原始数据', 'error');
+                return;
+            }
+            
+            if (!confirm('确定要重置为原始数据吗？这将丢失所有未保存的修改。')) {
+                return;
+            }
+            
+            // 保存当前状态到历史栈
+            saveStateToHistory();
+            
+            // 恢复原始数据
+            document.getElementById('faqQuestion').value = originalFAQ.question;
+            setAnswerContent(originalFAQ.answer);
+            document.getElementById('faqCategory').value = originalFAQ.category;
+            
+            showToast('已重置为原始数据', 'success');
+        }
+        
+        // 初始化TinyMCE编辑器
+        function initEditor() {
+            return new Promise((resolve) => {
+                tinymce.init({
+                    selector: '#faqAnswerEditor',
+                    plugins: 'lists link table',
+                    toolbar: 'undo redo | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright | bullist numlist | table | removeformat',
+                    menubar: false,
+                    height: 350,
+                    branding: false,
+                    promotion: false,
+                    setup: function(editor) {
+                        faqEditor = editor;
+                        editor.on('change', function() {
+                            // 在编辑器内容变化时自动保存历史状态
+                        });
+                        editor.on('init', function() {
+                            resolve(editor);
+                        });
+                    }
+                });
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 初始化TinyMCE编辑器
+            await initEditor();
+            
+            // 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const faqId = urlParams.get('id');
+            
+            if (faqId) {
+                document.getElementById('faqId').value = faqId;
+                document.getElementById('pageTitle').textContent = '编辑FAQ';
+                await loadFAQ(faqId);
+            } else {
+                document.getElementById('pageTitle').textContent = '新建FAQ';
+            }
+        });
+
+        // 加载FAQ数据
+                // 加载FAQ数据（从服务器API）
+        async function loadFAQ(id) {
+            try {
+                const response = await fetch('../admin/api/faq-data.php?id=' + id + '&t=' + Date.now());
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.code === 0 && result.data) {
+                        let faq = null;
+                        if (Array.isArray(result.data)) {
+                            faq = result.data.find(f => String(f.id) === String(id));
+                        } else if (result.data.id) {
+                            faq = result.data;
+                        }
+                        if (faq) {
+                            document.getElementById('faqQuestion').value = faq.question || '';
+                            setAnswerContent(faq.answer || '');
+                            document.getE        // 保存FAQ（保存到服务器API）
+        async function saveFAQ() {
+            const id = document.getElementById('faqId').value;
+            const question = document.getElementById('faqQuestion').value.trim();
+            const answer = getAnswerContent().trim();
+            const category = document.getElementById('faqCategory').value;
+            if (!question) {
+                showToast('请输入问题', 'error');
+                document.getElementById('faqQuestion').focus();
+                return;
+            }
+            if (!answer || answer === '<p></p>' || answer === '<p><br></p>') {
+                showToast('请输入回答', 'error');
+                if (faqEditor && faqEditor.focus) {
+                    faqEditor.focus();
+                }
+                return;
+            }
+            // 保存到服务器API
+            const formData = new FormData();
+            formData.append('action', 'save');
+            if (id) formData.append('id', id);
+            formData.append('question', question);
+            formData.append('answer', answer);
+            formData.append('category', category);
+            try {
+                const response = await fetch('../admin/api/faq-save.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.code === 0) {
+                        showToast(id ? 'FAQ更新成功' : 'FAQ添加成功', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'faq-management.html';
+                        }, 1000);
+                    } else {
+                        showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
+                    }
+                } else {
+                    showToast('保存失败: 服务器错误', 'error');
+                }
+            } catch (e) {
+                console.error('保存FAQ失败:', e);
+                showToast('保存失败: ' + e.message, 'error');
+            }
+        }
+
+        // 初始化function goBack() {
+            window.location.href = 'faq-management.html';
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            
+            const icon = toast.querySelector('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    saveFAQ();
+                } else if (e.key === 'z' && !e.shiftKey) {
+                    // Ctrl+Z 撤回
+                    e.preventDefault();
+                    undo();
+                } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
+                    // Ctrl+Y 或 Ctrl+Shift+Z 重做
+                    e.preventDefault();
+                    redo();
+                }
+            }
+        });
+    </script>
+</body>
 </html>

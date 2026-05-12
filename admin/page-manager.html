@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面管理 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-50); color: var(--gray-900); min-height: 100vh; }
+
+        /* Layout */
+        .cms-layout { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .cms-sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: #fff; z-index: 100;
+            display: flex; flex-direction: column;
+            overflow-y: auto;
+        }
+        .cms-sidebar-logo { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .cms-sidebar-logo h2 { font-size: 18px; font-weight: 700; color: #fff; }
+        .cms-sidebar-logo p { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .cms-nav { flex: 1; padding: 16px 12px; }
+        .cms-nav-section { margin-bottom: 8px; }
+        .cms-nav-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.35); padding: 8px 12px 6px; }
+        .cms-nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 8px;
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: 14px; transition: all 0.15s;
+        }
+        .cms-nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .cms-nav-item.active { background: var(--primary); color: #fff; font-weight: 600; }
+        .cms-nav-item i { width: 18px; text-align: center; font-size: 13px; }
+        .cms-sidebar-footer { padding: 12px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+        /* Main */
+        .cms-main { margin-left: var(--sidebar-width); flex: 1; min-height: 100vh; width: calc(100% - var(--sidebar-width)); }
+
+        /* Header */
+        .cms-header { background: #fff; border-bottom: 1px solid var(--gray-200); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .cms-header-left { display: flex; align-items: center; gap: 12px; }
+        .cms-header-title { font-size: 20px; font-weight: 600; color: var(--gray-900); }
+        .cms-header-right { display: flex; align-items: center; gap: 10px; }
+        .cms-header-btn { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--gray-100); border: none; border-radius: 8px; color: var(--gray-700); font-size: 14px; cursor: pointer; transition: all 0.15s; text-decoration: none; }
+        .cms-header-btn:hover { background: var(--gray-200); }
+        .cms-header-btn-primary { background: var(--primary); color: #fff; }
+        .cms-header-btn-primary:hover { background: var(--primary-dark); }
+        .cms-header-btn-danger { background: #fef2f2; color: var(--danger); }
+        .cms-header-btn-danger:hover { background: #fee2e2; }
+
+        /* Content */
+        .cms-content { padding: 24px; }
+
+        /* Toolbar */
+        .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-box { position: relative; flex: 1; max-width: 400px; }
+        .search-box input { width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.15s; }
+        .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-500); font-size: 14px; }
+        .toolbar-btn { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff; color: var(--gray-700); font-size: 14px; cursor: pointer; transition: all 0.15s; }
+        .toolbar-btn:hover { background: var(--gray-50); border-color: var(--gray-300); }
+        .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+        .stat-card { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 14px; }
+        .stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .stat-card-icon.blue { background: #eff6ff; color: var(--primary); }
+        .stat-card-icon.green { background: #ecfdf5; color: var(--success); }
+        .stat-card-icon.yellow { background: #fffbeb; color: var(--warning); }
+        .stat-card-icon.gray { background: var(--gray-100); color: var(--gray-500); }
+        .stat-card-info h4 { font-size: 24px; font-weight: 700; color: var(--gray-900); }
+        .stat-card-info p { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
+
+        /* Table */
+        .table-wrapper { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        thead { background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+        th { padding: 12px 16px; text-align: left; font-weight: 600; color: var(--gray-500); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--gray-50); }
+        .page-name { font-weight: 600; color: var(--gray-900); }
+        .page-title-cell { color: var(--gray-500); font-size: 13px; }
+        .page-url { font-size: 12px; color: var(--primary); font-family: monospace; }
+
+        /* Badges */
+        .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+        .badge-active { background: #ecfdf5; color: #059669; }
+        .badge-inactive { background: var(--gray-100); color: var(--gray-500); }
+        .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+        .badge-active .badge-dot { background: var(--success); }
+        .badge-inactive .badge-dot { background: var(--gray-300); }
+
+        /* Actions */
+        .actions { display: flex; gap: 6px; }
+        .action-btn { width: 34px; height: 34px; border: none; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; transition: all 0.15s; background: transparent; color: var(--gray-500); }
+        .action-btn:hover { background: var(--gray-100); color: var(--gray-900); }
+        .action-btn.edit:hover { color: var(--primary); background: #eff6ff; }
+        .action-btn.delete:hover { color: var(--danger); background: #fef2f2; }
+        .action-btn.toggle:hover { color: var(--warning); }
+
+        /* Empty state */
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-500); }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; display: block; opacity: 0.3; }
+        .empty-state p { font-size: 15px; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .modal { background: #fff; border-radius: 14px; width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 18px; font-weight: 600; }
+        .modal-close { width: 32px; height: 32px; border: none; border-radius: 8px; background: var(--gray-100); cursor: pointer; font-size: 14px; color: var(--gray-500); display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+        .modal-close:hover { background: var(--gray-200); color: var(--gray-900); }
+        .modal-body { padding: 20px 24px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 10px; }
+
+        /* Toast */
+        .toast { position: fixed; top: 24px; right: 24px; padding: 14px 20px; border-radius: 10px; font-size: 14px; z-index: 300; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateX(calc(100% + 40px)); transition: transform 0.3s ease; }
+        .toast.show { transform: translateX(0); }
+        .toast-success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .toast-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+        /* Loading */
+        .loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--gray-500); }
+        .loading i { margin-right: 8px; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Confirm dialog */
+        .confirm-text { font-size: 15px; color: var(--gray-700); line-height: 1.6; }
+        .confirm-text strong { color: var(--gray-900); }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <!-- Sidebar -->
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-logo">
+                <h2>宏都资本</h2>
+                <p>内容管理系统</p>
+            </div>
+            <nav class="cms-nav">
+                <div class="cms-nav-section"><div class="cms-nav-section-title">概览</div></div>
+                <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-chart-pie"></i><span>仪表板</span></a>
+                <div class="cms-nav-section"><div class="cms-nav-section-title">内容</div></div>
+                <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面管理</span></a>
+                <a href="page-manager.html" class="cms-nav-item active"><i class="fas fa-list"></i><span>页面列表</span></a>
+                <a href="visual-page-builder.html" class="cms-nav-item"><i class="fas fa-paint-brush"></i><span>页面设计</span></a>
+                <a href="case-management.html" class="cms-nav-item"><i class="fas fa-briefcase"></i><span>案例管理</span></a>
+                <a href="nav-editor.html" class="cms-nav-item"><i class="fas fa-sitemap"></i><span>导航管理</span></a>
+                <div class="cms-nav-section"><div class="cms-nav-section-title">设置</div></div>
+                <a href="settings.html" class="cms-nav-item"><i class="fas fa-cog"></i><span>系统设置</span></a>
+                <a href="seo-settings.html" class="cms-nav-item"><i class="fas fa-search"></i><span>SEO设置</span></a>
+                <a href="faq-manager.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+                <a href="logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+            </nav>
+            <div class="cms-sidebar-footer">
+                <a href="../index.html" target="_blank" class="cms-nav-item"><i class="fas fa-external-link-alt"></i><span>查看网站</span></a>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="cms-main">
+            <header class="cms-header">
+                <div class="cms-header-left">
+                    <h1 class="cms-header-title">页面列表</h1>
+                </div>
+                <div class="cms-header-right">
+                    <button class="cms-header-btn cms-header-btn-primary" onclick="openModal('create')">
+                        <i class="fas fa-plus"></i><span>新建页面</span>
+                    </button>
+                    <a href="../index.html" target="_blank" class="cms-header-btn"><i class="fas fa-external-link-alt"></i><span>访问网站</span></a>
+                    <button class="cms-header-btn cms-header-btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>退出</span></button>
+                </div>
+            </header>
+
+            <div class="cms-content">
+                <!-- Stats -->
+                <div class="stat-cards" id="statCards">
+                    <div class="stat-card"><div class="stat-card-icon blue"><i class="fas fa-file"></i></div><div class="stat-card-info"><h4 id="statTotal">0</h4><p>总页面数</p></div></div>
+                    <div class="stat-card"><div class="stat-card-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-card-info"><h4 id="statActive">0</h4><p>已启用</p></div></div>
+                    <div class="stat-card"><div class="stat-card-icon gray"><i class="fas fa-pause-circle"></i></div><div class="stat-card-info"><h4 id="statInactive">0</h4><p>已禁用</p></div></div>
+                    <div class="stat-card"><div class="stat-card-icon yellow"><i class="fas fa-clock"></i></div><div class="stat-card-info"><h4 id="statTypes">0</h4><p>页面类型</p></div></div>
+                </div>
+
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="搜索页面名称、标题..." oninput="renderTable()">
+                    </div>
+                    <button class="toolbar-btn" onclick="loadPages()"><i class="fas fa-sync-alt"></i>刷新</button>
+                    <button class="toolbar-btn" onclick="exportCSV()"><i class="fas fa-download"></i>导出</button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-wrapper">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>页面标识</th>
+                                    <th>页面名称</th>
+                                    <th>内页标题</th>
+                                    <th>URL</th>
+                                    <th>类型</th>
+                                    <th>状态</th>
+                                    <th>更新时间</th>
+                                    <th style="width:140px">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr><td colspan="8"><div class="loading"><i class="fas fa-spinner"></i>加载中...</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create/Edit Modal -->
+    <div class="modal-overlay" id="modalOverlay" style="display:none">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">新建页面</h3>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editPageId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>页面名称 *</label>
+                        <input type="text" id="formPageName" placeholder="如：home_page">
+                    </div>
+                    <div class="form-group">
+                        <label>页面标识</label>
+                        <input type="text" id="formPageId" placeholder="自动生成" disabled>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>内页标题</label>
+                        <input type="text" id="formTitle" placeholder="页面标题">
+                    </div>
+                    <div class="form-group">
+                        <label>副标题</label>
+                        <input type="text" id="formSubtitle" placeholder="副标题描述">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>页面类型</label>
+                        <select id="formPageType">
+                            <option value="custom">自定义页面</option>
+                            <option value="landing">落地页</option>
+                            <option value="content">内容页</option>
+                            <option value="system">系统页面</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>自定义URL</label>
+                        <input type="text" id="formCustomUrl" placeholder="留空使用默认">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>排序序号</label>
+                    <input type="number" id="formSortOrder" value="0" min="0">
+                </div>
+                <div class="form-group" style="border-top: 1px solid var(--gray-200); padding-top: 16px; margin-top: 8px;">
+                    <label style="color: var(--gray-500); font-size: 12px;">SEO设置（可选）</label>
+                </div>
+                <div class="form-group">
+                    <label>SEO标题</label>
+                    <input type="text" id="formSeoTitle" placeholder="搜索引擎显示的标题">
+                </div>
+                <div class="form-group">
+                    <label>SEO关键词</label>
+                    <input type="text" id="formSeoKeywords" placeholder="关键词1, 关键词2">
+                </div>
+                <div class="form-group">
+                    <label>SEO描述</label>
+                    <textarea id="formSeoDesc" rows="2" placeholder="搜索结果中的描述文字"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cms-header-btn" onclick="closeModal()">取消</button>
+                <button class="cms-header-btn cms-header-btn-primary" onclick="savePage()" id="saveBtn">创建页面</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmOverlay" style="display:none">
+        <div class="modal" style="max-width:420px">
+            <div class="modal-header">
+                <h3>确认删除</h3>
+                <button class="modal-close" onclick="closeConfirm()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="confirm-text" id="confirmText">确定要删除此页面吗？此操作不可恢复。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cms-header-btn" onclick="closeConfirm()">取消</button>
+                <button class="cms-header-btn cms-header-btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+
+    <script>
+        let allPages = [];
+        let deleteTargetId = null;
+        let currentMode = 'create';
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => { loadPages(); });
+
+        async function loadPages() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '<tr><td colspan="8"><div class="loading"><i class="fas fa-spinner"></i>加载中...</div></td></tr>';
+            try {
+                const r = await fetch('api/pages-manage.php?action=list');
+                const d = await r.json();
+                if (d.code === 0) {
+                    allPages = d.data.pages || [];
+                    updateStats();
+                    renderTable();
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>加载失败</p></div></td></tr>';
+                }
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>网络错误</p></div></td></tr>';
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').textContent = allPages.length;
+            document.getElementById('statActive').textContent = allPages.filter(p => p.status === 'active').length;
+            document.getElementById('statInactive').textContent = allPages.filter(p => p.status !== 'active').length;
+            document.getElementById('statTypes').textContent = new Set(allPages.map(p => p.page_type).filter(Boolean)).size;
+        }
+
+        function renderTable() {
+            const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+            let filtered = allPages;
+            if (q) {
+                filtered = allPages.filter(p =>
+                    (p.page_name && p.page_name.toLowerCase().includes(q)) ||
+                    (p.title && p.title.toLowerCase().includes(q)) ||
+                    (p.page_id && p.page_id.toLowerCase().includes(q)) ||
+                    (p.custom_url && p.custom_url.toLowerCase().includes(q))
+                );
+            }
+
+            const tbody = document.getElementById('tableBody');
+            if (!filtered.length) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><p>' + (q ? '没有匹配的页面' : '暂无页面，点击"新建页面"开始') + '</p></div></td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(p => {
+                const isActive = p.status === 'active';
+                const statusBadge = isActive
+                    ? '<span class="badge badge-active"><span class="badge-dot"></span>启用</span>'
+                    : '<span class="badge badge-inactive"><span class="badge-dot"></span>禁用</span>';
+                const pageId = p.page_id || '-';
+                const pageName = p.page_name || '-';
+                const title = p.title || '-';
+                const pageUrl = p.custom_url || `page.php?page_id=${pageId}`;
+                const pageType = p.page_type || 'custom';
+                const updated = p.last_modified ? p.last_modified.substring(0, 10) : '-';
+
+                return `<tr>
+                    <td style="font-family:monospace;font-size:12px;color:var(--gray-500)">${escapeHtml(pageId)}</td>
+                    <td class="page-name">${escapeHtml(pageName)}</td>
+                    <td class="page-title-cell">${escapeHtml(title)}</td>
+                    <td><a href="../${escapeHtml(pageUrl)}" target="_blank" class="page-url">${escapeHtml(pageUrl)}</a></td>
+                    <td><span style="font-size:12px;color:var(--gray-500)">${escapeHtml(pageType)}</span></td>
+                    <td>${statusBadge}</td>
+                    <td style="font-size:12px;color:var(--gray-500)">${updated}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit" title="编辑" onclick="editPage('${escapeHtml(pageId)}')"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn toggle" title="${isActive?'禁用':'启用'}" onclick="toggleStatus('${escapeHtml(pageId)}')"><i class="fas fa-${isActive?'pause':'play'}"></i></button>
+                            <a href="visual-page-builder.html?page=${escapeHtml(pageId)}" class="action-btn edit" title="设计页面" style="text-decoration:none"><i class="fas fa-paint-brush"></i></a>
+                            <button class="action-btn delete" title="删除" onclick="askDelete('${escapeHtml(pageId)}', '${escapeHtml(pageName)}')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openModal(mode) {
+            currentMode = mode;
+            document.getElementById('modalTitle').textContent = mode === 'create' ? '新建页面' : '编辑页面';
+            document.getElementById('saveBtn').textContent = mode === 'create' ? '创建页面' : '保存修改';
+            document.getElementById('formPageId').disabled = mode === 'edit';
+            if (mode === 'create') {
+                document.getElementById('editPageId').value = '';
+                document.getElementById('formPageName').value = '';
+                document.getElementById('formPageId').value = '';
+                document.getElementById('formTitle').value = '';
+                document.getElementById('formSubtitle').value = '';
+                document.getElementById('formPageType').value = 'custom';
+                document.getElementById('formCustomUrl').value = '';
+                document.getElementById('formSortOrder').value = '0';
+                document.getElementById('formSeoTitle').value = '';
+                document.getElementById('formSeoKeywords').value = '';
+                document.getElementById('formSeoDesc').value = '';
+            }
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        async function editPage(pageId) {
+            try {
+                const r = await fetch(`api/pages-manage.php?action=get&page_id=${encodeURIComponent(pageId)}`);
+                const d = await r.json();
+                if (d.code === 0 && d.data) {
+                    const p = d.data;
+                    document.getElementById('editPageId').value = p.page_id;
+                    document.getElementById('formPageId').value = p.page_id;
+                    document.getElementById('formPageName').value = p.page_name || '';
+                    document.getElementById('formTitle').value = p.title || '';
+                    document.getElementById('formSubtitle').value = p.subtitle || '';
+                    document.getElementById('formPageType').value = p.page_type || 'custom';
+                    document.getElementById('formCustomUrl').value = p.custom_url || '';
+                    document.getElementById('formSortOrder').value = p.sort_order || 0;
+                    document.getElementById('formSeoTitle').value = p.seo_title || '';
+                    document.getElementById('formSeoKeywords').value = p.seo_keywords || '';
+                    document.getElementById('formSeoDesc').value = p.seo_description || '';
+                    openModal('edit');
+                } else {
+                    showToast('获取页面信息失败', 'error');
+                }
+            } catch(e) {
+                showToast('网络错误', 'error');
+            }
+        }
+
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+
+        async function savePage() {
+            const data = {
+                page_name: document.getElementById('formPageName').value.trim(),
+                title: document.getElementById('formTitle').value.trim(),
+                subtitle: document.getElementById('formSubtitle').value.trim(),
+                page_type: document.getElementById('formPageType').value,
+                custom_url: document.getElementById('formCustomUrl').value.trim(),
+                sort_order: parseInt(document.getElementById('formSortOrder').value) || 0,
+                seo_title: document.getElementById('formSeoTitle').value.trim(),
+                seo_keywords: document.getElementById('formSeoKeywords').value.trim(),
+                seo_description: document.getElementById('formSeoDesc').value.trim(),
+                status: 'active'
+            };
+
+            if (!data.page_name) { showToast('页面名称不能为空', 'error'); return; }
+
+            const isEdit = currentMode === 'edit';
+            if (isEdit) {
+                data.page_id = document.getElementById('editPageId').value;
+                data.action = 'update';
+            } else {
+                data.action = 'create';
+            }
+
+            try {
+                const form = new FormData();
+                for (const [k, v] of Object.entries(data)) { form.append(k, v); }
+
+                const r = await fetch('api/pages-manage.php', { method: 'POST', body: form });
+                const d = await r.json();
+                if (d.code === 0) {
+                    showToast(isEdit ? '更新成功' : '创建成功', 'success');
+                    closeModal();
+                    loadPages();
+                } else {
+                    showToast(d.message || d.msg || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('网络错误', 'error');
+            }
+        }
+
+        async function toggleStatus(pageId) {
+            try {
+                const form = new FormData();
+                form.append('action', 'toggle-status');
+                form.append('page_id', pageId);
+                const r = await fetch('api/pages-manage.php', { method: 'POST', body: form });
+                const d = await r.json();
+                if (d.code === 0) {
+                    showToast('状态已更新', 'success');
+                    loadPages();
+                } else {
+                    showToast(d.msg || d.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('网络错误', 'error');
+            }
+        }
+
+        function askDelete(pageId, pageName) {
+            deleteTargetId = pageId;
+            document.getElementById('confirmText').innerHTML = `确定要删除 <strong>${escapeHtml(pageName)}</strong> 吗？<br>此操作不可恢复。`;
+            document.getElementById('confirmOverlay').style.display = 'flex';
+        }
+
+        function closeConfirm() { document.getElementById('confirmOverlay').style.display = 'none'; deleteTargetId = null; }
+
+        async function confirmDelete() {
+            if (!deleteTargetId) return;
+            try {
+                const form = new FormData();
+                form.append('action', 'delete');
+                form.append('page_id', deleteTargetId);
+                const r = await fetch('api/pages-manage.php', { method: 'POST', body: form });
+                const d = await r.json();
+                if (d.code === 0) {
+                    showToast('删除成功', 'success');
+                    closeConfirm();
+                    loadPages();
+                } else {
+                    showToast(d.msg || d.message || '删除失败', 'error');
+                }
+            } catch(e) {
+                showToast('网络错误', 'error');
+            }
+        }
+
+        function exportCSV() {
+            if (!allPages.length) return showToast('没有数据可导出', 'error');
+            const header = '页面标识,页面名称,内页标题,URL,类型,状态,更新时间';
+            const rows = allPages.map(p => [
+                p.page_id, p.page_name, p.title,
+                p.custom_url || `page.php?page_id=${p.page_id}`,
+                p.page_type, p.status, p.last_modified
+            ].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(','));
+            const csv = '\uFEFF' + header + '\n' + rows.join('\n');
+            const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'pages_export.csv';
+            a.click();
+            showToast('导出成功', 'success');
+        }
+
+        function logout() {
+            localStorage.removeItem('cms_logged_in');
+            localStorage.removeItem('cms_username');
+            window.location.href = 'login.html';
+        }
+
+        function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+        function showToast(msg, type) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.className = 'toast show toast-' + (type || 'success');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
