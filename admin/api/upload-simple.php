@@ -55,7 +55,7 @@ $targetPath = $uploadDir . $filename;
 // 移动文件
 if (move_uploaded_file($file['tmp_name'], $targetPath)) {
     // 返回相对路径，让前端统一处理
-    $relativePath = 'uploads/' . $filename;
+    $relativePath = '/uploads/' . $filename;
     echo json_encode([
         'success' => true,
         'message' => '上传成功',

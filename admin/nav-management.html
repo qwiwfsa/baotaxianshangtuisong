@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -95,6 +95,7 @@
                     </a>
 
 
+                    <a href="page-manager.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面列表</span></a>
                     <a href="nav-management.html" class="cms-nav-item active"><i class="fas fa-bars"></i><span>导航菜单</span></a>
                     <a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
                     <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
@@ -458,7 +459,7 @@
             if (!cleanUrl.endsWith('.html')) {
                 cleanUrl += '.html';
             }
-            window.location.href = 'visual-editor.html?page=' + encodeURIComponent(cleanUrl);
+            window.location.href = 'visual-page-builder.html?page=' + encodeURIComponent(cleanUrl);
         }
 
         // ========== 组件管理功能 ==========

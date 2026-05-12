@@ -136,39 +136,38 @@
         "lastModified": "2026-04-28 00:45:25"
     },
     {
-        "id": "15",
-        "title": "现金亮资",
-        "type": "企业摆账",
+        "id": "17",
+        "title": "某上市公司过桥融资",
+        "type": "过桥短拆",
         "city": "北京",
-        "amount": "三千万",
-        "image": "uploads\/20260427_69efb18e8687a.jpg",
-        "coverImage": "uploads\/20260427_69efb18e8687a.jpg",
+        "amount": "5亿",
+        "image": "uploads\/20260512_6a03007bb5037.png",
+        "coverImage": "uploads\/20260512_6a03007bb5037.png",
         "images": [
-            "uploads\/20260427_69efb18e8687a.jpg",
-            "uploads\/20260427_69efb19af3aa8.jpg"
+            "uploads\/20260512_6a03007bb5037.png"
         ],
         "status": "published",
-        "summary": "今日我们出资现金来辅助企业拿工程拿项目，解决没有足够的现金流来证明资金实力问题。",
-        "lastModified": "2026-05-06 01:29:56"
+        "summary": "为某上市公司提供5 亿大额过桥融资服务，解决其短期资金周转难题，保障业务平稳过渡。",
+        "lastModified": "2026-05-12 19:26:44"
     },
     {
-        "id": "16",
-        "title": "某高新技术企业",
-        "type": "企业过桥",
-        "city": "测试七",
-        "amount": "2亿元",
-        "image": "uploads\/20260427_69efbc9dcf100.jpg",
-        "coverImage": "uploads\/20260427_69efbc9dcf100.jpg",
+        "id": "10",
+        "title": "某房地产企业 11 亿工程亮资摆账中标案例",
+        "type": "工程亮资",
+        "city": "测试三",
+        "amount": "11亿元",
+        "image": "uploads\/20260428_69efe569f351a.jpg",
+        "coverImage": "uploads\/20260428_69efe569f351a.jpg",
         "images": [
-            "uploads\/20260427_69efbc9dcf100.jpg"
+            "uploads\/20260428_69efe569f351a.jpg"
         ],
         "status": "published",
-        "summary": "提供月末、季末银行存款冲量服务，帮助企业优化财务报表。",
-        "lastModified": "2026-05-06 01:36:29"
+        "summary": "为某房地产企业提供11 亿元大额工程亮资摆账服务，满足其大型项目投标阶段的资金实力证明需求，助力企业成功中标工程项目。",
+        "lastModified": "2026-05-12 19:33:37"
     },
     {
         "id": "3",
-        "title": "企业摆账服务",
+        "title": "某企业 5000 万资金证明摆账服务案例",
         "type": "企业摆账",
         "city": "某民营企业",
         "amount": "5000万",
@@ -178,67 +177,113 @@
             "uploads\/20260505_69f9c970c5c47.jpg"
         ],
         "status": "published",
-        "summary": "提供企业资金证明摆账服务",
-        "lastModified": "2026-05-06 06:16:22"
+        "summary": "为企业提供5000 万大额资金证明摆账服务，满足企业业务合规、项目审核阶段的资金实力展示需求。",
+        "lastModified": "2026-05-12 19:39:31"
     },
     {
-        "id": "1778393594849",
-        "title": "是",
+        "id": "13",
+        "title": "某连锁零售企业 1 亿元摆账流水打印服务案例",
+        "type": "企业摆账",
+        "city": "测试五",
+        "amount": "1亿元",
+        "image": "uploads\/20260512_6a03127a92af0.png",
+        "coverImage": "uploads\/20260512_6a03127a92af0.png",
+        "images": [
+            "uploads\/20260512_6a03127a92af0.png"
+        ],
+        "status": "published",
+        "summary": "为某连锁零售企业提供1 亿元大额企业摆账及流水打印服务，满足企业业务审计、资质审核阶段的资金实力与经营流水证明需求。",
+        "lastModified": "2026-05-12 19:46:16"
+    },
+    {
+        "id": "16",
+        "title": "某高新技术企业 6000 万实缴验资服务案例",
+        "type": "企业摆账",
+        "city": "测试七",
+        "amount": "6000 万",
+        "image": "uploads\/20260512_6a031da704d85.png",
+        "coverImage": "uploads\/20260512_6a031da704d85.png",
+        "images": [
+            "uploads\/20260512_6a031da704d85.png"
+        ],
+        "status": "published",
+        "summary": "为某高新技术企业提供6000 万元注册资金实缴验资服务，助力企业完成工商实缴流程，满足高新技术企业资质认定需求。",
+        "lastModified": "2026-05-12 20:36:19"
+    },
+    {
+        "id": "15",
+        "title": "3000 万现金亮资服务 | 企业工程项目资金实力证明案例",
+        "type": "企业摆账",
+        "city": "北京",
+        "amount": "3000万",
+        "image": "uploads\/20260427_69efb19af3aa8.jpg",
+        "coverImage": "uploads\/20260427_69efb19af3aa8.jpg",
+        "images": [
+            "uploads\/20260427_69efb19af3aa8.jpg"
+        ],
+        "status": "published",
+        "summary": "为企业提供3000 万现金亮资服务，解决企业工程项目投标阶段现金流不足、无法证明资金实力的问题，助力项目中标。",
+        "lastModified": "2026-05-12 20:43:12"
+    },
+    {
+        "id": "18",
+        "title": "某酒店老板 1 亿元工程亮资 | 油品项目资金实力证明案例",
+        "type": "工程亮资",
+        "city": "北京",
+        "amount": "3000万",
+        "image": "uploads\/20260512_6a031f630d19c.jpg",
+        "coverImage": "uploads\/20260512_6a031f630d19c.jpg",
+        "images": [
+            "uploads\/20260512_6a031f630d19c.jpg",
+            "uploads\/20260512_6a031f6b6aeaa.jpg"
+        ],
+        "status": "published",
+        "summary": "为企业老板提供1 亿元工程亮资服务，在项目合作中展示现金资金实力，助力拿下油品批发项目，实现业务收益。",
+        "lastModified": "2026-05-12 20:43:21"
+    },
+    {
+        "id": "12",
+        "title": "应收账款不确权 对价云信融资 | 低成本企业资金周转方案",
         "type": "云信融资出表",
-        "city": "",
-        "amount": "8亿元",
-        "image": "uploads\/20260510_6a0021fe7de25.jpg",
-        "coverImage": "uploads\/20260510_6a0021fe7de25.jpg",
+        "city": "测试二",
+        "amount": "8000万元",
+        "image": "uploads\/20260512_6a031aaeabfdc.jpeg",
+        "coverImage": "uploads\/20260512_6a031aaeabfdc.jpeg",
         "images": [
-            "uploads\/20260510_6a0021fe7de25.jpg"
+            "uploads\/20260512_6a031aaeabfdc.jpeg"
         ],
         "status": "published",
-        "summary": "",
-        "lastModified": "2026-05-10 08:13:35"
+        "summary": "提供企业应收账款（不确权）置换云信电子债权凭证服务，可流转支付、融资贴现，真实出表，成本低、不挑企业，助力三角债清理、债务重组与企业降负债。",
+        "lastModified": "2026-05-12 20:51:09"
     },
     {
-        "id": "1778418374252",
-        "title": "测试吗？",
-        "type": "过桥短拆",
-        "city": "",
-        "amount": "",
-        "image": "uploads\/20260510_6a0082cd7faea.jpg",
-        "coverImage": "uploads\/20260510_6a0082cd7faea.jpg",
+        "id": "14",
+        "title": "某上市制造企业 4亿股票解质押过桥融资案例",
+        "type": "企业摆账",
+        "city": "北京",
+        "amount": "4亿元",
+        "image": "uploads\/20260512_6a03197e79f62.png",
+        "coverImage": "uploads\/20260512_6a03197e79f62.png",
         "images": [
-            "uploads\/20260510_6a0082cd7faea.jpg"
+            "uploads\/20260512_6a03197e79f62.png"
         ],
         "status": "published",
-        "summary": "",
-        "lastModified": "2026-05-10 17:09:42"
+        "summary": "为上市制造企业股东提供5.8 亿元股票解质押过桥资金，成功化解质押风险，保障企业正常运营。",
+        "lastModified": "2026-05-12 21:03:56"
     },
     {
-        "id": "1778393602079",
-        "title": "测试",
-        "type": "云信融资出表",
+        "id": "1778589809435",
+        "title": "3 亿元个人名下资金证明 | 大额个人资产实力证明案例",
+        "type": "企业摆账",
         "city": "",
-        "amount": "",
-        "image": "uploads\/20260510_6a00220409ce5.jpg",
-        "coverImage": "uploads\/20260510_6a00220409ce5.jpg",
+        "amount": "3亿",
+        "image": "uploads\/20260512_6a032129407ab.png",
+        "coverImage": "uploads\/20260512_6a032129407ab.png",
         "images": [
-            "uploads\/20260510_6a00220409ce5.jpg"
+            "uploads\/20260512_6a032129407ab.png"
         ],
         "status": "published",
-        "summary": "",
-        "lastModified": "2026-05-10 17:24:26"
-    },
-    {
-        "id": "1778479682624",
-        "title": "测试a",
-        "type": "云信融资出表",
-        "city": "",
-        "amount": "",
-        "image": "uploads\/20260511_6a017247a13ad.png",
-        "coverImage": "uploads\/20260511_6a017247a13ad.png",
-        "images": [
-            "uploads\/20260511_6a017247a13ad.png"
-        ],
-        "status": "published",
-        "summary": "",
-        "lastModified": "2026-05-11 08:08:14"
+        "summary": "为客户提供3 亿元个人名下资金证明服务，资金直接出至客户个人账户名下，满足项目合作、移民留学、资产实力展示等场景的资金证明需求。",
+        "lastModified": "2026-05-12 21:04:24"
     }
 ]

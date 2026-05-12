@@ -483,11 +483,11 @@
                 return `
                 <a href="case-detail.html?id=${c.id}" class="case-related-item">
                     <div class="case-related-thumb">
-                        <img src="${relatedImage}" alt="${c.title}">
+                        <img src="${relatedImage}" alt="${c.title || ""}">
                     </div>
                     <div class="case-related-info">
-                        <h4 class="case-related-item-title">${c.title}</h4>
-                        <span class="case-related-item-type">${c.type} ? ${c.amount}</span>
+                        <h4 class="case-related-item-title">${c.title || ""}</h4>
+                        <span class="case-related-item-type">${c.type || ""} ? ${c.amount || ""}</span>
                     </div>
                 </a>
             `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">暂无相关案例</p>';
@@ -900,11 +900,11 @@
                 return `
                 <a href="case-detail.html?id=${c.id}" class="case-related-item">
                     <div class="case-related-thumb ratio-portrait">
-                        <img src="${relatedImage}" alt="${c.title}" onload="detectRelatedImageRatio(this, this.parentElement)" onerror="this.parentElement.classList.add('ratio-portrait')">
+                        <img src="${relatedImage}" alt="${c.title || ""}" onload="detectRelatedImageRatio(this, this.parentElement)" onerror="this.parentElement.classList.add('ratio-portrait')">
                     </div>
                     <div class="case-related-info">
-                        <h4 class="case-related-item-title">${c.title}</h4>
-                        <span class="case-related-item-type">${c.type} ? ${c.amount}</span>
+                        <h4 class="case-related-item-title">${c.title || ""}</h4>
+                        <span class="case-related-item-type">${c.type || ""} ? ${c.amount || ""}</span>
                     </div>
                 </a>
             `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">暂无相关案例</p>';

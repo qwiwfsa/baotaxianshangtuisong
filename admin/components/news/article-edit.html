@@ -317,15 +317,15 @@
             return new Promise((resolve) => {
                 tinymce.init({
                     selector: '#contentEditor',
-                    plugins: 'lists link image code table media paste fontsize fontfamily advlist directionality hr searchreplace visualblocks',
-                    toolbar: 'undo redo | formatselect | fontfamily fontsize | lineheight | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | table | link image media | code fullscreen',
+                    plugins: 'lists link image code table media advlist directionality searchreplace visualblocks',
+                    toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | table | link image media | code fullscreen',
                     toolbar_mode: 'wrap',
                     menubar: false,
                     height: 800,
                     branding: false,
                     promotion: false,
-                    language: 'zh-CN',
-                    language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@23.7.1/langs/zh_CN.js',
+                    // language: 'zh-CN',
+                    // language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@23.7.1/langs/zh_CN.js',
                     statusbar: true,
                     elementpath: true,
                     resize: true,
@@ -418,16 +418,9 @@
                                         body: formData
                                     }).then(function(resp) { return resp.json(); })
                                     .then(function(result) {
-                    if (result.success && result.data && result.data.url) {
-                        const imageUrl = result.data.url;
-                        coverImageInput.value = imageUrl;
-                        // Preview: use absolute path from root
-                        let previewUrl = imageUrl;
-                        if (previewUrl.startsWith('/')) {
-                            // Already absolute from root, use as-is
-                        } else if (!previewUrl.startsWith('http') && !previewUrl.startsWith('data:')) {
-                            previewUrl = '/' + previewUrl;
-                        }
+                                        if (result.success && result.data && result.data.url) {
+                                            editor.insertContent('<video src="' + result.data.url + '" controls width="100%" style="max-width: 100%;"></video>');
+                                        } else {
                                             alert('视频上传失败: ' + (result.message || '未知错误'));
                                         }
                                     }).catch(function(err) {
@@ -517,20 +510,27 @@
                     document.getElementById('seoDescription').value = article.seo_description || '';
                     
                     if (article.cover_image) {
-                        document.getElementById('coverImage').value = article.cover_image;
+                        // 修复封面图片路径
+                    let coverImagePath = article.cover_image || '';
+                    if (coverImagePath && coverImagePath.includes('/admin/uploads/')) {
+                        coverImagePath = coverImagePath.replace('/admin/uploads/', '/uploads/');
+                    }
+                    document.getElementById('coverImage').value = coverImagePath;
                         
-                        // API返回/开头的绝对路径（如 /uploads/xxx.jpg），需要补上网站子路径
-            let previewSrc = article.cover_image;
-                        if (previewSrc.startsWith('/')) {
-                            // Already absolute path from site root, use as-is
-                        } else if (!previewSrc.startsWith('http') && !previewSrc.startsWith('data:')) {
-                            // uploads/xxx to /uploads/xxx
-                            previewSrc = '/' + previewSrc;
+                        // 处理封面图片路径
+                        let previewSrc = article.cover_image || '';
+                        
+                        // 修复 /admin/uploads/ 路径问题
+                        if (previewSrc.includes('/admin/uploads/')) {
+                            previewSrc = previewSrc.replace('/admin/uploads/', '/uploads/');
                         }
-                            // 兼容旧数据：补上uploads目录
-                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
-                            previewSrc = basePath.replace(/\/$/, '') + '/uploads/' + previewSrc;
+                        
+                        // 如果是相对路径（不以 / 或 http 开头），加上 /uploads/ 前缀
+                        if (previewSrc && !previewSrc.startsWith('/') && !previewSrc.startsWith('http') && !previewSrc.startsWith('data:')) {
+                            previewSrc = '/uploads/' + previewSrc;
                         }
+                        
+                        console.log('Cover image path:', previewSrc);
                         
                         // 隐藏占位符，显示图片
                         const uploadPlaceholder = document.getElementById('uploadPlaceholder');
@@ -538,6 +538,11 @@
                         
                         const coverPreview = document.getElementById('coverPreview');
                         coverPreview.src = previewSrc;
+                        coverPreview.onerror = function() {
+                            console.error('Failed to load cover image:', previewSrc);
+                            this.style.display = 'none';
+                            if (uploadPlaceholder) uploadPlaceholder.style.display = 'block';
+                        };
                         coverPreview.style.display = 'block';
                         coverPreview.style.margin = '0 auto';
                         coverPreview.style.maxHeight = '200px';
@@ -545,14 +550,17 @@
                     
                     // 等待编辑器初始化完成后再设置内容
                     const setEditorContent = () => {
-                        if (tinymceEditor) {
+                        if (tinymceEditor && !tinymceEditor.removed) {
                             tinymceEditor.setContent(article.content || '');
+                            console.log('Editor content set, length:', (article.content || '').length);
                         } else {
                             // 如果编辑器还没初始化，等待一下再试
-                            setTimeout(setEditorContent, 100);
+                            console.log('Editor not ready, retrying...');
+                            setTimeout(setEditorContent, 200);
                         }
                     };
-                    setEditorContent();
+                    // 延迟执行以确保编辑器初始化完成
+                    setTimeout(setEditorContent, 500);
                     
                     updateSaveStatus('saved');
                 }
@@ -646,23 +654,42 @@
                     console.log('上传结果:', result);
                     
                     if (result.success && result.data && result.data.url) {
-                        const imageUrl = result.data.url;
-                        coverImageInput.value = imageUrl;
-                        // 预览路径：补上网站子路径
-                        let previewUrl = imageUrl;
-                        if (previewUrl.startsWith('/')) {
-                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
-                            previewUrl = basePath.replace(/\/$/, '') + previewUrl;
-                        } else if (!previewUrl.startsWith('http') && !previewUrl.startsWith('data:')) {
-                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
-                            previewUrl = basePath.replace(/\/$/, '') + '/' + previewUrl;
+                        let imageUrl = result.data.url;
+                        
+                        // 修复 /admin/uploads/ 路径
+                        if (imageUrl.includes('/admin/uploads/')) {
+                            imageUrl = imageUrl.replace('/admin/uploads/', '/uploads/');
                         }
+                        
+                        coverImageInput.value = imageUrl;
+                        
+                        // 预览路径处理
+                        let previewUrl = imageUrl;
+                        if (previewUrl && !previewUrl.startsWith('/') && !previewUrl.startsWith('http') && !previewUrl.startsWith('data:')) {
+                            previewUrl = '/uploads/' + previewUrl;
+                        }
+                        
+                        console.log('Upload success, preview URL:', previewUrl);
+                        console.log('coverPreview element:', coverPreview);
+                        console.log('imageUrl from API:', imageUrl);
                         
                         // 隐藏占位符，显示图片
                         const uploadPlaceholder = document.getElementById('uploadPlaceholder');
                         if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
                         
+                        // Ensure previewUrl is valid
+                        if (!previewUrl) {
+                            console.error('previewUrl is empty!');
+                            showToast('图片路径错误', 'error');
+                            return;
+                        }
+                        
                         coverPreview.src = previewUrl;
+                        coverPreview.onerror = function() {
+                            console.error('Failed to load uploaded image:', previewUrl);
+                            this.style.display = 'none';
+                            if (uploadPlaceholder) uploadPlaceholder.style.display = 'block';
+                        };
                         coverPreview.style.display = 'block';
                         coverPreview.style.margin = '0 auto';
                         coverPreview.style.maxHeight = '200px';
@@ -890,10 +917,11 @@
                 // 注意：不允许字符串ID，所有文章ID必须为数据库自增整数
             }
             
-            // Fix editor content image paths: relative to absolute
+            // 修复编辑器内容中的图片路径：相对路径转绝对路径
+            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
             editorContent = editorContent.replace(
                 /src="(\.\.\/|\.\.\/\.\.\/|\.\.\/\.\.\/\.\.\/)(uploads\/)/g,
-                'src="/$2'
+                'src="' + basePath.replace(/\/$/, '') + '/$2'
             );
             
             const data = {

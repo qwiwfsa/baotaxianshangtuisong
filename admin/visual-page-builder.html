@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.css">
+    <!-- SortableJS has no CSS -->
 
     <!-- 引入前端网站样式 -->
 
@@ -1058,6 +1058,8 @@
 
     
 
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script>
 </head>
 
 <body>
@@ -2272,24 +2274,43 @@
         // 自定义HTML属性表单
 
         function generateCustomProperties(data) {
-
+            const editorId = 'custom-html-editor-' + Date.now();
+            
+            // Delay TinyMCE init until after DOM update
+            setTimeout(() => {
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.init({
+                        selector: '#' + editorId,
+                        plugins: 'lists link image code table fontsize fontfamily',
+                        toolbar: 'undo redo | formatselect | fontfamily fontsize | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | link image | code',
+                        menubar: false,
+                        height: 300,
+                        branding: false,
+                        promotion: false,
+                        language: 'zh_CN',
+                        fontsize_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px 48px',
+                        font_family_formats: '宋体=simsun;微软雅黑=microsoft yahei;黑体=simhei;楷体=kaiti;Arial=arial;',
+                        setup: function(editor) {
+                            editor.on('change input NodeChange', function() {
+                                updateModuleProperty('html', editor.getContent());
+                            });
+                        }
+                    });
+                }
+            }, 100);
+            
             return `
-
                 <div class="property-field">
-
-                    <label class="property-label">HTML代码</label>
-
-                    <textarea class="property-input property-textarea" style="min-height: 200px; font-family: monospace;" onchange="updateModuleProperty('html', this.value)">${data.html}</textarea>
-
+                    <label class="property-label">HTML内容（富文本编辑）</label>
+                    <textarea id="${editorId}" class="property-input property-textarea" style="min-height: 300px;">${data.html || ''}</textarea>
                 </div>
-
+                <div class="property-field">
+                    <label class="property-label">或直接编辑HTML代码</label>
+                    <textarea class="property-input property-textarea" style="min-height: 150px; font-family: monospace;" 
+                        onchange="updateModuleProperty('html', this.value); if(tinymce.get('${editorId}')){tinymce.get('${editorId}').setContent(this.value);}">${data.html || ''}</textarea>
+                </div>
             `;
-
         }
-
-
-
-        // 更新模块属性
 
         function updateModuleProperty(key, value) {
 
@@ -2456,9 +2477,21 @@
         // 加载页面列表
 
         function loadPageList() {
-
-            // 这里可以从API加载页面列表
-
+            fetch('api/pages-manage.php?action=list')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 0 && data.data && data.data.pages) {
+                        const select = document.getElementById('pageSelector');
+                        select.innerHTML = '<option value="">选择页面</option>';
+                        data.data.pages.forEach(page => {
+                            const opt = document.createElement('option');
+                            opt.value = page.page_name || page.slug || page.id;
+                            opt.textContent = page.title || page.menu_name || page.name || page.page_name;
+                            select.appendChild(opt);
+                        });
+                    }
+                })
+                .catch(err => console.error('load page list failed:', err));
         }
 
 
@@ -2961,8 +2994,3 @@
 </body>
 
 </html>
-
-
-
-
-</body>

@@ -81,8 +81,8 @@ try {
 
         if ($exists) {
             // 更新
-            $stmt = $conn->prepare("UPDATE cases SET title=?, category=?, company=?, amount=?, period=?, description=?, image=?, content=?, status=?, updated_at=NOW() WHERE id=?");
-            $stmt->bind_param("sssssssssi", $title, $category, $company, $amount, $period, $description, $image, $content, $status, $caseId);
+            $stmt = $conn->prepare("UPDATE cases SET title=?, category=?, company=?, amount=?, period=?, description=?, image=?, content=?, status=?, seo_title=?, seo_keywords=?, seo_description=?, updated_at=NOW() WHERE id=?");
+            $stmt->bind_param("ssssssssssssi", $title, $category, $company, $amount, $period, $description, $image, $content, $status, $seo_title, $seo_keywords, $seo_description, $caseId);
         } else {
             // ID存在但不在表中 -> INSERT
             $isNew = true;

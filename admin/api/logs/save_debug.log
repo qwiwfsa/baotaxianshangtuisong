@@ -932,3 +932,43 @@
 [2026-05-10 09:06:59] 解析后的数据: {"id":83,"title":"测试好吧","summary":"","content":"<p>测试<\/p>","category_id":0,"cover_image":"uploads\/20260510_6a002e899bc3b.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
 [2026-05-10 09:06:59] 数据库连接成功
 [2026-05-10 09:06:59] 文章保存成功, ID: 83
+[2026-05-12 22:01:50] === 文章保存API被调用 ===
+[2026-05-12 22:01:50] 请求方法: POST
+[2026-05-12 22:01:50] 请求URI: /admin/api/news/save.php
+[2026-05-12 22:01:50] 原始请求数据长度: 1741
+[2026-05-12 22:01:50] 原始请求数据: {"id":76,"title":"募集账户与托管账户的区别？","summary":"\n\n产品成立之前，投资者的认购款是打到募集账户。\n产品成立后，托管方会开立一个托管账户，把募集账户的资金划到托管账户。托管账户的资金可以在证券资金账户与期货资金账户之前相互划转，用于账户间的资金调拨。\n产品清盘后，证券资金账户与期货账户做结息后所有资金划转到托管账户，托管账户结息清算后的总资金资金分配后划转到投资者的账户。\n募集账户是用来直接与投资者对接的，托管账户是用来账户间调整和存管整个产品的...","content":"<article class=\"article\" id=\"mp-editor\"><!-- 政务处理 -->\n<p class=\"ql-align-center\"><img data-src=\"pAptA0m3a361MlzXFaINeJvraENXG+Zyr9WAdvaL7U+76lxdOMajYUobd7bL53Pl+x3mnvP1ZhUAoww6CUm9F/5xJ4D+JIZr/e99/3zxKbQ=\" max-width=\"600\"></p>\n<p>产品成立之前，投资者的认购款是打到募集账户。</p
+[2026-05-12 22:01:50] 解析后的数据: {"id":76,"title":"募集账户与托管账户的区别？","summary":"\n\n产品成立之前，投资者的认购款是打到募集账户。\n产品成立后，托管方会开立一个托管账户，把募集账户的资金划到托管账户。托管账户的资金可以在证券资金账户与期货资金账户之前相互划转，用于账户间的资金调拨。\n产品清盘后，证券资金账户与期货账户做结息后所有资金划转到托管账户，托管账户结息清算后的总资金资金分配后划转到投资者的账户。\n募集账户是用来直接与投资者对接的，托管账户是用来账户间调整和存管整个产品的...","content":"<article class=\"article\" id=\"mp-editor\"><!-- 政务处理 -->\n<p class=\"ql-align-center\"><img data-src=\"pAptA0m3a361MlzXFaINeJvraENXG+Zyr9WAdvaL7U+76lxdOMajYUobd7bL53Pl+x3mnvP1ZhUAoww6CUm9F\/5xJ4D+JIZr\/e99\/3zxKbQ=\" max-width=\"600\"><\/p>\n<p>产品成立之前，投资者的认购款是打到募集账户。<\/p>\n<p>产品成立后，托管方会开立一个托管账户，把募集账户的资金划到托管账户。托管账户的资金可以在证券资金账户与期货资金账户之前相互划转，用于账户间的资金调拨。<\/p>\n<p>产品清盘后，证券资金账户与期货账户做结息后所有资金划转到托管账户，托管账户结息清算后的总资金资金分配后划转到投资者的账户。<\/p>\n<p>募集账户是用来直接与投资者对接的，托管账户是用来账户间调整和存管整个产品的资金的。<\/p>\n<\/article>","category_id":0,"cover_image":"uploads\/20260509_69ffa1cd514de.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:01:50] 数据库连接成功
+[2026-05-12 22:01:50] 文章保存成功, ID: 76
+[2026-05-12 22:02:35] === 文章保存API被调用 ===
+[2026-05-12 22:02:35] 请求方法: POST
+[2026-05-12 22:02:35] 请求URI: /admin/api/news/save.php
+[2026-05-12 22:02:35] 原始请求数据长度: 238
+[2026-05-12 22:02:35] 原始请求数据: {"id":0,"title":"测试吗？","summary":"","content":"<p>测试</p>","category_id":0,"cover_image":"uploads/20260512_6a0332f373acd.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:02:35] 解析后的数据: {"id":0,"title":"测试吗？","summary":"","content":"<p>测试<\/p>","category_id":0,"cover_image":"uploads\/20260512_6a0332f373acd.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:02:35] 数据库连接成功
+[2026-05-12 22:02:35] 文章保存成功, ID: 84
+[2026-05-12 22:06:51] === 文章保存API被调用 ===
+[2026-05-12 22:06:51] 请求方法: POST
+[2026-05-12 22:06:51] 请求URI: /admin/api/news/save.php
+[2026-05-12 22:06:51] 原始请求数据长度: 235
+[2026-05-12 22:06:51] 原始请求数据: {"id":0,"title":"确实","summary":"车","content":"<p>测试</p>","category_id":0,"cover_image":"uploads/20260512_6a0333eed8ea5.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:06:51] 解析后的数据: {"id":0,"title":"确实","summary":"车","content":"<p>测试<\/p>","category_id":0,"cover_image":"uploads\/20260512_6a0333eed8ea5.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:06:51] 数据库连接成功
+[2026-05-12 22:06:51] 文章保存成功, ID: 85
+[2026-05-12 22:10:20] === 文章保存API被调用 ===
+[2026-05-12 22:10:20] 请求方法: POST
+[2026-05-12 22:10:20] 请求URI: /admin/api/news/save.php
+[2026-05-12 22:10:20] 原始请求数据长度: 253
+[2026-05-12 22:10:20] 原始请求数据: {"id":0,"title":"测试","summary":"测试","content":"<p>撤不吧就是</p>","category_id":0,"cover_image":"uploads/20260512_6a0334c4052e9.png","status":"published","is_top":0,"sort_order":0,"seo_title":"测试","seo_keywords":"","seo_description":""}
+[2026-05-12 22:10:20] 解析后的数据: {"id":0,"title":"测试","summary":"测试","content":"<p>撤不吧就是<\/p>","category_id":0,"cover_image":"uploads\/20260512_6a0334c4052e9.png","status":"published","is_top":0,"sort_order":0,"seo_title":"测试","seo_keywords":"","seo_description":""}
+[2026-05-12 22:10:20] 数据库连接成功
+[2026-05-12 22:10:20] 文章保存成功, ID: 86
+[2026-05-12 22:11:01] === 文章保存API被调用 ===
+[2026-05-12 22:11:01] 请求方法: POST
+[2026-05-12 22:11:01] 请求URI: /admin/api/news/save.php
+[2026-05-12 22:11:01] 原始请求数据长度: 214
+[2026-05-12 22:11:01] 原始请求数据: {"id":0,"title":"3","summary":"","content":"","category_id":0,"cover_image":"uploads/20260512_6a0334f14099e.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:11:01] 解析后的数据: {"id":0,"title":"3","summary":"","content":"","category_id":0,"cover_image":"uploads\/20260512_6a0334f14099e.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
+[2026-05-12 22:11:01] 数据库连接成功
+[2026-05-12 22:11:01] 文章保存成功, ID: 87
