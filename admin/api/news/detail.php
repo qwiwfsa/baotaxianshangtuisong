@@ -103,6 +103,19 @@ if (!$basicOnly) {
     $nextStmt->close();
 }
 
+
+    // 获取文章关联标签
+    $tagIds = [];
+    $tagStmt = $conn->prepare("SELECT tag_id FROM article_tags WHERE article_id = ?");
+    $tagStmt->bind_param("i", $id);
+    $tagStmt->execute();
+    $tagResult = $tagStmt->get_result();
+    while ($tagRow = $tagResult->fetch_assoc()) {
+        $tagIds[] = (int)$tagRow["tag_id"];
+    }
+    $tagStmt->close();
+    $article["tag_ids"] = $tagIds;
+
 $stmt->close();
 $conn->close();
 

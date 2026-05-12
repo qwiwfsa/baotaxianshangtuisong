@@ -17,6 +17,9 @@ DeviceDetector::redirect();
     <meta property="og:locale" content="zh_CN">
     <link rel="canonical" href="https://www.hengxinziben.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Yao资金网 - 北京亮资业务|上市公司过桥资金|企业摆账服务</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -598,10 +601,10 @@ DeviceDetector::redirect();
     <!-- 页脚(由数据库动态渲染) -->
     <?php include 'includes/footer.php'; ?>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=20260513b"></script>
     
     <!-- CMS Data Integration -->
-    <script src="admin/assets/cms.js"></script>
+    <script src="admin/assets/cms.js?v=20260513b"></script>
     
     <!-- 成功案例展示脚本 -->
     <script>

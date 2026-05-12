@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签管理 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+        .cms-sidebar-header { padding: 20px 24px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .cms-sidebar-brand i { font-size: 24px; color: #3b82f6; }
+        .cms-sidebar-brand span { font-size: 18px; font-weight: 600; color: white; }
+        .cms-sidebar-nav { padding: 16px 0; }
+        .cms-nav-section { margin-bottom: 8px; }
+        .cms-nav-title { padding: 12px 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+        .cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; }
+        .cms-nav-item:hover { background: #334155; color: white; }
+        .cms-nav-item.active { background: #3b82f6; color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+        .cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+        .cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .cms-header h1 { font-size: 20px; font-weight: 600; color: #1f2937; }
+        .cms-content { padding: 24px; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+        .search-box { display: flex; gap: 8px; align-items: center; }
+        .search-box input { padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; width: 260px; outline: none; transition: border-color 0.2s; }
+        .search-box input:focus { border-color: #3b82f6; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+        .btn-primary { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; }
+        .btn-primary:hover { background: linear-gradient(135deg, #1e40af, #2563eb); }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-sm { padding: 4px 12px; font-size: 12px; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        td { padding: 12px 16px; font-size: 14px; color: #374151; border-bottom: 1px solid #f3f4f6; }
+        tr:hover td { background: #f9fafb; }
+        .action-btns { display: flex; gap: 6px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; background: #dbeafe; color: #1d4ed8; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #9ca3af; }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; }
+        .empty-state p { font-size: 16px; }
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 20px; }
+        .pagination button { padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer; font-size: 13px; color: #374151; }
+        .pagination button:hover { background: #f3f4f6; }
+        .pagination button.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .pagination .info { font-size: 13px; color: #6b7280; }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 16px; width: 600px; max-width: 90vw; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 18px; font-weight: 600; color: #1f2937; }
+        .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; background: #f3f4f6; border-radius: 8px; cursor: pointer; font-size: 18px; color: #6b7280; }
+        .modal-close:hover { background: #e5e7eb; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 8px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-input, .form-textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .form-input:focus, .form-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .form-textarea { resize: vertical; min-height: 80px; }
+        .form-hint { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+        .loading { text-align: center; padding: 40px; color: #6b7280; }
+        .loading i { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .toast { position: fixed; top: 20px; right: 20px; padding: 14px 24px; border-radius: 10px; color: white; font-size: 14px; z-index: 2000; opacity: 0; transform: translateY(-20px); transition: all 0.3s; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="cms-layout">
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="../../dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表板</span></a>
+                    <a href="../../index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面管理</span></a>
+                    <a href="../../nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+                </div>
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">内容</div>
+                    <a href="../news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+                    <a href="../../case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>案例管理</span></a>
+                    <a href="../../faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+                    <a href="tag-list.html" class="cms-nav-item active"><i class="fas fa-tags"></i><span>标签管理</span></a>
+                </div>
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">设置</div>
+                    <a href="../../seo-settings.html" class="cms-nav-item"><i class="fas fa-search"></i><span>SEO设置</span></a>
+                    <a href="../../logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+                    <a href="../../footer-manager.html" class="cms-nav-item"><i class="fas fa-list-alt"></i><span>页脚管理</span></a>
+                </div>
+            </nav>
+        </aside>
+        <main class="cms-main">
+            <div class="cms-header">
+                <h1><i class="fas fa-tags" style="color:#3b82f6;margin-right:10px;"></i>标签管理</h1>
+            </div>
+            <div class="cms-content">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="搜索标签名称或别名..." onkeyup="loadTags(1)">
+                        <button class="btn btn-primary" onclick="loadTags(1)"><i class="fas fa-search"></i>搜索</button>
+                    </div>
+                    <button class="btn btn-primary" onclick="openEditModal()"><i class="fas fa-plus"></i>新增标签</button>
+                </div>
+
+                <div class="card">
+                    <div id="tableLoading" class="loading"><i class="fas fa-spinner"></i> 加载中...</div>
+                    <table id="tagTable" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>别名(Slug)</th>
+                                <th>关联文章</th>
+                                <th>关联案例</th>
+                                <th>排序</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tagTableBody"></tbody>
+                    </table>
+                    <div id="emptyState" class="empty-state" style="display:none;">
+                        <i class="fas fa-tags"></i>
+                        <p>暂无标签，点击右上角"新增标签"创建</p>
+                    </div>
+                    <div id="pagination" class="pagination" style="display:none;"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">新增标签</h2>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId" value="0">
+                <div class="form-group">
+                    <label class="form-label">标签名称 <span style="color:#ef4444;">*</span></label>
+                    <input type="text" class="form-input" id="editName" placeholder="如：企业融资、过桥资金" oninput="autoGenerateSlug()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">别名(Slug)</label>
+                    <input type="text" class="form-input" id="editSlug" placeholder="自动从名称生成拼音，可手动修改">
+                    <div class="form-hint">URL中使用的地址，如：qi-ye-rong-zi</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SEO标题</label>
+                    <input type="text" class="form-input" id="editSeoTitle" placeholder="标签聚合页的SEO标题">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SEO关键词</label>
+                    <input type="text" class="form-input" id="editSeoKeywords" placeholder="多个关键词用逗号分隔">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SEO描述</label>
+                    <textarea class="form-textarea" id="editSeoDescription" rows="3" placeholder="标签聚合页的SEO描述"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">排序</label>
+                    <input type="number" class="form-input" id="editSortOrder" value="0" style="width:100px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEditModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveTag()"><i class="fas fa-save"></i>保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirm -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal" style="width:400px;">
+            <div class="modal-header">
+                <h2>确认删除</h2>
+                <button class="modal-close" onclick="document.getElementById('deleteModal').classList.remove('show')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size:15px;color:#374151;">确定要删除标签「<span id="deleteTagName" style="font-weight:600;"></span>」吗？</p>
+                <p style="font-size:13px;color:#9ca3af;margin-top:8px;">删除后，该标签与所有文章和案例的关联也将被移除。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="document.getElementById('deleteModal').classList.remove('show')">取消</button>
+                <button class="btn btn-danger" onclick="confirmDelete()"><i class="fas fa-trash"></i>确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentPage = 1;
+        let deleteId = 0;
+        let allTags = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTags(1);
+        });
+
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type + ' show';
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function loadTags(page) {
+            currentPage = page;
+            const search = document.getElementById('searchInput').value;
+
+            document.getElementById('tableLoading').style.display = 'block';
+            document.getElementById('tagTable').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('pagination').style.display = 'none';
+
+            let url = '../../api/tags/tag-list.php?page=' + page + '&limit=15';
+            if (search) url += '&search=' + encodeURIComponent(search);
+
+            fetch(url)
+                .then(r => r.json())
+                .then(res => {
+                    document.getElementById('tableLoading').style.display = 'none';
+                    if (res.success && res.data && res.data.length > 0) {
+                        renderTable(res.data);
+                        renderPagination(res.total, res.page, res.limit);
+                    } else {
+                        document.getElementById('emptyState').style.display = 'block';
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('tableLoading').style.display = 'none';
+                    document.getElementById('emptyState').style.display = 'block';
+                    showToast('加载失败: ' + err.message, 'error');
+                });
+        }
+
+        function renderTable(tags) {
+            const tbody = document.getElementById('tagTableBody');
+            tbody.innerHTML = '';
+            document.getElementById('tagTable').style.display = '';
+
+            tags.forEach(tag => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${tag.id}</td>
+                    <td><strong>${escapeHtml(tag.name)}</strong></td>
+                    <td><code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:12px;">${escapeHtml(tag.slug)}</code></td>
+                    <td><span class="badge">${tag.article_count || 0} 篇</span></td>
+                    <td><span class="badge">${tag.case_count || 0} 个</span></td>
+                    <td>${tag.sort_order || 0}</td>
+                    <td style="color:#6b7280;font-size:12px;">${tag.created_at || '-'}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn btn-primary btn-sm" onclick="openEditModal(${tag.id})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${tag.id}, '${escapeHtml(tag.name)}')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderPagination(total, page, limit) {
+            const container = document.getElementById('pagination');
+            container.style.display = 'flex';
+            const totalPages = Math.max(1, Math.ceil(total / limit));
+
+            let html = '<button onclick="loadTags(' + (page - 1) + ')" ' + (page <= 1 ? 'disabled' : '') + '><i class="fas fa-chevron-left"></i></button>';
+            for (let i = Math.max(1, page - 2); i <= Math.min(totalPages, page + 2); i++) {
+                html += '<button class="' + (i === page ? 'active' : '') + '" onclick="loadTags(' + i + ')">' + i + '</button>';
+            }
+            html += '<button onclick="loadTags(' + (page + 1) + ')" ' + (page >= totalPages ? 'disabled' : '') + '><i class="fas fa-chevron-right"></i></button>';
+            html += '<span class="info">共 ' + total + ' 条</span>';
+            container.innerHTML = html;
+        }
+
+        function openEditModal(id) {
+            document.getElementById('editId').value = id || 0;
+            document.getElementById('modalTitle').textContent = id ? '编辑标签' : '新增标签';
+
+            if (id) {
+                fetch('../../api/tags/tag-get.php?id=' + id)
+                    .then(r => r.json())
+                    .then(res => {
+                        if (res.success && res.data) {
+                            document.getElementById('editName').value = res.data.name || '';
+                            document.getElementById('editSlug').value = res.data.slug || '';
+                            document.getElementById('editSeoTitle').value = res.data.seo_title || '';
+                            document.getElementById('editSeoKeywords').value = res.data.seo_keywords || '';
+                            document.getElementById('editSeoDescription').value = res.data.seo_description || '';
+                            document.getElementById('editSortOrder').value = res.data.sort_order || 0;
+                        }
+                    });
+            } else {
+                document.getElementById('editName').value = '';
+                document.getElementById('editSlug').value = '';
+                document.getElementById('editSeoTitle').value = '';
+                document.getElementById('editSeoKeywords').value = '';
+                document.getElementById('editSeoDescription').value = '';
+                document.getElementById('editSortOrder').value = '0';
+            }
+
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('show');
+        }
+
+        function autoGenerateSlug() {
+            // Only auto-fill slug when creating new (not editing)
+            if (document.getElementById('editId').value == '0') {
+                const name = document.getElementById('editName').value;
+                const slug = document.getElementById('editSlug').value;
+                // Only auto-generate if slug is empty
+                if (!slug) {
+                    // We'll generate on the server side - just leave blank
+                }
+            }
+        }
+
+        function saveTag() {
+            const id = parseInt(document.getElementById('editId').value) || 0;
+            const name = document.getElementById('editName').value.trim();
+            const slug = document.getElementById('editSlug').value.trim();
+            const seo_title = document.getElementById('editSeoTitle').value.trim();
+            const seo_keywords = document.getElementById('editSeoKeywords').value.trim();
+            const seo_description = document.getElementById('editSeoDescription').value.trim();
+            const sort_order = parseInt(document.getElementById('editSortOrder').value) || 0;
+
+            if (!name) {
+                showToast('请输入标签名称', 'error');
+                return;
+            }
+
+            const data = { id, name, slug, seo_title, seo_keywords, seo_description, sort_order };
+
+            fetch('../../api/tags/tag-save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    showToast('保存成功', 'success');
+                    closeEditModal();
+                    loadTags(currentPage);
+                } else {
+                    showToast(res.message || '保存失败', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('保存失败: ' + err.message, 'error');
+            });
+        }
+
+        function openDeleteModal(id, name) {
+            deleteId = id;
+            document.getElementById('deleteTagName').textContent = name;
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function confirmDelete() {
+            fetch('../../api/tags/tag-delete.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: deleteId })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    showToast('删除成功', 'success');
+                    document.getElementById('deleteModal').classList.remove('show');
+                    loadTags(currentPage);
+                } else {
+                    showToast(res.message || '删除失败', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('删除失败: ' + err.message, 'error');
+            });
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

@@ -158,7 +158,18 @@ function syncHtmlFile($pageId, $data, $htmlFile) {
     $replacements = [];
     
     // 根据页面ID执行不同的替换逻辑
-    switch ($pageId) {
+    
+    // Flatten nested data from editor (fields under 'data' key)
+    if (isset($data['data']) && is_array($data['data'])) {
+        foreach ($data['data'] as $key => $value) {
+            if (!isset($data[$key])) {
+                $data[$key] = $value;
+            }
+        }
+    }
+
+    // 根据页面ID执行不同的替换逻辑
+switch ($pageId) {
         case 'contact':
             $replacements = syncContactPage($data, $htmlContent);
             break;
@@ -383,7 +394,28 @@ function syncIndexPage($data, &$htmlContent) {
         }
     }
     
-    return $replacements;
+            // 替换核心优势标题
+        if (!empty($data['advantagesTitle'])) {
+            $advTitle = htmlspecialchars($data['advantagesTitle']);
+            $htmlContent = preg_replace(
+                '/(<h2 class="advantages-title"[^>]*>)(.*?)(<\/h2>)/is',
+                '${1}' . $advTitle . '${3}',
+                $htmlContent, 1, $count
+            );
+            if ($count > 0) { $replacements[] = '优势标题已更新'; }
+        }
+        // 替换核心优势副标题
+        if (!empty($data['advantagesSubtitle'])) {
+            $advSub = htmlspecialchars($data['advantagesSubtitle']);
+            $htmlContent = preg_replace(
+                '/(<p class="advantages-subtitle">)(.*?)(<\/p>)/is',
+                '${1}' . $advSub . '${3}',
+                $htmlContent, 1, $count
+            );
+            if ($count > 0) { $replacements[] = '优势副标题已更新'; }
+        }
+
+return $replacements;
 }
 
 /**

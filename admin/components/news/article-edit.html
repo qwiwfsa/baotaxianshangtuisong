@@ -80,7 +80,20 @@
         
         /* TinyMCE */
         .tox-tinymce { border-radius: 8px !important; }
-    </style>
+    
+        /* 标签选择器样式 */
+        .tag-selector { margin-top: 4px; }
+        .tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
+        .tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
+        .tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
+        .tag-selector__tag i:hover { opacity: 1; }
+        .tag-selector__input-wrap { position: relative; }
+        .tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; margin-top: 2px; }
+        .tag-selector__dropdown.show { display: block; }
+        .tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; transition: background 0.15s; }
+        .tag-option:hover { background: #f3f4f6; }
+        .tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
+</style>
 </head>
 <body>
     <header class="header">
@@ -147,6 +160,28 @@
                         <span class="slider"></span>
                     </label>
                     <span style="font-size: 14px; color: #6b7280;">置顶后文章将显示在列表最前面</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 关联标签 -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-tags"></i>
+                关联标签
+            </h3>
+            <div class="form-group">
+                <label class="form-label">选择标签</label>
+                <div class="tag-selector">
+                    <div class="tag-selector__selected" id="selectedTags"></div>
+                    <div class="tag-selector__input-wrap">
+                        <input type="text" class="form-input" id="tagSearch" placeholder="搜索并选择标签..." oninput="filterTagOptions()">
+                        <div class="tag-selector__dropdown" id="tagDropdown"></div>
+                    </div>
+                </div>
+                <div style="font-size:12px;color:#9ca3af;margin-top:6px;">
+                    <i class="fas fa-info-circle"></i>
+                    在 <a href="../tags/tag-list.html" style="color:#3b82f6;" target="_blank">标签管理</a> 中创建和管理标签
                 </div>
             </div>
         </div>
@@ -504,6 +539,11 @@
                     document.getElementById('summary').value = article.summary || '';
                     document.getElementById('category').value = article.category_id || 0;
                     document.getElementById('sortOrder').value = article.sort_order || 0;
+
+                    // 加载已关联标签
+                    if (article.tag_ids && article.tag_ids.length > 0) {
+                        setSelectedTags(article.tag_ids);
+                    }
                     document.getElementById('isTop').checked = article.is_top == 1;
                     document.getElementById('seoTitle').value = article.seo_title || '';
                     document.getElementById('seoKeywords').value = article.seo_keywords || '';
@@ -936,7 +976,8 @@
                 sort_order: parseInt(document.getElementById('sortOrder').value) || 0,
                 seo_title: document.getElementById('seoTitle').value,
                 seo_keywords: document.getElementById('seoKeywords').value,
-                seo_description: document.getElementById('seoDescription').value
+                seo_description: document.getElementById('seoDescription').value,
+                tag_ids: getSelectedTagIds()
             };
 
             console.log('准备发送的数据:', {
@@ -1063,6 +1104,88 @@
                 saveAsDraft();
             }
         });
-    </script>
+    
+        // ========== 标签选择器 ==========
+        let allTags = [];
+        let selectedTags = [];
+
+        async function loadTagOptions() {
+            try {
+                const resp = await fetch('../../api/tags/tag-options.php');
+                const result = await resp.json();
+                if (result.success) {
+                    allTags = result.data || [];
+                }
+            } catch (e) {
+                console.log('Failed to load tags:', e);
+            }
+        }
+
+        function filterTagOptions() {
+            const search = document.getElementById('tagSearch').value.toLowerCase();
+            const dropdown = document.getElementById('tagDropdown');
+            const filtered = allTags.filter(t =>
+                (t.name.toLowerCase().includes(search) || t.slug.toLowerCase().includes(search)) &&
+                !selectedTags.includes(parseInt(t.id))
+            );
+            if (filtered.length > 0) {
+                dropdown.innerHTML = filtered.map(t =>
+                    `<div class="tag-option" onclick="addTag(${t.id}, '${t.name.replace(/'/g, "\\'")}')">${escapeHtml(t.name)} <span style="color:#9ca3af;font-size:12px;">(${escapeHtml(t.slug)})</span></div>`
+                ).join('');
+                dropdown.classList.add('show');
+            } else {
+                dropdown.innerHTML = '<div class="tag-option disabled">' + (search ? '无匹配标签' : '输入关键词搜索标签') + '</div>';
+                dropdown.classList.add('show');
+            }
+        }
+
+        function addTag(id, name) {
+            if (!selectedTags.includes(id)) {
+                selectedTags.push(id);
+                renderSelectedTags();
+            }
+            document.getElementById('tagSearch').value = '';
+            document.getElementById('tagDropdown').classList.remove('show');
+        }
+
+        function removeTag(id) {
+            selectedTags = selectedTags.filter(t => t !== id);
+            renderSelectedTags();
+        }
+
+        function setSelectedTags(ids) {
+            selectedTags = ids.map(id => parseInt(id));
+            renderSelectedTags();
+        }
+
+        function renderSelectedTags() {
+            const container = document.getElementById('selectedTags');
+            container.innerHTML = selectedTags.map(id => {
+                const tag = allTags.find(t => parseInt(t.id) === id);
+                const name = tag ? escapeHtml(tag.name) : '#' + id;
+                return `<span class="tag-selector__tag">${name} <i class="fas fa-times" onclick="removeTag(${id})"></i></span>`;
+            }).join('');
+        }
+
+        function getSelectedTagIds() {
+            return selectedTags;
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('tagDropdown');
+            if (dropdown && !e.target.closest('.tag-selector__input-wrap')) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        loadTagOptions();
+
+</script>
 </body>
 </html>

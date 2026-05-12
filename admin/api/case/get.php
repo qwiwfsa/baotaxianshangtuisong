@@ -47,9 +47,23 @@ if ($numericId > 0) {
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         $stmt->close();
+
+        // Get tag IDs before closing connection
+        $tagIds = [];
+        $tagStmt = $conn->prepare("SELECT tag_id FROM case_tags WHERE case_id = ?");
+        $tagStmt->bind_param("i", $numericId);
+        $tagStmt->execute();
+        $tagResult = $tagStmt->get_result();
+        while ($tagRow = $tagResult->fetch_assoc()) {
+            $tagIds[] = (int)$tagRow['tag_id'];
+        }
+        $tagStmt->close();
+
         $conn->close();
 
         if ($row) {
+            // Store tag IDs for later
+            $caseData_tagIds = $tagIds;
             $contentData = [];
             if (!empty($row['content'])) {
                 $parsed = json_decode($row['content'], true);
@@ -65,6 +79,7 @@ if ($numericId > 0) {
                 'seo_title' => $row['seo_title'] ?? '',
                 'seo_keywords' => $row['seo_keywords'] ?? '',
                 'seo_description' => $row['seo_description'] ?? '',
+            'tag_ids' => $caseData_tagIds ?? [],
                 'period' => $row['period'],
                 'summary' => $row['description'],
                 'detail' => $contentData['detail'] ?? $row['description'] ?? '',
@@ -92,6 +107,12 @@ if (!$caseData) {
     $dataDir = dirname(dirname(__DIR__)) . '/data/cases/';
     // 尝试多种文件名（前端可能传纯数字或case_xx格式）
     $candidates = [$caseId, 'case_' . $caseId, $numericId, 'case_' . $numericId];
+    if ($caseData && !isset($caseData['tag_ids'])) {
+        $caseData['tag_ids'] = [];
+    }
+    if ($caseData && !isset($caseData['tag_ids'])) {
+        $caseData['tag_ids'] = [];
+    }
     $candidates = array_unique(array_filter($candidates));
     foreach ($candidates as $c) {
         $f = $dataDir . $c . '.json';

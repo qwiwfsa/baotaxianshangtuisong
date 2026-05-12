@@ -972,3 +972,56 @@
 [2026-05-12 22:11:01] 解析后的数据: {"id":0,"title":"3","summary":"","content":"","category_id":0,"cover_image":"uploads\/20260512_6a0334f14099e.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":""}
 [2026-05-12 22:11:01] 数据库连接成功
 [2026-05-12 22:11:01] 文章保存成功, ID: 87
+[2026-05-13 02:17:37] === 文章保存API被调用 ===
+[2026-05-13 02:17:37] 请求方法: POST
+[2026-05-13 02:17:37] 请求URI: /admin/api/news/save.php
+[2026-05-13 02:17:37] 原始请求数据长度: 1752
+[2026-05-13 02:17:37] 原始请求数据: {"id":80,"title":"原创现金亮资和普通亮资的区别？","summary":"","content":"<article class=\"article\" id=\"mp-editor\"><!-- 政务处理 -->\n<p class=\"ql-align-center\"><img data-src=\"5LtMAMmc+K81jpOuQ2EB4p7gc+l4j9jP6HFD+zMTEU5RzGfgfCTCcZYBb62lNrd7aAJgOFTIVcV8ZazcFedkimJlualyKBGeswFxSkyvaFg=\" max-width=\"600\"></p>\n<p><strong>现金亮资简单来说和普通亮资的目的没什么区别，都是起到了显示资金实力和充当门面的作用。</strong></p>\n<p>但是关键点在于现金亮资需要提前到银行预约取现，有些银行的取现额度有时候会有限制，或者银行当日现金不足，所有如果要现金亮资的话，最好提前几天时间，以免造成亮资时间的延误。</p>\n<p><strong>现金亮资的成本要比普通资金证明的成本要高。</strong></p>\n<p>首先是因为现金亮资需要提前预约银行取现，如果亮资额度较大的话还需要同时到几家银行取现，因为一家银行的额度肯
+[2026-05-13 02:17:37] 解析后的数据: {"id":80,"title":"原创现金亮资和普通亮资的区别？","summary":"","content":"<article class=\"article\" id=\"mp-editor\"><!-- 政务处理 -->\n<p class=\"ql-align-center\"><img data-src=\"5LtMAMmc+K81jpOuQ2EB4p7gc+l4j9jP6HFD+zMTEU5RzGfgfCTCcZYBb62lNrd7aAJgOFTIVcV8ZazcFedkimJlualyKBGeswFxSkyvaFg=\" max-width=\"600\"><\/p>\n<p><strong>现金亮资简单来说和普通亮资的目的没什么区别，都是起到了显示资金实力和充当门面的作用。<\/strong><\/p>\n<p>但是关键点在于现金亮资需要提前到银行预约取现，有些银行的取现额度有时候会有限制，或者银行当日现金不足，所有如果要现金亮资的话，最好提前几天时间，以免造成亮资时间的延误。<\/p>\n<p><strong>现金亮资的成本要比普通资金证明的成本要高。<\/strong><\/p>\n<p>首先是因为现金亮资需要提前预约银行取现，如果亮资额度较大的话还需要同时到几家银行取现，因为一家银行的额度肯定是不够的，比较麻烦。<\/p>\n<p>其次现金亮资结束以后，到银行再进行存款也比较麻烦，因为银行存进去的钱都需要过印钞机，也比较费时间，需要等候。<\/p>\n<p>尽管现金亮资相对于普通的资金证明麻烦一些，但还是有很多企业或者个人的项目方就要求现金亮资，所有市场上需要现金亮资的客户也不在少数。<\/p>\n<p><strong>我们作为资方也只是配合客户实现他的目的，能够达到企业和个人的目的才是最重要的。<\/strong><\/p>\n<\/article>","category_id":0,"cover_image":"uploads\/sohu_b368456d_1778360374.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[]}
+[2026-05-13 02:17:37] 数据库连接成功
+[2026-05-13 02:17:38] 文章保存成功, ID: 80
+[2026-05-13 02:57:06] === 文章保存API被调用 ===
+[2026-05-13 02:57:06] 请求方法: POST
+[2026-05-13 02:57:06] 请求URI: /admin/api/news/save.php
+[2026-05-13 02:57:06] 原始请求数据长度: 163
+[2026-05-13 02:57:06] 原始请求数据: {"title": "Test Article with Tags", "summary": "Testing tag association", "content": "<p>Test content</p>", "category_id": 0, "status": "draft", "tag_ids": [3, 4]}
+[2026-05-13 02:57:06] 解析后的数据: {"title":"Test Article with Tags","summary":"Testing tag association","content":"<p>Test content<\/p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 02:57:06] 数据库连接成功
+[2026-05-13 02:57:26] === 文章保存API被调用 ===
+[2026-05-13 02:57:26] 请求方法: POST
+[2026-05-13 02:57:26] 请求URI: /admin/api/news/save.php
+[2026-05-13 02:57:26] 原始请求数据长度: 152
+[2026-05-13 02:57:26] 原始请求数据: {"title":"Test Article with Tags","summary":"Testing tag association","content":"<p>Test content<\/p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 02:57:26] 解析后的数据: {"title":"Test Article with Tags","summary":"Testing tag association","content":"<p>Test content<\/p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 02:57:26] 数据库连接成功
+[2026-05-13 02:58:36] === 文章保存API被调用 ===
+[2026-05-13 02:58:36] 请求方法: POST
+[2026-05-13 02:58:36] 请求URI: /admin/api/news/save.php
+[2026-05-13 02:58:36] 原始请求数据长度: 89
+[2026-05-13 02:58:36] 原始请求数据: {"title":"test","content":"<p>test</p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 02:58:36] 解析后的数据: {"title":"test","content":"<p>test<\/p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 02:58:36] 数据库连接成功
+[2026-05-13 03:00:22] === 文章保存API被调用 ===
+[2026-05-13 03:00:22] 请求方法: POST
+[2026-05-13 03:00:22] 请求URI: /admin/api/news/save.php
+[2026-05-13 03:00:22] 原始请求数据长度: 152
+[2026-05-13 03:00:22] 原始请求数据: {"title":"Test Article with Tags","summary":"Testing tag association","content":"<p>Test content<\/p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 03:00:22] 解析后的数据: {"title":"Test Article with Tags","summary":"Testing tag association","content":"<p>Test content<\/p>","category_id":0,"status":"draft","tag_ids":[3,4]}
+[2026-05-13 03:00:22] 数据库连接成功
+[2026-05-13 03:00:23] 文章保存成功, ID: 91
+[2026-05-13 03:00:23] === 文章保存API被调用 ===
+[2026-05-13 03:00:23] 请求方法: POST
+[2026-05-13 03:00:23] 请求URI: /admin/api/news/save.php
+[2026-05-13 03:00:23] 原始请求数据长度: 119
+[2026-05-13 03:00:23] 原始请求数据: {"id":91,"title":"Test Article Updated","content":"<p>Updated<\/p>","category_id":0,"status":"published","tag_ids":[3]}
+[2026-05-13 03:00:23] 解析后的数据: {"id":91,"title":"Test Article Updated","content":"<p>Updated<\/p>","category_id":0,"status":"published","tag_ids":[3]}
+[2026-05-13 03:00:23] 数据库连接成功
+[2026-05-13 03:00:24] 文章保存成功, ID: 91
+[2026-05-13 03:34:28] === 文章保存API被调用 ===
+[2026-05-13 03:34:28] 请求方法: POST
+[2026-05-13 03:34:28] 请求URI: /admin/api/news/save.php
+[2026-05-13 03:34:28] 原始请求数据长度: 236
+[2026-05-13 03:34:28] 原始请求数据: {"id":0,"title":"测试器","summary":"","content":"","category_id":0,"cover_image":"uploads/20260513_6a0380bcb7d33.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[4]}
+[2026-05-13 03:34:28] 解析后的数据: {"id":0,"title":"测试器","summary":"","content":"","category_id":0,"cover_image":"uploads\/20260513_6a0380bcb7d33.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[4]}
+[2026-05-13 03:34:28] 数据库连接成功
+[2026-05-13 03:34:29] 文章保存成功, ID: 92

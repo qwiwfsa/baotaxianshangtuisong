@@ -1,0 +1,15 @@
+[13-May-2026 02:57:07 PRC] PHP Warning:  mysqli::prepare(): Couldn't fetch mysqli in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php on line 135
+[13-May-2026 02:57:07 PRC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php:136
+Stack trace:
+#0 {main}
+  thrown in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php on line 136
+[13-May-2026 02:57:26 PRC] PHP Warning:  mysqli::prepare(): Couldn't fetch mysqli in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php on line 135
+[13-May-2026 02:57:26 PRC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php:136
+Stack trace:
+#0 {main}
+  thrown in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php on line 136
+[13-May-2026 02:58:37 PRC] PHP Warning:  mysqli::prepare(): Couldn't fetch mysqli in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php on line 135
+[13-May-2026 02:58:37 PRC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php:136
+Stack trace:
+#0 {main}
+  thrown in /www/wwwroot/www.yaozijin.com/admin/api/news/save.php on line 136

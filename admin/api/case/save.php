@@ -46,6 +46,13 @@ $seo_title = $data['seo_title'] ?? '';
 $seo_keywords = $data['seo_keywords'] ?? '';
 $seo_description = $data['seo_description'] ?? '';
 
+// 标签ID
+$tagIds = isset($data['tag_ids']) ? $data['tag_ids'] : [];
+if (is_string($tagIds)) { $tagIds = json_decode($tagIds, true) ?: []; }
+if (!is_array($tagIds)) { $tagIds = []; }
+$tagIds = array_map('intval', $tagIds);
+$tagIds = array_filter($tagIds, function($id) { return $id > 0; });
+
 // images 处理
 $images = $data['images'] ?? [];
 if (!is_array($images)) $images = [$images];
@@ -110,6 +117,19 @@ try {
     }
 
     $stmt->close();
+
+    // 同步标签关联
+    if ($caseId > 0) {
+        $conn->query("DELETE FROM case_tags WHERE case_id = $caseId");
+        if (!empty($tagIds)) {
+            $insStmt = $conn->prepare("INSERT INTO case_tags (case_id, tag_id) VALUES (?, ?)");
+            foreach ($tagIds as $tid) {
+                $insStmt->bind_param("ii", $caseId, $tid);
+                $insStmt->execute();
+            }
+            $insStmt->close();
+        }
+    }
 
     // ========== 也同步写入JSON文件（辅助，便于前端直接读取） ==========
     $now = date('Y-m-d H:i:s');

@@ -124,8 +124,31 @@ if ($id > 0) {
 if ($stmt->execute()) {
     $articleId = $id > 0 ? $id : $stmt->insert_id;
     $stmt->close();
-    $conn->close();
+    if (isset($data["tag_ids"]) && is_array($data["tag_ids"])) {
+        $tagIds = array_map("intval", $data["tag_ids"]);
+        $tagIds = array_filter($tagIds, function($v) { return $v > 0; });
+
+        // 删除旧的标签关联
+        $delStmt = $conn->prepare("DELETE FROM article_tags WHERE article_id = ?");
+        $delStmt->bind_param("i", $articleId);
+        $delStmt->execute();
+        $delStmt->close();
+
+        // 插入新的标签关联
+        if (!empty($tagIds)) {
+            $insStmt = $conn->prepare("INSERT INTO article_tags (article_id, tag_id) VALUES (?, ?)");
+            foreach ($tagIds as $tid) {
+                $insStmt->bind_param("ii", $articleId, $tid);
+                $insStmt->execute();
+            }
+            $insStmt->close();
+        }
+    }
+
     
+    $conn->close();
+
+    // 同步文章标签
     writeLog('文章保存成功, ID: ' . $articleId);
     
     echo json_encode([

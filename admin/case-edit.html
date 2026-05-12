@@ -156,7 +156,20 @@
         .history-btn i {
             font-size: 12px;
         }
-    </style>
+    
+        /* 标签选择器 */
+        .tag-selector { margin-top: 4px; }
+        .tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
+        .tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
+        .tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
+        .tag-selector__tag i:hover { opacity: 1; }
+        .tag-selector__input-wrap { position: relative; }
+        .tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; }
+        .tag-selector__dropdown.show { display: block; }
+        .tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; }
+        .tag-option:hover { background: #f3f4f6; }
+        .tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
+</style>
 </head>
 <body>
     <div class="cms-layout">
@@ -1222,6 +1235,78 @@
                 }
             }
         });
-    </script>
+    
+        // ========== 标签选择器 ==========
+        let caseAllTags = [];
+        let caseSelectedTags = [];
+
+        async function caseLoadTagOptions() {
+            try {
+                const resp = await fetch('api/tags/tag-options.php');
+                const result = await resp.json();
+                if (result.success) caseAllTags = result.data || [];
+            } catch(e) { console.log(e); }
+        }
+
+        function caseFilterTagOptions() {
+            const search = document.getElementById('caseTagSearch').value.toLowerCase();
+            const dd = document.getElementById('caseTagDropdown');
+            const filtered = caseAllTags.filter(t =>
+                (t.name.toLowerCase().includes(search) || t.slug.toLowerCase().includes(search)) &&
+                !caseSelectedTags.includes(parseInt(t.id))
+            );
+            if (filtered.length > 0) {
+                dd.innerHTML = filtered.map(t =>
+                    `<div class="tag-option" onclick="caseAddTag(${t.id}, '${t.name.replace(/'/g, "\'")}')">${t.name} <span style="color:#9ca3af;font-size:12px;">(${t.slug})</span></div>`
+                ).join('');
+                dd.classList.add('show');
+            } else {
+                dd.innerHTML = '<div class="tag-option disabled">' + (search ? '无匹配标签' : '输入关键词搜索标签') + '</div>';
+                dd.classList.add('show');
+            }
+        }
+
+        function caseAddTag(id, name) {
+            if (!caseSelectedTags.includes(id)) {
+                caseSelectedTags.push(id);
+                caseRenderSelectedTags();
+            }
+            document.getElementById('caseTagSearch').value = '';
+            document.getElementById('caseTagDropdown').classList.remove('show');
+        }
+
+        function caseRemoveTag(id) {
+            caseSelectedTags = caseSelectedTags.filter(t => t !== id);
+            caseRenderSelectedTags();
+        }
+
+        function caseSetSelectedTags(ids) {
+            caseSelectedTags = ids.map(id => parseInt(id));
+            caseRenderSelectedTags();
+        }
+
+        function caseRenderSelectedTags() {
+            const container = document.getElementById('caseSelectedTags');
+            container.innerHTML = caseSelectedTags.map(id => {
+                const tag = caseAllTags.find(t => parseInt(t.id) === id);
+                const name = tag ? tag.name : '#' + id;
+                return `<span class="tag-selector__tag">${name} <i class="fas fa-times" onclick="caseRemoveTag(${id})"></i></span>`;
+            }).join('');
+        }
+
+        function caseGetSelectedTagIds() {
+            return caseSelectedTags;
+        }
+
+        document.addEventListener('click', function(e) {
+            const dd = document.getElementById('caseTagDropdown');
+            if (dd && !e.target.closest('.tag-selector__input-wrap')) {
+                dd.classList.remove('show');
+            }
+        });
+
+        caseLoadTagOptions();
+
+</script>
 </body>
 </html>

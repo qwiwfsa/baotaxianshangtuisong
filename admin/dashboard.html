@@ -893,10 +893,7 @@
                         <i class="fas fa-file-alt"></i>
                         <span>页面管理</span>
                     </a>
-                    <a href="page-manager.html" class="cms-nav-item" data-section="page-manager">
-                        <i class="fas fa-list"></i>
-                        <span>页面列表</span>
-                    </a>
+                    
                     <a href="visual-page-builder.html" class="cms-nav-item" data-section="visual-builder">
                         <i class="fas fa-pen-ruler"></i>
                         <span>页面设计</span>
@@ -915,10 +912,12 @@
                         <i class="fas fa-question-circle"></i>
                         <span>FAQ管理</span>
                     </a>
-                    <a href="#" class="cms-nav-item" data-section="messages" onclick="showMessages(); return false;">
-                        <i class="fas fa-envelope"></i>
-                        <span>留言管理</span>
+
+                    <a href="../components/tags/tag-list.html" class="cms-nav-item" data-section="tags">
+                        <i class="fas fa-tags"></i>
+                        <span>标签管理</span>
                     </a>
+                    
                     
                     <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
                         <i class="fas fa-list-alt"></i>
@@ -1207,8 +1206,13 @@
         
         
         <!-- 留言管理区域 -->
-        <div id="messageSection" style="display:none; padding: 20px;">
-            <h2 style="margin-bottom: 20px;"><i class="fas fa-envelope"></i> 留言管理</h2>
+        <div id="messageSection" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2><i class="fas fa-envelope"></i> 留言管理</h2>
+                <button onclick="loadMessageList()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                    <i class="fas fa-sync"></i> 刷新
+                </button>
+            </div>
             <div class="stats" style="display: flex; gap: 30px; margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 8px;">
                 <div class="stat-item" style="text-align: center;">
                     <div id="msgTotalCount" style="font-size: 32px; font-weight: bold; color: #3b82f6;">0</div>
@@ -1810,6 +1814,14 @@
         div.textContent = text;
         return div.innerHTML;
     }
+
+    
+    // 页面加载时自动显示留言
+    document.addEventListener('DOMContentLoaded', function() {
+        loadMessageList();
+        // 每30秒自动刷新
+        setInterval(loadMessageList, 30000);
+    });
 </script>
 </body>
 </html>

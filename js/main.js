@@ -559,7 +559,7 @@
                 btnText.hidden = false;
                 btnLoading.hidden = true;
             });
-        }}
+        }
     }
 
     /**
