@@ -523,17 +523,43 @@
             btnText.hidden = true;
             btnLoading.hidden = false;
 
-            // 模拟提交
-            setTimeout(() => {
-                showNotification('提交成功！我们会尽快与您联系。', 'success');
-                form.reset();
-                
+            // 收集表单数据
+            const formData = {
+                name: inputs.name.value.trim(),
+                phone: inputs.phone.value.trim(),
+                email: inputs.email.value.trim(),
+                content: document.getElementById('message') ? document.getElementById('message').value.trim() : '',
+                source: 'contact'
+            };
+
+            // 提交到API
+            fetch('admin/api/message/submit.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification('提交成功！我们会尽快与您联系。', 'success');
+                    form.reset();
+                } else {
+                    showNotification(data.message || '提交失败，请稍后重试', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('提交失败:', error);
+                showNotification('提交失败，请检查网络连接后重试', 'error');
+            })
+            .finally(() => {
                 // 恢复按钮状态
                 submitBtn.disabled = false;
                 btnText.hidden = false;
                 btnLoading.hidden = true;
-            }, 1500);
-        }
+            });
+        }}
     }
 
     /**

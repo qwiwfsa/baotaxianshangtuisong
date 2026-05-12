@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言管理 - 后台管理</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .message-list { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .message-item { 
+            background: #fff; 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .message-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .message-info { display: flex; gap: 20px; color: #666; font-size: 14px; }
+        .message-content { margin: 15px 0; font-size: 16px; }
+        .message-status { 
+            padding: 4px 12px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+        }
+        .status-unread { background: #fee2e2; color: #dc2626; }
+        .status-read { background: #d1fae5; color: #059669; }
+        .message-actions { margin-top: 15px; }
+        .btn-mark-read { 
+            background: #3b82f6; 
+            color: white; 
+            border: none; 
+            padding: 8px 16px; 
+            border-radius: 4px; 
+            cursor: pointer;
+        }
+        .btn-delete { 
+            background: #ef4444; 
+            color: white; 
+            border: none; 
+            padding: 8px 16px; 
+            border-radius: 4px; 
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .empty-state { text-align: center; padding: 60px; color: #666; }
+        .stats { 
+            display: flex; 
+            gap: 30px; 
+            margin-bottom: 20px; 
+            padding: 20px; 
+            background: #f8fafc; 
+            border-radius: 8px;
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 32px; font-weight: bold; color: #3b82f6; }
+        .stat-label { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>后台管理</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><i class="fas fa-home"></i> 首页</a>
+                <a href="case-management.html"><i class="fas fa-briefcase"></i> 案例管理</a>
+                <a href="article-list.html"><i class="fas fa-newspaper"></i> 文章管理</a>
+                <a href="faq-management.html"><i class="fas fa-question-circle"></i> FAQ管理</a>
+                <a href="message-management.html" class="active"><i class="fas fa-envelope"></i> 留言管理</a>
+                <a href="nav-management.html"><i class="fas fa-bars"></i> 导航菜单</a>
+                <a href="page-manager.html"><i class="fas fa-file-alt"></i> 页面列表</a>
+                <a href="visual-page-builder.html"><i class="fas fa-paint-brush"></i> 页面设计</a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1><i class="fas fa-envelope"></i> 留言管理</h1>
+            </header>
+
+            <div class="message-list">
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalCount">0</div>
+                        <div class="stat-label">总留言</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="unreadCount">0</div>
+                        <div class="stat-label">未读</div>
+                    </div>
+                </div>
+
+                <div id="messageContainer">
+                    <div class="empty-state">加载中...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 加载留言列表
+        async function loadMessages() {
+            try {
+                console.log('正在加载留言...');
+                // 使用绝对路径或相对路径调用API
+                const apiUrl = window.location.origin + '/admin/api/message/list.php';
+                console.log('调用API:', apiUrl);
+                const response = await fetch(apiUrl);
+                console.log('API响应状态:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error('HTTP错误: ' + response.status);
+                }
+                
+                const result = await response.json();
+                console.log('API返回数据:', result);
+                
+                if (result.code === 0 || result.success) {
+                    const messages = result.data && result.data.list ? result.data.list : [];
+                    console.log('留言列表:', messages);
+                    renderMessages(messages);
+                } else {
+                    document.getElementById('messageContainer').innerHTML = 
+                        '<div class="empty-state">加载失败: ' + (result.message || '未知错误') + '</div>';
+                }
+            } catch (error) {
+                console.error('加载留言失败:', error);
+                document.getElementById('messageContainer').innerHTML = 
+                    '<div class="empty-state">加载失败: ' + error.message + '<br>请检查网络连接或刷新页面重试</div>';
+            }
+        }
+
+        // 渲染留言列表
+        function renderMessages(messages) {
+            const container = document.getElementById('messageContainer');
+            
+            if (!messages || messages.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i><br>暂无留言</div>';
+                updateStats([]);
+                return;
+            }
+
+            // 按时间倒序排列
+            messages.sort((a, b) => new Date(b.time) - new Date(a.time));
+            
+            updateStats(result.data);
+            
+            container.innerHTML = messages.map(msg => `
+                <div class="message-item" data-id="${msg.id}">
+                    <div class="message-header">
+                        <div>
+                            <strong style="font-size: 18px;">${escapeHtml(msg.name)}</strong>
+                            <span class="message-status status-${msg.status}">${msg.status === 'unread' ? '未读' : '已读'}</span>
+                        </div>
+                        <span style="color: #999; font-size: 14px;">${msg.time}</span>
+                    </div>
+                    <div class="message-info">
+                        <span><i class="fas fa-phone"></i> ${escapeHtml(msg.phone)}</span>
+                        <span><i class="fas fa-envelope"></i> ${escapeHtml(msg.email || '未填写')}</span>
+                        <span><i class="fas fa-source"></i> ${msg.source === 'contact' ? '联系我们' : '在线预约'}</span>
+                    </div>
+                    <div class="message-content">${escapeHtml(msg.content || '无留言内容')}</div>
+                    <div class="message-actions">
+                        ${msg.status === 'unread' ? `<button class="btn-mark-read" onclick="markAsRead('${msg.id}')">标记已读</button>` : ''}
+                        <button class="btn-delete" onclick="deleteMessage('${msg.id}')">删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 更新统计
+        function updateStats(data) {
+            const stats = data && data.stats ? data.stats : { total: 0, unread: 0 };
+            document.getElementById('totalCount').textContent = stats.total;
+            document.getElementById('unreadCount').textContent = stats.unread;
+        }
+
+        // 标记已读
+        async function markAsRead(id) {
+            try {
+                const apiUrl = window.location.origin + '/admin/api/message/save.php';
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `action=mark_read&id=${id}`
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    loadMessages();
+                } else {
+                    alert('操作失败: ' + result.message);
+                }
+            } catch (error) {
+                console.error('标记已读失败:', error);
+                alert('操作失败');
+            }
+        }
+
+        // 删除留言
+        async function deleteMessage(id) {
+            if (!confirm('确定要删除这条留言吗？')) return;
+            
+            try {
+                const apiUrl = window.location.origin + '/admin/api/message/save.php';
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `action=delete&id=${id}`
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    loadMessages();
+                } else {
+                    alert('删除失败: ' + result.message);
+                }
+            } catch (error) {
+                console.error('删除失败:', error);
+                alert('删除失败');
+            }
+        }
+
+        // HTML转义
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 页面加载时获取留言
+        loadMessages();
+    </script>
+</body>
+</html>

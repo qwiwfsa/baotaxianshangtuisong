@@ -487,7 +487,7 @@
                     </div>
                     <div class="case-related-info">
                         <h4 class="case-related-item-title">${c.title || ""}</h4>
-                        <span class="case-related-item-type">${c.type || ""} ? ${c.amount || ""}</span>
+                        <span class="case-related-item-type">${c.type || ""}${c.amount ? " · " + c.amount : ""}</span>
                     </div>
                 </a>
             `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">暂无相关案例</p>';
@@ -904,7 +904,7 @@
                     </div>
                     <div class="case-related-info">
                         <h4 class="case-related-item-title">${c.title || ""}</h4>
-                        <span class="case-related-item-type">${c.type || ""} ? ${c.amount || ""}</span>
+                        <span class="case-related-item-type">${c.type || ""}${c.amount ? " · " + c.amount : ""}</span>
                     </div>
                 </a>
             `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">暂无相关案例</p>';

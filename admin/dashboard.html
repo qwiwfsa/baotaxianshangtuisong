@@ -914,7 +914,12 @@
                     <a href="faq-management.html" class="cms-nav-item" data-section="faq">
                         <i class="fas fa-question-circle"></i>
                         <span>FAQ管理</span>
-                    </a>
+                    </a>
+                    <a href="#" class="cms-nav-item" data-section="messages" onclick="showMessages(); return false;">
+                        <i class="fas fa-envelope"></i>
+                        <span>留言管理</span>
+                    </a>
+                    
                     <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
                         <i class="fas fa-list-alt"></i>
                         <span>页脚管理</span>
@@ -1199,7 +1204,26 @@
                     </div>
                 </div>
             </div>
-        </main>
+        
+        
+        <!-- 留言管理区域 -->
+        <div id="messageSection" style="display:none; padding: 20px;">
+            <h2 style="margin-bottom: 20px;"><i class="fas fa-envelope"></i> 留言管理</h2>
+            <div class="stats" style="display: flex; gap: 30px; margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 8px;">
+                <div class="stat-item" style="text-align: center;">
+                    <div id="msgTotalCount" style="font-size: 32px; font-weight: bold; color: #3b82f6;">0</div>
+                    <div style="color: #666; font-size: 14px;">总留言</div>
+                </div>
+                <div class="stat-item" style="text-align: center;">
+                    <div id="msgUnreadCount" style="font-size: 32px; font-weight: bold; color: #ef4444;">0</div>
+                    <div style="color: #666; font-size: 14px;">未读</div>
+                </div>
+            </div>
+            <div id="messageList" style="max-width: 1200px;">
+                <div style="text-align: center; padding: 60px; color: #666;">点击加载留言</div>
+            </div>
+        </div>
+</main>
     </div>
 
     <script>
@@ -1723,6 +1747,69 @@
                 toast.classList.remove('show');
             }, 3000);
         }
-    </script>
+    
+    
+    // 留言管理功能
+    function showMessages() {
+        document.querySelectorAll('.cms-section').forEach(el => el.style.display = 'none');
+        const msgSection = document.getElementById('messageSection');
+        if (msgSection) {
+            msgSection.style.display = 'block';
+            loadMessageList();
+        }
+    }
+    
+    async function loadMessageList() {
+        const container = document.getElementById('messageList');
+        container.innerHTML = '<div style="text-align: center; padding: 60px;">加载中...</div>';
+        
+        try {
+            const response = await fetch('api/message/list.php');
+            const result = await response.json();
+            
+            if (result.code === 0 && result.data) {
+                const messages = result.data.list || [];
+                const stats = result.data.stats || { total: 0, unread: 0 };
+                
+                document.getElementById('msgTotalCount').textContent = stats.total;
+                document.getElementById('msgUnreadCount').textContent = stats.unread;
+                
+                if (messages.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 60px; color: #666;">暂无留言</div>';
+                    return;
+                }
+                
+                container.innerHTML = messages.map(msg => `
+                    <div style="background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                            <div>
+                                <strong style="font-size: 18px;">${escapeHtml(msg.name)}</strong>
+                                <span style="padding: 4px 12px; border-radius: 4px; font-size: 12px; margin-left: 10px; ${msg.status === 'unread' ? 'background: #fee2e2; color: #dc2626;' : 'background: #d1fae5; color: #059669;'}">${msg.status === 'unread' ? '未读' : '已读'}</span>
+                            </div>
+                            <span style="color: #999; font-size: 14px;">${msg.time}</span>
+                        </div>
+                        <div style="display: flex; gap: 20px; color: #666; font-size: 14px; margin-bottom: 10px;">
+                            <span>电话: ${escapeHtml(msg.phone)}</span>
+                            <span>邮箱: ${escapeHtml(msg.email || '未填写')}</span>
+                        </div>
+                        <div style="margin: 15px 0; font-size: 16px;">${escapeHtml(msg.content || '无留言内容')}</div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<div style="text-align: center; padding: 60px; color: #666;">加载失败</div>';
+            }
+        } catch (error) {
+            console.error('加载留言失败:', error);
+            container.innerHTML = '<div style="text-align: center; padding: 60px; color: #666;">加载失败，请刷新重试</div>';
+        }
+    }
+    
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+</script>
 </body>
 </html>
