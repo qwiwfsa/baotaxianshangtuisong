@@ -1047,6 +1047,10 @@
                     <div style="grid-column:1/-1;">
                         <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:500;color:#334155;">页面正文（HTML）</label>
                         <textarea id="content" rows="8" placeholder="输入HTML内容..." style="width:100%;padding:8px 12px;border:1px solid #d9d9d9;border-radius:6px;font-size:14px;outline:none;resize:vertical;min-height:120px;"></textarea>
+                        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                            <button type="button" class="btn btn-sm" onclick="fillContentTemplate()" style="padding:6px 14px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:6px;font-size:13px;cursor:pointer;"><i class="fas fa-magic"></i> 一键填充业务模板</button>
+                            <span style="font-size:12px;color:#94a3b8;line-height:30px;">将使用当前城市名称填充完整的业务板块内容</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1284,6 +1288,65 @@
             });
         }
 
+
+        // 一键填充业务模板
+        function fillContentTemplate() {
+            var city_name = (document.getElementById('city_name').value || '').trim();
+            if (!city_name) {
+                showToast('请先输入城市名称', 'warning');
+                return;
+            }
+            var html = '';
+            html += '<section class=\"services\" style=\"padding:40px 0;\">';
+            html += '  <div class=\"section-container\">';
+            html += '    <div class=\"section-header\">';
+            html += '      <h2 class=\"section-title\">' + city_name + '核心业务领域</h2>';
+            html += '      <p class=\"section-subtitle\">' + city_name + '地区上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务</p>';
+            html += '    </div>';
+            html += '    <div class=\"services-grid\" style=\"display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;\">';
+            html += '      <div class=\"service-card\" style=\"background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.08);\">';
+            html += '        <h3 style=\"font-size:18px;font-weight:600;color:#1a365d;margin-bottom:12px;\">上市公司类</h3>';
+            html += '        <ul style=\"list-style:none;padding:0;\">';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '上市公司短拆、股票解质押过桥</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '募集账户归还过桥、产业基金备案过桥</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '股票质押、定增、协议转让、代持</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '财务报表优化、降负债</li>';
+            html += '        </ul>';
+            html += '      </div>';
+            html += '      <div class=\"service-card\" style=\"background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.08);\">';
+            html += '        <h3 style=\"font-size:18px;font-weight:600;color:#1a365d;margin-bottom:12px;\">企业/个人摆账</h3>';
+            html += '        <ul style=\"list-style:none;padding:0;\">';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '长短期定存摆账、云信票据实摆</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '过账实趴、抵押类资金过桥</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '实缴验资、资金证明、银行保函</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '贸易增量、显账亮资</li>';
+            html += '        </ul>';
+            html += '      </div>';
+            html += '      <div class=\"service-card\" style=\"background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.08);\">';
+            html += '        <h3 style=\"font-size:18px;font-weight:600;color:#1a365d;margin-bottom:12px;\">银行存款类</h3>';
+            html += '        <ul style=\"list-style:none;padding:0;\">';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '银行时点冲量、日均业务</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '月末冲量</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '一年期定期存款</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '三年期定期存款</li>';
+            html += '        </ul>';
+            html += '      </div>';
+            html += '      <div class=\"service-card\" style=\"background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.08);\">';
+            html += '        <h3 style=\"font-size:18px;font-weight:600;color:#1a365d;margin-bottom:12px;\">应收账款融资</h3>';
+            html += '        <ul style=\"list-style:none;padding:0;\">';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '置换云信票据</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '可拆分流转支付</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '融资贴现、准入宽松</li>';
+            html += '          <li style=\"padding:6px 0;color:#4b5563;font-size:14px;\">' + city_name + '不看征信、包容执行诉讼主体</li>';
+            html += '        </ul>';
+            html += '      </div>';
+            html += '    </div>';
+            html += '  </div>';
+            html += '</section>';
+            document.getElementById('content').value = html;
+            showToast('业务模板已填充，可进一步编辑修改', 'success');
+        }
+
         function saveCity() {
             var id = parseInt(document.getElementById('editId').value) || 0;
             var city_name = (document.getElementById('city_name').value || '').trim();
@@ -1366,3 +1429,4 @@
 
 </body>
 </html>
+

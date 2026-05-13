@@ -173,7 +173,7 @@ function parseSectionToModule($section, $sortOrder, $xpath) {
             return [
                 'module_type' => 'card',
                 'module_data' => [
-                    'columns' => min(count($items), 3),
+                    'columns' => min(count($items), 4),
                     'style' => 'modern',
                     'items' => $items
                 ],
@@ -222,3 +222,4 @@ function parseSectionToModule($section, $sortOrder, $xpath) {
         'sort_order' => $sortOrder
     ];
 }
+

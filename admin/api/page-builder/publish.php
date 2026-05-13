@@ -213,13 +213,20 @@ function generateFullPage($pageId, $content) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>' . htmlspecialchars($pageId) . '</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/page-builder.css">
+    <style>
+        .page-content { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    </style>
 </head>
 <body>
     <div class="page-content">
         ' . $content . '
     </div>
     <script src="/assets/js/page-builder.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>';
 }
+

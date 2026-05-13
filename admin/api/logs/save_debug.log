@@ -1033,3 +1033,11 @@
 [2026-05-13 06:05:46] 解析后的数据: {"id":81,"title":"现金亮资如何操作？","summary":"","content":"<article class=\"article\" id=\"mp-editor\"><!-- 政务处理 -->\n<p class=\"ql-align-center\"><img data-src=\"ZEdxni\/u2gmtwZ8CLj8V0ZvraENXG+Zyr9WAdvaL7U80RPg\/2BRRBrb3KwkQbC7RgfDFX1TF2pUbPTafsN3EOHDLUblWvw\/+Fz9AC5q\/3B4=\" max-width=\"600\"><\/p>\n<p>简单说就是充门面。无论是企业还是个人在寻找合作伙伴时都喜欢找有资金实力的人，因为有资金实力的人能够保证合作的正常进行和项目的正常运转。一旦合作出现什么问题，一方也有资金赔偿。资金实力是业务正常运转的保证，也是取得合作者信任的保障。所以，对于企业来说，资金实力很重要。<\/p>\n<p>企业或者个人如果有雄厚的资金实力，那么就很容易取得别人的信任，这样就在寻找合作伙伴时就很占优势，容易找到靠谱的合作伙伴，最终满足自己的意愿，完成某些项目的合作，获得收益。<\/p>\n<p>有资金不用担心，但是如果一个企业或者个人想要做某个项目需要与人合作，但是又没有足够的资金难以取得对方的信任。这时，该怎么办呢？<\/p>\n<p>这时就需要摆账亮资了，也就是寻找到资金方，双方达成共识，让对方以自己的名义把资金存入银行，在与人合作时可以让合作方看到自己的账面上有不少资金，进而促进与对方的顺利合作。企业或者个人进行摆账亮资有利于与人合作达成某种意愿，摆账亮资对一个企业或者个人至关重要。<\/p>\n<\/article>","category_id":2,"cover_image":"uploads\/sohu_51801f0f_1778360377.png","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[4]}
 [2026-05-13 06:05:46] 数据库连接成功
 [2026-05-13 06:05:47] 文章保存成功, ID: 81
+[2026-05-13 16:11:07] === 文章保存API被调用 ===
+[2026-05-13 16:11:07] 请求方法: POST
+[2026-05-13 16:11:07] 请求URI: /admin/api/news/save.php
+[2026-05-13 16:11:07] 原始请求数据长度: 254
+[2026-05-13 16:11:07] 原始请求数据: {"id":0,"title":"线上测试二","summary":"","content":"<p>测试</p>","category_id":0,"cover_image":"uploads/20260513_6a04321858383.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[]}
+[2026-05-13 16:11:07] 解析后的数据: {"id":0,"title":"线上测试二","summary":"","content":"<p>测试<\/p>","category_id":0,"cover_image":"uploads\/20260513_6a04321858383.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[]}
+[2026-05-13 16:11:07] 数据库连接成功
+[2026-05-13 16:11:08] 文章保存成功, ID: 93

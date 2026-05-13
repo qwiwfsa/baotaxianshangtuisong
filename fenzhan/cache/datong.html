@@ -1,130 +1,15 @@
-<?php
-/**
- * 城市分站前端渲染模板
- * 100% 复刻主站首页风格，动态替换{城市}变量
- * 含缓存、SEO、本地区县模块
- */
-require_once __DIR__ . '/../config/db.php';
-
-if (!function_exists('getDbConnection')) {
-    function getDbConnection() { return getDB(); }
-}
-
-// ---------- 缓存配置 ----------
-$cacheDir = __DIR__ . '/cache/';
-$cacheTTL = 3600; // 1 hour
-$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
-
-if ($slug === '') {
-    http_response_code(404);
-    exit('Page not found');
-}
-
-// ---------- 加载城市数据 ----------
-try {
-    $conn = getDbConnection();
-    $stmt = $conn->prepare("SELECT * FROM fenzhan_cities WHERE slug = ? AND is_active = 1");
-    $stmt->bind_param("s", $slug);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows === 0) {
-        $stmt->close(); $conn->close();
-        http_response_code(404);
-        exit('Page not found');
-    }
-    $city = $result->fetch_assoc();
-    $stmt->close();
-    $conn->close();
-} catch (Exception $e) {
-    http_response_code(500);
-    exit('Internal error');
-}
-
-// ---------- 尝试读取缓存 ----------
-if (!is_dir($cacheDir)) {
-    @mkdir($cacheDir, 0755, true);
-}
-$cacheKey = preg_replace('/[^a-z0-9-]/', '', $slug);
-$cacheFile = $cacheDir . $cacheKey . '.html';
-
-if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTTL) {
-    echo file_get_contents($cacheFile);
-    exit;
-}
-
-// ---------- 城市数据 ----------
-$city_name = $city['city_name'];
-$phone = !empty($city['phone']) ? $city['phone'] : '13552883008';
-$province = $city['province'] ?? '';
-
-// ---------- SEO 自动生成 ----------
-$page_title = $city_name . '摆账_过桥短拆_实缴验资_资金证明 - Yao资金网';
-$page_keywords = $city_name . '摆账,' . $city_name . '过桥短拆,' . $city_name . '实缴验资,' . $city_name . '资金证明,' . $city_name . '银行冲量';
-$page_description = '专业提供' . $city_name . '企业摆账、过桥短拆、实缴验资、资金证明、银行冲量业务，自有资金，快速安全，全国接单，诚邀企业资源代理合作。';
-
-// 如果数据库有自定义值则覆盖
-if (!empty($city['title'])) $page_title = $city['title'];
-if (!empty($city['keywords'])) $page_keywords = $city['keywords'];
-if (!empty($city['description'])) $page_description = $city['description'];
-
-// ---------- 加载区县数据 ----------
-$districts = [];
-$districtFile = __DIR__ . '/districts.json';
-if (file_exists($districtFile)) {
-    $allDistricts = json_decode(file_get_contents($districtFile), true) ?: [];
-    if (isset($allDistricts[$city_name])) {
-        $districts = $allDistricts[$city_name];
-    } elseif (isset($allDistricts[$province])) {
-        // 省级别默认区县
-        $districts = $allDistricts[$province];
-    }
-}
-
-$escapedCity = htmlspecialchars($city_name, ENT_QUOTES, 'UTF-8');
-$escapedPhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
-$escapedTitle = htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8');
-$escapedKeywords = htmlspecialchars($page_keywords, ENT_QUOTES, 'UTF-8');
-$escapedDesc = htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8');
-
-// ---------- 构建区县模块HTML ----------
-$districtHtml = '';
-if (!empty($districts)) {
-    $districtHtml = '
-    <!-- 本地区县服务范围 -->
-    <section class="services" id="city-districts" style="padding-top:0;">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-label">LOCAL DISTRICTS</div>
-                <h2 class="section-title">' . $escapedCity . '服务范围</h2>
-                <p class="section-subtitle">覆盖' . $escapedCity . '全区，为您提供便捷的上门服务</p>
-            </div>
-            <div class="districts-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:20px 0;">';
-    foreach ($districts as $d) {
-        $dName = htmlspecialchars(trim($d), ENT_QUOTES, 'UTF-8');
-        $districtHtml .= '<div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;transition:all 0.2s;cursor:default;" onmouseover="this.style.background=\'#eff6ff\';this.style.borderColor=\'#3b82f6\';" onmouseout="this.style.background=\'#f8f9fa\';this.style.borderColor=\'#e5e7eb\';">' . $dName . '</div>';
-    }
-    $districtHtml .= '
-            </div>
-        </div>
-    </section>';
-}
-
-// ---------- 构建完整HTML ----------
-function buildPage($escapedCity, $escapedPhone, $escapedTitle, $escapedKeywords, $escapedDesc, $districtHtml, $city_name, $slug) {
-ob_start();
-?>
 
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="<?php echo $escapedDesc; ?>">
-    <meta name="keywords" content="<?php echo $escapedKeywords; ?>">
+    <meta name="description" content="专业提供大同企业摆账、过桥短拆、实缴验资、资金证明、银行冲量业务，自有资金，快速安全，全国接单，诚邀企业资源代理合作。">
+    <meta name="keywords" content="大同摆账,大同过桥短拆,大同实缴验资,大同资金证明,大同银行冲量">
     <meta name="author" content="Yao资金网">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html">
-    <title><?php echo $escapedTitle; ?></title>
+    <link rel="canonical" href="https://www.yaozijin.com/fenzhan/datong.html">
+    <title>大同摆账_过桥短拆_实缴验资_资金证明 - Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -138,12 +23,12 @@ ob_start();
     {
         "@context": "https://schema.org",
         "@type": "FinancialService",
-        "name": "<?php echo $escapedCity; ?>资金服务 - Yao资金网",
-        "description": "<?php echo $escapedDesc; ?>",
-        "url": "https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html",
-        "telephone": "<?php echo $escapedPhone; ?>",
+        "name": "大同资金服务 - Yao资金网",
+        "description": "专业提供大同企业摆账、过桥短拆、实缴验资、资金证明、银行冲量业务，自有资金，快速安全，全国接单，诚邀企业资源代理合作。",
+        "url": "https://www.yaozijin.com/fenzhan/datong.html",
+        "telephone": "13552883008",
         "email": "wanglizhongguo@126.com",
-        "areaServed": "<?php echo $escapedCity; ?>",
+        "areaServed": "大同",
         "foundingDate": "2014"
     }
     </script>
@@ -291,14 +176,14 @@ ob_start();
                 <span>专业资金服务 · 值得信赖</span>
             </div>
 
-            <h1 class="hero-title" id="hero-title"><?php echo $escapedCity; ?>专业资金解决方案<br>助力企业稳健发展</h1>
+            <h1 class="hero-title" id="hero-title">大同专业资金解决方案<br>助力企业稳健发展</h1>
 
-            <p class="hero-subtitle"><?php echo $escapedCity; ?>企业一站式资金服务商</p>
+            <p class="hero-subtitle">大同企业一站式资金服务商</p>
 
             <div class="hero-buttons">
                 <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
                     <button class="btn btn-primary" onclick="togglePhoneDisplay()" style="display: inline-block;">立即咨询</button>
-                    <span id="phoneDisplay" style="display: none; font-size: 18px; font-weight: 700; color: rgb(30, 58, 138); letter-spacing: 2px; white-space: nowrap; background: rgb(255, 255, 255); border-radius: 8px; padding: 8px 16px; box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 8px;"><?php echo $escapedPhone; ?></span>
+                    <span id="phoneDisplay" style="display: none; font-size: 18px; font-weight: 700; color: rgb(30, 58, 138); letter-spacing: 2px; white-space: nowrap; background: rgb(255, 255, 255); border-radius: 8px; padding: 8px 16px; box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 8px;">13552883008</span>
                 </div>
             </div>
 
@@ -328,29 +213,29 @@ ob_start();
         <div class="section-container">
             <div class="section-header">
                 <div class="section-label">OUR SERVICES</div>
-                <h2 class="section-title" id="services-title"><?php echo $escapedCity; ?>核心业务领域</h2>
-                <p class="section-subtitle"><?php echo $escapedCity; ?>地区上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
+                <h2 class="section-title" id="services-title">大同核心业务领域</h2>
+                <p class="section-subtitle">大同地区上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
             </div>
 
             <div class="services-grid">
                 <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
                     <h3 class="service-title">上市公司类</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>上市公司短拆、股票解质押过桥</li><li><?php echo $escapedCity; ?>募集账户归还过桥、产业基金备案过桥</li><li><?php echo $escapedCity; ?>股票质押、定增、协议转让、代持</li><li><?php echo $escapedCity; ?>财务报表优化、降负债</li></ul></ul>
+                    <ul class="service-list"><ul><li>大同上市公司短拆、股票解质押过桥</li><li>大同募集账户归还过桥、产业基金备案过桥</li><li>大同股票质押、定增、协议转让、代持</li><li>大同财务报表优化、降负债</li></ul></ul>
                 </article>
 
                 <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
                     <h3 class="service-title">企业/个人摆账</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>长短期定存摆账、云信票据实摆</li><li><?php echo $escapedCity; ?>过账实趴、抵押类资金过桥</li><li><?php echo $escapedCity; ?>实缴验资、资金证明、银行保函</li><li><?php echo $escapedCity; ?>贸易增量、显账亮资</li></ul></ul>
+                    <ul class="service-list"><ul><li>大同长短期定存摆账、云信票据实摆</li><li>大同过账实趴、抵押类资金过桥</li><li>大同实缴验资、资金证明、银行保函</li><li>大同贸易增量、显账亮资</li></ul></ul>
                 </article>
 
                 <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
                     <h3 class="service-title">银行存款类</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>银行时点冲量、日均业务</li><li><?php echo $escapedCity; ?>月末冲量</li><li><?php echo $escapedCity; ?>一年期定期存款</li><li><?php echo $escapedCity; ?>三年期定期存款</li></ul></ul>
+                    <ul class="service-list"><ul><li>大同银行时点冲量、日均业务</li><li>大同月末冲量</li><li>大同一年期定期存款</li><li>大同三年期定期存款</li></ul></ul>
                 </article>
 
                 <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
                     <h3 class="service-title">应收账款融资</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>置换云信票据</li><li><?php echo $escapedCity; ?>可拆分流转支付</li><li><?php echo $escapedCity; ?>融资贴现、准入宽松</li><li><?php echo $escapedCity; ?>不看征信、包容执行诉讼主体</li></ul></ul>
+                    <ul class="service-list"><ul><li>大同置换云信票据</li><li>大同可拆分流转支付</li><li>大同融资贴现、准入宽松</li><li>大同不看征信、包容执行诉讼主体</li></ul></ul>
                 </article>
             </div>
 
@@ -388,8 +273,7 @@ ob_start();
     </section>
 
     <!-- 本地区县服务范围 -->
-    <?php echo $districtHtml; ?>
-
+    
     <!-- 成功案例展示 -->
     <section class="cases-showcase" id="casesShowcase" aria-labelledby="cases-showcase-title">
         <div class="section-container">
@@ -475,11 +359,10 @@ ob_start();
     <section class="services" style="padding:40px 0;">
         <div class="section-container" style="text-align:center;">
             <div style="background:linear-gradient(135deg,#1a365d,#2d4a7a);color:white;border-radius:12px;padding:40px 20px;">
-                <h2 style="font-size:28px;margin-bottom:16px;"><?php echo $escapedCity; ?>业务咨询</h2>
+                <h2 style="font-size:28px;margin-bottom:16px;">大同业务咨询</h2>
                 <p style="font-size:16px;margin-bottom:24px;opacity:0.9;">专业团队为您提供全方位的资金解决方案</p>
                 <div style="font-size:32px;font-weight:700;letter-spacing:2px;">
-                    <i class="fas fa-phone-alt" style="margin-right:12px;"></i><?php echo $escapedPhone; ?>
-                </div>
+                    <i class="fas fa-phone-alt" style="margin-right:12px;"></i>13552883008                </div>
             </div>
         </div>
     </section>
@@ -555,7 +438,7 @@ ob_start();
                     <div class="faq-list">
                         <details class="faq-item">
                             <summary class="faq-question">如何联系你们？</summary>
-                            <div class="faq-answer"><p>电话：<?php echo $escapedPhone; ?><br>邮箱：wanglizhongguo@126.com</p></div>
+                            <div class="faq-answer"><p>电话：13552883008<br>邮箱：wanglizhongguo@126.com</p></div>
                         </details>
                     </div>
                 </div>
@@ -571,7 +454,7 @@ ob_start();
             <i class="fas fa-phone-alt"></i>
         </button>
         <div class="chat-widget-phone-display">
-            <span class="chat-widget-phone-text"><?php echo $escapedPhone; ?></span>
+            <span class="chat-widget-phone-text">13552883008</span>
         </div>
     </div>
 
@@ -643,17 +526,3 @@ ob_start();
     </script>
 </body>
 </html>
-<?php
-return ob_get_clean();
-}
-
-// ---------- 生成页面 ----------
-$html = buildPage($escapedCity, $escapedPhone, $escapedTitle, $escapedKeywords, $escapedDesc, $districtHtml, $city_name, $slug);
-
-// ---------- 写入缓存 ----------
-if (!empty($cacheFile)) {
-    file_put_contents($cacheFile, $html);
-}
-
-// ---------- 输出 ----------
-echo $html;

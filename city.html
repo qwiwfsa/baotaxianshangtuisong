@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="全国城市资金服务导航 - Yao资金网覆盖全国各大中城市，提供企业摆账、过桥短拆、实缴验资、资金证明等专业资金服务。">
+    <meta name="keywords" content="城市导航,资金服务,全国服务,企业摆账,过桥短拆">
+    <meta name="author" content="Yao资金网">
+    <meta name="robots" content="index, follow">
+    <title>全国城市导航 - Yao资金网 | 覆盖全国的资金服务网络</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=20260513e">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <base href="/">
+    <style>
+        .city-nav-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #1a365d 0%, #2d4a7a 50%, #1a365d 100%);
+            color: white;
+        }
+        .city-nav-header h1 { font-size: 32px; margin-bottom: 12px; }
+        .city-nav-header p { font-size: 16px; opacity: 0.9; }
+        .city-nav-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .province-group { margin-bottom: 36px; }
+        .province-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a365d;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #d4a843;
+        }
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .city-link {
+            display: block;
+            padding: 10px 14px;
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            color: #374151;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .city-link:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1a365d;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .city-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+            .city-link { font-size: 13px; padding: 8px 10px; }
+            .city-nav-header { padding: 40px 16px 30px; }
+            .city-nav-header h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+            <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="var m=document.querySelector('.nav-menu');m.style.display=m.style.display==='flex'?'none':'flex';">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="city-nav-header">
+        <h1><i class="fas fa-map-marker-alt"></i> 全国城市导航</h1>
+        <p>Yao资金网服务覆盖全国各大中城市，为您提供便捷的本地化资金服务</p>
+    </div>
+
+    <div class="city-nav-container">
+        <div class="province-group">
+            <h2 class="province-title">直辖市 <span style="font-size:14px;color:#6b7280;font-weight:400;">（4个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/beijing.html" class="city-link">北京</a>
+                <a href="/fenzhan/shanghai.html" class="city-link">上海</a>
+                <a href="/fenzhan/tianjin.html" class="city-link">天津</a>
+                <a href="/fenzhan/chongqing.html" class="city-link">重庆</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">广东 <span style="font-size:14px;color:#6b7280;font-weight:400;">（21个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/guangzhou.html" class="city-link">广州</a>
+                <a href="/fenzhan/shaoguan.html" class="city-link">韶关</a>
+                <a href="/fenzhan/shenzhen.html" class="city-link">深圳</a>
+                <a href="/fenzhan/zhuhai.html" class="city-link">珠海</a>
+                <a href="/fenzhan/shantou.html" class="city-link">汕头</a>
+                <a href="/fenzhan/foshan.html" class="city-link">佛山</a>
+                <a href="/fenzhan/jiangmen.html" class="city-link">江门</a>
+                <a href="/fenzhan/zhanjiang.html" class="city-link">湛江</a>
+                <a href="/fenzhan/maoming.html" class="city-link">茂名</a>
+                <a href="/fenzhan/zhaoqing.html" class="city-link">肇庆</a>
+                <a href="/fenzhan/huizhou.html" class="city-link">惠州</a>
+                <a href="/fenzhan/meizhou.html" class="city-link">梅州</a>
+                <a href="/fenzhan/shanwei.html" class="city-link">汕尾</a>
+                <a href="/fenzhan/heyuan.html" class="city-link">河源</a>
+                <a href="/fenzhan/yangjiang.html" class="city-link">阳江</a>
+                <a href="/fenzhan/qingyuan.html" class="city-link">清远</a>
+                <a href="/fenzhan/dongguan.html" class="city-link">东莞</a>
+                <a href="/fenzhan/zhongshan.html" class="city-link">中山</a>
+                <a href="/fenzhan/chaozhou.html" class="city-link">潮州</a>
+                <a href="/fenzhan/jieyang.html" class="city-link">揭阳</a>
+                <a href="/fenzhan/yunfu.html" class="city-link">云浮</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">江苏 <span style="font-size:14px;color:#6b7280;font-weight:400;">（13个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/nanjing.html" class="city-link">南京</a>
+                <a href="/fenzhan/wuxi.html" class="city-link">无锡</a>
+                <a href="/fenzhan/xuzhou.html" class="city-link">徐州</a>
+                <a href="/fenzhan/changzhou.html" class="city-link">常州</a>
+                <a href="/fenzhan/suzhou.html" class="city-link">苏州</a>
+                <a href="/fenzhan/nantong.html" class="city-link">南通</a>
+                <a href="/fenzhan/lianyungang.html" class="city-link">连云港</a>
+                <a href="/fenzhan/huaian.html" class="city-link">淮安</a>
+                <a href="/fenzhan/yancheng.html" class="city-link">盐城</a>
+                <a href="/fenzhan/yangzhou.html" class="city-link">扬州</a>
+                <a href="/fenzhan/zhenjiang.html" class="city-link">镇江</a>
+                <a href="/fenzhan/taizhou.html" class="city-link">泰州</a>
+                <a href="/fenzhan/suqian.html" class="city-link">宿迁</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">浙江 <span style="font-size:14px;color:#6b7280;font-weight:400;">（11个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/hangzhou.html" class="city-link">杭州</a>
+                <a href="/fenzhan/ningbo.html" class="city-link">宁波</a>
+                <a href="/fenzhan/wenzhou.html" class="city-link">温州</a>
+                <a href="/fenzhan/jiaxing.html" class="city-link">嘉兴</a>
+                <a href="/fenzhan/huzhou.html" class="city-link">湖州</a>
+                <a href="/fenzhan/shaoxing.html" class="city-link">绍兴</a>
+                <a href="/fenzhan/jinhua.html" class="city-link">金华</a>
+                <a href="/fenzhan/quzhou.html" class="city-link">衢州</a>
+                <a href="/fenzhan/zhoushan.html" class="city-link">舟山</a>
+                <a href="/fenzhan/lishui.html" class="city-link">丽水</a>
+                <a href="/fenzhan/taizhou-zj.html" class="city-link">台州</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">山东 <span style="font-size:14px;color:#6b7280;font-weight:400;">（16个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/jinan.html" class="city-link">济南</a>
+                <a href="/fenzhan/qingdao.html" class="city-link">青岛</a>
+                <a href="/fenzhan/zibo.html" class="city-link">淄博</a>
+                <a href="/fenzhan/zaozhuang.html" class="city-link">枣庄</a>
+                <a href="/fenzhan/dongying.html" class="city-link">东营</a>
+                <a href="/fenzhan/yantai.html" class="city-link">烟台</a>
+                <a href="/fenzhan/weifang.html" class="city-link">潍坊</a>
+                <a href="/fenzhan/jining.html" class="city-link">济宁</a>
+                <a href="/fenzhan/taian.html" class="city-link">泰安</a>
+                <a href="/fenzhan/weihai.html" class="city-link">威海</a>
+                <a href="/fenzhan/rizhao.html" class="city-link">日照</a>
+                <a href="/fenzhan/linyi.html" class="city-link">临沂</a>
+                <a href="/fenzhan/dezhou.html" class="city-link">德州</a>
+                <a href="/fenzhan/liaocheng.html" class="city-link">聊城</a>
+                <a href="/fenzhan/binzhou.html" class="city-link">滨州</a>
+                <a href="/fenzhan/heze.html" class="city-link">菏泽</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">福建 <span style="font-size:14px;color:#6b7280;font-weight:400;">（9个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/fuzhou.html" class="city-link">福州</a>
+                <a href="/fenzhan/xiamen.html" class="city-link">厦门</a>
+                <a href="/fenzhan/putian.html" class="city-link">莆田</a>
+                <a href="/fenzhan/sanming.html" class="city-link">三明</a>
+                <a href="/fenzhan/quanzhou.html" class="city-link">泉州</a>
+                <a href="/fenzhan/zhangzhou.html" class="city-link">漳州</a>
+                <a href="/fenzhan/nanping.html" class="city-link">南平</a>
+                <a href="/fenzhan/longyan.html" class="city-link">龙岩</a>
+                <a href="/fenzhan/ningde.html" class="city-link">宁德</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">河北 <span style="font-size:14px;color:#6b7280;font-weight:400;">（11个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/shijiazhuang.html" class="city-link">石家庄</a>
+                <a href="/fenzhan/tangshan.html" class="city-link">唐山</a>
+                <a href="/fenzhan/qinhuangdao.html" class="city-link">秦皇岛</a>
+                <a href="/fenzhan/handan.html" class="city-link">邯郸</a>
+                <a href="/fenzhan/xingtai.html" class="city-link">邢台</a>
+                <a href="/fenzhan/baoding.html" class="city-link">保定</a>
+                <a href="/fenzhan/zhangjiakou.html" class="city-link">张家口</a>
+                <a href="/fenzhan/chengde.html" class="city-link">承德</a>
+                <a href="/fenzhan/cangzhou.html" class="city-link">沧州</a>
+                <a href="/fenzhan/langfang.html" class="city-link">廊坊</a>
+                <a href="/fenzhan/hengshui.html" class="city-link">衡水</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">河南 <span style="font-size:14px;color:#6b7280;font-weight:400;">（18个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/zhengzhou.html" class="city-link">郑州</a>
+                <a href="/fenzhan/kaifeng.html" class="city-link">开封</a>
+                <a href="/fenzhan/luoyang.html" class="city-link">洛阳</a>
+                <a href="/fenzhan/pingdingshan.html" class="city-link">平顶山</a>
+                <a href="/fenzhan/anyang.html" class="city-link">安阳</a>
+                <a href="/fenzhan/hebi.html" class="city-link">鹤壁</a>
+                <a href="/fenzhan/xinxiang.html" class="city-link">新乡</a>
+                <a href="/fenzhan/jiaozuo.html" class="city-link">焦作</a>
+                <a href="/fenzhan/puyang.html" class="city-link">濮阳</a>
+                <a href="/fenzhan/xuchang.html" class="city-link">许昌</a>
+                <a href="/fenzhan/tahe.html" class="city-link">漯河</a>
+                <a href="/fenzhan/sanmenxia.html" class="city-link">三门峡</a>
+                <a href="/fenzhan/nanyang.html" class="city-link">南阳</a>
+                <a href="/fenzhan/shangqiu.html" class="city-link">商丘</a>
+                <a href="/fenzhan/xinyang.html" class="city-link">信阳</a>
+                <a href="/fenzhan/zhoukou.html" class="city-link">周口</a>
+                <a href="/fenzhan/zhumadian.html" class="city-link">驻马店</a>
+                <a href="/fenzhan/jiyuan.html" class="city-link">济源</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">湖北 <span style="font-size:14px;color:#6b7280;font-weight:400;">（17个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/wuhan.html" class="city-link">武汉</a>
+                <a href="/fenzhan/huangshi.html" class="city-link">黄石</a>
+                <a href="/fenzhan/shiyan.html" class="city-link">十堰</a>
+                <a href="/fenzhan/yichang.html" class="city-link">宜昌</a>
+                <a href="/fenzhan/xiangyang.html" class="city-link">襄阳</a>
+                <a href="/fenzhan/ezhou.html" class="city-link">鄂州</a>
+                <a href="/fenzhan/jingmen.html" class="city-link">荆门</a>
+                <a href="/fenzhan/xiaogan.html" class="city-link">孝感</a>
+                <a href="/fenzhan/jingzhou.html" class="city-link">荆州</a>
+                <a href="/fenzhan/huanggang.html" class="city-link">黄冈</a>
+                <a href="/fenzhan/xianning.html" class="city-link">咸宁</a>
+                <a href="/fenzhan/suizhou.html" class="city-link">随州</a>
+                <a href="/fenzhan/enshi.html" class="city-link">恩施</a>
+                <a href="/fenzhan/xiantao.html" class="city-link">仙桃</a>
+                <a href="/fenzhan/qianjiang.html" class="city-link">潜江</a>
+                <a href="/fenzhan/tianmen.html" class="city-link">天门</a>
+                <a href="/fenzhan/shennongjia.html" class="city-link">神农架</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">湖南 <span style="font-size:14px;color:#6b7280;font-weight:400;">（14个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/changsha.html" class="city-link">长沙</a>
+                <a href="/fenzhan/zhuzhou.html" class="city-link">株洲</a>
+                <a href="/fenzhan/xiangtan.html" class="city-link">湘潭</a>
+                <a href="/fenzhan/hengyang.html" class="city-link">衡阳</a>
+                <a href="/fenzhan/shaoyang.html" class="city-link">邵阳</a>
+                <a href="/fenzhan/yueyang.html" class="city-link">岳阳</a>
+                <a href="/fenzhan/changde.html" class="city-link">常德</a>
+                <a href="/fenzhan/zhangjiajie.html" class="city-link">张家界</a>
+                <a href="/fenzhan/yiyang.html" class="city-link">益阳</a>
+                <a href="/fenzhan/chenzhou.html" class="city-link">郴州</a>
+                <a href="/fenzhan/yongzhou.html" class="city-link">永州</a>
+                <a href="/fenzhan/huaihua.html" class="city-link">怀化</a>
+                <a href="/fenzhan/loudi.html" class="city-link">娄底</a>
+                <a href="/fenzhan/xiangxi.html" class="city-link">湘西</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">安徽 <span style="font-size:14px;color:#6b7280;font-weight:400;">（15个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/hefei.html" class="city-link">合肥</a>
+                <a href="/fenzhan/wuhu.html" class="city-link">芜湖</a>
+                <a href="/fenzhan/bengbu.html" class="city-link">蚌埠</a>
+                <a href="/fenzhan/huainan.html" class="city-link">淮南</a>
+                <a href="/fenzhan/maanshan.html" class="city-link">马鞍山</a>
+                <a href="/fenzhan/huaibei.html" class="city-link">淮北</a>
+                <a href="/fenzhan/tongling.html" class="city-link">铜陵</a>
+                <a href="/fenzhan/anqing.html" class="city-link">安庆</a>
+                <a href="/fenzhan/huangshan.html" class="city-link">黄山</a>
+                <a href="/fenzhan/chuzhou.html" class="city-link">滁州</a>
+                <a href="/fenzhan/fuyang.html" class="city-link">阜阳</a>
+                <a href="/fenzhan/luan.html" class="city-link">六安</a>
+                <a href="/fenzhan/bozhou.html" class="city-link">亳州</a>
+                <a href="/fenzhan/chizhou.html" class="city-link">池州</a>
+                <a href="/fenzhan/xuancheng.html" class="city-link">宣城</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">江西 <span style="font-size:14px;color:#6b7280;font-weight:400;">（9个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/nanchang.html" class="city-link">南昌</a>
+                <a href="/fenzhan/jingdezhen.html" class="city-link">景德镇</a>
+                <a href="/fenzhan/pingxiang.html" class="city-link">萍乡</a>
+                <a href="/fenzhan/jiujiang.html" class="city-link">九江</a>
+                <a href="/fenzhan/xinyu.html" class="city-link">新余</a>
+                <a href="/fenzhan/yingtan.html" class="city-link">鹰潭</a>
+                <a href="/fenzhan/ganzhou.html" class="city-link">赣州</a>
+                <a href="/fenzhan/jian.html" class="city-link">吉安</a>
+                <a href="/fenzhan/shangrao.html" class="city-link">上饶</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">山西 <span style="font-size:14px;color:#6b7280;font-weight:400;">（11个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/taiyuan.html" class="city-link">太原</a>
+                <a href="/fenzhan/datong.html" class="city-link">大同</a>
+                <a href="/fenzhan/yangquan.html" class="city-link">阳泉</a>
+                <a href="/fenzhan/changzhi.html" class="city-link">长治</a>
+                <a href="/fenzhan/jincheng.html" class="city-link">晋城</a>
+                <a href="/fenzhan/shuozhou.html" class="city-link">朔州</a>
+                <a href="/fenzhan/jinzhong.html" class="city-link">晋中</a>
+                <a href="/fenzhan/yuncheng.html" class="city-link">运城</a>
+                <a href="/fenzhan/xinzhou.html" class="city-link">忻州</a>
+                <a href="/fenzhan/linfen.html" class="city-link">临汾</a>
+                <a href="/fenzhan/lyuliang.html" class="city-link">吕梁</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">陕西 <span style="font-size:14px;color:#6b7280;font-weight:400;">（9个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/xian.html" class="city-link">西安</a>
+                <a href="/fenzhan/tongchuan.html" class="city-link">铜川</a>
+                <a href="/fenzhan/baoji.html" class="city-link">宝鸡</a>
+                <a href="/fenzhan/xianyang.html" class="city-link">咸阳</a>
+                <a href="/fenzhan/weinan.html" class="city-link">渭南</a>
+                <a href="/fenzhan/yanan.html" class="city-link">延安</a>
+                <a href="/fenzhan/hanzhong.html" class="city-link">汉中</a>
+                <a href="/fenzhan/ankang.html" class="city-link">安康</a>
+                <a href="/fenzhan/shangluo.html" class="city-link">商洛</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">甘肃 <span style="font-size:14px;color:#6b7280;font-weight:400;">（14个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/lanzhou.html" class="city-link">兰州</a>
+                <a href="/fenzhan/jiayuguan.html" class="city-link">嘉峪关</a>
+                <a href="/fenzhan/jinchang.html" class="city-link">金昌</a>
+                <a href="/fenzhan/baiyin.html" class="city-link">白银</a>
+                <a href="/fenzhan/tianshui.html" class="city-link">天水</a>
+                <a href="/fenzhan/wuwei.html" class="city-link">武威</a>
+                <a href="/fenzhan/zhangye.html" class="city-link">张掖</a>
+                <a href="/fenzhan/pingliang.html" class="city-link">平凉</a>
+                <a href="/fenzhan/jiuquan.html" class="city-link">酒泉</a>
+                <a href="/fenzhan/qingyang.html" class="city-link">庆阳</a>
+                <a href="/fenzhan/dingxi.html" class="city-link">定西</a>
+                <a href="/fenzhan/longnan.html" class="city-link">陇南</a>
+                <a href="/fenzhan/linxia.html" class="city-link">临夏</a>
+                <a href="/fenzhan/gannan.html" class="city-link">甘南</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">青海 <span style="font-size:14px;color:#6b7280;font-weight:400;">（8个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/xining.html" class="city-link">西宁</a>
+                <a href="/fenzhan/haidong.html" class="city-link">海东</a>
+                <a href="/fenzhan/haibei.html" class="city-link">海北</a>
+                <a href="/fenzhan/huangnan.html" class="city-link">黄南</a>
+                <a href="/fenzhan/hainan.html" class="city-link">海南</a>
+                <a href="/fenzhan/guoluo.html" class="city-link">果洛</a>
+                <a href="/fenzhan/yushu.html" class="city-link">玉树</a>
+                <a href="/fenzhan/haixi.html" class="city-link">海西</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">四川 <span style="font-size:14px;color:#6b7280;font-weight:400;">（21个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/chengdu.html" class="city-link">成都</a>
+                <a href="/fenzhan/zigong.html" class="city-link">自贡</a>
+                <a href="/fenzhan/panzhihua.html" class="city-link">攀枝花</a>
+                <a href="/fenzhan/luzhou.html" class="city-link">泸州</a>
+                <a href="/fenzhan/deyang.html" class="city-link">德阳</a>
+                <a href="/fenzhan/mianyang.html" class="city-link">绵阳</a>
+                <a href="/fenzhan/guangyuan.html" class="city-link">广元</a>
+                <a href="/fenzhan/suining.html" class="city-link">遂宁</a>
+                <a href="/fenzhan/neijiang.html" class="city-link">内江</a>
+                <a href="/fenzhan/leshan.html" class="city-link">乐山</a>
+                <a href="/fenzhan/nanchong.html" class="city-link">南充</a>
+                <a href="/fenzhan/meishan.html" class="city-link">眉山</a>
+                <a href="/fenzhan/yibin.html" class="city-link">宜宾</a>
+                <a href="/fenzhan/guangan.html" class="city-link">广安</a>
+                <a href="/fenzhan/dazhou.html" class="city-link">达州</a>
+                <a href="/fenzhan/yaan.html" class="city-link">雅安</a>
+                <a href="/fenzhan/bazhong.html" class="city-link">巴中</a>
+                <a href="/fenzhan/ziyang.html" class="city-link">资阳</a>
+                <a href="/fenzhan/aba.html" class="city-link">阿坝</a>
+                <a href="/fenzhan/ganzi.html" class="city-link">甘孜</a>
+                <a href="/fenzhan/liangshan.html" class="city-link">凉山</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">贵州 <span style="font-size:14px;color:#6b7280;font-weight:400;">（9个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/guiyang.html" class="city-link">贵阳</a>
+                <a href="/fenzhan/liupanshui.html" class="city-link">六盘水</a>
+                <a href="/fenzhan/zunyi.html" class="city-link">遵义</a>
+                <a href="/fenzhan/anshun.html" class="city-link">安顺</a>
+                <a href="/fenzhan/bijie.html" class="city-link">毕节</a>
+                <a href="/fenzhan/tongren.html" class="city-link">铜仁</a>
+                <a href="/fenzhan/qianxinan.html" class="city-link">黔西南</a>
+                <a href="/fenzhan/qiandongnan.html" class="city-link">黔东南</a>
+                <a href="/fenzhan/qiannan.html" class="city-link">黔南</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">云南 <span style="font-size:14px;color:#6b7280;font-weight:400;">（16个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/kunming.html" class="city-link">昆明</a>
+                <a href="/fenzhan/qujing.html" class="city-link">曲靖</a>
+                <a href="/fenzhan/yuxi.html" class="city-link">玉溪</a>
+                <a href="/fenzhan/baoshan.html" class="city-link">保山</a>
+                <a href="/fenzhan/zhaotong.html" class="city-link">昭通</a>
+                <a href="/fenzhan/lijiang.html" class="city-link">丽江</a>
+                <a href="/fenzhan/puer.html" class="city-link">普洱</a>
+                <a href="/fenzhan/lincang.html" class="city-link">临沧</a>
+                <a href="/fenzhan/chuxiong.html" class="city-link">楚雄</a>
+                <a href="/fenzhan/honghe.html" class="city-link">红河</a>
+                <a href="/fenzhan/wenshan.html" class="city-link">文山</a>
+                <a href="/fenzhan/xishuangbanna.html" class="city-link">西双版纳</a>
+                <a href="/fenzhan/dali.html" class="city-link">大理</a>
+                <a href="/fenzhan/dehong.html" class="city-link">德宏</a>
+                <a href="/fenzhan/nujiang.html" class="city-link">怒江</a>
+                <a href="/fenzhan/diqing.html" class="city-link">迪庆</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">辽宁 <span style="font-size:14px;color:#6b7280;font-weight:400;">（14个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/shenyang.html" class="city-link">沈阳</a>
+                <a href="/fenzhan/dalian.html" class="city-link">大连</a>
+                <a href="/fenzhan/anshan.html" class="city-link">鞍山</a>
+                <a href="/fenzhan/fushun.html" class="city-link">抚顺</a>
+                <a href="/fenzhan/benxi.html" class="city-link">本溪</a>
+                <a href="/fenzhan/dandong.html" class="city-link">丹东</a>
+                <a href="/fenzhan/jinzhou.html" class="city-link">锦州</a>
+                <a href="/fenzhan/yingkou.html" class="city-link">营口</a>
+                <a href="/fenzhan/fuxin.html" class="city-link">阜新</a>
+                <a href="/fenzhan/liaoyang.html" class="city-link">辽阳</a>
+                <a href="/fenzhan/panjin.html" class="city-link">盘锦</a>
+                <a href="/fenzhan/tieling.html" class="city-link">铁岭</a>
+                <a href="/fenzhan/chaoyang.html" class="city-link">朝阳</a>
+                <a href="/fenzhan/huludao.html" class="city-link">葫芦岛</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">吉林 <span style="font-size:14px;color:#6b7280;font-weight:400;">（9个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/changchun.html" class="city-link">长春</a>
+                <a href="/fenzhan/jilin.html" class="city-link">吉林</a>
+                <a href="/fenzhan/siping.html" class="city-link">四平</a>
+                <a href="/fenzhan/liaoyuan.html" class="city-link">辽源</a>
+                <a href="/fenzhan/tonghua.html" class="city-link">通化</a>
+                <a href="/fenzhan/baishan.html" class="city-link">白山</a>
+                <a href="/fenzhan/songyuan.html" class="city-link">松原</a>
+                <a href="/fenzhan/baicheng.html" class="city-link">白城</a>
+                <a href="/fenzhan/yanbian.html" class="city-link">延边</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">黑龙江 <span style="font-size:14px;color:#6b7280;font-weight:400;">（13个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/haerbin.html" class="city-link">哈尔滨</a>
+                <a href="/fenzhan/qiqihaer.html" class="city-link">齐齐哈尔</a>
+                <a href="/fenzhan/jixi.html" class="city-link">鸡西</a>
+                <a href="/fenzhan/hegang.html" class="city-link">鹤岗</a>
+                <a href="/fenzhan/shuangyashan.html" class="city-link">双鸭山</a>
+                <a href="/fenzhan/daqing.html" class="city-link">大庆</a>
+                <a href="/fenzhan/yichun.html" class="city-link">伊春</a>
+                <a href="/fenzhan/jiamusi.html" class="city-link">佳木斯</a>
+                <a href="/fenzhan/qitaihe.html" class="city-link">七台河</a>
+                <a href="/fenzhan/mudanjiang.html" class="city-link">牡丹江</a>
+                <a href="/fenzhan/heihe.html" class="city-link">黑河</a>
+                <a href="/fenzhan/suihua.html" class="city-link">绥化</a>
+                <a href="/fenzhan/daxinganling.html" class="city-link">大兴安岭</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">海南 <span style="font-size:14px;color:#6b7280;font-weight:400;">（4个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/haikou.html" class="city-link">海口</a>
+                <a href="/fenzhan/sanya.html" class="city-link">三亚</a>
+                <a href="/fenzhan/sansha.html" class="city-link">三沙</a>
+                <a href="/fenzhan/danzhou.html" class="city-link">儋州</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">广西 <span style="font-size:14px;color:#6b7280;font-weight:400;">（14个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/nanning.html" class="city-link">南宁</a>
+                <a href="/fenzhan/liuzhou.html" class="city-link">柳州</a>
+                <a href="/fenzhan/guilin.html" class="city-link">桂林</a>
+                <a href="/fenzhan/wuzhou.html" class="city-link">梧州</a>
+                <a href="/fenzhan/beihai.html" class="city-link">北海</a>
+                <a href="/fenzhan/fangchenggang.html" class="city-link">防城港</a>
+                <a href="/fenzhan/qinzhou.html" class="city-link">钦州</a>
+                <a href="/fenzhan/guigang.html" class="city-link">贵港</a>
+                <a href="/fenzhan/yulin.html" class="city-link">玉林</a>
+                <a href="/fenzhan/baise.html" class="city-link">百色</a>
+                <a href="/fenzhan/hezhou.html" class="city-link">贺州</a>
+                <a href="/fenzhan/hechi.html" class="city-link">河池</a>
+                <a href="/fenzhan/laibin.html" class="city-link">来宾</a>
+                <a href="/fenzhan/chongzuo.html" class="city-link">崇左</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">内蒙古 <span style="font-size:14px;color:#6b7280;font-weight:400;">（12个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/huhehaote.html" class="city-link">呼和浩特</a>
+                <a href="/fenzhan/baotou.html" class="city-link">包头</a>
+                <a href="/fenzhan/wuhai.html" class="city-link">乌海</a>
+                <a href="/fenzhan/chifeng.html" class="city-link">赤峰</a>
+                <a href="/fenzhan/tongliao.html" class="city-link">通辽</a>
+                <a href="/fenzhan/eerduosi.html" class="city-link">鄂尔多斯</a>
+                <a href="/fenzhan/hulunbeier.html" class="city-link">呼伦贝尔</a>
+                <a href="/fenzhan/bayannaoer.html" class="city-link">巴彦淖尔</a>
+                <a href="/fenzhan/wulanchabu.html" class="city-link">乌兰察布</a>
+                <a href="/fenzhan/xinganmeng.html" class="city-link">兴安盟</a>
+                <a href="/fenzhan/xilinguole.html" class="city-link">锡林郭勒</a>
+                <a href="/fenzhan/alashan.html" class="city-link">阿拉善</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">宁夏 <span style="font-size:14px;color:#6b7280;font-weight:400;">（5个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/yinchuan.html" class="city-link">银川</a>
+                <a href="/fenzhan/shizuishan.html" class="city-link">石嘴山</a>
+                <a href="/fenzhan/wuzhong.html" class="city-link">吴忠</a>
+                <a href="/fenzhan/guyuan.html" class="city-link">固原</a>
+                <a href="/fenzhan/zhongwei.html" class="city-link">中卫</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">新疆 <span style="font-size:14px;color:#6b7280;font-weight:400;">（25个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/wulumuqi.html" class="city-link">乌鲁木齐</a>
+                <a href="/fenzhan/kelamayi.html" class="city-link">克拉玛依</a>
+                <a href="/fenzhan/tulufan.html" class="city-link">吐鲁番</a>
+                <a href="/fenzhan/hami.html" class="city-link">哈密</a>
+                <a href="/fenzhan/changji.html" class="city-link">昌吉</a>
+                <a href="/fenzhan/boertala.html" class="city-link">博尔塔拉</a>
+                <a href="/fenzhan/bayinguoleng.html" class="city-link">巴音郭楞</a>
+                <a href="/fenzhan/akesu.html" class="city-link">阿克苏</a>
+                <a href="/fenzhan/kezilesu.html" class="city-link">克孜勒苏</a>
+                <a href="/fenzhan/kashi.html" class="city-link">喀什</a>
+                <a href="/fenzhan/hetian.html" class="city-link">和田</a>
+                <a href="/fenzhan/yili.html" class="city-link">伊犁</a>
+                <a href="/fenzhan/tacheng.html" class="city-link">塔城</a>
+                <a href="/fenzhan/aletai.html" class="city-link">阿勒泰</a>
+                <a href="/fenzhan/shihezi.html" class="city-link">石河子</a>
+                <a href="/fenzhan/alaer.html" class="city-link">阿拉尔</a>
+                <a href="/fenzhan/tumushuke.html" class="city-link">图木舒克</a>
+                <a href="/fenzhan/wujiaqu.html" class="city-link">五家渠</a>
+                <a href="/fenzhan/beitun.html" class="city-link">北屯</a>
+                <a href="/fenzhan/tiemenguan.html" class="city-link">铁门关</a>
+                <a href="/fenzhan/shuanghe.html" class="city-link">双河</a>
+                <a href="/fenzhan/kekedala.html" class="city-link">可克达拉</a>
+                <a href="/fenzhan/kunyu.html" class="city-link">昆玉</a>
+                <a href="/fenzhan/huyanghe.html" class="city-link">胡杨河</a>
+                <a href="/fenzhan/xinxing.html" class="city-link">新星</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">西藏 <span style="font-size:14px;color:#6b7280;font-weight:400;">（7个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/lasa.html" class="city-link">拉萨</a>
+                <a href="/fenzhan/rikaze.html" class="city-link">日喀则</a>
+                <a href="/fenzhan/changdu.html" class="city-link">昌都</a>
+                <a href="/fenzhan/linzhi.html" class="city-link">林芝</a>
+                <a href="/fenzhan/shannan.html" class="city-link">山南</a>
+                <a href="/fenzhan/naqu.html" class="city-link">那曲</a>
+                <a href="/fenzhan/ali.html" class="city-link">阿里</a>
+            </div>
+        </div>
+        <div class="province-group">
+            <h2 class="province-title">港澳台 <span style="font-size:14px;color:#6b7280;font-weight:400;">（3个城市）</span></h2>
+            <div class="city-grid">
+                <a href="/fenzhan/hongkong.html" class="city-link">香港</a>
+                <a href="/fenzhan/macau.html" class="city-link">澳门</a>
+                <a href="/fenzhan/taiwan.html" class="city-link">台湾</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="/uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <p class="footer-desc"></p>
+                </div>
+                <div class="footer-nav" data-footer-group="quick_links"><h4 class="footer-nav-title">快速链接</h4><ul class="footer-nav-list"></ul></div>
+                <div class="footer-nav" data-footer-group="service_links"><h4 class="footer-nav-title">更多内容</h4><ul class="footer-nav-list"></ul></div>
+                <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>
+            </div>
+            <div class="footer-bottom" id="footerDynamicContainer">
+                <p class="footer-copyright"></p>
+                <p class="footer-disclaimer"></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/footer-loader.js?v=20260513e"></script>
+    <script src="/js/main.js?v=20260513e"></script>
+</body>
+</html>
