@@ -382,11 +382,20 @@
             });
         }, observerOptions);
 
-        animatedElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
+        var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        animatedElements.forEach(function(el) {
+            var rect = el.getBoundingClientRect();
+            // If element is already in viewport, show immediately without animation
+            if (rect.top < windowHeight - 50) {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            } else {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            }
         });
     }
 

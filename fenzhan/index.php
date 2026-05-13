@@ -1,10 +1,11 @@
 <?php
 /**
  * 城市分站前端渲染模板
- * 100% 复刻主站首页风格，动态替换{城市}变量
- * 含缓存、SEO、本地区县模块
+ * 100% 复用主站首页模板，动态替换城市名称变量
+ * 含缓存、SEO优化、区县模块
  */
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/common-content.php';
 
 if (!function_exists('getDbConnection')) {
     function getDbConnection() { return getDB(); }
@@ -12,7 +13,7 @@ if (!function_exists('getDbConnection')) {
 
 // ---------- 缓存配置 ----------
 $cacheDir = __DIR__ . '/cache/';
-$cacheTTL = 3600; // 1 hour
+$cacheTTL = 3600;
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 if ($slug === '') {
@@ -40,7 +41,7 @@ try {
     exit('Internal error');
 }
 
-// ---------- 尝试读取缓存 ----------
+// ---------- 缓存读取 ----------
 if (!is_dir($cacheDir)) {
     @mkdir($cacheDir, 0755, true);
 }
@@ -52,22 +53,21 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTTL) {
     exit;
 }
 
-// ---------- 城市数据 ----------
+// ---------- 城市变量 ----------
 $city_name = $city['city_name'];
 $phone = !empty($city['phone']) ? $city['phone'] : '13552883008';
 $province = $city['province'] ?? '';
 
 // ---------- SEO 自动生成 ----------
-$page_title = $city_name . '摆账_过桥短拆_实缴验资_资金证明 - Yao资金网';
-$page_keywords = $city_name . '摆账,' . $city_name . '过桥短拆,' . $city_name . '实缴验资,' . $city_name . '资金证明,' . $city_name . '银行冲量';
-$page_description = '专业提供' . $city_name . '企业摆账、过桥短拆、实缴验资、资金证明、银行冲量业务，自有资金，快速安全，全国接单，诚邀企业资源代理合作。';
+$page_title = $city_name . '资金_过桥短拆_实资摆账_资金证明 - Yao资金网';
+$page_keywords = $city_name . '资金,' . $city_name . '过桥短拆,' . $city_name . '实资摆账,' . $city_name . '资金证明,' . $city_name . '大额亮资';
+$page_description = '专业提供' . $city_name . '企业个人、过桥短拆实资摆账、资金证明、大额亮资等资金业务，快速安全，全国多地拥有丰富企业资源，口碑良好。';
 
-// 如果数据库有自定义值则覆盖
 if (!empty($city['title'])) $page_title = $city['title'];
 if (!empty($city['keywords'])) $page_keywords = $city['keywords'];
 if (!empty($city['description'])) $page_description = $city['description'];
 
-// ---------- 加载区县数据 ----------
+// ---------- 区县数据加载 ----------
 $districts = [];
 $districtFile = __DIR__ . '/districts.json';
 if (file_exists($districtFile)) {
@@ -75,7 +75,6 @@ if (file_exists($districtFile)) {
     if (isset($allDistricts[$city_name])) {
         $districts = $allDistricts[$city_name];
     } elseif (isset($allDistricts[$province])) {
-        // 省级别默认区县
         $districts = $allDistricts[$province];
     }
 }
@@ -86,22 +85,25 @@ $escapedTitle = htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8');
 $escapedKeywords = htmlspecialchars($page_keywords, ENT_QUOTES, 'UTF-8');
 $escapedDesc = htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8');
 
-// ---------- 构建区县模块HTML ----------
+// ---------- 加载首页公共内容 ----------
+$homepageContent = loadHomepageContent();
+
+// ---------- 区县模块HTML ----------
 $districtHtml = '';
 if (!empty($districts)) {
     $districtHtml = '
-    <!-- 本地区县服务范围 -->
+    <!-- 城市专属服务范围 -->
     <section class="services" id="city-districts" style="padding-top:0;">
         <div class="section-container">
             <div class="section-header">
                 <div class="section-label">LOCAL DISTRICTS</div>
                 <h2 class="section-title">' . $escapedCity . '服务范围</h2>
-                <p class="section-subtitle">覆盖' . $escapedCity . '全区，为您提供便捷的上门服务</p>
+                <p class="section-subtitle">覆盖' . $escapedCity . '全城，为您提供便捷的网点服务</p>
             </div>
             <div class="districts-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:20px 0;">';
     foreach ($districts as $d) {
         $dName = htmlspecialchars(trim($d), ENT_QUOTES, 'UTF-8');
-        $districtHtml .= '<div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;transition:all 0.2s;cursor:default;" onmouseover="this.style.background=\'#eff6ff\';this.style.borderColor=\'#3b82f6\';" onmouseout="this.style.background=\'#f8f9fa\';this.style.borderColor=\'#e5e7eb\';">' . $dName . '</div>';
+        $districtHtml .= '<div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">' . $dName . '</div>';
     }
     $districtHtml .= '
             </div>
@@ -109,11 +111,10 @@ if (!empty($districts)) {
     </section>';
 }
 
-// ---------- 构建完整HTML ----------
+// ---------- 生成最终HTML ----------
 function buildPage($escapedCity, $escapedPhone, $escapedTitle, $escapedKeywords, $escapedDesc, $districtHtml, $city_name, $slug) {
 ob_start();
 ?>
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -192,7 +193,7 @@ ob_start();
                 <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
                 <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
                 <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">核心优势</a></li>
                 <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
                 <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
                 <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
@@ -204,7 +205,7 @@ ob_start();
                         { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
                         { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
                         { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-                        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
+                        { id: '4', name: '核心优势', url: 'advantages.html', icon: 'fas fa-star' },
                         { id: '5', name: '行业资讯', url: 'news.html', icon: 'fas fa-newspaper' },
                         { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
                         { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
@@ -262,7 +263,7 @@ ob_start();
                 })();
             </script>
 
-            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+            <button class="search-toggle" id="searchToggle" aria-label="搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
             </button>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
@@ -273,7 +274,7 @@ ob_start();
         <div class="search-overlay" id="searchOverlay" role="search" aria-hidden="true">
             <div class="search-container">
                 <form class="search-form" id="searchForm" action="#" method="get">
-                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、案例、资讯..." aria-label="搜索内容">
+                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、案例或资讯..." aria-label="搜索关键词">
                     <button type="submit" class="search-submit" aria-label="搜索"><i class="fas fa-search" aria-hidden="true"></i></button>
                 </form>
                 <div class="search-suggestions" id="searchSuggestions" aria-live="polite"></div>
@@ -291,9 +292,9 @@ ob_start();
                 <span>专业资金服务 · 值得信赖</span>
             </div>
 
-            <h1 class="hero-title" id="hero-title"><?php echo $escapedCity; ?>专业资金解决方案<br>助力企业稳健发展</h1>
+            <h1 class="hero-title" id="hero-title"><?php echo $escapedCity; ?>专业资金服务商<br>助力企业稳健发展</h1>
 
-            <p class="hero-subtitle"><?php echo $escapedCity; ?>企业一站式资金服务商</p>
+            <p class="hero-subtitle"><?php echo $escapedCity; ?>企业一站式资金解决方案</p>
 
             <div class="hero-buttons">
                 <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
@@ -313,81 +314,19 @@ ob_start();
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" data-target="100">100亿+</div>
-                    <div class="stat-label">亿资金规模</div>
+                    <div class="stat-label">资金规模</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" data-target="99">99%</div>
-                    <div class="stat-label">客户满意度</div>
+                    <div class="stat-label">客户好评</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 核心业务领域 -->
-    <section class="services" id="services" aria-labelledby="services-title">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-label">OUR SERVICES</div>
-                <h2 class="section-title" id="services-title"><?php echo $escapedCity; ?>核心业务领域</h2>
-                <p class="section-subtitle"><?php echo $escapedCity; ?>地区上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
-            </div>
+<?php renderServicesSection($homepageContent, $city_name); ?>
 
-            <div class="services-grid">
-                <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h3 class="service-title">上市公司类</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>上市公司短拆、股票解质押过桥</li><li><?php echo $escapedCity; ?>募集账户归还过桥、产业基金备案过桥</li><li><?php echo $escapedCity; ?>股票质押、定增、协议转让、代持</li><li><?php echo $escapedCity; ?>财务报表优化、降负债</li></ul></ul>
-                </article>
-
-                <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h3 class="service-title">企业/个人摆账</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>长短期定存摆账、云信票据实摆</li><li><?php echo $escapedCity; ?>过账实趴、抵押类资金过桥</li><li><?php echo $escapedCity; ?>实缴验资、资金证明、银行保函</li><li><?php echo $escapedCity; ?>贸易增量、显账亮资</li></ul></ul>
-                </article>
-
-                <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h3 class="service-title">银行存款类</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>银行时点冲量、日均业务</li><li><?php echo $escapedCity; ?>月末冲量</li><li><?php echo $escapedCity; ?>一年期定期存款</li><li><?php echo $escapedCity; ?>三年期定期存款</li></ul></ul>
-                </article>
-
-                <article class="service-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h3 class="service-title">应收账款融资</h3>
-                    <ul class="service-list"><ul><li><?php echo $escapedCity; ?>置换云信票据</li><li><?php echo $escapedCity; ?>可拆分流转支付</li><li><?php echo $escapedCity; ?>融资贴现、准入宽松</li><li><?php echo $escapedCity; ?>不看征信、包容执行诉讼主体</li></ul></ul>
-                </article>
-            </div>
-
-            <!-- 业务详情：核心优势/收费说明/风险提示 -->
-            <div class="service-details" id="serviceDetails">
-                <div class="detail-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h4 class="detail-title"><i class="fas fa-star"></i> 核心优势</h4>
-                    <ul class="detail-list">
-                        <li>资金实力雄厚，单笔可提供数亿至数十亿资金支持</li>
-                        <li>操作灵活，可根据客户需求定制个性化方案</li>
-                        <li>审批快速，资料齐全后最快当日放款</li>
-                        <li>合规安全，严格遵循金融监管要求</li>
-                    </ul>
-                </div>
-                <div class="detail-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h4 class="detail-title"><i class="fas fa-calculator"></i> 收费说明</h4>
-                    <ul class="detail-list">
-                        <li>按实际使用天数计费，透明无隐藏费用</li>
-                        <li>根据资金规模、期限、风险等级综合定价</li>
-                        <li>长期合作客户享受优惠费率</li>
-                        <li>具体费用以双方签署协议为准</li>
-                    </ul>
-                </div>
-                <div class="detail-card" style="opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;">
-                    <h4 class="detail-title"><i class="fas fa-exclamation-triangle"></i> 风险提示</h4>
-                    <ul class="detail-list">
-                        <li>资金业务存在市场风险，请根据自身情况谨慎决策</li>
-                        <li>请确保提供真实、完整的资料信息</li>
-                        <li>严格遵守合同约定，按时归还资金</li>
-                        <li>投资有风险，入市需谨慎</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 本地区县服务范围 -->
+    <!-- 城市专属区县服务范围 -->
     <?php echo $districtHtml; ?>
 
     <!-- 成功案例展示 -->
@@ -396,7 +335,7 @@ ob_start();
             <div class="section-header">
                 <div class="section-label">SUCCESS CASES</div>
                 <h2 class="section-title" id="cases-showcase-title">成功案例</h2>
-                <p class="section-subtitle">真实案例见证专业实力，累计服务500+企业客户</p>
+                <p class="section-subtitle">用事实彰显专业实力，累计服务500+企业客户</p>
             </div>
             <div class="cases-showcase-grid" id="casesShowcaseGrid"></div>
             <div class="cases-showcase-pagination" id="casesShowcasePagination" style="display:flex;">
@@ -407,167 +346,17 @@ ob_start();
         </div>
     </section>
 
-    <!-- 服务优势 -->
-    <section class="advantages" id="advantages" aria-labelledby="advantages-title">
-        <div class="section-container">
-            <div class="advantages-header">
-                <h2 class="advantages-title" id="advantages-title">我们的核心优势</h2>
-                <p class="advantages-subtitle">专业 高效 安全 可靠</p>
-            </div>
-            <div class="advantages-content">
-                <div class="advantages-visual">
-                    <div class="advantages-image-wrapper">
-                        <div class="advantages-icon-main"><i class="fas fa-thumbs-up"></i></div>
-                        <div class="advantages-stats">
-                            <div class="advantages-stat"><span class="advantages-stat-number">500+</span><span class="advantages-stat-label">服务企业</span></div>
-                            <div class="advantages-stat"><span class="advantages-stat-number">99%</span><span class="advantages-stat-label">客户满意度</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="advantages-features">
-                    <div class="advantages-feature">
-                        <div class="advantages-check"><i class="fas fa-check"></i></div>
-                        <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">丰富的行业经验</h3>
-                            <p class="advantages-feature-desc">深耕资金业务十余年，积累了丰富的行业经验和资源网络，能够为客户提供最专业的服务。</p>
-                        </div>
-                    </div>
-                    <div class="advantages-feature">
-                        <div class="advantages-check"><i class="fas fa-check"></i></div>
-                        <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">强大的资金实力</h3>
-                            <p class="advantages-feature-desc">累计管理资金规模超100亿元，单笔可提供数亿至数十亿资金支持。</p>
-                        </div>
-                    </div>
-                    <div class="advantages-feature">
-                        <div class="advantages-check"><i class="fas fa-check"></i></div>
-                        <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">专业的服务团队</h3>
-                            <p class="advantages-feature-desc">核心团队成员均来自国内知名金融机构，平均从业经验超过15年。</p>
-                        </div>
-                    </div>
-                    <div class="advantages-feature">
-                        <div class="advantages-check"><i class="fas fa-check"></i></div>
-                        <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">完善的风控体系</h3>
-                            <p class="advantages-feature-desc">建立了完善的风险控制体系，严格遵循合规要求，确保每笔业务安全可控。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 核心优势 -->
+    <?php renderAdvantagesSection($homepageContent); ?>
 
-    <!-- 合作银行 -->
-    <section class="bank-logos-section">
-        <div class="section-container">
-            <div class="section-header">
-                <h2 class="section-title">合作银行</h2>
-                <p class="section-subtitle">与多家银行建立深度合作关系</p>
-            </div>
-            <div class="bank-logos-wrapper">
-                <img src="uploads/合作银行logo.jpg" alt="合作银行" class="bank-logos-image">
-            </div>
-        </div>
-    </section>
-
-    <!-- 联系电话 -->
-    <section class="services" style="padding:40px 0;">
-        <div class="section-container" style="text-align:center;">
-            <div style="background:linear-gradient(135deg,#1a365d,#2d4a7a);color:white;border-radius:12px;padding:40px 20px;">
-                <h2 style="font-size:28px;margin-bottom:16px;"><?php echo $escapedCity; ?>业务咨询</h2>
-                <p style="font-size:16px;margin-bottom:24px;opacity:0.9;">专业团队为您提供全方位的资金解决方案</p>
-                <div style="font-size:32px;font-weight:700;letter-spacing:2px;">
-                    <i class="fas fa-phone-alt" style="margin-right:12px;"></i><?php echo $escapedPhone; ?>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ常见问题 -->
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-label">FAQ</div>
-                <h2 class="section-title" id="faq-title">常见问题</h2>
-                <p class="section-subtitle">解答您关于资金业务的常见疑问</p>
-            </div>
-            <div id="faqDynamicContainer" class="faq-container">
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-lightbulb"></i> 亮资业务</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">什么是亮资服务？</summary>
-                            <div class="faq-answer"><p>亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</p></div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">亮资需要多长时间？</summary>
-                            <div class="faq-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div>
-                        </details>
-                    </div>
-                </div>
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-exchange-alt"></i> 过桥资金</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">过桥资金的利率是多少？</summary>
-                            <div class="faq-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间。</p></div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">过桥资金最长可以使用多久？</summary>
-                            <div class="faq-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div>
-                        </details>
-                    </div>
-                </div>
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-university"></i> 摆账业务</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">摆账业务的资金安全吗？</summary>
-                            <div class="faq-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。</p></div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">摆账需要提供什么资料？</summary>
-                            <div class="faq-answer"><p>一般需要提供：营业执照、法人身份证、公司章程、银行开户许可证等基础资料。</p></div>
-                        </details>
-                    </div>
-                </div>
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar"></i> 应收账款融资</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">应收账款融资的额度是多少？</summary>
-                            <div class="faq-answer"><p>应收账款融资额度一般为应收账款金额的50%-80%。</p></div>
-                        </details>
-                    </div>
-                </div>
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-piggy-bank"></i> 银行存款</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">银行存款业务有什么优势？</summary>
-                            <div class="faq-answer"><p>我们与多家银行建立了长期合作关系，可以为客户争取更优惠的存款利率。</p></div>
-                        </details>
-                    </div>
-                </div>
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-question-circle"></i> 一般问题</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">如何联系你们？</summary>
-                            <div class="faq-answer"><p>电话：<?php echo $escapedPhone; ?><br>邮箱：wanglizhongguo@126.com</p></div>
-                        </details>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+<?php renderBankLogosSection(); ?>
+<?php renderContactSection($city_name, $phone); ?>
+<?php renderFaqSection($homepageContent, $phone); ?>
     </main>
 
-    <!-- 右侧边浮动电话按钮 -->
+    <!-- 右侧浮动电话按钮 -->
     <div class="chat-widget" id="chatWidget" aria-label="联系电话">
-        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="拨打电话" aria-expanded="false">
+        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="点击电话" aria-expanded="false">
             <i class="fas fa-phone-alt"></i>
         </button>
         <div class="chat-widget-phone-display">
@@ -584,11 +373,11 @@ ob_start();
                     <p class="footer-desc"></p>
                 </div>
                 <div class="footer-nav" data-footer-group="quick_links">
-                    <h4 class="footer-nav-title">快速链接</h4>
+                    <h4 class="footer-nav-title">快速导航</h4>
                     <ul class="footer-nav-list"></ul>
                 </div>
                 <div class="footer-nav" data-footer-group="service_links">
-                    <h4 class="footer-nav-title">更多内容</h4>
+                    <h4 class="footer-nav-title">服务项目</h4>
                     <ul class="footer-nav-list"></ul>
                 </div>
                 <div class="footer-nav" data-footer-group="contact">
@@ -608,22 +397,19 @@ ob_start();
     <script src="/js/cms.js?v=20260513e"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Remove active class from all nav links (city page has no specific active page)
         document.querySelectorAll('.nav-menu a').forEach(function(link) {
             link.classList.remove('active');
         });
 
-        // Phone toggle function
         window.togglePhoneDisplay = function() {
             var el = document.getElementById('phoneDisplay');
             if (el) el.style.display = el.style.display === 'none' ? 'inline-block' : 'none';
         };
 
-        // Load cases
         var grid = document.getElementById('casesShowcaseGrid');
         if (grid) {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'admin/api/cases-showcase.php?limit=6', true);
+            xhr.open('GET', '/admin/api/cases-showcase.php?limit=6', true);
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     try {
@@ -631,7 +417,7 @@ ob_start();
                         if (resp.code === 0 && resp.data && resp.data.length > 0) {
                             grid.innerHTML = resp.data.map(function(c) {
                                 var img = c.image || 'uploads/case-default.jpg';
-                                return '<article class="case-card-enhanced"><div class="case-card-image"><img src="' + img + '" alt="' + c.title + '" onerror="this.src=\\'uploads/case-default.jpg\\';this.onerror=null;"></div><div class="case-card-content"><h3 class="case-card-title" style="cursor:pointer;" onclick="window.location.href=\\'case-detail.html?id=' + c.id + '\\'">' + c.title + '</h3><p class="case-card-summary">' + (c.summary || '') + '</p></div></article>';
+                                return '<article class="case-card-enhanced"><div class="case-card-image"><img src="' + img + '" alt="' + c.title + '" onerror="this.src=\'uploads/case-default.jpg\';this.onerror=null;"></div><div class="case-card-content"><h3 class="case-card-title" style="cursor:pointer;" onclick="window.location.href=\'case-detail.html?id=' + c.id + '\'">' + c.title + '</h3><p class="case-card-summary">' + (c.summary || '') + '</p></div></article>';
                             }).join('');
                         }
                     } catch(e) {}

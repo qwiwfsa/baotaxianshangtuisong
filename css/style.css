@@ -749,6 +749,13 @@ input, textarea, select {
     margin-top: auto;
 }
 
+/* Fix inner UL padding when CMS content already has <ul> */
+.service-list ul {
+    padding-left: 0;
+    list-style: none;
+    margin: 0;
+}
+
 .service-link {
     display: inline-flex;
     align-items: center;

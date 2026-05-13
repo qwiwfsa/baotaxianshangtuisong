@@ -170,10 +170,16 @@ function parseSectionToModule($section, $sortOrder, $xpath) {
         }
 
         if (count($items) > 0) {
+            // Try to read actual columns from inline style first
+            $columns = min(count($items), 4);
+            $styleAttr = $section->getAttribute('style');
+            if ($styleAttr && preg_match('/grid-template-columns\s*:\s*repeat\((\d+)/', $styleAttr, $m)) {
+                $columns = intval($m[1]);
+            }
             return [
                 'module_type' => 'card',
                 'module_data' => [
-                    'columns' => min(count($items), 4),
+                    'columns' => $columns,
                     'style' => 'modern',
                     'items' => $items
                 ],

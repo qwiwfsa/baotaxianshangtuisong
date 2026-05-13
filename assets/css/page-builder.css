@@ -278,3 +278,58 @@
     margin: 0 auto;
 }
 
+
+/* 图片占位符 - 无文件兜底方案 */
+.img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    color: #9ca3af;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+.img-placeholder i {
+    font-size: 32px;
+}
+.img-placeholder-banner {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+}
+.img-placeholder-image {
+    width: 100%;
+    min-height: 200px;
+}
+.card-image.card-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    color: #9ca3af;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    min-height: 180px;
+    height: 200px;
+}
+.card-image.card-image-placeholder i {
+    font-size: 36px;
+}
+
+/* 图片加载失败 */
+img.img-broken {
+    display: none;
+}
+.card-image:has(img.img-broken) {
+    background: #f3f4f6;
+    min-height: 180px;
+}
+
+/* Banner图片加载失败 */
+.banner-slide:has(img[style*="display: none"]) {
+    background: #f3f4f6;
+    min-height: 300px;
+}

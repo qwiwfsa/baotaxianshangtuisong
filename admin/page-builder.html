@@ -1748,7 +1748,11 @@
 
                 const item = data.items[0];
 
+                if (item.image && item.image.indexOf('{{') === -1) {
                 html += '<img src="' + item.image + '" alt="' + item.title + '">';
+            } else {
+                html += '<div class="img-placeholder img-placeholder-banner"><i class="fas fa-image"></i><span>' + (item.title || 'Banner') + '</span></div>';
+            }
 
                 html += '<h3>' + item.title + '</h3>';
 
@@ -1792,7 +1796,7 @@
 
                 <div class="module-image">
 
-                    <img src="${data.src}" alt="${data.alt}" style="width: ${data.width};">
+                    ${data.src && data.src.indexOf('{{') === -1 ? '<img src="' + data.src + '" alt="' + data.alt + '" style="width: ' + data.width + ';">' : '<div class="img-placeholder img-placeholder-image"><i class="fas fa-image"></i><span>' + (data.alt || '图片') + '</span></div>'}
 
                 </div>
 
@@ -1816,7 +1820,7 @@
 
                         <div class="card-item">
 
-                            <img src="${item.image}" alt="${item.title}">
+                            ${item.image && item.image.indexOf('{{') === -1 ? '<img src="' + item.image + '" alt="' + item.title + '">' : '<div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>' + (item.title || '图片') + '</span></div>'}
 
                             <h4>${item.title}</h4>
 
