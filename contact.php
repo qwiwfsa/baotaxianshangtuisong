@@ -5,6 +5,7 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="联系我们 - 获取专业的资金服务咨询，电话：13552883008">
@@ -12,10 +13,10 @@ DeviceDetector::redirect();
     <title>联系我们</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/page-custom.css">
-    <!-- 高德地图API - 请替换为自己的Key -->
-    <script src="https://webapi.amap.com/maps?v=2.0&key=9ed402d0d11a77f467b97cbf0f551916&plugin=AMap.Marker"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/page-custom.css">
+    
+
     <!-- Logo动态加载 -->
     <script>
     (function(){
@@ -107,15 +108,15 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link active" role="menuitem">联系我们</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link active" role="menuitem">联系我们</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -263,7 +264,7 @@ DeviceDetector::redirect();
                             <div class="contact-qr-card">
                                 <h3>扫码添加微信</h3>
                                 <div class="contact-qr-image">
-                                    <img src="uploads/wechat-qr.png" alt="微信二维码" loading="lazy">
+                                    <img src="/uploads/wechat-qr.png" alt="微信二维码" loading="lazy">
                                 </div>
                                 <p>微信扫一扫，添加好友咨询</p>
                             </div>
@@ -289,37 +290,6 @@ DeviceDetector::redirect();
                     </div>
                 </div>
 
-                <!-- 地图位置 -->
-                <div class="editable-section" data-section="contact-map">
-                    <div class="contact-map-section">
-                        <div class="contact-map-header">
-                            <h2><i class="fas fa-map-marked-alt"></i> 公司位置</h2>
-                            <h3>财富金融中心</h3>
-                            <p>北京市朝阳区呼家楼街道东三环中路5号</p>
-                        </div>
-                        <div class="contact-map-container">
-                            <!-- 高德地图容器 -->
-                            <div id="amap-container" style="width:100%;height:400px;border-radius:8px;"></div>
-                        </div>
-                        <div class="contact-map-info">
-                            <div class="map-info-item">
-                                <i class="fas fa-subway"></i>
-                                <span>地铁：1号线/2号线建国门站B出口，步行约5分钟</span>
-                            </div>
-                            <div class="map-info-item">
-                                <i class="fas fa-bus"></i>
-                                <span>公交：金融街站，途经公交：1路、4路、52路、120路</span>
-                            </div>
-                            <div class="map-info-item">
-                                <i class="fas fa-car"></i>
-                                <span>自驾：大厦设有地下停车场，访客可免费停车2小时</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
 
     </main>
 
@@ -340,66 +310,8 @@ DeviceDetector::redirect();
 <?php include 'includes/footer.php'; ?>
 
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
-    <!-- 高德地图初始化 -->
-    <script>
-        // 高德地图初始化
-        // 注意：需要将 YOUR_AMAP_KEY_HERE 替换为实际的高德地图API Key
-        // 申请地址：https://lbs.amap.com/
-        (function() {
-            // 检查是否已加载高德地图API
-            if (typeof AMap === 'undefined') {
-                console.warn('高德地图API未加载，请检查API Key是否正确');
-                document.getElementById('amap-container').innerHTML = 
-                    '<div class="contact-map-placeholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">' +
-                    '<i class="fas fa-exclamation-triangle" style="font-size:48px;color:#f59e0b;margin-bottom:16px;"></i>' +
-                    '<p>地图加载失败</p>' +
-                    '<p class="map-note">请在contact.html中配置高德地图API Key</p>' +
-                    '</div>';
-                return;
-            }
-            
-            // 初始化地图
-            // 北京市朝阳区呼家楼街道东三环中路5号 坐标
-            var map = new AMap.Map('amap-container', {
-                zoom: 16,
-                center: [116.4628, 39.9289], // 东三环中路区域坐标
-                viewMode: '2D',
-                resizeEnable: true
-            });
-            
-            // 添加标记点
-            var marker = new AMap.Marker({
-                position: [116.4628, 39.9289],
-                title: '财富金融中心',
-                label: {
-                    content: 'Yao资金网 - 财富金融中心',
-                    direction: 'top'
-                }
-            });
-            marker.setMap(map);
-            
-            // 添加信息窗体
-            var infoWindow = new AMap.InfoWindow({
-                content: '<div style="padding:10px;"><h4 style="margin:0 0 5px;">财富金融中心</h4><p style="margin:0;font-size:12px;">北京市朝阳区呼家楼街道东三环中路5号</p></div>',
-                offset: new AMap.Pixel(0, -30)
-            });
-            
-            // 点击标记显示信息窗体
-            marker.on('click', function() {
-                infoWindow.open(map, marker.getPosition());
-            });
-            
-            // 添加地图控件
-            AMap.plugin(['AMap.ToolBar', 'AMap.Scale'], function() {
-                map.addControl(new AMap.ToolBar({
-                    position: 'RB'
-                }));
-                map.addControl(new AMap.Scale());
-            });
-        })();
-    </script>
     
     <!-- 浮动电话按钮脚本 -->
     <script>

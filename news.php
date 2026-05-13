@@ -141,7 +141,7 @@ DeviceDetector::redirect();
 (function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p;}}})();
 </script>
     <!-- 社交分享样式 -->
-    <link rel="stylesheet" href="css/social-share.css">
+    <link rel="stylesheet" href="/css/social-share.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -149,15 +149,15 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="images/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="images/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -231,7 +231,7 @@ DeviceDetector::redirect();
 <?php include 'includes/footer.php'; ?>
 
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     <!-- 动态加载资讯文章 -->
     <script>
@@ -244,8 +244,8 @@ DeviceDetector::redirect();
             try {
                 const ts = Date.now();
                 const apiUrl = currentCategoryId
-                    ? 'mobile/api/news.php?category_id=' + currentCategoryId + '&limit=100&t=' + ts
-                    : 'mobile/api/news.php?limit=100&t=' + ts;
+                    ? '/mobile/api/news.php?category_id=' + currentCategoryId + '&limit=100&t=' + ts
+                    : '/mobile/api/news.php?limit=100&t=' + ts;
                 const response = await fetch(apiUrl, {
                     method: 'GET',
                     cache: 'no-store',
@@ -271,7 +271,7 @@ DeviceDetector::redirect();
             if (!categoriesContainer) return;
             
             try {
-                const resp = await fetch('mobile/api/news.php?limit=1&t=' + Date.now(), {
+                const resp = await fetch('/mobile/api/news.php?limit=1&t=' + Date.now(), {
                     cache: 'no-store',
                     headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' }
                 });
@@ -619,7 +619,7 @@ DeviceDetector::redirect();
         })();
     </script>
     <!-- 社交分享功能 -->
-    <script src="js/social-share.js"></script>
+    <script src="/js/social-share.js"></script>
 </body>
 </html>
 

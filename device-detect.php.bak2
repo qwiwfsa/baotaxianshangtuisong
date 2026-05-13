@@ -88,8 +88,7 @@ class DeviceDetector {
         // 如果是移动设备且不在mobile目录，重定向到移动版
         if ($deviceType === 'mobile' && strpos($_SERVER['REQUEST_URI'], '/mobile/') === false) {
             // 优先尝试 .php，若不存在则尝试 .html（手机端是.html文件）
-            // 注意: 路径前加 "/" 防止 DOCUMENT_ROOT 无尾斜杠导致路径拼接错误
-            $mobilePage = $basePath . '/mobile/' . $currentPage;
+            $mobilePage = $basePath . 'mobile/' . $currentPage;
             if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $mobilePage)) {
                 $htmlPage = preg_replace('/\.php$/', '.html', $mobilePage);
                 if ($htmlPage !== $mobilePage && file_exists($_SERVER['DOCUMENT_ROOT'] . $htmlPage)) {
@@ -102,7 +101,7 @@ class DeviceDetector {
             }
         }
 
-// 如果是桌面设备// 如果是桌面设备且在mobile目录，重定向回桌面版
+        // 如果是桌面设备// 如果是桌面设备且在mobile目录，重定向回桌面版
         if ($deviceType === 'desktop' && strpos($_SERVER['REQUEST_URI'], '/mobile/') !== false) {
             $desktopPage = str_replace('/mobile/', '/', $_SERVER['REQUEST_URI']);
             header('Location: ' . $desktopPage);

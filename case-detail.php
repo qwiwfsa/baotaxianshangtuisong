@@ -5,6 +5,7 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao璧勯噾缃戞垚鍔熸渚嬭鎯?- 鏌ョ湅璇︾粏鐨勮祫閲戞湇鍔℃渚嬶紝浜嗚В鎴戜滑濡備綍甯姪浼佷笟瑙ｅ喅璧勯噾闇€姹傘€?>
@@ -148,15 +149,15 @@ DeviceDetector::redirect();
     <!-- 瀵艰埅鏍?-->
     <nav class="navbar" id="navbar" role="navigation" aria-label="涓诲鑸?>
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao璧勯噾缃戦椤?><img src="uploads/logo.png?v=20260502040820" alt="Yao璧勯噾缃? style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao璧勯噾缃戦椤?><img src="uploads/logo.png?v=20260502040820" alt="Yao璧勯噾缃? style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">棣栭〉</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">涓氬姟鑼冨洿</a></li>
-                <li role="none"><a href="cases.html" class="nav-link active" role="menuitem">鎴愬姛妗堜緥</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">鏈嶅姟浼樺娍</a></li>
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">琛屼笟璧勮</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">甯歌闂</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">鑱旂郴鎴戜滑</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">棣栭〉</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">涓氬姟鑼冨洿</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link active" role="menuitem">鎴愬姛妗堜緥</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">鏈嶅姟浼樺娍</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">琛屼笟璧勮</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">甯歌闂</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">鑱旂郴鎴戜滑</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="鎵撳紑鎼滅储" aria-expanded="false">

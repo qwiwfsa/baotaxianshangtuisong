@@ -186,7 +186,7 @@
                         { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
                         { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
                         { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-                        { id: '5', name: '行业资讯', url: 'news.html', icon: 'fas fa-newspaper' },
+                        { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
                         { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
                         { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
                     ];
@@ -195,9 +195,15 @@
                         const container = document.getElementById('dynamicNavMenu');
                         if (!container) return;
                         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                        const isMobile = window.location.pathname.indexOf('/mobile/') === 0;
                         container.innerHTML = items.map(function(item) {
-                            const isActive = item.url === currentPage || (currentPage === '' && item.url === 'index.html');
-                            return '<li role="none"><a href="' + item.url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
+                            // 手机端：将API返回的绝对路径转为移动端相对路径
+                            var url = item.url;
+                            if (isMobile && url.indexOf('/') === 0) {
+                                url = url === '/' ? 'index.html' : url.substring(1);
+                            }
+                            const isActive = url === currentPage || (currentPage === '' && url === 'index.html');
+                            return '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
                         }).join('');
                         // 同步到localStorage
                         try { localStorage.setItem('cms_nav_items', JSON.stringify(items)); } catch(e) {}
@@ -1167,4 +1173,5 @@
 
 
 
+    <script src="../js/footer-loader.js"></script>
 </body></html>

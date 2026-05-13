@@ -1,4 +1,5 @@
 <html lang="zh-CN" data-immersive-translate-page-theme="light"><head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="提供企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等一站式资金业务服务，高效合规，专业对接。">
@@ -18,7 +19,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
     <noscript>&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;</noscript>
-    <link rel="stylesheet" href="css/style.css?v=20260506a">
+    <link rel="stylesheet" href="/css/style.css?v=20260506a">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -137,8 +138,8 @@
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;" class=""></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"><li role="none"><a href="index.html" class="nav-link active" role="menuitem">首页</a></li><li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li><li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li><li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li><li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li><li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li><li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li></ul>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;" class=""></a>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"><li role="none"><a href="/" class="nav-link active" role="menuitem">首页</a></li><li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li><li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li><li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li><li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li><li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li><li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li></ul>
             
             <script>
                 // 动态加载导航菜单 — 优先从数据库，回退localStorage，兜底默认数据
@@ -362,7 +363,7 @@
             <div class="cases-showcase-grid" id="casesShowcaseGrid">
                     <article class="case-card-enhanced" data-id="1778589809435">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a032129407ab.png')">
-                            <img src="uploads/20260512_6a032129407ab.png" alt="3 亿元个人名下资金证明 | 大额个人资产实力证明案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a032129407ab.png" alt="3 亿元个人名下资金证明 | 大额个人资产实力证明案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=1778589809435'" style="cursor: pointer;">3 亿元个人名下资金证明 | 大额个人资产实力证明案例</h3>
@@ -379,7 +380,7 @@
                 
                     <article class="case-card-enhanced" data-id="18">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a031f630d19c.jpg')">
-                            <img src="uploads/20260512_6a031f630d19c.jpg" alt="某酒店老板 1 亿元工程亮资 | 油品项目资金实力证明案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a031f630d19c.jpg" alt="某酒店老板 1 亿元工程亮资 | 油品项目资金实力证明案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=18'" style="cursor: pointer;">某酒店老板 1 亿元工程亮资 | 油品项目资金实力证明案例</h3>
@@ -396,7 +397,7 @@
                 
                     <article class="case-card-enhanced" data-id="17">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a03007bb5037.png')">
-                            <img src="uploads/20260512_6a03007bb5037.png" alt="某上市公司过桥融资" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a03007bb5037.png" alt="某上市公司过桥融资" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=17'" style="cursor: pointer;">某上市公司过桥融资</h3>
@@ -413,7 +414,7 @@
                 
                     <article class="case-card-enhanced" data-id="16">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a031da704d85.png')">
-                            <img src="uploads/20260512_6a031da704d85.png" alt="某高新技术企业 6000 万实缴验资服务案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a031da704d85.png" alt="某高新技术企业 6000 万实缴验资服务案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=16'" style="cursor: pointer;">某高新技术企业 6000 万实缴验资服务案例</h3>
@@ -430,7 +431,7 @@
                 
                     <article class="case-card-enhanced" data-id="15">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260427_69efb19af3aa8.jpg')">
-                            <img src="uploads/20260427_69efb19af3aa8.jpg" alt="3000 万现金亮资服务 | 企业工程项目资金实力证明案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260427_69efb19af3aa8.jpg" alt="3000 万现金亮资服务 | 企业工程项目资金实力证明案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=15'" style="cursor: pointer;">3000 万现金亮资服务 | 企业工程项目资金实力证明案例</h3>
@@ -447,7 +448,7 @@
                 
                     <article class="case-card-enhanced" data-id="14">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a03197e79f62.png')">
-                            <img src="uploads/20260512_6a03197e79f62.png" alt="某上市制造企业 4亿股票解质押过桥融资案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a03197e79f62.png" alt="某上市制造企业 4亿股票解质押过桥融资案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=14'" style="cursor: pointer;">某上市制造企业 4亿股票解质押过桥融资案例</h3>
@@ -464,7 +465,7 @@
                 
                     <article class="case-card-enhanced" data-id="13">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a03127a92af0.png')">
-                            <img src="uploads/20260512_6a03127a92af0.png" alt="某连锁零售企业 1 亿元摆账流水打印服务案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a03127a92af0.png" alt="某连锁零售企业 1 亿元摆账流水打印服务案例" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=13'" style="cursor: pointer;">某连锁零售企业 1 亿元摆账流水打印服务案例</h3>
@@ -481,7 +482,7 @@
                 
                     <article class="case-card-enhanced" data-id="12">
                         <div class="case-card-image" onclick="openLightbox('uploads/20260512_6a031aaeabfdc.jpeg')">
-                            <img src="uploads/20260512_6a031aaeabfdc.jpeg" alt="应收账款不确权 对价云信融资 | 低成本企业资金周转方案" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
+                            <img src="/uploads/20260512_6a031aaeabfdc.jpeg" alt="应收账款不确权 对价云信融资 | 低成本企业资金周转方案" onerror="this.src='uploads/case-default.jpg';this.onerror=null;">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=12'" style="cursor: pointer;">应收账款不确权 对价云信融资 | 低成本企业资金周转方案</h3>
@@ -589,7 +590,7 @@
                 <p class="section-subtitle">与多家银行建立深度合作关系</p>
             </div>
             <div class="bank-logos-wrapper">
-                <img src="uploads/合作银行logo.jpg" alt="合作银行" class="bank-logos-image">
+                <img src="/uploads/合作银行logo.jpg" alt="合作银行" class="bank-logos-image">
             </div>
         </div>
     </section>
@@ -720,7 +721,7 @@
         <div class="footer-container">
             <div class="footer-main">
                 <div class="footer-brand">
-                    <div class="footer-logo"><img src="uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <div class="footer-logo"><img src="/uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资金网" style="height:48px;width:auto;"></div>
                     <p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
                 </div>
                 <div class="footer-nav" data-footer-group="quick_links">

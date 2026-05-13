@@ -90,15 +90,15 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 <body>
     <nav class="navbar" id="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="logo"><img src="images/logo.png" alt="Yao资金网"></a>
+            <a href="/" class="logo"><img src="images/logo.png" alt="Yao资金网"></a>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">首页</a></li>
-                <li><a href="services.html" class="nav-link">业务范围</a></li>
-                <li><a href="cases.html" class="nav-link">成功案例</a></li>
-                <li><a href="advantages.html" class="nav-link">服务优势</a></li>
-                <li><a href="news.php" class="nav-link">行业资讯</a></li>
-                <li><a href="faq.html" class="nav-link">常见问题</a></li>
-                <li><a href="contact.html" class="nav-link">联系我们</a></li>
+                <li><a href="/" class="nav-link">首页</a></li>
+                <li><a href="/services.html" class="nav-link">业务范围</a></li>
+                <li><a href="/cases.html" class="nav-link">成功案例</a></li>
+                <li><a href="/advantages.html" class="nav-link">服务优势</a></li>
+                <li><a href="/news.php" class="nav-link">行业资讯</a></li>
+                <li><a href="/faq.html" class="nav-link">常见问题</a></li>
+                <li><a href="/contact.html" class="nav-link">联系我们</a></li>
             </ul>
         </div>
     </nav>

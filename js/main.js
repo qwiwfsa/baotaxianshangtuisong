@@ -412,6 +412,7 @@
             email: document.getElementById('email'),
             privacy: document.getElementById('privacy')
         };
+        if (!inputs.name || !inputs.phone || !inputs.email || !inputs.privacy) return;
 
         const errors = {
             name: document.getElementById('nameError'),

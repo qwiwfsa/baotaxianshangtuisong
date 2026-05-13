@@ -5,6 +5,7 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao资金网-专业资金业务服务商，提供北京亮资业务、上市公司过桥资金、企业摆账服务。10年+行业经验，累计服务500+企业，管理资金规模超100亿。">
@@ -24,7 +25,7 @@ DeviceDetector::redirect();
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="css/style.css?v=20250504">
+    <link rel="stylesheet" href="/css/style.css?v=20250504">
     <!-- 动态内容加载脚本 -->
     <script>
         // 从localStorage加载编辑后的内容
@@ -165,7 +166,7 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <!-- 动态菜单将在这里加载 -->
             </ul>
@@ -174,13 +175,13 @@ DeviceDetector::redirect();
                 // 动态加载导航菜单
                 (function() {
                     const defaultNavItems = [
-                        { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
-                        { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
-                        { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-                        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-                        { id: '5', name: '行业资讯', url: 'news.html', icon: 'fas fa-newspaper' },
-                        { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
-                        { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
+                        { id: '1', name: '首页', url: '/', icon: 'fas fa-home' },
+                        { id: '2', name: '业务范围', url: '/services.html', icon: 'fas fa-briefcase' },
+                        { id: '3', name: '成功案例', url: '/cases.html', icon: 'fas fa-trophy' },
+                        { id: '4', name: '服务优势', url: '/advantages.html', icon: 'fas fa-star' },
+                        { id: '5', name: '行业资讯', url: '/news.php', icon: 'fas fa-newspaper' },
+                        { id: '6', name: '常见问题', url: '/faq.html', icon: 'fas fa-question-circle' },
+                        { id: '7', name: '联系我们', url: '/contact.html', icon: 'fas fa-phone' }
                     ];
                     
                     // 从 localStorage 读取菜单
@@ -487,108 +488,100 @@ DeviceDetector::redirect();
                 <p class="section-subtitle">与多家银行建立深度合作关系</p>
             </div>
             <div class="bank-logos-wrapper">
-                <img src="uploads/合作银行logo.jpg" alt="合作银行" class="bank-logos-image">
+                <img src="/uploads/合作银行logo.jpg" alt="合作银行" class="bank-logos-image">
             </div>
         </div>
     </section>
 
-    <!-- FAQ常见问题 -->
-    <section class="faq" id="faq" aria-labelledby="faq-title">
+        <section class="faq" id="faq" aria-labelledby="faq-title">
         <div class="section-container">
             <div class="section-header">
                 <div class="section-label">FAQ</div>
                 <h2 class="section-title" id="faq-title">常见问题</h2>
                 <p class="section-subtitle">解答您关于资金业务的常见疑问</p>
             </div>
-            
+
             <div class="faq-container">
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-lightbulb" aria-hidden="true"></i> 亮资业务</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">什么是亮资业务？</summary>
-                            <div class="faq-answer">
-                                <p>亮资业务是指企业在参与招投标、项目洽谈、商务合作等场景时，需要向对方展示资金实力的服务。我们提供大额资金在客户账户中展示，证明企业具备相应的资金履约能力。</p>
-                            </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">亮资业务需要多长时间？</summary>
-                            <div class="faq-answer">
-                                <p>根据客户需求，亮资业务可分为时点亮资和时期亮资。时点亮资通常在1-3个工作日内完成；时期亮资根据约定期限，从几天到数月不等。</p>
-                            </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">亮资业务收费如何计算？</summary>
-                            <div class="faq-answer">
-                                <p>亮资业务收费主要根据资金规模、亮资时长、操作复杂程度等因素综合确定。具体费用需要根据实际情况评估，欢迎来电咨询获取详细报价。</p>
-                            </div>
-                        </details>
-                    </div>
-                </div>
-                
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-exchange-alt" aria-hidden="true"></i> 过桥资金</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">过桥资金适用于哪些场景？</summary>
-                            <div class="faq-answer">
-                                <p>过桥资金主要适用于：银行贷款续贷、股票解质押、募集账户归还、企业并购、项目保证金、资金周转等短期资金需求场景。</p>
-                            </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">申请过桥资金需要什么条件？</summary>
-                            <div class="faq-answer">
-                                <p>申请过桥资金通常需要提供：企业营业执照、财务报表、资金用途说明、还款来源证明、抵押担保资料等。具体资料清单根据业务类型有所不同。</p>
-                            </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">过桥资金多久可以放款？</summary>
-                            <div class="faq-answer">
-                                <p>资料齐全且审核通过后，最快可在当日放款。一般情况下，从申请到放款需要1-3个工作日。</p>
-                            </div>
-                        </details>
-                    </div>
-                </div>
-                
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-university" aria-hidden="true"></i> 摆账业务</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">摆账和亮资有什么区别？</summary>
-                            <div class="faq-answer">
-                                <p>摆账通常指将资金存入客户账户并保持一定时期，用于财务报表优化、审计、年检等；亮资则侧重于向第三方展示资金实力。两者在操作方式和应用场景上有所不同。</p>
-                            </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">摆账业务安全吗？</summary>
-                            <div class="faq-answer">
-                                <p>我们严格按照法律法规和监管要求开展业务，所有操作均有正规合同保障，资金安全有保障。同时，客户信息严格保密。</p>
-                            </div>
-                        </details>
-                    </div>
-                </div>
-                
-                <div class="faq-category">
-                    <h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> 应收账款融资</h3>
-                    <div class="faq-list">
-                        <details class="faq-item">
-                            <summary class="faq-question">什么样的应收账款可以融资？</summary>
-                            <div class="faq-answer">
-                                <p>一般来说，与核心企业（国企、央企、上市公司等）产生的应收账款更容易获得融资。我们接受云信、商票等多种形式的应收账款融资申请。</p>
-                            </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary class="faq-question">应收账款融资额度如何确定？</summary>
-                            <div class="faq-answer">
-                                <p>融资额度主要根据应收账款金额、付款方信用等级、账期等因素综合评估。一般可融资金额为应收账款面额的70%-95%。</p>
-                            </div>
-                        </details>
-                    </div>
-                </div>
+                <?php
+                try {
+                    require_once __DIR__ . "/config/db.php";
+                    $faqConn = getDB();
+                    $faqCats = [];
+                    $catResult = $faqConn->query("SELECT cat_key, cat_label, sort_order FROM faq_categories ORDER BY sort_order ASC");
+                    if ($catResult) {
+                        while ($row = $catResult->fetch_assoc()) {
+                            $faqCats[$row['cat_key']] = $row;
+                        }
+                    }
+
+                    $faqItems = [];
+                    $faqResult = $faqConn->query("SELECT id, category, question, answer, sort_order FROM faq WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
+                    if ($faqResult) {
+                        while ($row = $faqResult->fetch_assoc()) {
+                            $cat = $row['category'] ?: 'general';
+                            if (!isset($faqItems[$cat])) $faqItems[$cat] = [];
+                            $faqItems[$cat][] = $row;
+                        }
+                    }
+
+                    $categoryConfig = [
+                        'liangzi'   => ['icon' => 'fa-lightbulb'],
+                        'guoqiao'   => ['icon' => 'fa-exchange-alt'],
+                        'baizhang'  => ['icon' => 'fa-university'],
+                        'receivable'=> ['icon' => 'fa-file-invoice-dollar'],
+                        'deposit'   => ['icon' => 'fa-building-columns'],
+                        'general'   => ['icon' => 'fa-circle-question'],
+                    ];
+
+                    $hasContent = false;
+                    foreach ($categoryConfig as $key => $cfg) {
+                        if (empty($faqItems[$key])) continue;
+                        $hasContent = true;
+                        $label = isset($faqCats[$key]) ? htmlspecialchars($faqCats[$key]['cat_label'], ENT_QUOTES, 'UTF-8') : $key;
+                        echo '<div class="faq-category">';
+                        echo '<h3 class="faq-category-title"><i class="fas ' . $cfg['icon'] . '" aria-hidden="true"></i> ' . $label . '</h3>';
+                        echo '<div class="faq-list">';
+                        foreach ($faqItems[$key] as $item) {
+                            $q = htmlspecialchars($item['question'], ENT_QUOTES, 'UTF-8');
+                            echo '<details class="faq-item">';
+                            echo '<summary class="faq-question">' . $q . '</summary>';
+                            echo '<div class="faq-answer">' . $item['answer'] . '</div>';
+                            echo '</details>';
+                        }
+                        echo '</div></div>';
+                    }
+
+                    if (!$hasContent) {
+                        // Fallback to hardcoded defaults if DB has no FAQ data
+                        $fallback = [
+                            'liangzi' => ['icon' => 'fa-lightbulb', 'label' => '亮资业务', 'items' => [
+                                ['q' => '什么是亮资业务？', 'a' => '<p>亮资业务是指企业在参与招投标、项目洽谈、商务合作等场景时，需要向对方展示资金实力的服务。我们提供大额资金在客户账户中展示，证明企业具备相应的资金履约能力。</p>'],
+                                ['q' => '亮资业务需要多长时间？', 'a' => '<p>根据客户需求，亮资业务可分为时点亮资和时期亮资。时点亮资通常在1-3个工作日内完成；时期亮资根据约定期限，从几天到数月不等。</p>'],
+                            ]],
+                            'guoqiao' => ['icon' => 'fa-exchange-alt', 'label' => '过桥资金', 'items' => [
+                                ['q' => '过桥资金适用于哪些场景？', 'a' => '<p>过桥资金主要适用于：银行贷款续贷、股票解质押、募集账户归还、企业并购、项目保证金、资金周转等短期资金需求场景。</p>'],
+                            ]],
+                        ];
+                        foreach ($fallback as $key => $fb) {
+                            echo '<div class="faq-category">';
+                            echo '<h3 class="faq-category-title"><i class="fas ' . $fb['icon'] . '" aria-hidden="true"></i> ' . $fb['label'] . '</h3>';
+                            echo '<div class="faq-list">';
+                            foreach ($fb['items'] as $item) {
+                                echo '<details class="faq-item">';
+                                echo '<summary class="faq-question">' . $item['q'] . '</summary>';
+                                echo '<div class="faq-answer">' . $item['a'] . '</div>';
+                                echo '</details>';
+                            }
+                            echo '</div></div>';
+                        }
+                    }
+                } catch (Exception $e) {
+                    // If DB fails, show nothing (silent fail)
+                }
+                ?>
             </div>
         </div>
     </section>
-
     </main>
 
     <!-- 右侧边浮动电话按钮 -->
@@ -601,10 +594,10 @@ DeviceDetector::redirect();
     <!-- 页脚(由数据库动态渲染) -->
     <?php include 'includes/footer.php'; ?>
 
-    <script src="js/main.js?v=20260513b"></script>
+    <script src="/js/main.js?v=20260513b"></script>
     
     <!-- CMS Data Integration -->
-    <script src="admin/assets/cms.js?v=20260513b"></script>
+    <script src="/admin/assets/cms.js?v=20260513b"></script>
     
     <!-- 成功案例展示脚本 -->
     <script>
@@ -657,7 +650,7 @@ DeviceDetector::redirect();
                             title: c.title,
                             summary: c.summary || '暂无简介',
                             amount: c.amount || '保密',
-                            cover_image: c.coverImage || c.image || 'images/case-default.jpg'
+                            cover_image: c.coverImage || c.image || '/uploads/case-default.jpg'
                         }));
                         console.log('[首页案例] 加载案例数:', casesData.length, '原始数据:', result.cases.length);
                         renderCases();
@@ -691,7 +684,7 @@ DeviceDetector::redirect();
                         <div class="case-card-image" onclick="openLightbox('${item.cover_image}')">
                             <img src="${item.cover_image}" 
                                  alt="${item.title}" 
-                                 onerror="this.src='uploads/case-default.jpg'">
+                                 onerror="this.src='/uploads/case-default.jpg'">
                         </div>
                         <div class="case-card-content">
                             <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=${item.id}'" style="cursor: pointer;">${item.title}</h3>

@@ -615,7 +615,7 @@
 
 
 
-            <ul class="nav-menu" role="menubar">
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
 
 
 
@@ -645,7 +645,7 @@
 
 
 
-                <li role="none"><a href="news.html" class="nav-link active" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
 
 
 
@@ -1140,4 +1140,67 @@
 
     loadNews();
 })();</script>
+    <script src="../js/footer-loader.js"></script>
+<script>
+(function() {
+    // Ĭ�ϵ�����Ŀ - APIʧ��ʱʹ��
+    var defaultNavItems = [
+        { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
+        { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
+        { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
+        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
+        { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
+        { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
+        { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
+    ];
+
+    function renderNav(items) {
+        var container = document.getElementById('dynamicNavMenu');
+        if (!container) return;
+        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
+        container.innerHTML = items.map(function(item) {
+            var url = item.url;
+            if (isMobile && url.indexOf('/') === 0) {
+                url = url === '/' ? 'index.html' : url.substring(1);
+            }
+            var isActive = url === currentPage || (currentPage === '' && url === 'index.html');
+            return '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
+        }).join('');
+        try { localStorage.setItem('cms_nav_items', JSON.stringify(items)); } catch(e) {}
+    }
+
+    // 1. 先从数据库加载
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../admin/api/nav-save.php?type=nav&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 400) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.code === 0 && resp.data && resp.data.length > 0) {
+                    renderNav(resp.data);
+                    return;
+                }
+            } catch(e) {}
+        }
+        loadFromLocal();
+    };
+    xhr.onerror = function() { loadFromLocal(); };
+    xhr.send();
+
+    function loadFromLocal() {
+        try {
+            var stored = localStorage.getItem('cms_nav_items');
+            if (stored) {
+                var parsed = JSON.parse(stored);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    renderNav(parsed);
+                    return;
+                }
+            }
+        } catch(e) {}
+        renderNav(defaultNavItems);
+    }
+})();
+</script>
 </body></html>

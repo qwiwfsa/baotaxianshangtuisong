@@ -5,6 +5,7 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao资金网业务范围 - 提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务">
@@ -12,8 +13,8 @@ DeviceDetector::redirect();
     <title>业务范围 - Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/page-custom.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/page-custom.css">
     <!-- Logo动态加载 -->
     <script>
     (function(){
@@ -105,15 +106,15 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link active" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link active" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -131,7 +132,7 @@ DeviceDetector::redirect();
     <main id="main-content">
         <!-- 业务范围Banner图片 -->
         <div class="business-banner">
-            <img src="uploads/business-banner.jpg" alt="资金业务">
+            <img src="/uploads/business-banner.jpg" alt="资金业务">
         </div>
 
         <!-- 页面标题区 -->
@@ -354,7 +355,7 @@ DeviceDetector::redirect();
 <?php include 'includes/footer.php'; ?>
 
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     <!-- CMS Editor -->
     <script>

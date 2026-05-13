@@ -5,6 +5,7 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao资金网成功案例 - 多年来已成功服务数百家企业，累计管理出资金额超百亿。查看我们的过桥资金、摆账亮资、应收账款融资等成功案例。">
@@ -12,8 +13,8 @@ DeviceDetector::redirect();
     <title>成功案例 - Yao资金网 | 专业资金业务服务商</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/cases-enhanced.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/cases-enhanced.css">
     <!-- Logo动态加载 -->
     <script>
     (function(){
@@ -105,15 +106,15 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link active" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link active" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -131,7 +132,7 @@ DeviceDetector::redirect();
     <main id="main-content">
         <!-- 成功案例Banner图片 -->
         <div class="business-banner">
-            <img src="uploads/business-banner.jpg" alt="成功案例">
+            <img src="/uploads/business-banner.jpg" alt="成功案例">
         </div>
 
         <!-- 页面标题区 -->
@@ -238,7 +239,7 @@ DeviceDetector::redirect();
 <?php include 'includes/footer.php'; ?>
 
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     <script>
         // 案例数据 - 将从CMS数据源动态加载
         let casesData = [];
@@ -462,8 +463,8 @@ DeviceDetector::redirect();
                 const result = await response.json();
                 console.log('[Cases] API返回:', result);
                 
-                if (result.success && result.data && result.data.cases) {
-                    const publishedCases = result.data.cases
+                if (result.success && result.cases) {
+                    const publishedCases = result.cases
                         .filter(c => c.status === 'published')
                         .map(c => ({
                             id: c.id,
@@ -637,7 +638,9 @@ DeviceDetector::redirect();
             loadCasesData();
         }
     
-    <!-- 图片预览弹窗 (Lightbox) -->
+    </script>
+
+<!-- 图片预览弹窗 (Lightbox) -->
     <div id="imageLightbox" class="lightbox-overlay" style="display: none;">
         <div class="lightbox-container">
             <button class="lightbox-close" onclick="closeLightbox()" aria-label="关闭预览">

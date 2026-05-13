@@ -11,7 +11,7 @@
     window.__footerLoaded = true;
 
     // 页脚配置API地址
-    const FOOTER_API = './admin/api/footer-data.php';
+    const FOOTER_API = '/admin/api/footer-data.php';
 
     /**
      * 从分组数据中获取指定键的值

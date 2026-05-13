@@ -5,6 +5,7 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao资金网行业资讯详情 - 了解最新行业动态与业务资讯">
@@ -12,7 +13,7 @@ DeviceDetector::redirect();
     <title>文章详情 - Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <style>
         /* 文章详情页样式 */
         .article-detail-header {
@@ -552,7 +553,7 @@ main#main-content {
 (function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p;}}})();
 </script>
     <!-- 社交分享样式 -->
-    <link rel="stylesheet" href="css/social-share.css">
+    <link rel="stylesheet" href="/css/social-share.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -560,15 +561,15 @@ main#main-content {
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo/biaoqianlogo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/biaoqianlogo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -607,7 +608,7 @@ main#main-content {
             <div class="related-articles-container">
                 <div class="related-articles-header">
                     <h2 class="related-articles-title">相关资讯</h2>
-                    <a href="news.php" class="related-articles-more">
+                    <a href="/news.php" class="related-articles-more">
                         查看全部 <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -704,7 +705,7 @@ main#main-content {
             const date = article.created_at || article.date || new Date().toISOString();
             const formattedDate = new Date(date).toLocaleDateString('zh-CN');
             document.getElementById('articleHeader').innerHTML = `
-                <a href="news.php" class="article-back-btn-top">
+                <a href="/news.php" class="article-back-btn-top">
                     <i class="fas fa-arrow-left"></i>
                     返回资讯列表
                 </a>
@@ -806,7 +807,7 @@ main#main-content {
                     <i class="far fa-file-alt"></i>
                     <h2>文章未找到</h2>
                     <p>抱歉，您访问的文章不存在或已被删除</p>
-                    <a href="news.php" class="btn">
+                    <a href="/news.php" class="btn">
                         <i class="fas fa-arrow-left"></i>
                         返回资讯列表
                     </a>
@@ -839,7 +840,7 @@ main#main-content {
         });
     </script>
     <!-- 社交分享功能 -->
-    <script src="js/social-share.js"></script>
+    <script src="/js/social-share.js"></script>
 </body>
 </html>
 

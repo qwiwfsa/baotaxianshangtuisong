@@ -29,6 +29,7 @@ if ($activeCat) {
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="<?php echo htmlspecialchars($pageSeo['description']); ?>">
@@ -36,8 +37,8 @@ if ($activeCat) {
     <title><?php echo htmlspecialchars($pageSeo['title']); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/page-custom.css?v=20260504">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260504">
     <!-- Logo动态加载 -->
     <script>
     (function(){
@@ -123,15 +124,15 @@ if ('caches' in window) {
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link active" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link active" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -341,23 +342,23 @@ if ('caches' in window) {
         <div class="footer-container">
             <div class="footer-main">
                 <div class="footer-brand">
-                    <div class="footer-logo"><img src="uploads/logo.png?v=20260502041100" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <div class="footer-logo"><img src="/uploads/logo.png?v=20260502041100" alt="Yao资金网" style="height:48px;width:auto;"></div>
 
                     <p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、云信融资出表等全方位资金服务</p>
                 </div>
                 <div class="footer-nav" data-footer-group="quick_links">                   <h4 class="footer-nav-title">快速链接</h4>
                     <ul class="footer-nav-list">
-                        <li><a href="index.html">首页</a></li>
-                        <li><a href="services.html">业务范围</a></li>
-                        <li><a href="cases.html">成功案例</a></li>
-                        <li><a href="advantages.html">服务优势</a></li>
+                        <li><a href="/">首页</a></li>
+                        <li><a href="/services.html">业务范围</a></li>
+                        <li><a href="/cases.html">成功案例</a></li>
+                        <li><a href="/advantages.html">服务优势</a></li>
                     </ul>
                 </div>
                 <div class="footer-nav" data-footer-group="service_links">                   <h4 class="footer-nav-title">更多内容</h4>
                     <ul class="footer-nav-list">
-                        <li><a href="news.php">行业资讯</a></li>
-                        <li><a href="faq.html">常见问题</a></li>
-                        <li><a href="contact.html">联系我们</a></li>
+                        <li><a href="/news.php">行业资讯</a></li>
+                        <li><a href="/faq.html">常见问题</a></li>
+                        <li><a href="/contact.html">联系我们</a></li>
                     </ul>
                 </div>
                 <div class="footer-nav" data-footer-group="contact">                   <h4 class="footer-nav-title">联系方式</h4>
@@ -376,7 +377,7 @@ if ('caches' in window) {
     </footer>
     <script src="admin/assets/cms.js"></script>
 
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     <script>
         // 显示/隐藏电话号码
         function showPhoneNumber() {
