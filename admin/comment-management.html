@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评论管理 - 药资资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f3f4f6; min-height: 100vh;
+        }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar {
+            width: 260px; background: #1e293b; color: white;
+            position: fixed; left: 0; top: 0; bottom: 0; overflow-y: auto; z-index: 100;
+        }
+        .cms-sidebar-header { padding: 24px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { display: flex; align-items: center; gap: 12px; }
+        .cms-sidebar-brand i { font-size: 28px; color: #3b82f6; }
+        .cms-sidebar-brand span { font-size: 20px; font-weight: 600; }
+        .cms-sidebar-nav { padding: 16px 0; }
+        .cms-nav-section { margin-bottom: 8px; }
+        .cms-nav-title {
+            padding: 12px 24px; font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8;
+        }
+        .cms-nav-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 24px;
+            color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer;
+        }
+        .cms-nav-item:hover { background: #334155; color: white; }
+        .cms-nav-item.active { background: #3b82f6; color: white; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+        .cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+        .cms-header {
+            background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px;
+            display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50;
+        }
+        .cms-header-left { display: flex; align-items: center; gap: 16px; }
+        .cms-header-title { font-size: 20px; font-weight: 600; color: #1f2937; }
+        .cms-header-right { display: flex; align-items: center; gap: 16px; }
+        .cms-user-menu {
+            display: flex; align-items: center; gap: 10px; padding: 6px 12px;
+            background: #f3f4f6; border-radius: 8px; cursor: pointer;
+        }
+        .cms-user-menu i { font-size: 20px; color: #3b82f6; }
+        .cms-user-menu span { font-size: 14px; font-weight: 500; color: #374151; }
+        .cms-content { padding: 24px; }
+        .cms-card {
+            background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;
+        }
+        .cms-card-header {
+            padding: 20px 24px; border-bottom: 1px solid #e5e7eb;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+        }
+        .cms-card-body { padding: 0; }
+        .cms-toolbar {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        }
+        .cms-search-input {
+            padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px;
+            font-size: 14px; outline: none; width: 220px; transition: border-color 0.2s;
+        }
+        .cms-search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .cms-filter-select {
+            padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px;
+            font-size: 14px; outline: none; background: white; cursor: pointer;
+        }
+        .cms-btn {
+            display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+            border: none; border-radius: 8px; font-size: 14px; cursor: pointer;
+            transition: all 0.2s; text-decoration: none;
+        }
+        .cms-btn-primary { background: #3b82f6; color: white; }
+        .cms-btn-primary:hover { background: #2563eb; }
+        .cms-btn-success { background: #10b981; color: white; }
+        .cms-btn-success:hover { background: #059669; }
+        .cms-btn-warning { background: #f59e0b; color: white; }
+        .cms-btn-warning:hover { background: #d97706; }
+        .cms-btn-danger { background: #ef4444; color: white; }
+        .cms-btn-danger:hover { background: #dc2626; }
+        .cms-btn-sm { padding: 4px 10px; font-size: 12px; }
+        .cms-btn-outline {
+            background: white; color: #374151; border: 1px solid #d1d5db;
+        }
+        .cms-btn-outline:hover { background: #f3f4f6; }
+        .cms-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #f8fafc; }
+        th {
+            padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600;
+            color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e5e7eb;
+        }
+        td { padding: 14px 16px; font-size: 14px; color: #374151; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+        tr:hover td { background: #f8fafc; }
+        .comment-content { max-width: 400px; word-break: break-word; line-height: 1.5; }
+        .comment-nickname { font-weight: 600; color: #1f2937; }
+        .comment-article { font-size: 13px; color: #6b7280; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .comment-date { font-size: 13px; color: #9ca3af; white-space: nowrap; }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px;
+            border-radius: 12px; font-size: 12px; font-weight: 500;
+        }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-approved { background: #d1fae5; color: #065f46; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        .cms-empty {
+            text-align: center; padding: 60px 20px; color: #9ca3af;
+        }
+        .cms-empty i { font-size: 48px; margin-bottom: 16px; color: #d1d5db; }
+        .cms-empty p { font-size: 16px; }
+        .cms-pagination {
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+            padding: 16px 24px; border-top: 1px solid #e5e7eb;
+        }
+        .cms-page-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 36px; height: 36px; padding: 0 8px; border: 1px solid #d1d5db;
+            border-radius: 8px; background: white; color: #374151; font-size: 14px;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .cms-page-btn:hover { background: #f3f4f6; border-color: #9ca3af; }
+        .cms-page-btn.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .cms-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .cms-toast {
+            position: fixed; top: 24px; right: 24px; z-index: 9999;
+            padding: 14px 20px; border-radius: 10px; color: white; font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateX(120%);
+            transition: transform 0.3s ease; max-width: 400px;
+        }
+        .cms-toast.show { transform: translateX(0); }
+        .cms-toast.success { background: #10b981; }
+        .cms-toast.error { background: #ef4444; }
+        .cms-toast.info { background: #3b82f6; }
+        .cms-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        /* Toggle switch */
+        .toggle-wrap { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #374151; cursor: pointer; }
+        .toggle-switch {
+            position: relative; width: 44px; height: 24px; background: #d1d5db;
+            border-radius: 12px; transition: background 0.2s; flex-shrink: 0;
+        }
+        .toggle-switch.active { background: #10b981; }
+        .toggle-switch::after {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 20px; height: 20px; background: white; border-radius: 50%;
+            transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active::after { transform: translateX(20px); }
+        .toolbar-divider { width: 1px; height: 28px; background: #e5e7eb; }
+        /* Modal */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            z-index: 1000; align-items: center; justify-content: center;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: white; border-radius: 12px; width: 90%; max-width: 600px;
+            max-height: 80vh; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid #e5e7eb;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 600; color: #1f2937; }
+        .modal-close {
+            background: none; border: none; font-size: 20px; color: #9ca3af;
+            cursor: pointer; padding: 4px;
+        }
+        .modal-close:hover { color: #374151; }
+        .modal-body { padding: 24px; overflow-y: auto; max-height: calc(80vh - 140px); }
+        .modal-footer {
+            padding: 16px 24px; border-top: 1px solid #e5e7eb;
+            display: flex; justify-content: flex-end; gap: 8px;
+        }
+        .bl-add-form { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .bl-add-form select, .bl-add-form input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; outline: none; }
+        .bl-add-form select:focus, .bl-add-form input:focus { border-color: #3b82f6; }
+        .bl-add-form input { flex: 1; min-width: 150px; }
+        .bl-table { width: 100%; border-collapse: collapse; }
+        .bl-table th { padding: 10px 12px; font-size: 12px; background: #f8fafc; border-bottom: 1px solid #e5e7eb; text-align: left; color: #6b7280; }
+        .bl-table td { padding: 10px 12px; font-size: 14px; border-bottom: 1px solid #f3f4f6; }
+        .badge-type {
+            display: inline-block; padding: 2px 8px; border-radius: 6px;
+            font-size: 12px; font-weight: 500;
+        }
+        .badge-nickname { background: #dbeafe; color: #1e40af; }
+        .badge-ip { background: #f3e8ff; color: #6b21a8; }
+        .cms-checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: #3b82f6; }
+        @media (max-width: 768px) {
+            .cms-sidebar { width: 200px; }
+            .cms-main { margin-left: 200px; }
+            .cms-search-input { width: 150px; }
+            td, th { padding: 10px 12px; }
+            .comment-content { max-width: 200px; }
+        }
+        @media (max-width: 640px) {
+            .cms-sidebar { display: none; }
+            .cms-main { margin-left: 0; }
+            .cms-card-header { flex-direction: column; align-items: stretch; }
+            .cms-toolbar { flex-direction: column; }
+            .cms-search-input { width: 100%; }
+            table { font-size: 13px; }
+            td, th { padding: 8px 10px; }
+            .comment-content { max-width: 150px; }
+        }
+        .action-group { display: flex; gap: 6px; flex-wrap: nowrap; }
+        .refresh-btn { cursor: pointer; color: #6b7280; transition: color 0.2s; }
+        .refresh-btn:hover { color: #3b82f6; }
+    
+        .cms-nav-item-comment {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 8px;
+        }
+        .cms-nav-item-comment:hover { background: #334155; }
+        .cms-nav-item-comment i { color: #f59e0b; }
+
+</style>
+</head>
+<body>
+<div class="cms-layout">
+    <aside class="cms-sidebar">
+        <div class="cms-sidebar-header">
+            <div class="cms-sidebar-brand">
+                <i class="fas fa-cog"></i>
+                <span>CMS管理后台</span>
+            </div>
+        </div>
+        <nav class="cms-sidebar-nav">
+            <div class="cms-nav-section">
+                <div class="cms-nav-title">主要</div>
+                <a href="comment-management.html" class="cms-nav-item cms-nav-item-comment active"><i class="fas fa-comments" style="color:#f59e0b;"></i><span>评论管理</span></a>
+
+                    <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
+                <a href="logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+                <a href="seo-settings.html" class="cms-nav-item"><i class="fas fa-search"></i><span>SEO设置</span></a>
+            </div>
+            <div class="cms-nav-section">
+                <div class="cms-nav-title">内容</div>
+                <a href="case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>案例管理</span></a>
+                <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面管理</span></a>
+                <a href="page-manager.html" class="cms-nav-item"><i class="fas fa-list"></i><span>页面列表</span></a>
+                <a href="visual-editor-v3.html" class="cms-nav-item"><i class="fas fa-paint-brush"></i><span>可视化编辑器</span></a>
+                <a href="visual-page-builder.html" class="cms-nav-item"><i class="fas fa-pen-ruler"></i><span>页面搭建</span></a>
+                <a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+                <a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+                <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+                <a href="components/tags/tag-list.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+
+                <a href="fenzhan-management.html" class="cms-nav-item"><i class="fas fa-building"></i><span>城市分站</span></a>
+                <a href="footer-manager.html" class="cms-nav-item"><i class="fas fa-list-alt"></i><span>页脚管理</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <div class="cms-main">
+        <div class="cms-header">
+            <div class="cms-header-left">
+                <h1 class="cms-header-title">评论管理</h1>
+            </div>
+            <div class="cms-header-right">
+                <div class="cms-user-menu" onclick="logout()">
+                    <i class="fas fa-user-circle"></i>
+                    <span>退出登录</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cms-content">
+            <div class="cms-card">
+                <div class="cms-card-header">
+                    <div class="cms-toolbar">
+                        <select class="cms-filter-select" id="statusFilter" onchange="loadComments(1)">
+                            <option value="-1">全部状态</option>
+                            <option value="0">待审核</option>
+                            <option value="1">已通过</option>
+                            <option value="2">已拒绝</option>
+                        </select>
+                        <input type="text" class="cms-search-input" id="searchInput" placeholder="搜索昵称/内容/文章标题..." onkeyup="if(event.key==='Enter')loadComments(1)">
+                        <button class="cms-btn cms-btn-primary" onclick="loadComments(1)"><i class="fas fa-search"></i>搜索</button>
+
+                        <span class="toolbar-divider"></span>
+
+                        <label class="toggle-wrap" title="开启后新评论自动通过审核，无需人工操作">
+                            <span>免审核</span>
+                            <span class="toggle-switch" id="autoApproveToggle" onclick="toggleAutoApprove()"></span>
+                        </label>
+
+                        <span class="toolbar-divider"></span>
+
+                        <button class="cms-btn cms-btn-success" id="batchApproveBtn" disabled onclick="batchApprove()"><i class="fas fa-check"></i>批量通过</button>
+                        <button class="cms-btn cms-btn-danger" id="batchDeleteBtn" disabled onclick="batchDelete()"><i class="fas fa-trash"></i>批量删除</button>
+                        <button class="cms-btn cms-btn-outline" onclick="openBlacklistModal()"><i class="fas fa-ban"></i>黑名单</button>
+                    </div>
+                    <div>
+                        <span style="font-size:13px;color:#6b7280;">共 <strong id="totalCount">0</strong> 条评论</span>
+                        <button class="cms-btn cms-btn-primary cms-btn-sm" onclick="loadComments(currentPage)" title="刷新"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+                <div class="cms-card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:40px;"><input type="checkbox" class="cms-checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
+                                <th style="width:40px;">ID</th>
+                                <th style="width:100px;">昵称</th>
+                                <th>评论内容</th>
+                                <th style="width:180px;">所属文章</th>
+                                <th style="width:80px;">状态</th>
+                                <th style="width:140px;">时间</th>
+                                <th style="width:180px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="commentList"></tbody>
+                    </table>
+                    <div class="cms-empty" id="emptyState" style="display:none;">
+                        <i class="far fa-comment-dots"></i>
+                        <p>暂无评论数据</p>
+                    </div>
+                    <div class="cms-pagination" id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blacklist Modal -->
+<div class="modal-overlay" id="blacklistModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-ban" style="color:#ef4444;"></i> 评论黑名单</h3>
+            <button class="modal-close" onclick="closeBlacklistModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="bl-add-form">
+                <select id="blType">
+                    <option value="nickname">昵称</option>
+                    <option value="ip">IP地址</option>
+                </select>
+                <input type="text" id="blValue" placeholder="输入要拉黑的值，按回车添加" onkeyup="if(event.key==='Enter')addBlacklist()">
+                <button class="cms-btn cms-btn-danger" onclick="addBlacklist()"><i class="fas fa-plus"></i>拉黑</button>
+            </div>
+            <table class="bl-table">
+                <thead>
+                    <tr>
+                        <th style="width:60px;">ID</th>
+                        <th style="width:80px;">类型</th>
+                        <th>值</th>
+                        <th style="width:160px;">添加时间</th>
+                        <th style="width:60px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="blList"></tbody>
+            </table>
+            <div class="cms-empty" id="blEmpty" style="display:none;padding:30px 20px;">
+                <p>暂无黑名单</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="cms-btn cms-btn-primary" onclick="closeBlacklistModal()">关闭</button>
+        </div>
+    </div>
+</div>
+
+<div class="cms-toast" id="toast"></div>
+
+<script>
+// Auth check
+if (localStorage.getItem('cms_logged_in') !== 'true') {
+    window.location.href = 'login.html';
+}
+
+var currentPage = 1;
+var totalComments = 0;
+
+function logout() {
+    localStorage.removeItem('cms_logged_in');
+    localStorage.removeItem('cms_username');
+    localStorage.removeItem('cms_login_time');
+    window.location.href = 'login.html';
+}
+
+function showToast(message, type) {
+    var toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'cms-toast ' + type + ' show';
+    setTimeout(function() { toast.classList.remove('show'); }, 3000);
+}
+
+function getStatusBadge(status) {
+    if (status == 0) return '<span class="status-badge status-pending"><i class="fas fa-clock"></i>待审核</span>';
+    if (status == 1) return '<span class="status-badge status-approved"><i class="fas fa-check"></i>已通过</span>';
+    if (status == 2) return '<span class="status-badge status-rejected"><i class="fas fa-times"></i>已拒绝</span>';
+    return '<span class="status-badge status-pending">未知</span>';
+}
+
+function loadComments(page) {
+    currentPage = page;
+    var status = document.getElementById('statusFilter').value;
+    var search = encodeURIComponent(document.getElementById('searchInput').value);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'api/comments/list.php?page=' + page + '&limit=20&status=' + status + '&search=' + search + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    renderComments(resp.data, resp.total, resp.page);
+                } else {
+                    showToast('加载失败: ' + (resp.message || '未知错误'), 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() {
+        showToast('网络请求失败', 'error');
+    };
+    xhr.send();
+}
+
+var allCommentIds = [];
+
+function renderComments(comments, total, page) {
+    totalComments = total;
+    allCommentIds = [];
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('selectAll').checked = false;
+    updateBatchDeleteBtn();
+    var tbody = document.getElementById('commentList');
+    var empty = document.getElementById('emptyState');
+
+    tbody.innerHTML = '';
+
+    if (!comments || comments.length === 0) {
+        empty.style.display = 'block';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+    empty.style.display = 'none';
+
+    comments.forEach(function(c) {
+        allCommentIds.push(c.id);
+        var statusLabel = getStatusBadge(c.status);
+        var articleTitle = c.article_title || '(未知)';
+        var dateStr = c.created_at || '';
+
+        var approveBtn = '';
+        var rejectBtn = '';
+        if (c.status == 0) {
+            approveBtn = '<button class="cms-btn cms-btn-success cms-btn-sm" onclick="approveComment(' + c.id + ', 1)"><i class="fas fa-check"></i>通过</button>';
+            rejectBtn = '<button class="cms-btn cms-btn-warning cms-btn-sm" onclick="approveComment(' + c.id + ', 2)"><i class="fas fa-times"></i>拒绝</button>';
+        }
+
+        var row = document.createElement('tr');
+        row.innerHTML = '<td><input type="checkbox" class="cms-checkbox cms-item-checkbox" data-id="' + c.id + '" onchange="updateBatchDeleteBtn()"></td>' +
+            '<td style="font-size:12px;color:#9ca3af;">' + c.id + '</td>' +
+            '<td><span class="comment-nickname">' + escapeHtml(c.nickname) + '</span></td>' +
+            '<td><div class="comment-content">' + escapeHtml(c.content) + '</div></td>' +
+            '<td><div class="comment-article" title="' + escapeHtml(articleTitle) + '">' + escapeHtml(articleTitle) + '</div></td>' +
+            '<td>' + statusLabel + '</td>' +
+            '<td><span class="comment-date">' + dateStr + '</span></td>' +
+            '<td><div class="cms-actions">' +
+                approveBtn + rejectBtn +
+                '<button class="cms-btn cms-btn-danger cms-btn-sm" onclick="deleteComment(' + c.id + ')"><i class="fas fa-trash"></i>删除</button>' +
+            '</div></td>';
+        tbody.appendChild(row);
+    });
+
+    renderPagination(page, total);
+}
+
+function toggleSelectAll(master) {
+    var checked = master.checked;
+    var items = document.querySelectorAll('.cms-item-checkbox');
+    for (var i = 0; i < items.length; i++) {
+        items[i].checked = checked;
+    }
+    updateBatchDeleteBtn();
+}
+
+function updateBatchDeleteBtn() {
+    var checked = document.querySelectorAll('.cms-item-checkbox:checked');
+    var hasChecked = checked.length > 0;
+    document.getElementById('batchDeleteBtn').disabled = !hasChecked;
+    document.getElementById('batchApproveBtn').disabled = !hasChecked;
+}
+
+function getSelectedIds() {
+    var ids = [];
+    var items = document.querySelectorAll('.cms-item-checkbox:checked');
+    for (var i = 0; i < items.length; i++) {
+        ids.push(parseInt(items[i].getAttribute('data-id')));
+    }
+    return ids;
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function renderPagination(page, total) {
+    var totalPages = Math.ceil(total / 20);
+    var pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'cms-page-btn';
+    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    prevBtn.disabled = page <= 1;
+    prevBtn.onclick = function() { loadComments(page - 1); };
+    pagination.appendChild(prevBtn);
+
+    var start = Math.max(1, page - 2);
+    var end = Math.min(totalPages, page + 2);
+
+    if (start > 1) {
+        var firstBtn = document.createElement('button');
+        firstBtn.className = 'cms-page-btn';
+        firstBtn.textContent = '1';
+        firstBtn.onclick = function() { loadComments(1); };
+        pagination.appendChild(firstBtn);
+        if (start > 2) {
+            var dots = document.createElement('span');
+            dots.style.padding = '0 4px';
+            dots.textContent = '...';
+            pagination.appendChild(dots);
+        }
+    }
+
+    for (var i = start; i <= end; i++) {
+        var btn = document.createElement('button');
+        btn.className = 'cms-page-btn' + (i === page ? ' active' : '');
+        btn.textContent = i;
+        btn.onclick = (function(p) { return function() { loadComments(p); }; })(i);
+        pagination.appendChild(btn);
+    }
+
+    if (end < totalPages) {
+        if (end < totalPages - 1) {
+            var dots = document.createElement('span');
+            dots.style.padding = '0 4px';
+            dots.textContent = '...';
+            pagination.appendChild(dots);
+        }
+        var lastBtn = document.createElement('button');
+        lastBtn.className = 'cms-page-btn';
+        lastBtn.textContent = totalPages;
+        lastBtn.onclick = function() { loadComments(totalPages); };
+        pagination.appendChild(lastBtn);
+    }
+
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'cms-page-btn';
+    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    nextBtn.disabled = page >= totalPages;
+    nextBtn.onclick = function() { loadComments(page + 1); };
+    pagination.appendChild(nextBtn);
+}
+
+function approveComment(id, status) {
+    if (!confirm(status === 1 ? '确定通过该评论？' : '确定拒绝该评论？')) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/approve.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    showToast(status === 1 ? '已通过' : '已拒绝', 'success');
+                    loadComments(currentPage);
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({id: id, status: status}));
+}
+
+function deleteComment(id) {
+    if (!confirm('确定删除该评论？此操作不可恢复。')) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/delete.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    showToast('已删除', 'success');
+                    loadComments(currentPage);
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({id: id}));
+}
+
+// ============ Batch Approve ============
+function batchApprove() {
+    var ids = getSelectedIds();
+    if (ids.length === 0) {
+        showToast('请先选择要通过的评论', 'error');
+        return;
+    }
+    if (!confirm('确定通过选中的 ' + ids.length + ' 条评论？')) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/batch-approve.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    showToast(resp.message || '批量通过成功', 'success');
+                    loadComments(1);
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({ids: ids, status: 1}));
+}
+
+// ============ Batch Delete ============
+function batchDelete() {
+    var ids = getSelectedIds();
+    if (ids.length === 0) {
+        showToast('请先选择要删除的评论', 'error');
+        return;
+    }
+    if (!confirm('确定删除选中的 ' + ids.length + ' 条评论？此操作不可恢复。')) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/batch-delete.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    showToast(resp.message || '批量删除成功', 'success');
+                    loadComments(1);
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({ids: ids}));
+}
+
+// ============ Auto Approve Toggle ============
+function toggleAutoApprove() {
+    var toggle = document.getElementById('autoApproveToggle');
+    var newVal = toggle.classList.contains('active') ? '0' : '1';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/settings.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    if (newVal === '1') {
+                        toggle.classList.add('active');
+                    } else {
+                        toggle.classList.remove('active');
+                    }
+                    showToast(newVal === '1' ? '已开启免审核，新评论将自动通过' : '已关闭免审核', 'success');
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({auto_approve: newVal}));
+}
+
+function loadAutoApproveSetting() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'api/comments/settings.php?t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success && resp.data) {
+                    if (resp.data.auto_approve === '1') {
+                        document.getElementById('autoApproveToggle').classList.add('active');
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+}
+
+// ============ Blacklist ============
+function openBlacklistModal() {
+    document.getElementById('blacklistModal').classList.add('show');
+    loadBlacklist();
+}
+
+function closeBlacklistModal() {
+    document.getElementById('blacklistModal').classList.remove('show');
+}
+
+function loadBlacklist() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'api/comments/blacklist.php?t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success && resp.data) {
+                    renderBlacklist(resp.data);
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+}
+
+function renderBlacklist(items) {
+    var tbody = document.getElementById('blList');
+    var empty = document.getElementById('blEmpty');
+    tbody.innerHTML = '';
+
+    if (!items || items.length === 0) {
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    items.forEach(function(item) {
+        var typeLabel = item.type === 'nickname'
+            ? '<span class="badge-type badge-nickname">昵称</span>'
+            : '<span class="badge-type badge-ip">IP</span>';
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td style="font-size:12px;color:#9ca3af;">' + item.id + '</td>' +
+            '<td>' + typeLabel + '</td>' +
+            '<td><code>' + escapeHtml(item.value) + '</code></td>' +
+            '<td style="font-size:13px;color:#9ca3af;">' + (item.created_at || '') + '</td>' +
+            '<td><button class="cms-btn cms-btn-danger cms-btn-sm" onclick="deleteBlacklist(' + item.id + ')"><i class="fas fa-trash"></i></button></td>';
+        tbody.appendChild(tr);
+    });
+}
+
+function addBlacklist() {
+    var type = document.getElementById('blType').value;
+    var value = document.getElementById('blValue').value.trim();
+    if (!value) {
+        showToast('请输入要拉黑的值', 'error');
+        return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/blacklist.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    showToast('已拉黑', 'success');
+                    document.getElementById('blValue').value = '';
+                    loadBlacklist();
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({type: type, value: value}));
+}
+
+function deleteBlacklist(id) {
+    if (!confirm('确定移出黑名单？')) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/comments/blacklist.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success) {
+                    showToast('已移除', 'success');
+                    loadBlacklist();
+                } else {
+                    showToast(resp.message || '操作失败', 'error');
+                }
+            } catch(e) {
+                showToast('数据解析失败', 'error');
+            }
+        } else {
+            showToast('请求失败: ' + xhr.status, 'error');
+        }
+    };
+    xhr.onerror = function() { showToast('网络请求失败', 'error'); };
+    xhr.send(JSON.stringify({action: 'delete', id: id}));
+}
+
+// Init
+loadComments(1);
+loadAutoApproveSetting();
+
+// Close modal on overlay click
+document.getElementById('blacklistModal').addEventListener('click', function(e) {
+    if (e.target === this) closeBlacklistModal();
+});
+</script>
+</body>
+</html>

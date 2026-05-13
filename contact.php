@@ -225,11 +225,6 @@ DeviceDetector::redirect();
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">电子邮箱</label>
-                                    <input type="email" id="email" name="email" placeholder="请输入邮箱地址（选填）">
-                                    <span class="form-error" id="emailError"></span>
-                                </div>
-                                <div class="form-group">
                                     <label class="form-label">业务类型 <span class="required">*</span></label>
                                     <select id="serviceType" name="serviceType" required>
                                         <option value="">请选择业务类型</option>
@@ -244,12 +239,7 @@ DeviceDetector::redirect();
                                     <label class="form-label">需求描述</label>
                                     <textarea id="message" name="message" rows="4" placeholder="请简要描述您的资金需求..."></textarea>
                                 </div>
-                                <div class="form-group form-checkbox">
-                                    <input type="checkbox" id="privacy" name="privacy" required>
-                                    <label for="privacy">我已阅读并同意<a href="#">隐私政策</a>和<a href="#">服务条款</a></label>
-                                    <span class="form-error" id="privacyError"></span>
-                                </div>
-                                <button type="submit" class="form-submit" id="submitBtn">
+                                                                <button type="submit" class="form-submit" id="submitBtn">
                                     <span class="btn-text">提交咨询</span>
                                     <span class="btn-loading" hidden>
                                         <i class="fas fa-spinner fa-spin"></i> 提交中...
@@ -390,6 +380,122 @@ DeviceDetector::redirect();
             }
         })();
     </script>
+
+    <!-- 在线咨询表单提交 -->
+    <script>
+    (function() {
+        var form = document.getElementById('contactForm');
+        var btn = document.getElementById('submitBtn');
+        if (!form) return;
+
+        var serviceLabels = {
+            'listed': '上市公司摆账',
+            'baizhang': '企业/个人摆账',
+            'deposit': '银行存款冲量',
+            'receivable': '应收账款质押',
+            'other': '其他业务'
+        };
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (btn.disabled) return;
+
+            // Clear previous errors
+            document.querySelectorAll('.form-error').forEach(function(el) {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+
+            var name = document.getElementById('name').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var serviceType = document.getElementById('serviceType').value;
+            var message = document.getElementById('message').value.trim();
+
+            // Validate
+            var hasError = false;
+            if (!name) {
+                var err = document.getElementById('nameError');
+                if (err) { err.textContent = '请输入您的姓名'; err.style.display = 'block'; }
+                hasError = true;
+            }
+            if (!phone) {
+                var err = document.getElementById('phoneError');
+                if (err) { err.textContent = '请输入联系电话'; err.style.display = 'block'; }
+                hasError = true;
+            } else if (!/^1[3-9]\d{9}$/.test(phone)) {
+                var err = document.getElementById('phoneError');
+                if (err) { err.textContent = '请输入有效的手机号码'; err.style.display = 'block'; }
+                hasError = true;
+            }
+            if (hasError) return;
+
+            // Build content
+            var serviceLabel = serviceLabels[serviceType] || serviceType || '未选择';
+            var content = '业务类型: ' + serviceLabel;
+            if (message) content += '\n备注: ' + message;
+
+            btn.disabled = true;
+            btn.querySelector('.btn-text').textContent = '提交中...';
+            btn.querySelector('.btn-loading').hidden = false;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'admin/api/message/submit.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = '提交咨询';
+                btn.querySelector('.btn-loading').hidden = true;
+
+                try {
+                    var resp = JSON.parse(xhr.responseText);
+                    if (resp.code === 0) {
+                        form.reset();
+                        showContactSuccess(resp.msg || '提交成功，我们将会尽快与您联系');
+                    } else {
+                        showContactError(resp.msg || '提交失败，请稍后再试');
+                    }
+                } catch(e) {
+                    showContactError('网络异常，请稍后再试');
+                }
+            };
+            xhr.onerror = function() {
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = '提交咨询';
+                btn.querySelector('.btn-loading').hidden = true;
+                showContactError('网络请求失败，请检查网络后重试');
+            };
+            xhr.send('name=' + encodeURIComponent(name) + '&phone=' + encodeURIComponent(phone) + '&content=' + encodeURIComponent(content) + '&source=contact');
+        });
+
+        function showContactSuccess(msg) {
+            var old = document.querySelector('.contact-success-toast');
+            if (old) old.remove();
+            var toast = document.createElement('div');
+            toast.className = 'contact-success-toast';
+            toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg;
+            toast.style.cssText = 'position:fixed;top:100px;left:50%;transform:translateX(-50%);background:#10b981;color:white;padding:16px 28px;border-radius:12px;font-size:16px;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.2);max-width:90%;text-align:center;animation:contactFadeIn 0.3s ease;';
+            document.body.appendChild(toast);
+            setTimeout(function() { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.5s'; setTimeout(function() { toast.remove(); }, 500); }, 4000);
+        }
+
+        function showContactError(msg) {
+            var errDiv = document.getElementById('submitErrorDisplay') || (function() {
+                var d = document.createElement('div');
+                d.id = 'submitErrorDisplay';
+                d.style.cssText = 'color:#ef4444;font-size:14px;margin-top:12px;text-align:center;';
+                var btn = document.getElementById('submitBtn');
+                btn.parentNode.insertBefore(d, btn.nextSibling);
+                return d;
+            })();
+            errDiv.textContent = msg;
+            setTimeout(function() { errDiv.textContent = ''; }, 4000);
+        }
+    })();
+    </script>
+    <style>
+        @keyframes contactFadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+    </style>
+
 </body>
 </html>
 

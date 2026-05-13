@@ -547,6 +547,178 @@ main#main-content {
 .footer-icp a:hover {
     color: #6b7280;
 }
+
+/* 评论区域样式 */
+.comments-section {
+    max-width: 900px;
+    margin: 40px auto 20px;
+    padding: 0 20px;
+}
+.comments-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.comments-title i { color: #3b82f6; }
+.comments-title span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #9ca3af;
+}
+.comment-form {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+.comment-form .form-group { margin-bottom: 16px; }
+.comment-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+.comment-form input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.comment-form input[type="text"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+.comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+.comment-form textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+.comment-form .form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.comment-form .form-tip { font-size: 13px; color: #9ca3af; }
+.comment-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.comment-submit-btn:hover {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+}
+.comment-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.comment-list { list-style: none; padding: 0; }
+.comment-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+.comment-item:last-child { border-bottom: none; }
+.comment-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.comment-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+.comment-author {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+.comment-time {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-left: auto;
+}
+.comment-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #374151;
+    padding-left: 46px;
+}
+.comment-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #9ca3af;
+}
+.comment-empty i {
+    font-size: 40px;
+    color: #d1d5db;
+    margin-bottom: 12px;
+}
+.comment-empty p { font-size: 15px; }
+.comment-success {
+    text-align: center;
+    padding: 20px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    color: #065f46;
+    font-size: 15px;
+    margin-bottom: 24px;
+    display: none;
+}
+.comment-success.show { display: block; }
+.comment-error {
+    color: #ef4444;
+    font-size: 13px;
+    margin-top: 4px;
+    display: none;
+}
+.comment-error.show { display: block; }
+@media (max-width: 640px) {
+    .comments-section { margin: 24px auto 16px; padding: 0 16px; }
+    .comment-form { padding: 16px; }
+    .comment-form input[type="text"] { max-width: 100%; }
+}
+
 </style>
 
 <script>
@@ -604,7 +776,44 @@ main#main-content {
         </section>
 
         <!-- 相关文章 -->
-        <section class="related-articles">
+        
+        <!-- 用户评论 -->
+        <section class="comments-section">
+            <h2 class="comments-title">
+                <i class="far fa-comment-dots"></i>
+                用户评论
+                <span id="commentCount">(0)</span>
+            </h2>
+
+            <div class="comment-form">
+                <div class="form-group">
+                    <label for="commentNickname">昵称</label>
+                    <input type="text" id="commentNickname" placeholder="请输入您的昵称" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label for="commentContent">评论内容</label>
+                    <textarea id="commentContent" placeholder="来说点什么吧..." maxlength="2000"></textarea>
+                    <div class="comment-error" id="commentError"></div>
+                </div>
+                <div class="form-footer">
+                    <span class="form-tip">评论审核通过后显示</span>
+                    <button class="comment-submit-btn" id="commentSubmitBtn" onclick="submitComment()">
+                        <i class="fas fa-paper-plane"></i>
+                        提交评论
+                    </button>
+                </div>
+            </div>
+
+            <div class="comment-success" id="commentSuccess"></div>
+
+            <ul class="comment-list" id="commentList"></ul>
+            <div class="comment-empty" id="commentEmpty">
+                <i class="far fa-comment-dots"></i>
+                <p>暂无评论，快来抢沙发吧~</p>
+            </div>
+        </section>
+
+<section class="related-articles">
             <div class="related-articles-container">
                 <div class="related-articles-header">
                     <h2 class="related-articles-title">相关资讯</h2>
@@ -841,6 +1050,103 @@ main#main-content {
     </script>
     <!-- 社交分享功能 -->
     <script src="/js/social-share.js"></script>
+
+    <!-- 评论功能 -->
+    <script>
+    (function() {
+        var articleId = null;
+        var params = new URLSearchParams(window.location.search);
+        articleId = params.get('id');
+        if (!articleId) return;
+
+        function loadComments() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'api/comment-list.php?article_id=' + articleId + '&t=' + Date.now(), true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
+                        var resp = JSON.parse(xhr.responseText);
+                        if (resp.success && resp.data) renderComments(resp.data);
+                    } catch(e) {}
+                }
+            };
+            xhr.send();
+        }
+
+        function renderComments(comments) {
+            var list = document.getElementById('commentList');
+            var empty = document.getElementById('commentEmpty');
+            var count = document.getElementById('commentCount');
+            if (!list) return;
+            list.innerHTML = '';
+            if (!comments || comments.length === 0) {
+                if (empty) empty.style.display = 'block';
+                if (count) count.textContent = '(0)';
+                return;
+            }
+            if (empty) empty.style.display = 'none';
+            if (count) count.textContent = '(' + comments.length + ')';
+            comments.forEach(function(c) {
+                var nickname = c.nickname || '匿名';
+                var li = document.createElement('li');
+                li.className = 'comment-item';
+                li.innerHTML =
+                    '<div class="comment-item-header">' +
+                        '<div class="comment-avatar">' + esc(nickname.charAt(0)) + '</div>' +
+                        '<span class="comment-author">' + esc(nickname) + '</span>' +
+                        '<span class="comment-time">' + esc(c.created_at || '') + '</span>' +
+                    '</div>' +
+                    '<div class="comment-text">' + esc(c.content || '') + '</div>';
+                list.appendChild(li);
+            });
+        }
+
+        function esc(t) { if (!t) return ''; var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+        window.submitComment = function() {
+            var nickname = document.getElementById('commentNickname');
+            var content = document.getElementById('commentContent');
+            var error = document.getElementById('commentError');
+            var btn = document.getElementById('commentSubmitBtn');
+            var success = document.getElementById('commentSuccess');
+            if (!nickname || !content) return;
+            var nameVal = nickname.value.trim();
+            var contentVal = content.value.trim();
+            if (error) error.classList.remove('show');
+            if (!nameVal) { nickname.focus(); if (error) { error.textContent = '请输入昵称'; error.classList.add('show'); } return; }
+            if (nameVal.length > 20) { if (error) { error.textContent = '昵称不能超过20个字符'; error.classList.add('show'); } return; }
+            if (!contentVal) { content.focus(); if (error) { error.textContent = '请输入评论内容'; error.classList.add('show'); } return; }
+            if (contentVal.length < 2) { content.focus(); if (error) { error.textContent = '评论内容至少2个字符'; error.classList.add('show'); } return; }
+            if (contentVal.length > 2000) { if (error) { error.textContent = '评论内容不能超过2000字'; error.classList.add('show'); } return; }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
+            var formData = new FormData();
+            formData.append('article_id', articleId);
+            formData.append('nickname', nameVal);
+            formData.append('content', contentVal);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'api/comment-submit.php', true);
+            xhr.onload = function() {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 提交评论';
+                if (xhr.status === 200) {
+                    try {
+                        var resp = JSON.parse(xhr.responseText);
+                        if (resp.success) {
+                            nickname.value = ''; content.value = '';
+                            if (success) { success.textContent = '\u8bc4\u8bba\u63d0\u4ea4\u6210\u529f\uff0c\u7b49\u5f85\u5ba1\u6838\u540e\u663e\u793a'; success.classList.add('show'); setTimeout(function() { success.classList.remove('show'); }, 4000); }
+                        } else { if (error) { error.textContent = resp.message || '\u63d0\u4ea4\u5931\u8d25'; error.classList.add('show'); } }
+                    } catch(e) { if (error) { error.textContent = '\u63d0\u4ea4\u5931\u8d25\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5'; error.classList.add('show'); } }
+                } else { if (error) { error.textContent = '\u7f51\u7edc\u9519\u8bef (' + xhr.status + ')'; error.classList.add('show'); } }
+            };
+            xhr.onerror = function() { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> \u63d0\u4ea4\u8bc4\u8bba'; if (error) { error.textContent = '\u7f51\u7edc\u8bf7\u6c42\u5931\u8d25'; error.classList.add('show'); } };
+            xhr.send(formData);
+        };
+
+        loadComments();
+    })();
+    </script>
+
 </body>
 </html>
 

@@ -9,6 +9,7 @@ ini_set('display_errors', 0);
 
 require_once __DIR__ . '/../config/db.php';
 
+if (!function_exists('setApiHeaders')) {
 function setApiHeaders() {
     if (ob_get_level()) { ob_clean(); }
     header('Content-Type: application/json; charset=utf-8');
@@ -17,14 +18,18 @@ function setApiHeaders() {
     header('Access-Control-Allow-Headers: Content-Type');
     header('Cache-Control: no-cache, no-store, must-revalidate');
 }
+}
 
+if (!function_exists('handlePreflight')) {
 function handlePreflight() {
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         http_response_code(200);
         exit;
     }
 }
+}
 
+if (!function_exists('requireMethod')) {
 function requireMethod($method) {
     if ($_SERVER['REQUEST_METHOD'] !== $method) {
         http_response_code(405);
@@ -32,7 +37,9 @@ function requireMethod($method) {
         exit;
     }
 }
+}
 
+if (!function_exists('jsonSuccess')) {
 function jsonSuccess($data, $extra = []) {
     $output = array_merge([
         'success' => true,
@@ -42,7 +49,9 @@ function jsonSuccess($data, $extra = []) {
     echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
+}
 
+if (!function_exists('jsonError')) {
 function jsonError($message, $code = 500) {
     http_response_code($code);
     echo json_encode([
@@ -51,4 +60,5 @@ function jsonError($message, $code = 500) {
         'code' => $code
     ], JSON_UNESCAPED_UNICODE);
     exit;
+}
 }

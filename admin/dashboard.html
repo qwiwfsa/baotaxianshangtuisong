@@ -857,7 +857,8 @@
                 justify-content: center;
             }
         }
-    </style>
+    
+</style>
 </head>
 <body>
     <div class="cms-layout">
@@ -876,8 +877,7 @@
                     <a href="dashboard.html" class="cms-nav-item active" data-section="dashboard">
                         <i class="fas fa-home"></i>
                         <span>仪表板</span>
-                    </a>
-                    <a href="logo-settings.html" class="cms-nav-item" data-section="logo">
+                    </a>                    <a href="logo-settings.html" class="cms-nav-item" data-section="logo">
                         <i class="fas fa-image"></i>
                         <span>Logo设置</span>
                     </a>
@@ -1236,7 +1236,35 @@
             <div id="messageList" style="max-width: 1200px;">
                 <div style="text-align: center; padding: 60px; color: #666;">点击加载留言</div>
             </div>
-        </div>
+        
+            <!-- 咨询管理 -->
+            <div class="cms-card">
+                <div class="cms-card-header">
+                    <h2 class="cms-card-title"><i class="fas fa-envelope" style="color:#3b82f6;"></i> 最新咨询</h2>
+                    <div class="cms-card-actions">
+                        <a href="message-management.html" class="cms-header-btn cms-header-btn-primary" style="font-size:13px;padding:6px 14px;">
+                            <i class="fas fa-external-link-alt"></i>查看全部
+                        </a>
+                    </div>
+                </div>
+                <div class="cms-card-body" style="padding:0;">
+                    <table class="cms-page-stats-table" id="dashMsgTable">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>电话</th>
+                                <th>内容</th>
+                                <th>时间</th>
+                                <th>状态</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashMsgBody">
+                            <tr><td colspan="5" style="text-align:center;color:#9ca3af;padding:30px;">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+</div>
 </main>
     </div>
 
@@ -1309,6 +1337,7 @@
 
             // 加载活动记录
             await loadActivities();
+            loadDashboardMessages();
 
             // 绑定事件
             document.getElementById('logoutBtn').addEventListener('click', logout);
@@ -1818,6 +1847,48 @@
         }
     }
     
+    function loadDashboardMessages() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'api/message/list.php?page=1&limit=5&t=' + Date.now(), true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                try {
+                    var resp = JSON.parse(xhr.responseText);
+                    if (resp.code === 0 && resp.data && resp.data.list) {
+                        renderDashMessages(resp.data.list);
+                    }
+                } catch(e) {}
+            }
+        };
+        xhr.send();
+    }
+
+    function renderDashMessages(messages) {
+        var tbody = document.getElementById('dashMsgBody');
+        if (!tbody) return;
+        if (!messages || messages.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9ca3af;padding:30px;">暂无线咨询</td></tr>';
+            return;
+        }
+        var html = '';
+        for (var i = 0; i < messages.length; i++) {
+            var m = messages[i];
+            var statusHtml = m.status === 'unread'
+                ? '<span class="status-badge status-pending" style="padding:2px 8px;font-size:11px;">未读</span>'
+                : '<span class="status-badge status-approved" style="padding:2px 8px;font-size:11px;">已读</span>';
+            var contentPreview = (m.content || '').substring(0, 50);
+            if ((m.content || '').length > 50) contentPreview += '...';
+            html += '<tr>' +
+                '<td style="padding:10px 16px;font-size:14px;">' + escapeHtml(m.name) + '</td>' +
+                '<td style="padding:10px 16px;font-size:14px;">' + escapeHtml(m.phone) + '</td>' +
+                '<td style="padding:10px 16px;font-size:13px;color:#6b7280;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + escapeHtml(m.content || '') + '">' + escapeHtml(contentPreview) + '</td>' +
+                '<td style="padding:10px 16px;font-size:13px;color:#9ca3af;">' + escapeHtml(m.time || '') + '</td>' +
+                '<td style="padding:10px 16px;">' + statusHtml + '</td>' +
+                '</tr>';
+        }
+        tbody.innerHTML = html;
+    }
+
     function escapeHtml(text) {
         if (!text) return '';
         const div = document.createElement('div');

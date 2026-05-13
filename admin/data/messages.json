@@ -1,22 +1,55 @@
 [
-  {
-    "id": "msg_001",
-    "name": "张三",
-    "content": "咨询业务详情",
-    "email": "zhang@example.com",
-    "phone": "13800138000",
-    "time": "2026-04-29 10:30:00",
-    "status": "unread",
-    "source": "contact"
-  },
-  {
-    "id": "msg_002",
-    "name": "李四",
-    "content": "想预约办理过桥业务，请尽快联系我",
-    "email": "lisi@example.com",
-    "phone": "13900139000",
-    "time": "2026-04-29 09:15:00",
-    "status": "unread",
-    "source": "appointment"
-  }
+    {
+        "id": "msg_001",
+        "name": "张三",
+        "content": "咨询业务详情",
+        "email": "zhang@example.com",
+        "phone": "13800138000",
+        "time": "2026-04-29 10:30:00",
+        "status": "unread",
+        "source": "contact"
+    },
+    {
+        "id": "msg_002",
+        "name": "李四",
+        "content": "想预约办理过桥业务，请尽快联系我",
+        "email": "lisi@example.com",
+        "phone": "13900139000",
+        "time": "2026-04-29 09:15:00",
+        "status": "unread",
+        "source": "appointment"
+    },
+    {
+        "id": "6a04f42a16b22",
+        "name": "测试用户",
+        "phone": "13800138000",
+        "email": "",
+        "content": "业务类型: 企业摆账\\n备注: 测试提交",
+        "source": "contact",
+        "status": "unread",
+        "time": "2026-05-14 05:59:06",
+        "ip": "47.95.236.85"
+    },
+    {
+        "id": "6a04f46e0344d",
+        "name": "张三",
+        "phone": "13912345678",
+        "email": "",
+        "content": "业务类型: 企业摆账\n备注: 需要资金500万",
+        "source": "contact",
+        "status": "unread",
+        "time": "2026-05-14 06:00:14",
+        "ip": "47.95.236.85"
+    },
+    {
+        "id": "6a04f58aea04f",
+        "name": "王立力",
+        "phone": "13552883008",
+        "email": "",
+        "content": "业务类型: 上市公司摆账\n备注: 咨询业务",
+        "source": "contact",
+        "status": "unread",
+        "time": "2026-05-14 06:04:58",
+        "ip": "223.88.57.52"
+    }
 ]

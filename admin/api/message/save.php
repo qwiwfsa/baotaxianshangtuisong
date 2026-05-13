@@ -109,6 +109,29 @@ switch ($action) {
         }
         break;
 
+    case 'batch_delete':
+        // ��ɾ������
+        $input = json_decode(file_get_contents('php://input'), true);
+        $ids = isset($input['ids']) ? $input['ids'] : [];
+        if (empty($ids) || !is_array($ids)) {
+            jsonError('ȱ��ɾ���б�');
+        }
+        $count = 0;
+        $newMessages = [];
+        foreach ($messages as $msg) {
+            if (in_array($msg['id'], $ids)) {
+                $count++;
+                continue;
+            }
+            $newMessages[] = $msg;
+        }
+        if (writeDataFile('messages.json', $newMessages)) {
+            jsonSuccess(['deleted' => $count], "��ɾ��{$count}����ѯ");
+        } else {
+            jsonError('д��ʧ��');
+        }
+        break;
+
     default:
         jsonError('无效的action参数（可选值：mark_read, delete, update）');
 }

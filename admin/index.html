@@ -747,7 +747,19 @@
                 justify-content: center;
             }
         }
-    </style>
+    
+        .cms-nav-item-comment {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 8px;
+        }
+        .cms-nav-item-comment:hover { background: #334155; }
+        .cms-nav-item-comment i { color: #f59e0b; }
+
+</style>
 </head>
 <body>
     <div class="cms-layout">
@@ -766,6 +778,11 @@
                     <a href="dashboard.html" class="cms-nav-item" data-section="dashboard">
                         <i class="fas fa-home"></i>
                         <span>仪表板</span>
+                    </a>
+
+                    <a href="comment-management.html" class="cms-nav-item cms-nav-item-comment">
+                        <i class="fas fa-comments" style="color:#f59e0b;"></i>
+                        <span>评论管理</span>
                     </a>
                     <a href="logo-settings.html" class="cms-nav-item" data-section="logo">
                         <i class="fas fa-image"></i>
@@ -816,10 +833,17 @@
                         <i class="fas fa-building"></i>
                         <span>城市分站</span>
                     </a>
-                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+
+<a href="districts-manager.html" class="cms-nav-item">
+<i class="fas fa-map-marked-alt"></i>
+<span>区县管理</span>
+</a>                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
                         <i class="fas fa-list-alt"></i>
                         <span>页脚管理</span>
                     </a>
+
+                    
+
                     
 
                 </div>

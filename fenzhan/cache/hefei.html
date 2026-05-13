@@ -14,46 +14,103 @@
     <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="canonical" href="https://www.yaozijin.com/fenzhan/hefei.html">
+    <!-- Open Graph -->
+    <meta property="og:title" content="合肥资金_过桥短拆_实资摆账_资金证明 - Yao资金网">
+    <meta property="og:description" content="合肥资金服务_专业资金业务_宏都资本">
+    <meta property="og:url" content="https://www.yaozijin.com/fenzhan/hefei.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "宏都资本-合肥资金服务",
+        "telephone": "13552883008",
+        "areaServed": "合肥",
+        "description": "合肥专业资金服务商，提供过桥短拆、实资摆账、资金证明等全方位资金解决方案"
+    }
+    </script>
 </head>
 <body>
+    
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-            <a href="/" class="logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
-                <li><a href="/" class="nav-link">首页</a></li>
-                <li><a href="/services.html" class="nav-link">业务范围</a></li>
-                <li><a href="/cases.html" class="nav-link">成功案例</a></li>
-                <li><a href="/advantages.html" class="nav-link">核心优势</a></li>
-                <li><a href="/news.php" class="nav-link">行业资讯</a></li>
-                <li><a href="/faq.html" class="nav-link">常见问题</a></li>
-                <li><a href="/contact.html" class="nav-link">联系我们</a></li>
+        <nav class="navbar" id="navbar">
+            <div class="navbar-container">
+                <a href="/" class="logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;"></a>
+                <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
+                <!-- 动态菜单将在这里加载 -->
             </ul>
-            <button class="search-toggle" id="searchToggle"><i class="fas fa-search"></i></button>
-            <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
-        </div>
-    </nav>
-    <main id="main-content">
-    <section class="hero" id="home">
-        <div class="hero-container">
-            <div class="hero-badge"><i class="fas fa-shield-alt"></i><span>专业资金服务 . 值得信赖</span></div>
-            <h1 class="hero-title">合肥专业资金服务商<br>助力企业稳健发展</h1>
-            <p class="hero-subtitle">合肥企业一站式资金解决方案</p>
-            <div class="hero-buttons">
-                <div class="booking-wrapper">
-                    <button class="btn btn-primary" onclick="togglePhoneDisplay()">立即咨询</button>
-                    <span id="phoneDisplay" style="display:none;font-size:18px;font-weight:700;color:rgb(30,58,138);">13552883008</span>
+            <script>
+                (function() {
+                    const defaultNavItems = [
+                        { id: '1', name: '首页', url: '/', icon: 'fas fa-home' },
+                        { id: '2', name: '业务范围', url: '/services.html', icon: 'fas fa-briefcase' },
+                        { id: '3', name: '成功案例', url: '/cases.html', icon: 'fas fa-trophy' },
+                        { id: '4', name: '服务优势', url: '/advantages.html', icon: 'fas fa-star' },
+                        { id: '5', name: '行业资讯', url: '/news.php', icon: 'fas fa-newspaper' },
+                        { id: '6', name: '常见问题', url: '/faq.html', icon: 'fas fa-question-circle' },
+                        { id: '7', name: '联系我们', url: '/contact.html', icon: 'fas fa-phone' }
+                    ];
+                    let navItems = defaultNavItems;
+                    try {
+                        const stored = localStorage.getItem('cms_nav_items');
+                        if (stored) {
+                            const parsed = JSON.parse(stored);
+                            if (Array.isArray(parsed) && parsed.length > 0) {
+                                navItems = parsed;
+                            }
+                        }
+                    } catch (e) { console.log('读取菜单失败，使用默认菜单'); }
+                    const menuContainer = document.getElementById('dynamicNavMenu');
+                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                    menuContainer.innerHTML = navItems.map(item => {
+                        const isActive = item.url === currentPage || (currentPage === '' && item.url === 'index.html');
+                        return '<li role="none"><a href="' + item.url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
+                    }).join('');
+                })();
+            </script>
+            </div>
+        </nav>
+        <main id="main-content">
+                <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-container">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    <span>专业资金服务商 · 值得信赖</span>
                 </div>
+                <h1 class="hero-title" id="hero-title">合肥专业资金解决方案<br />
+助力企业稳健发展</h1>
+                <p class="hero-subtitle">合肥地区提供上市公司短拆、企业摆账、实缴验资、资金证明等全方位资金服务,以专业实力和丰富经验,为您的企业发展保驾护航。</p>
+                <div class="hero-buttons">
+                    <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
+                        <button class="btn btn-primary" id="consultNowBtn" onclick="togglePhoneDisplay()" style="display:inline-flex;align-items:center;gap:6px;">
+                            <i class="fas fa-phone-alt"></i> 立即咨询
+                        </button>
+                        <span id="phoneDisplay" style="display:none;font-size:18px;font-weight:700;color:#1e3a8a;letter-spacing:2px;white-space:nowrap;background:#fff;border-radius:8px;padding:8px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);">13552883008</span>
+                    </div>
+                </div>
+                                <div class="stats" role="region" aria-label="公司数据统计">
+                                        <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">年行业经验</div>
+                    </div>
+                                        <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">服务企业</div>
+                    </div>
+                                        <div class="stat-card">
+                        <div class="stat-number">100亿+</div>
+                        <div class="stat-label">亿资金规模</div>
+                    </div>
+                                        <div class="stat-card">
+                        <div class="stat-number">99%</div>
+                        <div class="stat-label">%客户满意度</div>
+                    </div>
+                                    </div>
             </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">年行业经验</div></div>
-                <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">服务企业</div></div>
-                <div class="stat-card"><div class="stat-number">100亿+</div><div class="stat-label">资金规模</div></div>
-                <div class="stat-card"><div class="stat-number">99%</div><div class="stat-label">客户好评</div></div>
-            </div>
-        </div>
-    </section>
-    <section class="services" id="services" aria-labelledby="services-title">
+        </section>
+            <section class="services" id="services" aria-labelledby="services-title">
         <div class="section-container">
             <div class="section-header">
                 <div class="section-label">OUR SERVICES</div>
@@ -105,7 +162,7 @@
             </div>
         </div>
     </section>
-
+        
     <!-- 城市专属服务范围 -->
     <section class="services" id="city-districts" style="padding-top:0;">
         <div class="section-container">
@@ -117,29 +174,27 @@
             <div class="districts-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:20px 0;"><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">瑶海区</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">庐阳区</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">蜀山区</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">包河区</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">长丰县</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">肥东县</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">肥西县</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">庐江县</div><div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">巢湖市</div>
             </div>
         </div>
-    </section>    <section class="cases-showcase" id="casesShowcase">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-label">SUCCESS CASES</div>
-                <h2 class="section-title">成功案例</h2>
-                <p class="section-subtitle">用事实彰显专业实力，累计服务500+企业客户</p>
+    </section>        <section class="cases-showcase" id="casesShowcase">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-label">SUCCESS CASES</div>
+                    <h2 class="section-title">成功案例</h2>
+                    <p class="section-subtitle">用真实案例证明专业实力，累计服务500+企业客户</p>
+                </div>
+                <div class="cases-showcase-grid" id="casesShowcaseGrid">
+                </div>
+                <div class="cases-showcase-pagination" id="casesShowcasePagination">
+                    <button class="pagination-btn pagination-prev" id="prevPageBtn" onclick="changePage(-1)" title="上一页">
+                        <span class="pagination-arrow">&lt;</span>
+                    </button>
+                    <span class="pagination-info" id="paginationInfo">第 1 页</span>
+                    <button class="pagination-btn pagination-next" id="nextPageBtn" onclick="changePage(1)" title="下一页">
+                        <span class="pagination-arrow">&gt;</span>
+                    </button>
+                </div>
             </div>
-            <div class="cases-showcase-grid" id="casesShowcaseGrid">
-                <!-- Case cards rendered by JS -->
-            </div>
-
-            <div class="cases-showcase-pagination" id="casesShowcasePagination">
-                <button class="pagination-btn pagination-prev" id="prevPageBtn" onclick="changePage(-1)" title="上一页">
-                    <span class="pagination-arrow">&lt;</span>
-                </button>
-                <span class="pagination-info" id="paginationInfo">第 1 页</span>
-                <button class="pagination-btn pagination-next" id="nextPageBtn" onclick="changePage(1)" title="下一页">
-                    <span class="pagination-arrow">&gt;</span>
-                </button>
-            </div>
-        </div>
-    </section>
-    <section class="advantages" id="advantages" aria-labelledby="advantages-title">
+        </section>
+            <section class="advantages" id="advantages" aria-labelledby="advantages-title">
         <div class="section-container">
             <div class="section-header">
                 <h2 class="advantages-title" id="advantages-title">我们的核心优势</h2>
@@ -188,7 +243,7 @@
             </div>
         </div>
     </section>
-    <section class="bank-logos-section">
+            <section class="bank-logos-section">
         <div class="section-container">
             <div class="section-header">
                 <h2 class="section-title">合作银行</h2>
@@ -199,7 +254,7 @@
             </div>
         </div>
     </section>
-    <section class="services" style="padding:40px 0;">
+            <section class="services" style="padding:40px 0;">
         <div class="section-container" style="text-align:center;">
             <div style="background:linear-gradient(135deg,#1a365d,#2d4a7a);color:white;border-radius:12px;padding:40px 20px;">
                 <h2 style="font-size:28px;margin-bottom:16px;">合肥业务咨询</h2>
@@ -209,28 +264,38 @@
             </div>
         </div>
     </section>
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-label">FAQ</div>
-                <h2 class="section-title" id="faq-title">常见问题</h2>
-                <p class="section-subtitle">解答您关于资金业务的常见疑问</p>
-            </div>
-            <div class="faq-container">
-                <div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-lightbulb"></i> 显账亮资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">什么是亮资服务？</summary><div class="faq-answer">亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</div></details><details class="faq-item"><summary class="faq-question">亮资需要多长时间？</summary><div class="faq-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-exchange-alt"></i> 实缴验资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">过桥资金的利率是多少？</summary><div class="faq-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间，具体费率需根据实际情况评估。</p></div></details><details class="faq-item"><summary class="faq-question">过桥资金最长可以使用多久？</summary><div class="faq-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-university"></i> 企业摆账</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">摆账业务的资金安全吗？</summary><div class="faq-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。同时会签订正规合同，保障双方权益。</p></div></details><details class="faq-item"><summary class="faq-question">摆账需要提供什么资料？</summary><div class="faq-answer"><p>一般需要提供：营业执照、法人身份证、公司章程、银行开户许可证等基础资料，具体要求根据摆账金额和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar"></i> 云信融资出表</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">云信与承兑汇票区别</summary><div class="faq-answer"><p>简单通俗来讲它就类似于银行承兑汇票 &nbsp;区别在于一个兑付人是银行，一个兑付人是我们持金融牌照的保理机构也属于国企 到期无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信出表融资操作逻辑</summary><div class="faq-answer"><p>操作逻辑：就是我们保理机构以收购买断企业应收帐款方式（ 不确权 签无追索权保理）等价融资开具云信票据（电子债权凭证）给企业，企业可以流转支付 代替现金使用 到期资方可以无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信融资成本多少？</summary><div class="faq-answer"><p>帮助企业以极低的年化不超过3.5%融资成本用来流转支付 或真实债务出表，代替现金使用一年以内，解决企业现金流不足支付问题。</p></div></details><details class="faq-item"><summary class="faq-question">准备申请材料</summary><div class="faq-answer"><p>准备的申请材料：<br>营业执照 应收账款清单 合同发票， 业务确认表 &nbsp;近三年的财务报表 法人身份证</p></div></details><details class="faq-item"><summary class="faq-question">操作流程</summary><div class="faq-answer"><p>业务操作流程</p>
+
+        <section class="page-content" style="padding-top:0;">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-label">FAQ</div>
+                    <h2 class="section-title">常见问题</h2>
+                    <p class="section-subtitle">为您解答资金业务中的常见疑问</p>
+                </div>
+        <style>
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 768px) {
+            .faq-grid { grid-template-columns: 1fr; }
+        }
+        .faq-grid .faq-custom-category {
+            margin-bottom: 0;
+        }
+        </style>
+        <div class="faq-grid">
+        <div class="faq-custom-category" data-category="liangzi"><h3 class="faq-custom-category-title"><i class="fas fa-lightbulb" aria-hidden="true"></i> 显账亮资</h3><div class="faq-custom-list"><details class="faq-custom-item"><summary class="faq-custom-question"><span>什么是亮资服务？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer">亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>亮资需要多长时间？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div></details></div></div><div class="faq-custom-category" data-category="guoqiao"><h3 class="faq-custom-category-title"><i class="fas fa-exchange-alt" aria-hidden="true"></i> 实缴验资</h3><div class="faq-custom-list"><details class="faq-custom-item"><summary class="faq-custom-question"><span>过桥资金的利率是多少？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间，具体费率需根据实际情况评估。</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>过桥资金最长可以使用多久？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div></details></div></div><div class="faq-custom-category" data-category="baizhang"><h3 class="faq-custom-category-title"><i class="fas fa-university" aria-hidden="true"></i> 企业摆账</h3><div class="faq-custom-list"><details class="faq-custom-item"><summary class="faq-custom-question"><span>摆账业务的资金安全吗？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。同时会签订正规合同，保障双方权益。</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>摆账需要提供什么资料？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>一般需要提供：营业执照、法人身份证、公司章程、银行开户许可证等基础资料，具体要求根据摆账金额和银行要求而定。</p></div></details></div></div><div class="faq-custom-category" data-category="receivable"><h3 class="faq-custom-category-title"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> 云信融资出表</h3><div class="faq-custom-list"><details class="faq-custom-item"><summary class="faq-custom-question"><span>云信与承兑汇票区别</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>简单通俗来讲它就类似于银行承兑汇票 &nbsp;区别在于一个兑付人是银行，一个兑付人是我们持金融牌照的保理机构也属于国企 到期无条件刚性兑付。</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>云信出表融资操作逻辑</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>操作逻辑：就是我们保理机构以收购买断企业应收帐款方式（ 不确权 签无追索权保理）等价融资开具云信票据（电子债权凭证）给企业，企业可以流转支付 代替现金使用 到期资方可以无条件刚性兑付。</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>云信融资成本多少？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>帮助企业以极低的年化不超过3.5%融资成本用来流转支付 或真实债务出表，代替现金使用一年以内，解决企业现金流不足支付问题。</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>准备申请材料</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>准备的申请材料：<br>营业执照 应收账款清单 合同发票， 业务确认表 &nbsp;近三年的财务报表 法人身份证</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>操作流程</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>业务操作流程</p>
 <p>阶段一：准备与申请提交申请 材料（所需资料:营业执照 应收账款清单，合同发票，业 务确认表，近三年财报，法人 身份证）&nbsp;</p>
 <p>阶段二：人工审批1个工作日 内完成</p>
 <p>阶段三：审批通过业务立项收 取履约保证金（财务审核履约 保证金金额及公户私户付款比 例)</p>
 <p>阶段四：法大大网签保理协 议，回寄合同资料原件，企业 承诺函扫描上传申请配置额度 （5-7个工作日），开票企业 注册中企云链账户，绑定uk。</p>
-<p>阶段五：全款支付1.财务确认 全款到账（包含对公对私账 户）2.出票给客户t+0或t+1， 出具对公账户收款金额的保理 服务费发票，业务结束。 目来自华为备忘录</p></div></details><details class="faq-item"><summary class="faq-question">云信属性与功能</summary><div class="faq-answer"><p>它的属性就是 可拆分 可流转 可支付 可融资 可贴现，市场上做票据的有大量收云信贴现的你可以了解下</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-building-columns"></i> 资金证明</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">银行存款业务有什么优势？</summary><div class="faq-answer"><p>我们与多家银行建立了长期合作关系，可以为客户争取更优惠的存款利率，同时提供专业的资金管理建议。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-circle-question"></i> 一般问题</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">如何联系你们？</summary><div class="faq-answer"><p>您可以通过以下方式联系我们：<br>电话：13552883008<br>邮箱：wanglizhongguo@126.com<br>或直接在网站上点击"立即咨询"按钮。</p></div></details></div></div>            </div>
-        </div>
-    </section>
-    </main>
-    <div class="chat-widget" id="chatWidget">
-        <button class="chat-widget-btn" id="chatWidgetBtn"><i class="fas fa-phone-alt"></i></button>
-        <div class="chat-widget-phone-display"><span>13552883008</span></div>
-    </div>
-        <footer class="footer">
+<p>阶段五：全款支付1.财务确认 全款到账（包含对公对私账 户）2.出票给客户t+0或t+1， 出具对公账户收款金额的保理 服务费发票，业务结束。 目来自华为备忘录</p></div></details><details class="faq-custom-item"><summary class="faq-custom-question"><span>云信属性与功能</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>它的属性就是 可拆分 可流转 可支付 可融资 可贴现，市场上做票据的有大量收云信贴现的你可以了解下</p></div></details></div></div><div class="faq-custom-category" data-category="deposit"><h3 class="faq-custom-category-title"><i class="fas fa-building-columns" aria-hidden="true"></i> 资金证明</h3><div class="faq-custom-list"><details class="faq-custom-item"><summary class="faq-custom-question"><span>银行存款业务有什么优势？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>我们与多家银行建立了长期合作关系，可以为客户争取更优惠的存款利率，同时提供专业的资金管理建议。</p></div></details></div></div><div class="faq-custom-category" data-category="general"><h3 class="faq-custom-category-title"><i class="fas fa-circle-question" aria-hidden="true"></i> 一般问题</h3><div class="faq-custom-list"><details class="faq-custom-item"><summary class="faq-custom-question"><span>如何联系你们？</span><i class="fas fa-chevron-down"></i></summary><div class="faq-custom-answer"><p>您可以通过以下方式联系我们：<br>电话：13552883008<br>邮箱：wanglizhongguo@126.com<br>或直接在网站上点击"立即咨询"按钮。</p></div></details></div></div>        </div>
+            </div>
+        </section>
+        </main>
+            <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
                 <!-- 品牌信息 -->
@@ -278,64 +343,70 @@
             </div>
         </div>
     </footer>
-    <script src="/js/main.js?v=20260513e"></script>
+        <script src="/js/main.js?v=20260513e"></script>
 
     <!-- Cases Showcase Script -->
     <script>
     (function() {
-        var C = [], P = 1, N = 8;
-        async function F() {
+        var casesData = [], currentPage = 1, perPage = 8;
+        async function fetchCases() {
             try {
                 var r = await fetch('/api/cases.php?t=' + Date.now(), {method:'GET', headers:{'Accept':'application/json'}});
-                if (!r.headers.get('content-type') || !r.headers.get('content-type').includes('application/json')) { E(); return; }
+                if (!r.headers.get('content-type') || !r.headers.get('content-type').includes('application/json')) { showEmpty(); return; }
                 var d = await r.json();
                 if (d.success && d.cases && d.cases.length > 0) {
                     var seen = {};
-                    C = d.cases.filter(function(c) { if (seen[c.id]) return false; seen[c.id] = true; return true; }).map(function(c) {
-                        return {id:c.id, title:c.title, summary:c.summary||'', amount:c.amount||'', cover:c.coverImage||c.image||'/uploads/case-default.jpg'};
+                    casesData = d.cases.filter(function(c) { if (seen[c.id]) return false; seen[c.id] = true; return true; }).map(function(c) {
+                        return {id:c.id, title:c.title, summary:c.summary||'暂无简介', amount:c.amount||'面议', cover:c.coverImage||c.image||'/uploads/case-default.jpg'};
                     });
-                    R(); U();
-                } else { E(); }
-            } catch(e) { E(); }
+                    render(); updatePagination();
+                } else { showEmpty(); }
+            } catch(e) { showEmpty(); }
         }
-        function R() {
+        function render() {
             var g = document.getElementById('casesShowcaseGrid');
             if (!g) return;
-            var s = (P-1)*N, e = s+N, p = C.slice(s, e);
-            if (p.length === 0) { E(); return; }
-            var h = '';
-            for (var i = 0; i < p.length; i++) {
-                var item = p[i];
-                h += '<article class="case-card-enhanced" data-id="' + item.id + '">'
+            var start = (currentPage-1)*perPage, end = start+perPage, page = casesData.slice(start, end);
+            if (page.length === 0) { showEmpty(); return; }
+            var html = '';
+            for (var i = 0; i < page.length; i++) {
+                var item = page[i];
+                html += '<article class="case-card-enhanced" data-id="' + item.id + '">'
                     + '<div class="case-card-image" onclick="openLightbox(\'' + item.cover + '\')">'
                     + '<img src="' + item.cover + '" alt="' + item.title + '" onerror="this.src=\'/uploads/case-default.jpg\'"></div>'
                     + '<div class="case-card-content">'
-                    + '<h3 class="case-card-title" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'" style="cursor:pointer">' + item.title + '</h3>'
-                    + '<p class="case-card-summary" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'" style="cursor:pointer">' + item.summary + '</p>'
+                    + '<h3 class="case-card-title" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'" style="cursor:pointer">'
+                    + item.title + '</h3>'
+                    + '<p class="case-card-summary" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'" style="cursor:pointer">'
+                    + item.summary + '</p>'
                     + '<div class="case-card-meta"><div class="case-card-amount" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'" style="cursor:pointer">'
                     + '<span class="case-card-amount-label">融资金额</span>'
                     + '<span class="case-card-amount-value">' + item.amount + '</span></div>'
                     + '<button class="btn-view-detail" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'">查看详情</button></div></div></article>';
             }
-            g.innerHTML = h;
+            g.innerHTML = html;
         }
-        function E() {
+        function showEmpty() {
             var g = document.getElementById('casesShowcaseGrid');
             if (g) g.innerHTML = '<div class="cases-showcase-empty"><i class="fas fa-folder-open"></i><p class="cases-showcase-empty-text">暂无成功案例，敬请期待</p></div>';
         }
-        function U() {
-            var t = Math.ceil(C.length / N);
+        function updatePagination() {
+            var total = Math.ceil(casesData.length / perPage);
             var prev = document.getElementById('prevPageBtn'), next = document.getElementById('nextPageBtn'), info = document.getElementById('paginationInfo');
-            if (prev) prev.disabled = P <= 1;
-            if (next) next.disabled = P >= t || t === 0;
-            if (info) info.textContent = '第 ' + P + ' 页 / 共 ' + (t || 1) + ' 页';
+            if (prev) prev.disabled = currentPage <= 1;
+            if (next) next.disabled = currentPage >= total || total === 0;
+            if (info) info.textContent = '第 ' + currentPage + ' 页 / 共 ' + (total || 1) + ' 页';
             var pag = document.getElementById('casesShowcasePagination');
-            if (pag) pag.style.display = t <= 1 ? 'none' : 'flex';
+            if (pag) pag.style.display = total <= 1 ? 'none' : 'flex';
         }
         window.changePage = function(d) {
-            var t = Math.ceil(C.length / N);
-            var np = P + d;
-            if (np >= 1 && np <= t) { P = np; R(); U(); var el = document.getElementById('casesShowcase'); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); }
+            var total = Math.ceil(casesData.length / perPage);
+            var np = currentPage + d;
+            if (np >= 1 && np <= total) {
+                currentPage = np; render(); updatePagination();
+                var el = document.getElementById('casesShowcase');
+                if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+            }
         };
         window.openLightbox = function(src) {
             var lb = document.getElementById('imageLightbox'), li = document.getElementById('lightboxImage');
@@ -347,7 +418,7 @@
         };
         document.addEventListener('click', function(e) { if (e.target === document.getElementById('imageLightbox')) closeLightbox(); });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
-        document.addEventListener('DOMContentLoaded', F);
+        document.addEventListener('DOMContentLoaded', fetchCases);
     })();
     </script>
 
@@ -376,11 +447,58 @@
         .pagination-btn:disabled{opacity:.4;cursor:not-allowed;}
         .pagination-info{font-size:14px;color:#64748b;min-width:140px;text-align:center;}
     </style>
+
         <script>
-    document.addEventListener('DOMContentLoaded',function(){
-        window.togglePhoneDisplay=function(){var e=document.getElementById('phoneDisplay');if(e)e.style.display=e.style.display==='none'?'inline-block':'none';};
+    function togglePhoneDisplay() {
+        const btn = document.getElementById('consultNowBtn');
+        const phone = document.getElementById('phoneDisplay');
+        if (btn && phone) {
+            btn.style.display = 'none';
+            phone.style.display = 'inline-flex';
+        }
+    }
+    document.addEventListener('click', function(e) {
+        const btn = document.getElementById('consultNowBtn');
+        const phone = document.getElementById('phoneDisplay');
+        if (btn && phone && phone.style.display !== 'none') {
+            if (e.target !== btn && !btn.contains(e.target) &&
+                e.target !== phone && !phone.contains(e.target)) {
+                phone.style.display = 'none';
+                btn.style.display = 'inline-flex';
+            }
+        }
     });
     </script>
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open('GET','/admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector('.logo img');
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector('.footer-logo img');
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                        if(resp.data.favicon){
+                            var lk=document.querySelector('link[rel="icon"]')||document.querySelector('link[rel="shortcut icon"]');
+                            if(!lk){lk=document.createElement('link');lk.rel='icon';document.head.appendChild(lk);}
+                            lk.href=fixPath(resp.data.favicon);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
 
+    
 </body>
 </html>
