@@ -967,13 +967,23 @@ main#main-content {
                 var qqBtn = document.getElementById('shareBtnQQ');
                 var weiboBtn = document.getElementById('shareBtnWeibo');
                 var copyBtn = document.getElementById('shareBtnCopy');
-                if (wechatBtn) wechatBtn.onclick = function(){ openWechatShare(url); };
-                if (momentsBtn) momentsBtn.onclick = function(){ openWechatShare(url); };
-                if (qqBtn) qqBtn.onclick = function(){ window.open('https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t, '_blank', 'width=680,height=520'); };
-                if (weiboBtn) weiboBtn.onclick = function(){ window.open('https://service.weibo.com/share/share.php?url=' + u + '&title=' + t, '_blank', 'width=680,height=520'); };
+                if (wechatBtn) wechatBtn.onclick = function(){ shareToWechat(url, title); };
+                if (momentsBtn) momentsBtn.onclick = function(){ shareToMoments(url, title); };
+                if (qqBtn) qqBtn.onclick = function(){ shareToQQ(url, title); };
+                if (weiboBtn) weiboBtn.onclick = function(){ shareToWeibo(url, title); };
                 if (copyBtn) copyBtn.onclick = function(){ copyLink(url, this); };
             }, 100);
-        }
+        
+            // Render tags
+            const tagsContainer = document.getElementById('articleTags');
+            if (article.tags && article.tags.length > 0) {
+                tagsContainer.innerHTML = '<span class="tag-label"><i class="fas fa-tags"></i></span>' +
+                    article.tags.map(t => '<a href="/tag/' + t.slug + '" class="tag-link">' + t.name + '</a>').join('');
+                tagsContainer.style.display = 'flex';
+            } else {
+                tagsContainer.style.display = 'none';
+            }
+}
 
         // 渲染相关文章
         function renderRelated(articles) {
@@ -1113,7 +1123,7 @@ main#main-content {
             var nameVal = nickname.value.trim();
             var contentVal = content.value.trim();
             if (error) error.classList.remove('show');
-            if (!nameVal) { nickname.focus(); if (error) { error.textContent = '请输入昵称'; error.classList.add('show'); } return; }
+            
             if (nameVal.length > 20) { if (error) { error.textContent = '昵称不能超过20个字符'; error.classList.add('show'); } return; }
             if (!contentVal) { content.focus(); if (error) { error.textContent = '请输入评论内容'; error.classList.add('show'); } return; }
             if (contentVal.length < 2) { content.focus(); if (error) { error.textContent = '评论内容至少2个字符'; error.classList.add('show'); } return; }

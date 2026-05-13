@@ -123,13 +123,15 @@ try {
     ?>
 
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
-        <nav class="navbar" id="navbar">
-            <div class="navbar-container">
-                <a href="/" class="logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;"></a>
-                <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
+        <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <!-- 动态菜单将在这里加载 -->
             </ul>
+
             <script>
+                // 动态加载导航菜单
                 (function() {
                     const defaultNavItems = [
                         { id: '1', name: '首页', url: '/', icon: 'fas fa-home' },
@@ -140,6 +142,8 @@ try {
                         { id: '6', name: '常见问题', url: '/faq.html', icon: 'fas fa-question-circle' },
                         { id: '7', name: '联系我们', url: '/contact.html', icon: 'fas fa-phone' }
                     ];
+
+                    // 从 localStorage 读取菜单
                     let navItems = defaultNavItems;
                     try {
                         const stored = localStorage.getItem('cms_nav_items');
@@ -149,17 +153,49 @@ try {
                                 navItems = parsed;
                             }
                         }
-                    } catch (e) { console.log('读取菜单失败，使用默认菜单'); }
+                    } catch (e) {
+                        console.log('读取菜单失败，使用默认菜单');
+                    }
+
+                    // 渲染菜单
                     const menuContainer = document.getElementById('dynamicNavMenu');
                     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
                     menuContainer.innerHTML = navItems.map(item => {
                         const isActive = item.url === currentPage || (currentPage === '' && item.url === 'index.html');
-                        return '<li role="none"><a href="' + item.url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
+                        return `<li role="none"><a href="${item.url}" class="nav-link${isActive ? ' active' : ''}" role="menuitem">${item.name}</a></li>`;
                     }).join('');
                 })();
             </script>
+
+            <!-- 搜索按钮 -->
+            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- 搜索层 -->
+        <div class="search-overlay" id="searchOverlay" role="search" aria-hidden="true">
+            <div class="search-container">
+                <form class="search-form" id="searchForm" action="#" method="get">
+                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、文章或资讯..." aria-label="搜索关键词">
+                    <button type="submit" class="search-submit" aria-label="搜索">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions" aria-live="polite"></div>
+                <button class="search-close" id="searchClose" aria-label="关闭搜索">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
             </div>
-        </nav>
+        </div>
+    </nav>
         <main id="main-content">
                 <section class="hero" id="home" aria-labelledby="hero-title">
             <div class="hero-container">
@@ -536,13 +572,15 @@ if (!empty($templateContent)) {
     </head>
     <body>
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
-        <nav class="navbar" id="navbar">
-            <div class="navbar-container">
-                <a href="/" class="logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;"></a>
-                <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
+        <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <!-- 动态菜单将在这里加载 -->
             </ul>
+
             <script>
+                // 动态加载导航菜单
                 (function() {
                     const defaultNavItems = [
                         { id: '1', name: '首页', url: '/', icon: 'fas fa-home' },
@@ -553,6 +591,8 @@ if (!empty($templateContent)) {
                         { id: '6', name: '常见问题', url: '/faq.html', icon: 'fas fa-question-circle' },
                         { id: '7', name: '联系我们', url: '/contact.html', icon: 'fas fa-phone' }
                     ];
+
+                    // 从 localStorage 读取菜单
                     let navItems = defaultNavItems;
                     try {
                         const stored = localStorage.getItem('cms_nav_items');
@@ -562,17 +602,49 @@ if (!empty($templateContent)) {
                                 navItems = parsed;
                             }
                         }
-                    } catch (e) { console.log('读取菜单失败，使用默认菜单'); }
+                    } catch (e) {
+                        console.log('读取菜单失败，使用默认菜单');
+                    }
+
+                    // 渲染菜单
                     const menuContainer = document.getElementById('dynamicNavMenu');
                     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
                     menuContainer.innerHTML = navItems.map(item => {
                         const isActive = item.url === currentPage || (currentPage === '' && item.url === 'index.html');
-                        return '<li role="none"><a href="' + item.url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
+                        return `<li role="none"><a href="${item.url}" class="nav-link${isActive ? ' active' : ''}" role="menuitem">${item.name}</a></li>`;
                     }).join('');
                 })();
             </script>
+
+            <!-- 搜索按钮 -->
+            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- 搜索层 -->
+        <div class="search-overlay" id="searchOverlay" role="search" aria-hidden="true">
+            <div class="search-container">
+                <form class="search-form" id="searchForm" action="#" method="get">
+                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、文章或资讯..." aria-label="搜索关键词">
+                    <button type="submit" class="search-submit" aria-label="搜索">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions" aria-live="polite"></div>
+                <button class="search-close" id="searchClose" aria-label="关闭搜索">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
             </div>
-        </nav>
+        </div>
+    </nav>
         <main id="main-content">
                 <section class="hero" id="home" aria-labelledby="hero-title">
             <div class="hero-container">

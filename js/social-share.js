@@ -2,12 +2,10 @@
 (function() {
     'use strict';
 
-    // Helper: safe get of data attribute with fallback
     function getShareText(key, fallback) {
         return document.documentElement.getAttribute(key) || fallback || '';
     }
 
-    // Get current page URL and title
     function getShareUrl() {
         return window.location.href.split('#')[0];
     }
@@ -17,7 +15,11 @@
         return t.replace(/ - .*$/, '').trim() || t;
     }
 
-    // === QR Code for WeChat ===
+    function isMobile() {
+        return /Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    // === QR Code for WeChat (fallback) ===
     var qrModalEl = null;
 
     function buildQrModal(url) {
@@ -26,7 +28,7 @@
         var desc = getShareText('data-share-wx-desc', '打开微信扫一扫，分享给好友或朋友圈');
         var hint = getShareText('data-share-wx-hint', '打开微信「扫一扫」分享');
         var closeText = getShareText('data-share-close', '关闭');
-        var html = '<div class="wechat-share-modal" id="wxQrModal">'
+        return '<div class="wechat-share-modal" id="wxQrModal">'
             + '<div class="wechat-share-content">'
             + '<div class="wechat-share-title">' + title + '</div>'
             + '<div class="wechat-share-desc">' + desc + '</div>'
@@ -36,7 +38,6 @@
             + '<p style="font-size:13px;color:#9ca3af;margin:-8px 0 20px">' + hint + '</p>'
             + '<button class="wechat-share-close" onclick="closeWechatShare()">' + closeText + '</button>'
             + '</div></div>';
-        return html;
     }
 
     window.openWechatShare = function(url) {
@@ -61,6 +62,52 @@
                 if (qrModalEl) qrModalEl.remove();
                 qrModalEl = null;
             }, 300);
+        }
+    };
+
+    // === Mobile App Share Functions ===
+    window.shareToQQ = function(url, title) {
+        var u = encodeURIComponent(url);
+        var t = encodeURIComponent(title || getShareTitle());
+        if (isMobile()) {
+            try { window.location.href = 'mqqapi://share/to_friend?url=' + u + '&title=' + t + '&description=' + t; } catch(e) {}
+            setTimeout(function() {
+                window.open('https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t, '_blank');
+            }, 800);
+        } else {
+            window.open('https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t, '_blank', 'width=680,height=520');
+        }
+    };
+
+    window.shareToWechat = function(url, title) {
+        if (isMobile()) {
+            try { window.location.href = 'weixin://'; } catch(e) {}
+            setTimeout(function() { openWechatShare(url); }, 1000);
+        } else {
+            openWechatShare(url);
+        }
+    };
+
+    window.shareToMoments = function(url, title) {
+        if (isMobile()) {
+            try { window.location.href = 'weixin://dl/moments'; } catch(e) {}
+            setTimeout(function() { openWechatShare(url); }, 1000);
+        } else {
+            openWechatShare(url);
+        }
+    };
+
+    window.shareToWeibo = function(url, title) {
+        var u = encodeURIComponent(url);
+        var t = encodeURIComponent(title || getShareTitle());
+        window.open('https://service.weibo.com/share/share.php?url=' + u + '&title=' + t, '_blank', 'width=680,height=520');
+    };
+
+    window.shareNative = function(url, title) {
+        if (navigator.share) {
+            navigator.share({ title: title || getShareTitle(), url: url || getShareUrl() }).catch(function() {});
+        } else {
+            copyLink(url || getShareUrl());
         }
     };
 
@@ -105,34 +152,45 @@
     }
 
     // === Build Share HTML ===
+    function btnVal(url, title, fn) {
+        return "onclick=\"" + fn + "('" + url.replace(/'/g, "\\'") + "','" + (title || '').replace(/'/g, "\\'") + "')\"";
+    }
+
     function buildShareCompact(url, title) {
         var u = encodeURIComponent(url);
         var t = encodeURIComponent(title || getShareTitle());
         var label = getShareText('data-share-label', '分享到：');
-        return '<div class="article-share-compact">'
+        var html = '<div class="article-share-compact">'
             + '<span class="social-share-label">' + label + '</span>'
-            + '<button class="share-btn wechat" onclick="openWechatShare(\'' + url.replace(/'/g, "\\'") + '\')" title="微信"><i class="fab fa-weixin"></i></button>'
-            + '<button class="share-btn wechat-moments" onclick="openWechatShare(\'' + url.replace(/'/g, "\\'") + '\')" title="朋友圈"><i class="fas fa-users"></i></button>'
-            + '<button class="share-btn qq" onclick="window.open(\'https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t + '\',\'_blank\',\'width=680,height=520\')" title="QQ"><i class="fab fa-qq"></i></button>'
-            + '<button class="share-btn weibo" onclick="window.open(\'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t + '\',\'_blank\',\'width=680,height=520\')" title="微博"><i class="fab fa-weibo"></i></button>'
-            + '<button class="share-btn copy" onclick="copyLink(\'' + url.replace(/'/g, "\\'") + '\',this)" title="复制链接"><i class="fas fa-link"></i></button>'
-            + '</div>';
+            + '<button class="share-btn wechat" ' + btnVal(url, title, 'shareToWechat') + ' title="微信"><i class="fab fa-weixin"></i></button>'
+            + '<button class="share-btn wechat-moments" ' + btnVal(url, title, 'shareToMoments') + ' title="朋友圈"><i class="fas fa-users"></i></button>'
+            + '<button class="share-btn qq" ' + btnVal(url, title, 'shareToQQ') + ' title="QQ"><i class="fab fa-qq"></i></button>'
+            + '<button class="share-btn weibo" ' + btnVal(url, title, 'shareToWeibo') + ' title="微博"><i class="fab fa-weibo"></i></button>'
+            + '<button class="share-btn copy" onclick="copyLink(\'' + url.replace(/'/g, "\\'") + '\',this)" title="复制链接"><i class="fas fa-link"></i></button>';
+        if (navigator.share) {
+            html += '<button class="share-btn more" ' + btnVal(url, title, 'shareNative') + ' title="更多"><i class="fas fa-ellipsis-h"></i></button>';
+        }
+        html += '</div>';
+        return html;
     }
 
     function buildShareFull(url, title) {
         var u = encodeURIComponent(url);
         var t = encodeURIComponent(title || getShareTitle());
-        var shareTo = '分享到';
-        return '<div class="article-share-full">'
+        var html = '<div class="article-share-full">'
             + '<div class="share-left">'
-            + '<span class="share-title">' + shareTo + '</span>'
+            + '<span class="share-title">分享到</span>'
             + '<div class="share-buttons">'
-            + '<button class="share-btn wechat" onclick="openWechatShare(\'' + url.replace(/'/g, "\\'") + '\')" title="微信"><i class="fab fa-weixin"></i><span class="share-btn-label">微信</span></button>'
-            + '<button class="share-btn wechat-moments" onclick="openWechatShare(\'' + url.replace(/'/g, "\\'") + '\')" title="朋友圈"><i class="fas fa-users"></i><span class="share-btn-label">朋友圈</span></button>'
-            + '<button class="share-btn qq" onclick="window.open(\'https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t + '\',\'_blank\',\'width=680,height=520\')" title="QQ"><i class="fab fa-qq"></i><span class="share-btn-label">QQ</span></button>'
-            + '<button class="share-btn weibo" onclick="window.open(\'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t + '\',\'_blank\',\'width=680,height=520\')" title="微博"><i class="fab fa-weibo"></i><span class="share-btn-label">微博</span></button>'
-            + '<button class="share-btn copy" onclick="copyLink(\'' + url.replace(/'/g, "\\'") + '\',this)" title="复制链接"><i class="fas fa-link"></i><span class="share-btn-label">复制链接</span></button>'
-            + '</div></div></div>';
+            + '<button class="share-btn wechat" ' + btnVal(url, title, 'shareToWechat') + ' title="微信"><i class="fab fa-weixin"></i><span class="share-btn-label">微信</span></button>'
+            + '<button class="share-btn wechat-moments" ' + btnVal(url, title, 'shareToMoments') + ' title="朋友圈"><i class="fas fa-users"></i><span class="share-btn-label">朋友圈</span></button>'
+            + '<button class="share-btn qq" ' + btnVal(url, title, 'shareToQQ') + ' title="QQ"><i class="fab fa-qq"></i><span class="share-btn-label">QQ</span></button>'
+            + '<button class="share-btn weibo" ' + btnVal(url, title, 'shareToWeibo') + ' title="微博"><i class="fab fa-weibo"></i><span class="share-btn-label">微博</span></button>'
+            + '<button class="share-btn copy" onclick="copyLink(\'' + url.replace(/'/g, "\\'") + '\',this)" title="复制链接"><i class="fas fa-link"></i><span class="share-btn-label">复制链接</span></button>';
+        if (navigator.share) {
+            html += '<button class="share-btn more" ' + btnVal(url, title, 'shareNative') + ' title="更多"><i class="fas fa-ellipsis-h"></i><span class="share-btn-label">更多</span></button>';
+        }
+        html += '</div></div></div>';
+        return html;
     }
 
     function resolveUrl(href) {
@@ -145,9 +203,7 @@
         return base + href;
     }
 
-    // === Add share to list page ===
     function addShareToListPage() {
-        // Priority 1: PC list page with .news-card structure
         var cards = document.querySelectorAll('.news-card');
         if (cards.length > 0) {
             cards.forEach(function(card) {
@@ -167,7 +223,6 @@
             return;
         }
 
-        // Priority 2: Mobile list page - articles rendered as divs inline in .news-list-container
         var container = document.querySelector('.news-list-container');
         if (!container) return;
 
@@ -176,19 +231,14 @@
             var item = items[i];
             if (!item || item.tagName !== 'DIV') continue;
             if (item.querySelector('.article-share-compact')) continue;
-            // Check it's an article item (has a link to news-detail and h3)
             var link = item.querySelector('a[href*="news-detail"]');
             var titleEl = item.querySelector('h3');
             if (link && titleEl) {
                 var href = link.getAttribute('href');
                 var absUrl = resolveUrl(href);
                 var title = titleEl.textContent.trim();
-
-                // Try to find the flex-1 content wrapper (inline style or any text container)
-                // Mobile renders: <div style="flex:1;padding:...">
                 var contentWrapper = item.querySelector('div[style*="flex:"]');
                 if (!contentWrapper) {
-                    // Fallback: find any div that contains the h3 and isn't the thumb
                     var childDivs = item.querySelectorAll(':scope > div');
                     for (var j = 0; j < childDivs.length; j++) {
                         if (childDivs[j].querySelector('h3')) {
@@ -206,59 +256,42 @@
         }
     }
 
-    // === Add share bar to detail page ===
     function addShareToDetailPage() {
-        // Skip if already injected by the HTML template
         if (window.__shareBarInjected) return;
         if (document.querySelector('.article-share-full')) return;
 
         var titleEl = document.querySelector('h1.article-detail-title');
         if (!titleEl) {
-            // Content not yet loaded, retry
             setTimeout(addShareToDetailPage, 500);
             return;
         }
         var title = titleEl.textContent.trim();
         var url = getShareUrl();
 
-        // Look for the content container: insert share bar after article-detail-main (article body)
-        // to place it between article body and related-articles section
         var main = document.querySelector('.article-detail-main');
-        
         if (main) {
-            var shareHtml = buildShareFull(url, title);
-            // Insert after .article-detail-main, inside #articleContent
-            main.insertAdjacentHTML('afterend', shareHtml);
+            main.insertAdjacentHTML('afterend', buildShareFull(url, title));
         } else {
-            // Fallback: find the content area
             var content = document.querySelector('#articleContent') ||
                           document.querySelector('.article-detail-content') ||
                           document.querySelector('.article-detail-container');
             if (content && !content.querySelector('.article-share-full')) {
-                var shareHtml = buildShareFull(url, title);
-                content.insertAdjacentHTML('beforeend', shareHtml);
+                content.insertAdjacentHTML('beforeend', buildShareFull(url, title));
             }
         }
     }
 
-    // Also expose the share URL/title for inline usage
     window.__getShareUrl = getShareUrl;
     window.__getShareTitle = getShareTitle;
 
-    // === Init ===
     document.addEventListener('DOMContentLoaded', function() {
         var path = window.location.pathname;
-
-        // Check if it's a detail page
         if (path.indexOf('news-detail') !== -1) {
-            // Wait for dynamic content to load, then add share
             setTimeout(addShareToDetailPage, 500);
             setTimeout(addShareToDetailPage, 2000);
             setTimeout(addShareToDetailPage, 4000);
             return;
         }
-
-        // Check if it's a list page
         if (path.indexOf('news') !== -1) {
             function tryAddList() {
                 addShareToListPage();

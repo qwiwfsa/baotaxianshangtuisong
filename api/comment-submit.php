@@ -8,10 +8,11 @@ $article_id = isset($_POST['article_id']) ? intval($_POST['article_id']) : 0;
 $nickname = isset($_POST['nickname']) ? trim($_POST['nickname']) : '';
 $content_text = isset($_POST['content']) ? trim($_POST['content']) : '';
 
-if ($article_id <= 0 || $nickname === '' || $content_text === '') {
+if ($article_id <= 0 || $content_text === '') {
     jsonError('参数不完整', 400);
 }
 
+if ($nickname === '') $nickname = '匿名';
 if (mb_strlen($nickname) > 50) {
     jsonError('昵称过长', 400);
 }

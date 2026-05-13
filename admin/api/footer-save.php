@@ -9,6 +9,20 @@
 require_once __DIR__ . '/../../config/db.php';
 
 header('Content-Type: application/json; charset=utf-8');
+// 城市分站缓存清理
+function clearFenzhanCache() {
+    $cacheDir = __DIR__ . "/../../fenzhan/cache/";
+    if (is_dir($cacheDir)) {
+        $files = glob($cacheDir . "*.html");
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                @unlink($file);
+            }
+        }
+    }
+}
+
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['code' => 1, 'msg' => '仅支持POST请求']);
@@ -46,6 +60,7 @@ if ($action === 'save') {
     $stmt->execute();
     $stmt->close();
 
+    clearFenzhanCache();
     echo json_encode(['code' => 0, 'msg' => '保存成功']);
     exit;
 }
@@ -76,6 +91,7 @@ if ($action === 'save_all') {
         $stmt->close();
     }
 
+    clearFenzhanCache();
     echo json_encode(['code' => 0, 'msg' => '全部保存成功']);
     exit;
 }
@@ -99,6 +115,7 @@ if ($action === 'add_link') {
     $newId = $stmt->insert_id;
     $stmt->close();
 
+    clearFenzhanCache();
     echo json_encode(['code' => 0, 'msg' => '添加成功', 'id' => $newId]);
     exit;
 }
@@ -116,6 +133,7 @@ if ($action === 'delete_link') {
     $stmt->execute();
     $stmt->close();
 
+    clearFenzhanCache();
     echo json_encode(['code' => 0, 'msg' => '删除成功']);
     exit;
 }

@@ -61,6 +61,24 @@ try {
     $updateStmt->execute();
     $updateStmt->close();
     
+    // 获取文章标签
+    $tagStmt = $db->prepare("SELECT t.id, t.name, t.slug FROM article_tags at JOIN tags t ON at.tag_id = t.id WHERE at.article_id = ?");
+    $tagStmt->bind_param('i', $id);
+    $tagStmt->execute();
+    $tagResult = $tagStmt->get_result();
+    $article['tags'] = $tagResult->fetch_all(MYSQLI_ASSOC);
+    $article['tag_ids'] = array_column($article['tags'], 'id');
+    $tagStmt->close();
+
+    // 获取文章标签
+    $tagStmt = $db->prepare("SELECT t.id, t.name, t.slug FROM article_tags at JOIN tags t ON at.tag_id = t.id WHERE at.article_id = ?");
+    $tagStmt->bind_param('i', $id);
+    $tagStmt->execute();
+    $tagResult = $tagStmt->get_result();
+    $article['tags'] = $tagResult->fetch_all(MYSQLI_ASSOC);
+    $article['tag_ids'] = array_column($article['tags'], 'id');
+    $tagStmt->close();
+
     // 获取上一篇和下一篇
     $prevStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id < ? AND status = 'published' ORDER BY id DESC LIMIT 1");
     $prevStmt->bind_param('i', $id);

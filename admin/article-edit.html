@@ -27,6 +27,32 @@
         .form-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
         .form-section-title { font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 8px; }
         .form-section-title i { color: #3b82f6; }
+
+/* Tag selector */
+.tag-selector { margin-top: 4px; }
+.tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
+.tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
+.tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
+.tag-selector__tag i:hover { opacity: 1; }
+.tag-selector__input-wrap { position: relative; }
+.tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; }
+.tag-selector__dropdown.show { display: block; }
+.tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; }
+.tag-option:hover { background: #f3f4f6; }
+.tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
+
+/* Tag selector */
+.tag-selector { margin-top: 4px; }
+.tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
+.tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
+.tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
+.tag-selector__tag i:hover { opacity: 1; }
+.tag-selector__input-wrap { position: relative; }
+.tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; }
+.tag-selector__dropdown.show { display: block; }
+.tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; }
+.tag-option:hover { background: #f3f4f6; }
+.tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
         
         .form-group { margin-bottom: 20px; }
         .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 8px; }
@@ -179,6 +205,26 @@
             <div class="form-group">
                 <label class="form-label">SEO描述</label>
                 <textarea class="form-textarea" id="seoDescription" rows="3" placeholder="搜索引擎显示的描述"></textarea>
+            </div>
+        </div>
+                </div>
+        </div>
+
+        <!-- 标签管理 -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-tags"></i>
+                标签管理
+            </h3>
+            <div class="form-group">
+                <label class="form-label">选择标签</label>
+                <div class="tag-selector">
+                    <div class="tag-selector__selected" id="articleSelectedTags"></div>
+                    <div class="tag-selector__input-wrap">
+                        <input type="text" class="form-input" id="articleTagSearch" placeholder="搜索标签..." oninput="articleFilterTagOptions()" onfocus="articleFilterTagOptions()">
+                        <div class="tag-selector__dropdown" id="articleTagDropdown"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -509,6 +555,11 @@
                     document.getElementById('seoTitle').value = article.seo_title || '';
                     document.getElementById('seoKeywords').value = article.seo_keywords || '';
                     document.getElementById('seoDescription').value = article.seo_description || '';
+
+                    // Load tags for this article
+                    if (article.tag_ids) {
+                        articleSetSelectedTags(article.tag_ids);
+                    }
                     
                     if (article.cover_image) {
                         document.getElementById('coverImage').value = article.cover_image;
@@ -944,6 +995,7 @@
                 sort_order: parseInt(document.getElementById('sortOrder').value) || 0,
                 seo_title: document.getElementById('seoTitle').value,
                 seo_keywords: document.getElementById('seoKeywords').value,
+                tag_ids: articleGetSelectedTagIds()
                 seo_description: document.getElementById('seoDescription').value
             };
 
@@ -1071,6 +1123,78 @@
                 saveAsDraft();
             }
         });
+    </script>
+    <script>
+        // ========== 标签选择器 ==========
+        let articleAllTags = [];
+        let articleSelectedTags = [];
+
+        async function articleLoadTagOptions() {
+            try {
+                const resp = await fetch('api/tags/tag-options.php');
+                const result = await resp.json();
+                if (result.success) articleAllTags = result.data || [];
+            } catch(e) { console.log(e); }
+        }
+
+        function articleFilterTagOptions() {
+            const search = document.getElementById('articleTagSearch').value.toLowerCase();
+            const dd = document.getElementById('articleTagDropdown');
+            const filtered = articleAllTags.filter(t =>
+                (t.name.toLowerCase().includes(search) || t.slug.toLowerCase().includes(search)) &&
+                !articleSelectedTags.includes(parseInt(t.id))
+            );
+            if (filtered.length > 0) {
+                dd.innerHTML = filtered.map(t =>
+                    `<div class="tag-option" onclick="articleAddTag(${t.id}, '${t.name.replace(/'/g, "\\'")}')">${t.name} <span style="color:#9ca3af;font-size:12px;">(${t.slug})</span></div>`
+                ).join('');
+                dd.classList.add('show');
+            } else {
+                dd.innerHTML = '<div class="tag-option disabled">' + (search ? '无匹配标签' : '没有可用的标签') + '</div>';
+                dd.classList.add('show');
+            }
+        }
+
+        function articleAddTag(id, name) {
+            if (!articleSelectedTags.includes(id)) {
+                articleSelectedTags.push(id);
+                articleRenderSelectedTags();
+            }
+            document.getElementById('articleTagSearch').value = '';
+            document.getElementById('articleTagDropdown').classList.remove('show');
+        }
+
+        function articleRemoveTag(id) {
+            articleSelectedTags = articleSelectedTags.filter(t => t !== id);
+            articleRenderSelectedTags();
+        }
+
+        function articleSetSelectedTags(ids) {
+            articleSelectedTags = ids.map(id => parseInt(id));
+            articleRenderSelectedTags();
+        }
+
+        function articleRenderSelectedTags() {
+            const container = document.getElementById('articleSelectedTags');
+            container.innerHTML = articleSelectedTags.map(id => {
+                const tag = articleAllTags.find(t => parseInt(t.id) === id);
+                const name = tag ? tag.name : '#' + id;
+                return `<span class="tag-selector__tag">${name} <i class="fas fa-times" onclick="articleRemoveTag(${id})"></i></span>`;
+            }).join('');
+        }
+
+        function articleGetSelectedTagIds() {
+            return articleSelectedTags;
+        }
+
+        document.addEventListener('click', function(e) {
+            const dd = document.getElementById('articleTagDropdown');
+            if (dd && !e.target.closest('.tag-selector__input-wrap')) {
+                dd.classList.remove('show');
+            }
+        });
+
+        articleLoadTagOptions();
     </script>
 </body>
 </html>

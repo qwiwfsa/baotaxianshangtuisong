@@ -259,3 +259,15 @@
         height: 160px;
     }
 }
+
+.share-btn.more {
+    background: #8b5cf6;
+}
+.share-btn.more:hover {
+    background: #7c3aed;
+}
+@media (max-width: 768px) {
+    .share-btn { width: 36px; height: 36px; font-size: 15px; }
+    .article-share-full .share-btn { width: 32px; height: 32px; font-size: 13px; }
+    .article-share-compact .share-btn { width: 34px; height: 34px; font-size: 14px; }
+}
