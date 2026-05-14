@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yao资金网服务条款与使用条件说明，明确网站服务范围、用户义务与免责声明，保障双方合法权益">>
+    <meta name="robots" content="noindex, follow">
+    <title>˽ - Yaoʽ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .legal-page {
+            padding: 120px 0 80px;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+        }
+        
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .legal-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .legal-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        
+        .legal-date {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        .legal-content {
+            background: white;
+            padding: 48px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .legal-section {
+            margin-bottom: 32px;
+        }
+        
+        .legal-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .legal-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-light);
+        }
+        
+        .legal-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 20px 0 12px;
+        }
+        
+        .legal-section p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        
+        .legal-section ul {
+            list-style: disc;
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .legal-section li {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            gap: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .legal-page {
+                padding: 100px 0 60px;
+            }
+            
+            .legal-title {
+                font-size: 28px;
+            }
+            
+            .legal-content {
+                padding: 28px;
+            }
+        }
+    </style>
+    <!-- Logo̬ -->
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open('GET','admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector('.logo img');
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector('.footer-logo img');
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                        if(resp.data.favicon){
+                            var lk=document.querySelector('link[rel="icon"]')||document.querySelector('link[rel="shortcut icon"]');
+                            if(!lk){lk=document.createElement('link');lk.rel='icon';document.head.appendChild(lk);}
+                            lk.href=fixPath(resp.data.favicon);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
+<script>
+(function() {
+    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                if (data && data.code === 0 && data.data) {
+                    var seo = data.data;
+                    if (seo.page_title) document.title = seo.page_title;
+                    if (seo.meta_keywords) {
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw) kw.content = seo.meta_keywords;
+                    }
+                    if (seo.meta_description) {
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc) desc.content = seo.meta_description;
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+})();
+</script>
+<script>
+(function() {
+    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                if (data && data.code === 0 && data.data) {
+                    var seo = data.data;
+                    if (seo.page_title) document.title = seo.page_title;
+                    if (seo.meta_keywords) {
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw) kw.content = seo.meta_keywords;
+                    }
+                    if (seo.meta_description) {
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc) desc.content = seo.meta_description;
+                    }
+                }
+            } catch(e) {}
+        }
+    };
+    xhr.send();
+})();
+</script>
+
+<script>
+(function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p;}}})();
+</script>
+</head>
+<body>
+    <!-- 򻯵 -->
+    <nav class="navbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light);">
+        <div class="navbar-container">
+<a href="index.html" class="logo" aria-label="Yaoʽҳ"><img src="uploads/logo.png?v=20260502040820" alt="Yaoʽ" style="height:48px;width:auto;"></a>
+            <a href="index.html" class="btn btn-outline">ҳ</a>
+        </div>
+    </nav>
+
+    <main class="page-main">
+    <div class="container" style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
+        <h1 style="color: #1e3a8a; font-size: 28px; margin-bottom: 30px; text-align: center;">服务条款</h1>
+        
+        <p style="color: #6b7280; font-size: 14px; margin-bottom: 30px; text-align: center;">更新日期：2026年5月</p>
+
+        <div style="line-height: 1.8; color: #374151; font-size: 15px;">
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">1. 服务说明</h2>
+            <p>Yao资金网（以下简称"本网站"）为用户提供过桥短拆、摆账亮资、实缴验资、资金证明等资金业务的信息对接与咨询服务。使用本网站服务前，请仔细阅读本条款。</p>
+
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">2. 用户责任</h2>
+            <p>用户在使用本网站服务时应确保所提供信息真实、准确、完整。用户不得利用本网站从事违法违规活动，不得干扰网站正常运营。</p>
+
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">3. 免责声明</h2>
+            <p>本网站提供的资金业务信息仅供参考，不构成任何形式的投资建议或承诺。本网站不对因使用或依赖本站信息而导致的任何损失承担责任。实际业务操作以双方签订的正式合同为准。</p>
+
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">4. 知识产权</h2>
+            <p>本网站所有内容（包括但不限于文字、图片、标识、数据等）的知识产权归本网站所有。未经书面许可，任何组织或个人不得以任何形式复制、转载、传播或用于商业用途。</p>
+
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">5. 隐私保护</h2>
+            <p>本网站重视用户隐私保护，收集和使用用户信息将遵循本网站<a href="/privacy.html" style="color: #2563eb;">隐私政策</a>。我们采取合理的安全措施保护用户数据安全。</p>
+
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">6. 条款变更</h2>
+            <p>本网站保留随时修改本条款的权利。条款变更后，如用户继续使用本网站服务，视为接受修改后的条款。建议用户定期查看本条款。</p>
+
+            <h2 style="color: #1e3a8a; font-size: 20px; margin-top: 30px; margin-bottom: 12px;">7. 联系方式</h2>
+            <p>如对本条款有任何疑问，请通过 <a href="/contact.html" style="color: #2563eb;">联系我们</a> 页面与我们取得联系。</p>
+        </div>
+    </div>
+</main>
+
+    <!-- ҳ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="uploads/logo.png?v=20260502041100" alt="Yaoʽ" style="height:48px;width:auto;"></div>
+                    <p class="footer-desc">רҵʽҵ̣ṩй˾šҵˡдӦ˿ʵȫλʽ</p>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">ٵ</h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">ҳ</a></li>
+                        <li><a href="services.html">ҵΧ</a></li>
+                        <li><a href="cases.html">ɹ</a></li>
+                        <li><a href="advantages.html"></a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">Ϣ</h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="news.php">ҵѶ</a></li>
+                        <li><a href="faq.html"></a></li>
+                        <li><a href="contact.html">ϵ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">ϵʽ</h4>
+                    <ul class="footer-nav-list">
+                        <li><i class="fas fa-phone"></i> 13552883008</li>
+                        <li><i class="fas fa-user"></i> </li>
+                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2014-2024 Yaoʽ Ȩ</p>
+            </div>
+        </div>
+    </footer>
+    
+        <!-- CMS Editor -->
+    <script>
+        // ǷҪر༭
+        (function() {
+            console.log('[CMS] ʼ...');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const isEditMode = urlParams.get('edit') === 'true';
+            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
+            
+            console.log('[CMS] ༭ģʽ:', isEditMode);
+            console.log('[CMS] ¼״̬:', isLoggedIn);
+            
+            if (isEditMode && isLoggedIn) {
+                console.log('[CMS] ʼر༭...');
+                
+                // ر༭ʽ
+                const editorCss = document.createElement('link');
+                editorCss.rel = 'stylesheet';
+                editorCss.href = 'admin/editor.css';
+                editorCss.onerror = function() {
+                    console.error('[CMS] ༭ʽʧ');
+                };
+                document.head.appendChild(editorCss);
+                
+                // ر༭ű
+                const editorScript = document.createElement('script');
+                editorScript.src = 'admin/editor.js';
+                editorScript.onload = function() {
+                    console.log('[CMS] ༭űسɹ');
+                };
+                editorScript.onerror = function() {
+                    console.error('[CMS] ༭űʧ');
+                };
+                document.body.appendChild(editorScript);
+            } else if (isEditMode && !isLoggedIn) {
+                console.log('[CMS] δ¼ض򵽵¼ҳ');
+                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
+            }
+        })();
+    </script>
+    <script src="admin/assets/cms.js"></script>
+</body>
+</html>
+

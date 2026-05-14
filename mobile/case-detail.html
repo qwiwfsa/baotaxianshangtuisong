@@ -18,7 +18,28 @@
     <meta http-equiv="Expires" content="0">
 
 
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+        <script>
+    // 全局错误防御：抑制外部图片404和document异常
+    (function() {
+        window.addEventListener('error', function(e) {
+            if (e.target && e.target.tagName === 'IMG') {
+                e.stopPropagation();
+                e.preventDefault();
+                return true;
+            }
+        }, true);
+        window.onerror = function(msg) {
+            if (msg && (msg.toString().indexOf('document.addEventListener') >= 0 ||
+                msg.toString().indexOf('GetPic') >= 0 ||
+                msg.toString().indexOf('eastmoney') >= 0)) {
+                return true;
+            }
+            return false;
+        };
+    })();
+    </script>
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 

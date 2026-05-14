@@ -37,7 +37,7 @@
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
         <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <!-- 动态菜单将在这里加载 -->
             </ul>
@@ -354,9 +354,10 @@
                     <h4 class="footer-nav-title">快速链接</h4>
                     <ul class="footer-nav-list">
                                                 <li><a href="https://yaozijin.com/fenzhan/hangzhou.html">杭州</a></li>
+                                                <li><a href="https://yaozijin.com/fenzhan/chongqing.html">重庆</a></li>
+                                                <li><a href="https://yaozijin.com/fenzhan/chengdu.html">成都</a></li>
                                                 <li><a href="#">网站地图</a></li>
-                                                <li><a href="ijin.com/fenzhan/chendu.html">成都</a></li>
-                                                <li><a href="https://176947126.b2b.11467.com/">宏都资本</a></li>
+                                                <li><a href="#">友情链接</a></li>
                                             </ul>
                 </div>
 
@@ -420,7 +421,7 @@
                 var item = page[i];
                 html += '<article class="case-card-enhanced" data-id="' + item.id + '">'
                     + '<div class="case-card-image" onclick="openLightbox(\'' + item.cover + '\')">'
-                    + '<img src="' + item.cover + '" alt="' + item.title + '" onerror="this.src=\'/uploads/case-default.jpg\'"></div>'
+                    + '<img loading="lazy" src="' + item.cover + '" alt="' + item.title + '" onerror="this.src=\'/uploads/case-default.jpg\'"></div>'
                     + '<div class="case-card-content">'
                     + '<h3 class="case-card-title" onclick="window.location.href=\'case-detail.html?id=' + item.id + '\'" style="cursor:pointer">'
                     + item.title + '</h3>'
@@ -472,7 +473,7 @@
     <div id="imageLightbox" class="lightbox-overlay" style="display:none;">
         <div class="lightbox-container">
             <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-            <img id="lightboxImage" src="" alt="图片预览">
+            <img loading="lazy" id="lightboxImage" src="" alt="图片预览">
         </div>
     </div>
 

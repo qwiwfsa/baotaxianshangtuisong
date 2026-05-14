@@ -621,6 +621,249 @@ main#main-content {
     color: #6b7280;
 }
 
+
+/* 表情选择器 */
+.emoji-picker-wrapper {
+    position: relative;
+    margin-bottom: 8px;
+}
+.emoji-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    color: #6b7280;
+    transition: all 0.2s;
+}
+.emoji-toggle-btn:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: #eff6ff;
+}
+.emoji-picker {
+    position: absolute;
+    bottom: 44px;
+    left: 0;
+    z-index: 100;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 10px;
+}
+.emoji-picker-inner {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    max-width: 360px;
+}
+.emoji-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background 0.15s;
+    padding: 0;
+    line-height: 1;
+}
+.emoji-item:hover {
+    background: #f3f4f6;
+    transform: scale(1.15);
+}
+
+/* 回复按钮 */
+.comment-reply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    font-size: 13px;
+    color: #6b7280;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.comment-reply-btn:hover {
+    color: #3b82f6;
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+/* 回复表单 - 内联 */
+
+.nickname-emoji-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nickname-emoji-row input {
+    flex: 1;
+}
+.nickname-emoji-row .emoji-picker-wrapper {
+    margin-bottom: 0;
+}
+.nickname-emoji-row .emoji-picker {
+    bottom: 44px;
+    left: auto;
+    right: 0;
+}
+.reply-form {
+    margin: 12px 0 12px 48px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    display: none;
+}
+.reply-form.show { display: block; }
+.reply-form .form-group { margin-bottom: 10px; }
+.reply-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 4px;
+}
+.reply-form input[type="text"] {
+    width: 100%;
+    max-width: 250px;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+}
+.reply-form input[type="text"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+}
+.reply-form textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    resize: vertical;
+}
+.reply-form textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+}
+.reply-form .form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+}
+.reply-form .form-tip { font-size: 12px; color: #9ca3af; }
+.reply-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 18px;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.reply-submit-btn:hover {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+}
+.reply-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.reply-cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.reply-cancel-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* 回复列表 */
+.comment-replies {
+    margin-left: 48px;
+    border-left: 2px solid #e5e7eb;
+    padding-left: 16px;
+}
+.comment-reply-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+.comment-reply-item:last-child { border-bottom: none; }
+.comment-reply-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.comment-reply-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+.comment-reply-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+.comment-reply-time {
+    font-size: 11px;
+    color: #9ca3af;
+}
+.comment-reply-text {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+/* 回复表单内的表情选择器 */
+.reply-form .emoji-picker-wrapper {
+    margin-bottom: 0;
+}
+.reply-form .emoji-picker {
+    bottom: 40px;
+}
+
 /* 评论区域样式 */
 .comments-section {
     max-width: 900px;
@@ -879,15 +1122,45 @@ main#main-content {
                 <span id="commentCount">(0)</span>
             </h2>
 
-            <div class="comment-form">
-                <div class="form-group">
+            <div class="comment-form">                    <div class="form-group">
                     <label for="commentNickname">昵称</label>
-                    <input type="text" id="commentNickname" placeholder="请输入您的昵称" maxlength="20">
+                    <div class="nickname-emoji-row">
+                        <input type="text" id="commentNickname" placeholder="请输入您的昵称" maxlength="20">
+                        <div class="emoji-picker-wrapper">
+                            <button type="button" class="emoji-toggle-btn" id="emojiToggleBtn" onclick="toggleEmojiPicker()" title="插入表情">
+                                <i class="far fa-smile-wink"></i>
+                            </button>
+                            <div class="emoji-picker" id="emojiPicker" style="display:none;">
+                                <div class="emoji-picker-inner">
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😊')">😊</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😂')">😂</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('❤️')">❤️</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('👍')">👍</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😍')">😍</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('🎉')">🎉</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('💪')">💪</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('🔥')">🔥</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('🙌')">🙌</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😎')">😎</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('✨')">✨</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('💯')">💯</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('🤝')">🤝</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('👏')">👏</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😄')">😄</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😅')">😅</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('🤗')">🤗</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😁')">😁</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('🥰')">🥰</button>
+                                    <button type="button" class="emoji-item" onclick="insertEmoji('😘')">😘</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="commentContent">评论内容</label>
                     <textarea id="commentContent" placeholder="来说点什么吧..." maxlength="2000"></textarea>
-                    <div class="comment-error" id="commentError"></div>
+<div class="comment-error" id="commentError"></div>
                 </div>
                 <div class="form-footer">
                     <span class="form-tip">评论审核通过后显示</span>
@@ -1211,7 +1484,8 @@ main#main-content {
             xhr.send();
         }
 
-        function renderComments(comments) {
+        
+                function renderComments(comments) {
             var list = document.getElementById('commentList');
             var empty = document.getElementById('commentEmpty');
             var count = document.getElementById('commentCount');
@@ -1224,22 +1498,65 @@ main#main-content {
             }
             if (empty) empty.style.display = 'none';
             if (count) count.textContent = '(' + comments.length + ')';
+
             comments.forEach(function(c) {
                 var nickname = c.nickname || '匿名';
                 var li = document.createElement('li');
                 li.className = 'comment-item';
-                li.innerHTML =
+
+                var html =
                     '<div class="comment-item-header">' +
                         '<div class="comment-avatar">' + esc(nickname.charAt(0)) + '</div>' +
                         '<span class="comment-author">' + esc(nickname) + '</span>' +
                         '<span class="comment-time">' + esc(c.created_at || '') + '</span>' +
                     '</div>' +
-                    '<div class="comment-text">' + esc(c.content || '') + '</div>';
+                    '<div class="comment-text">' + esc(c.content || '') + '</div>' +
+                    '<button class="comment-reply-btn" data-cid="' + c.id + '" data-nickname="' + esc(nickname) + '" onclick="toggleReply(this)">' +
+                        '<i class="fas fa-reply"></i> 回复' +
+                    '</button>';
+
+                // Inline reply form
+                html += '<div class="reply-form" id="replyForm_' + c.id + '">' +
+                    '<div class="form-group">' +
+                        '<label>昵称</label>' +
+                        '<input type="text" name="replyNickname" placeholder="您的昵称" maxlength="20">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label id="replyLabel_' + c.id + '">回复</label>' +
+                        '<textarea name="replyContent" placeholder="写下你的回复..." maxlength="2000"></textarea>' +
+                    '</div>' +
+                    '<div class="reply-error" style="color:#ef4444;font-size:13px;display:none;margin-bottom:6px;"></div>' +
+                    '<div class="form-footer">' +
+                        '<span class="form-tip">评论审核通过后显示</span>' +
+                        '<div>' +
+                            '<button type="button" class="reply-cancel-btn" onclick="cancelReply(' + c.id + ')">取消</button>' +
+                            '<button type="button" class="reply-submit-btn" onclick="submitReply(' + c.id + ')"><i class="fas fa-reply"></i> 回复</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+
+                // Replies
+                if (c.replies && c.replies.length > 0) {
+                    html += '<div class="comment-replies">';
+                    for (var ri = 0; ri < c.replies.length; ri++) {
+                        var r = c.replies[ri];
+                        var rNick = r.nickname || '匿名';
+                        html += '<div class="comment-reply-item">' +
+                            '<div class="comment-reply-header">' +
+                                '<div class="comment-reply-avatar">' + esc(rNick.charAt(0)) + '</div>' +
+                                '<span class="comment-reply-author">' + esc(rNick) + '</span>' +
+                                '<span class="comment-reply-time">' + esc(r.created_at || '') + '</span>' +
+                            '</div>' +
+                            '<div class="comment-reply-text">' + esc(r.content || '') + '</div>' +
+                        '</div>';
+                    }
+                    html += '</div>';
+                }
+
+                li.innerHTML = html;
                 list.appendChild(li);
             });
-        }
-
-        function esc(t) { if (!t) return ''; var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+        }function esc(t) { if (!t) return ''; var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
         window.submitComment = function() {
             var nickname = document.getElementById('commentNickname');
@@ -1280,6 +1597,202 @@ main#main-content {
             xhr.onerror = function() { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> \u63d0\u4ea4\u8bc4\u8bba'; if (error) { error.textContent = '\u7f51\u7edc\u8bf7\u6c42\u5931\u8d25'; error.classList.add('show'); } };
             xhr.send(formData);
         };
+
+
+        // ===== 回复功能 =====
+        
+        // ===== Reply functionality =====
+        var replyingTo = null;
+
+        window.toggleReply = function(btn) {
+            var cid = parseInt(btn.getAttribute('data-cid'));
+            var nickname = btn.getAttribute('data-nickname');
+            var form = document.getElementById('replyForm_' + cid);
+            if (!form) return;
+            if (form.classList.contains('show')) {
+                form.classList.remove('show');
+                replyingTo = null;
+                return;
+            }
+            document.querySelectorAll('.reply-form').forEach(function(f) {
+                f.classList.remove('show');
+            });
+            form.classList.add('show');
+            replyingTo = { commentId: cid, nickname: nickname };
+            var label = document.getElementById('replyLabel_' + cid);
+            if (label) label.textContent = '回复 ' + nickname;
+            var ta = form.querySelector('textarea');
+            if (ta) setTimeout(function() { ta.focus(); }, 100);
+        };
+
+        window.cancelReply = function(commentId) {
+            var form = document.getElementById('replyForm_' + commentId);
+            if (form) form.classList.remove('show');
+            replyingTo = null;
+        };
+
+        window.submitReply = function(commentId) {
+            if (!replyingTo || replyingTo.commentId !== commentId) return;
+            var form = document.getElementById('replyForm_' + commentId);
+            if (!form) return;
+            var nicknameInput = form.querySelector('input[name="replyNickname"]');
+            var contentInput = form.querySelector('textarea');
+            var errorDiv = form.querySelector('.reply-error');
+            var btn = form.querySelector('.reply-submit-btn');
+            if (!contentInput) return;
+
+            var nameVal = nicknameInput ? nicknameInput.value.trim() : '';
+            var contentVal = contentInput.value.trim();
+            if (errorDiv) errorDiv.style.display = 'none';
+
+            if (!contentVal) { contentInput.focus(); if (errorDiv) { errorDiv.textContent = '请输入回复内容'; errorDiv.style.display = 'block'; } return; }
+            if (contentVal.length < 2) { contentInput.focus(); if (errorDiv) { errorDiv.textContent = '回复内容至少2个字符'; errorDiv.style.display = 'block'; } return; }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交...';
+
+            var fd = new FormData();
+            fd.append('article_id', articleId);
+            fd.append('parent_id', commentId);
+            fd.append('nickname', nameVal || '匿名');
+            fd.append('content', contentVal);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'api/comment-submit.php', true);
+            xhr.onload = function() {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-reply"></i> 回复';
+                if (xhr.status === 200) {
+                    try {
+                        var resp = JSON.parse(xhr.responseText);
+                        if (resp.success) {
+                            if (nicknameInput) nicknameInput.value = '';
+                            contentInput.value = '';
+                            cancelReply(commentId);
+                            loadComments();
+                            var success = document.getElementById('commentSuccess');
+                            if (success) {
+                                success.textContent = '回复提交成功' + (resp.message && resp.message.indexOf('审核') >= 0 ? '，等待审核后显示' : '');
+                                success.classList.add('show');
+                                setTimeout(function() { success.classList.remove('show'); }, 3000);
+                            }
+                        } else {
+                            if (errorDiv) { errorDiv.textContent = resp.message || '提交失败'; errorDiv.style.display = 'block'; }
+                        }
+                    } catch(e) {
+                        if (errorDiv) { errorDiv.textContent = '提交失败，请稍后再试'; errorDiv.style.display = 'block'; }
+                    }
+                } else {
+                    if (errorDiv) { errorDiv.textContent = '网络错误 (' + xhr.status + ')'; errorDiv.style.display = 'block'; }
+                }
+            };
+            xhr.onerror = function() {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-reply"></i> 回复';
+                if (errorDiv) { errorDiv.textContent = '网络请求失败'; errorDiv.style.display = 'block'; }
+            };
+            xhr.send(fd);
+        };
+
+        // ===== Emoji picker =====
+        window.toggleEmojiPicker = function() {
+            var picker = document.getElementById('emojiPicker');
+            if (picker) picker.style.display = (picker.style.display !== 'block') ? 'block' : 'none';
+        };
+
+        window.insertEmoji = function(emoji) {
+            var textarea = document.getElementById('commentContent');
+            if (!textarea) return;
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + emoji + textarea.value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+            textarea.focus();
+            document.getElementById('emojiPicker').style.display = 'none';
+        };
+
+        document.addEventListener('click', function(e) {
+            var picker = document.getElementById('emojiPicker');
+            var btn = document.getElementById('emojiToggleBtn');
+            if (picker && picker.style.display === 'block' && !picker.contains(e.target) && !(btn && btn.contains(e.target))) {
+                picker.style.display = 'none';
+            }
+        });
+        loadComments();
+                            // Show brief success message
+                            var success = document.getElementById('commentSuccess');
+                            if (success) {
+                                success.textContent = '回复提交成功' + (resp.message && resp.message.indexOf('审核') >= 0 ? '，等待审核后显示' : '');
+                                success.classList.add('show');
+                                setTimeout(function() { success.classList.remove('show'); }, 3000);
+                            }
+                        } else {
+                            if (errorDiv) { errorDiv.textContent = resp.message || '提交失败'; errorDiv.classList.add('show'); }
+                        }
+                    } catch(e) {
+                        if (errorDiv) { errorDiv.textContent = '提交失败，请稍后再试'; errorDiv.classList.add('show'); }
+                    }
+                } else {
+                    if (errorDiv) { errorDiv.textContent = '网络错误 (' + xhr.status + ')'; errorDiv.classList.add('show'); }
+                }
+            };
+            xhr.onerror = function() {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-reply"></i> 回复';
+                if (errorDiv) { errorDiv.textContent = '网络请求失败'; errorDiv.classList.add('show'); }
+            };
+            xhr.send(formData);
+        };
+
+        // ===== Emoji picker =====
+        window.toggleEmojiPicker = function() {
+            var picker = document.getElementById('emojiPicker');
+            if (picker) {
+                var isVisible = picker.style.display !== 'none';
+                picker.style.display = isVisible ? 'none' : 'block';
+            }
+        };
+
+        window.insertEmoji = function(emoji) {
+            var textarea = document.getElementById('commentContent');
+            if (!textarea) return;
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            var val = textarea.value;
+            textarea.value = val.substring(0, start) + emoji + val.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+            textarea.focus();
+            // Hide picker
+            var picker = document.getElementById('emojiPicker');
+            if (picker) picker.style.display = 'none';
+        };
+
+        // Close emoji picker when clicking outside
+
+        window.toggleReplyEmoji = function(commentId) {
+            var picker = document.getElementById('replyEmojiPicker_' + commentId);
+            if (picker) {
+                var isVisible = picker.style.display !== 'none';
+                picker.style.display = isVisible ? 'none' : 'block';
+            }
+        };
+
+        window.insertReplyEmoji = function(commentId, emoji) {
+            var form = document.getElementById('replyForm_' + commentId);
+            if (!form) return;
+            var textarea = form.querySelector('textarea[name="replyContent"]');
+            if (!textarea) return;
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            var val = textarea.value;
+            textarea.value = val.substring(0, start) + emoji + val.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+            textarea.focus();
+            var picker = document.getElementById('replyEmojiPicker_' + commentId);
+            if (picker) picker.style.display = 'none';
+        };
+
+
 
         loadComments();
     })();

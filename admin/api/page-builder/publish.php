@@ -4,26 +4,22 @@
  */
 require_once __DIR__ . '/../common.php';
 require_once __DIR__ . '/../config.php';
-
 try {
     $conn = getDbConnection();
     $data = getAllPostParams();
     $pageId = isset($data['page_id']) ? trim($data['page_id']) : '';
     if (empty($pageId)) { jsonError('页面ID不能为空'); }
-
     $stmt = $conn->prepare("SELECT module_type, module_data FROM page_builder_modules WHERE page_id=? AND is_active=1 ORDER BY sort_order ASC");
     $stmt->bind_param("s", $pageId);
     $stmt->execute();
     $result = $stmt->get_result();
     $html = '';
-
     while ($row = $result->fetch_assoc()) {
         $moduleType = $row['module_type'];
         $moduleData = json_decode($row['module_data'], true);
         $html .= renderModule($moduleType, $moduleData);
     }
     $stmt->close();
-
     $outputPath = __DIR__ . '/../../../pages/' . $pageId . '.html';
     $fullHtml = generateFullPage($pageId, $html);
     if (file_put_contents($outputPath, $fullHtml)) {
@@ -35,23 +31,25 @@ try {
 } catch (Exception $e) {
     jsonError('系统错误: ' . $e->getMessage());
 }
-
 function renderModule($type, $data) {
     switch ($type) {
         case 'banner': return renderBanner($data);
         case 'text':   return renderText($data);
         case 'image':  return renderImage($data);
+        case 'button': return renderButton($data);
         case 'card':   return renderCard($data);
+        case 'carousel': return renderCarousel($data);
+        case 'imageText': return renderImageText($data);
+        case 'container': return renderContainer($data);
+        case 'columns': return renderColumns($data);
         case 'video':  return renderVideo($data);
         case 'custom': return renderCustom($data);
         default:       return '';
     }
 }
-
 function isPlaceholderUrl($url) {
     return empty($url) || strpos($url, '{{') !== false;
 }
-
 function renderBanner($data) {
     $height = isset($data['height']) ? intval($data['height']) : 500;
     $autoplay = isset($data['autoplay']) ? $data['autoplay'] : true;
@@ -80,7 +78,6 @@ function renderBanner($data) {
     $html .= '</div>';
     return $html;
 }
-
 function renderText($data) {
     $title = htmlspecialchars($data['title'] ?? '');
     $content = $data['content'] ?? '';
@@ -91,7 +88,6 @@ function renderText($data) {
     $html .= '</div>';
     return $html;
 }
-
 function renderImage($data) {
     $src = htmlspecialchars($data['src'] ?? '');
     $alt = htmlspecialchars($data['alt'] ?? '');
@@ -106,7 +102,6 @@ function renderImage($data) {
     $html .= '</div>';
     return $html;
 }
-
 function renderCard($data) {
     $columns = isset($data['columns']) ? intval($data['columns']) : 3;
     $items = isset($data['items']) ? $data['items'] : [];
@@ -133,7 +128,6 @@ function renderCard($data) {
     $html .= '</div>';
     return $html;
 }
-
 function renderVideo($data) {
     $src = htmlspecialchars($data['src'] ?? '');
     $poster = htmlspecialchars($data['poster'] ?? '');
@@ -146,11 +140,99 @@ function renderVideo($data) {
     $html .= '</div>';
     return $html;
 }
-
 function renderCustom($data) {
     return $data['html'] ?? '';
 }
+function renderButton($data) {
+    $text = htmlspecialchars($data['text'] ?? '点击按钮');
+    $link = htmlspecialchars($data['link'] ?? '#');
+    $type = $data['type'] ?? 'primary';
+    $size = $data['size'] ?? 'medium';
+    $align = $data['align'] ?? 'center';
+    $target = !empty($data['newWindow']) ? 'target="_blank"' : '';
+    $html = '<div class="button-module" style="text-align: ' . $align . ';">';
+    $html .= '<a href="' . $link . '" class="btn btn-' . $type . ' btn-' . $size . '" ' . $target . '>' . $text . '</a>';
+    $html .= '</div>';
+    return $html;
+}
+function renderCarousel($data) {
+    $items = isset($data['items']) ? $data['items'] : [];
+    $height = isset($data['height']) ? intval($data['height']) : 400;
+    $autoplay = isset($data['autoplay']) ? $data['autoplay'] : true;
+    $interval = isset($data['interval']) ? intval($data['interval']) : 5;
+    $showDots = isset($data['showDots']) ? $data['showDots'] : true;
+    $showArrows = isset($data['showArrows']) ? $data['showArrows'] : true;
+    $html = '<div class="carousel-module" style="position:relative;height:' . $height . 'px;overflow:hidden;" data-autoplay="' . ($autoplay ? 'true' : 'false') . '" data-interval="' . $interval . '">';
+    foreach ($items as $i => $item) {
+        $image = htmlspecialchars($item['image'] ?? '');
+        $title = htmlspecialchars($item['title'] ?? '');
+        $html .= '<div class="carousel-slide" data-index="' . $i . '" style="position:absolute;inset:0;transition:opacity 0.5s;' . ($i > 0 ? 'opacity:0;pointer-events:none;' : '') . '">';
+        if (empty($image) || strpos($image, '{{') !== false) {
+            $html .= '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f3f4f6;color:#9ca3af;flex-direction:column;"><i class="fas fa-image" style="font-size:48px;margin-bottom:12px;"></i><span>' . ($title ?: '轮播图') . '</span></div>';
+        } else {
+            $html .= '<img src="' . $image . '" alt="' . $title . '" style="width:100%;height:100%;object-fit:cover;">';
+        }
+        $html .= '</div>';
+    }
+    if ($showDots && count($items) > 1) {
+        $html .= '<div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;">';
+        foreach ($items as $i => $item) {
+            $html .= '<span data-index="' . $i . '" style="width:10px;height:10px;border-radius:50%;background:' . ($i === 0 ? '#fff' : 'rgba(255,255,255,0.5)') . ';cursor:pointer;"></span>';
+        }
+        $html .= '</div>';
+    }
+    $html .= '</div>';
+    return $html;
+}
+function renderImageText($data) {
+    $image = htmlspecialchars($data['image'] ?? '');
+    $title = htmlspecialchars($data['title'] ?? '');
+    $content = $data['content'] ?? '';
+    $layout = $data['layout'] ?? 'image-left';
+    $imageWidth = $data['imageWidth'] ?? '40%';
+    $flexDirection = $layout === 'image-right' ? 'row-reverse' : ($layout === 'image-top' ? 'column' : 'row');
+    $html = '<div class="image-text-module" style="display:flex;flex-direction:' . $flexDirection . ';gap:24px;align-items:center;">';
+    $html .= '<div style="flex:0 0 ' . $imageWidth . ';max-width:100%;">';
+    if (empty($image) || strpos($image, '{{') !== false) {
+        $html .= '<div style="padding:60px 20px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;border:2px dashed #d1d5db;border-radius:8px;color:#9ca3af;flex-direction:column;"><i class="fas fa-image" style="font-size:36px;margin-bottom:8px;"></i><span>' . ($title ?: '图片') . '</span></div>';
+    } else {
+        $html .= '<img src="' . $image . '" alt="' . $title . '" style="width:100%;border-radius:8px;">';
+    }
+    $html .= '</div>';
+    $html .= '<div style="flex:1;">';
+    if ($title) $html .= '<h3>' . $title . '</h3>';
+    if ($content) $html .= '<div>' . $content . '</div>';
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
+}
+function renderContainer($data) {
+    $width = $data['width'] ?? '100%';
+    $padding = $data['padding'] ?? '24px';
+    $bgColor = $data['bgColor'] ?? '#ffffff';
+    $borderRadius = $data['borderRadius'] ?? '0';
+    $bgStyle = '';
+    if (!empty($data['bgImage']) && strpos($data['bgImage'], '{{') === false) {
+        $bgStyle = 'background-image:url("' . htmlspecialchars($data['bgImage']) . '");background-size:cover;background-position:center;';
+    } else {
+        $bgStyle = 'background-color:' . $bgColor . ';';
+    }
+    $children = $data['childrenContent'] ?? '';
+    return '<div class="container-module" style="width:' . $width . ';padding:' . $padding . ';' . $bgStyle . 'border-radius:' . $borderRadius . ';">' . $children . '</div>';
+}
 
+function renderColumns($data) {
+    $columns = isset($data['columns']) ? intval($data['columns']) : 2;
+    $gap = $data['gap'] ?? '24px';
+    $equalHeight = isset($data['equalHeight']) && $data['equalHeight'] ? 'align-items:stretch;' : '';
+    $html = '<div class="columns-module" style="display:grid;grid-template-columns:repeat(' . $columns . ',1fr);gap:' . $gap . ';' . $equalHeight . '">';
+    for ($i = 0; $i < $columns; $i++) {
+        $colContent = $data['column' . $i . 'Content'] ?? '';
+        $html .= '<div class="column-item" style="min-height:50px;">' . $colContent . '</div>';
+    }
+    $html .= '</div>';
+    return $html;
+}
 function generateFullPage($pageId, $content) {
     return '<!DOCTYPE html>
 <html lang="zh-CN">

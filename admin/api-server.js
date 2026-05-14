@@ -11,8 +11,8 @@ const PORT = 3000;
 // MySQL数据库配置
 const dbConfig = {
     host: 'localhost',
-    user: 'root',
-    password: '',
+    user: 'hongdu_app',
+    password: 'Hd2024SecureMyDB',
     database: 'hongdu',
     charset: 'utf8mb4'
 };

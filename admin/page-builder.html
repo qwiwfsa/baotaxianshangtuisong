@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 
 <html lang="zh-CN">
 
@@ -1377,13 +1377,26 @@
         // 初始化
 
         document.addEventListener('DOMContentLoaded', function() {
-
             initDragAndDrop();
-
             initSortable();
-
             loadPageList();
-
+            // Auto-select page from URL parameter
+            var params = new URLSearchParams(window.location.search);
+            var pageParam = params.get('page');
+            if (pageParam) {
+                var sel = document.getElementById('pageSelector');
+                sel.value = pageParam;
+                if (sel.value === pageParam) {
+                    loadPage();
+                } else {
+                    setTimeout(function() {
+                        sel.value = pageParam;
+                        if (sel.value === pageParam) {
+                            loadPage();
+                        }
+                    }, 600);
+                }
+            }
         });
 
 

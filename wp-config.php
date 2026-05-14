@@ -20,8 +20,8 @@ if ( $_SERVER['SERVER_ADDR'] == '::1' || $_SERVER['SERVER_ADDR'] == '127.0.0.1' 
 } else {
 	// ===== 阿里云服务器（宝塔面板） =====
 	define( 'DB_NAME',     'hongdu' );
-	define( 'DB_USER',     'hongdu' );
-	define( 'DB_PASSWORD', 'fdsajkl' );
+	define( 'DB_USER',     'hongdu_app' );
+	define( 'DB_PASSWORD', 'Hd2024SecureMyDB');
 	define( 'DB_HOST',     'localhost' );
 }
 

@@ -143,7 +143,7 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <!-- 动态菜单将在这里加载 -->
             </ul>
@@ -465,7 +465,7 @@ DeviceDetector::redirect();
                 <p class="section-subtitle">与多家银行建立深度合作关系</p>
             </div>
             <div class="bank-logos-wrapper">
-                <img src="/uploads/bank-logos.jpg" alt="合作银行" class="bank-logos-image">
+                <img loading="lazy" src="/uploads/bank-logos.jpg" alt="合作银行" class="bank-logos-image">
             </div>
         </div>
     </section>
@@ -659,7 +659,7 @@ DeviceDetector::redirect();
                 grid.innerHTML = pageData.map(item => `
                     <article class="case-card-enhanced" data-id="${item.id}">
                         <div class="case-card-image" onclick="openLightbox('${item.cover_image}')">
-                            <img src="${item.cover_image}" 
+                            <img loading="lazy" src="${item.cover_image}" 
                                  alt="${item.title}" 
                                  onerror="this.src='/uploads/case-default.jpg'">
                         </div>
@@ -765,7 +765,7 @@ DeviceDetector::redirect();
             <button class="lightbox-close" onclick="closeLightbox()" aria-label="关闭预览">
                 <i class="fas fa-times"></i>
             </button>
-            <img id="lightboxImage" src="" alt="大图预览">
+            <img loading="lazy" id="lightboxImage" src="" alt="大图预览">
         </div>
     </div>
 

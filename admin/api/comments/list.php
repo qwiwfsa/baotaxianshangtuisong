@@ -49,7 +49,7 @@ if (!empty($params)) {
 $count_stmt->execute();
 $total = $count_stmt->get_result()->fetch_row()[0];
 
-$sql = "SELECT c.*, COALESCE(a.title, '(已删除)') as article_title FROM article_comments c LEFT JOIN cms_articles a ON c.article_id = a.id $where_clause ORDER BY c.created_at DESC LIMIT ? OFFSET ?";
+$sql = "SELECT c.*, COALESCE(a.title, '(已删除)') as article_title, pc.nickname as parent_nickname FROM article_comments c LEFT JOIN cms_articles a ON c.article_id = a.id LEFT JOIN article_comments pc ON c.parent_id = pc.id $where_clause ORDER BY c.created_at DESC LIMIT ? OFFSET ?";
 $all_params = array_merge($params, [$limit, $offset]);
 $all_types = $types . 'ii';
 
