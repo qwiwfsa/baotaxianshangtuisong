@@ -47,7 +47,7 @@ function fva($data, $group) {
             <div class="footer-main">
                 <!-- 品牌信息 -->
                 <div class="footer-brand">
-                    <div class="footer-logo"><img src="uploads/logo/biaoqianlogo.png?v=20260502041100" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div>
                     <p class="footer-desc"><?php echo htmlspecialchars(fv($footerData, 'brand', 'company_desc', '专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务')); ?></p>
                 </div>
 

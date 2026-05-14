@@ -1073,22 +1073,81 @@
 
     <script src="../js/main.js"></script>
 <script>
-(async function(){
-    var STATE = {all:[], page:1, per:10, loading:false};
+(function(){
+    // ===== 状态管理 =====
+    var STATE = {all:[], page:1, per:10, loading:false, catId:0, categories:[]};
     var el = document.querySelector('.news-list-container');
     if(!el) return;
 
+    // ===== 保存原始SEO数据（全部资讯时恢复） =====
+    var defaultSEOTitle = document.title;
+    var defaultSEOKeywords = (document.querySelector('meta[name="keywords"]')||{}).content || '';
+    var defaultSEODesc = (document.querySelector('meta[name="description"]')||{}).content || '';
+
+    // ===== 更新页面SEO（根据当前分类） =====
+    function updateSEO() {
+        if (STATE.catId === 0) {
+            document.title = defaultSEOTitle;
+            var kwMeta = document.querySelector('meta[name="keywords"]');
+            if (kwMeta) kwMeta.content = defaultSEOKeywords;
+            var descMeta = document.querySelector('meta[name="description"]');
+            if (descMeta) descMeta.content = defaultSEODesc;
+            return;
+        }
+        var cat = null;
+        for (var i = 0; i < STATE.categories.length; i++) {
+            if (parseInt(STATE.categories[i].id) === STATE.catId) {
+                cat = STATE.categories[i];
+                break;
+            }
+        }
+        if (cat) {
+            if (cat.seo_title) document.title = cat.seo_title;
+            if (cat.seo_keywords) {
+                var kwMeta = document.querySelector('meta[name="keywords"]');
+                if (kwMeta) kwMeta.content = cat.seo_keywords;
+            }
+            if (cat.seo_description) {
+                var descMeta = document.querySelector('meta[name="description"]');
+                if (descMeta) descMeta.content = cat.seo_description;
+            }
+        }
+    }
+
+
+    // ===== 分类点击事件绑定 =====
+    function bindCategoryClicks() {
+        var cats = document.querySelectorAll('.news-category');
+        cats.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var cid = parseInt(this.getAttribute('data-cat-id')) || 0;
+                STATE.catId = cid;
+                STATE.page = 1;
+                // 更新active样式
+                cats.forEach(function(c) { c.classList.remove('active'); });
+                this.classList.add('active');
+                loadNews();
+            });
+        });
+    }
+
+    // ===== 从API加载文章 =====
     async function loadNews(){
         STATE.loading = true;
         el.innerHTML = '<div style="text-align:center;padding:40px;color:#666;font-size:16px">加载中...</div>';
         try {
-            var r = await fetch('api/news.php?page=1&limit=100&t='+Date.now(), {method:'GET',cache:'no-store'});
+            var url = 'api/news.php?page=1&limit=100&t='+Date.now();
+            if (STATE.catId > 0) url += '&category_id=' + STATE.catId;
+            var r = await fetch(url, {method:'GET',cache:'no-store'});
             if(!r.ok) throw new Error('HTTP '+r.status);
             var d = JSON.parse(await r.text());
             if(!d.success || !d.data || !d.data.news || d.data.news.length===0) {
                 el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>'; return;
             }
             STATE.all = d.data.news;
+            STATE.categories = d.data.categories || [];
+            updateSEO();
             renderPage();
         } catch(e) {
             el.innerHTML = '<div style="text-align:center;padding:40px;color:red;font-size:18px">加载失败: '+e.message+'</div>';
@@ -1096,6 +1155,7 @@
         STATE.loading = false;
     }
 
+    // ===== 渲染文章列表 =====
     function renderPage(){
         var total = STATE.all.length, pages = Math.ceil(total/STATE.per)||1;
         var pg = STATE.page; if(pg<1) pg=1; if(pg>pages) pg=pages; STATE.page=pg;
@@ -1118,7 +1178,7 @@
         }
         if(items.length===0) html = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>';
 
-        // Pagination
+        // 分页
         var pag = '<div style="display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0">';
         pag += '<button onclick="changePage(-1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#9ca3af"'+(pg<=1?' disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb"':'')+'>&lt;</button>';
         pag += '<button onclick="changePage(1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#9ca3af"'+(pg>=pages?' disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb"':'')+'>&gt;</button>';
@@ -1127,6 +1187,7 @@
         el.innerHTML = html + pag;
     }
 
+    // ===== 翻页（暴露到window供onclick调用） =====
     window.changePage = function(dir){
         STATE.page += dir;
         renderPage();
@@ -1138,6 +1199,8 @@
         window.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
     };
 
+    // ===== 初始化 =====
+    bindCategoryClicks();
     loadNews();
 })();</script>
     <script src="../js/footer-loader.js"></script>

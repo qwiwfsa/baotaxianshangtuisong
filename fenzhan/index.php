@@ -13,7 +13,7 @@ if (!function_exists('getDbConnection')) {
 
 // ---------- 缓存配置 ----------
 $cacheDir = __DIR__ . '/cache/';
-$cacheTTL = 3600;
+$cacheTTL = 600;
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 if ($slug === '') {

@@ -1493,6 +1493,9 @@
                 const response = await fetch(API_BASE + 'pages/index', {
                     credentials: 'include'
                 });
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
                 const result = await response.json();
                 if (result.success && result.pagesIndex) {
                     pagesIndex = result.pagesIndex;

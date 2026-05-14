@@ -1054,10 +1054,28 @@ main#main-content {
             // 3) 确保 /uploads/ 路径正确
             content = content.replace(/src="\/uploads\//g, 'src="/uploads/');
             // 4) 替换 /admin/uploads/ -> /uploads/（管理员上传的图片前台可访问）
-            content = content.replace(/src="\/admin\/uploads\//g, 'src="\/uploads\/');
+            content = content.replace(/src="\/admin\/uploads\//g, 'src="\/uploads\/')
+            const tags = article.tags || [];
+            let tagsHtml = '';
+            if (tags.length > 0) {
+                tagsHtml = `
+                    <div class="article-tags">
+                        ${tags.map(function(tag){
+                            var tagName = (typeof tag === 'object') ? tag.name : tag;
+                            var tagSlug = (typeof tag === 'object' && tag.slug) ? tag.slug : '';
+                            if (tagSlug) {
+                                return '<a href="/tag/' + tagSlug + '" class="article-tag" style="text-decoration:none;">' + tagName + '</a>';
+                            }
+                            return '<span class="article-tag">' + tagName + '</span>';
+                        }).join('')}
+                    </div>
+                `;
+            }
+            
             document.getElementById('articleContent').innerHTML = `
                 <div class="article-detail-main">
                     <div class="article-body">${content}</div>
+                    ${tagsHtml}
                     <div class="article-share-full">
                         <div class="share-left">
                             <span class="share-title">分享到：</span>
@@ -1092,17 +1110,8 @@ main#main-content {
                 if (copyBtn) copyBtn.onclick = function(){ copyLink(url, this); };
             }, 100);
         
-            // Render tags
-            const tagsContainer = document.getElementById('articleTags');
-            if (tagsContainer) {
-                if (article.tags && article.tags.length > 0) {
-                    tagsContainer.innerHTML = '<span class="tag-label"><i class="fas fa-tags"></i></span>' +
-                        article.tags.map(t => '<a href="/tag/' + t.slug + '" class="tag-link">' + t.name + '</a>').join('');
-                    tagsContainer.style.display = 'flex';
-                } else {
-                    tagsContainer.style.display = 'none';
-                }
-            }
+                        // Tags are now rendered inline above share section
+
         // 渲染相关文章
         }
         function renderRelated(articles) {

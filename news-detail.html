@@ -506,7 +506,7 @@ data-share-copy-fail="复制失败">
 </script>
 
 <script>
-(function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p;}}})();
+(function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p+window.location.search;}}})();
 </script>
     <!-- 社交分享样式 -->
     <link rel="stylesheet" href="/css/social-share.css">
@@ -591,7 +591,7 @@ data-share-copy-fail="复制失败">
 
                     <p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
                 </div>
-                <div class="footer-nav">
+                <div class="footer-nav" data-footer-group="quick_links">
                     <h4 class="footer-nav-title">快速链接</h4>
                     <ul class="footer-nav-list">
                         <li><a href="/">首页</a></li>
@@ -600,7 +600,7 @@ data-share-copy-fail="复制失败">
                         <li><a href="/advantages.html">服务优势</a></li>
                     </ul>
                 </div>
-                <div class="footer-nav">
+                <div class="footer-nav" data-footer-group="service_links">
                     <h4 class="footer-nav-title">更多内容</h4>
                     <ul class="footer-nav-list">
                         <li><a href="/news.php">行业资讯</a></li>
@@ -608,7 +608,7 @@ data-share-copy-fail="复制失败">
                         <li><a href="/contact.html">联系我们</a></li>
                     </ul>
                 </div>
-                <div class="footer-nav">
+                <div class="footer-nav" data-footer-group="contact">
                     <h4 class="footer-nav-title">联系方式</h4>
                     <ul class="footer-nav-list">
                         <li><i class="fas fa-phone"></i> 13552883008</li>
@@ -624,6 +624,7 @@ data-share-copy-fail="复制失败">
         </div>
     </footer>
 
+    <script src="/js/footer-loader.js?v=20260513e"></script>
     <script src="/js/main.js"></script>
     <script>
         // 从API加载文章
@@ -673,12 +674,30 @@ data-share-copy-fail="复制失败">
         // 渲染文章内容
         function renderArticleContent(article) {
             const content = article.content || '<p>暂无内容</p>';
+            const tags = article.tags || [];
+            let tagsHtml = '';
+            if (tags.length > 0) {
+                tagsHtml = `
+                    <div class="article-tags">
+                        ${tags.map(function(tag){
+                            var tagName = (typeof tag === 'object') ? tag.name : tag;
+                            var tagSlug = (typeof tag === 'object' && tag.slug) ? tag.slug : '';
+                            if (tagSlug) {
+                                return '<a href="/tag/' + tagSlug + '" class="article-tag" style="text-decoration:none;">' + tagName + '</a>';
+                            }
+                            return '<span class="article-tag">' + tagName + '</span>';
+                        }).join('')}
+                    </div>
+                `;
+            }
+            
             
             document.getElementById('articleContent').innerHTML = `
                 <div class="article-detail-main">
                     <div class="article-body">
                         ${content}
                     </div>
+                    ${tagsHtml}
                     <div class="article-share-full">
                         <div class="share-left">
                             <span class="share-title">分享到：</span>

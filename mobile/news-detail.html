@@ -656,12 +656,19 @@ data-share-copy-fail="复制失败">
         function renderArticleContent(article) {
             const content = article.content || '<p>暂无内容</p>';
             const tags = article.tags || [];
-            
+            
             let tagsHtml = '';
             if (tags.length > 0) {
                 tagsHtml = `
                     <div class="article-tags">
-                        ${tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
+                        ${tags.map(function(tag){
+                            var tagName = (typeof tag === 'object') ? tag.name : tag;
+                            var tagSlug = (typeof tag === 'object' && tag.slug) ? tag.slug : '';
+                            if (tagSlug) {
+                                return '<a href=\'../tag/' + tagSlug + '\' class=\'article-tag\' style=\'text-decoration:none;\'>' + tagName + '</a>';
+                            }
+                            return '<span class=\'article-tag\'>' + tagName + '</span>';
+                        }).join('')}
                     </div>
                 `;
             }
@@ -711,11 +718,13 @@ data-share-copy-fail="复制失败">
         // 渲染相关文章
         function renderRelatedArticles(currentArticleId, allArticles) {
             // 排除当前文章，取前4篇
+            if (!allArticles || allArticles.length === 0) return;
             const relatedArticles = allArticles
                 .filter(a => a.id !== currentArticleId)
                 .slice(0, 4);
             
             if (relatedArticles.length === 0) {
+
                 document.getElementById('relatedArticles').innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; color: #9ca3af; padding: 40px;">
                         暂无相关资讯
@@ -785,35 +794,32 @@ data-share-copy-fail="复制失败">
                 return;
             }
 
-            // 从API加载文章数据（替代废弃的localStorage缓存）
-            fetch('../mobile/api/news.php?t=' + Date.now(), {method:'GET',cache:'no-store'})
+            // 从文章详情API加载（包含标签、上下篇等完整数据）
+            fetch('../api/news-detail.php?id=' + articleId + '&t=' + Date.now(), {method:'GET',cache:'no-store'})
                 .then(function(r){ return r.json(); })
                 .then(function(result){
-                    if(!result.success || !result.data || !result.data.news){
+                    if(!result.success || !result.data){
                         renderNotFound(); return;
                     }
-                    var articles = result.data.news;
-                    var article = null;
-                    for(var i=0;i<articles.length;i++){
-                        if(String(articles[i].id) === String(articleId)){
-                            article = articles[i]; break;
-                        }
-                    }
-                    if(!article){
-                        renderNotFound(); return;
-                    }
+                    var article = result.data;
+                    // 同时加载全部文章列表用于相关文章
+                    fetch('../mobile/api/news.php?limit=10&t=' + Date.now(), {method:'GET',cache:'no-store'})
+                        .then(function(r2){ return r2.json(); })
+                        .then(function(result2){
+                            var related = (result2.success && result2.data && result2.data.news) ? result2.data.news : [];
+                            renderRelatedArticles(articleId, related);
+                        })['catch'](function(){});
                     document.title = (article.title||'') + ' - Yao资金网';
                     renderArticleHeader(article);
                     renderArticleContent(article);
-                    renderRelatedArticles(articleId, articles);
                     incrementViews(articleId);
                 })
                 ['catch'](function(e){
                     console.error('API load failed:', e);
                     renderNotFound();
                 });
-        });
-        
+        })
+
         // 从API加载页脚数据
         (function(){
             var xhr = new XMLHttpRequest();

@@ -6,6 +6,7 @@ DeviceDetector::redirect();
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao资金网热门标签 - 浏览所有行业标签，快速找到感兴趣的亮资、摆账、企业融资相关文章和案例">
     <meta name="keywords" content="亮资,摆账,企业融资,过桥资金,标签云,热门标签">
@@ -17,12 +18,12 @@ DeviceDetector::redirect();
     <script>
     (function(){
         var xhr=new XMLHttpRequest();
-        xhr.open('GET','admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.open('GET','/admin/api/fetch-logo.php?t='+Date.now(),true);
         xhr.onload=function(){
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p:p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -43,7 +44,7 @@ DeviceDetector::redirect();
         xhr.send();
         var pageName='tags';
         var seoXhr=new XMLHttpRequest();
-        seoXhr.open('GET','admin/api/fetch-seo.php?page='+pageName+'&t='+Date.now(),true);
+        seoXhr.open('GET','/admin/api/fetch-seo.php?page='+pageName+'&t='+Date.now(),true);
         seoXhr.onload=function(){
             if(seoXhr.status>=200&&seoXhr.status<400){
                 try{
@@ -85,22 +86,33 @@ DeviceDetector::redirect();
     </style>
 </head>
 <body>
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo"><img src="images/logo.png" alt="Yao资金网"></a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">首页</a></li>
-                <li><a href="/services.html" class="nav-link">业务范围</a></li>
-                <li><a href="/cases.html" class="nav-link">成功案例</a></li>
-                <li><a href="/advantages.html" class="nav-link">服务优势</a></li>
-                <li><a href="/news.php" class="nav-link">行业资讯</a></li>
-                <li><a href="/faq.html" class="nav-link">常见问题</a></li>
-                <li><a href="/contact.html" class="nav-link">联系我们</a></li>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="images/logo.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
+
+            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <section class="tags-header">
+    <main>
+        <section class="tags-header">
         <div class="page-header-container">
             <div class="page-header-content">
                 <h1>热门标签</h1>
@@ -118,11 +130,13 @@ DeviceDetector::redirect();
         </div>
     </div>
 
+    </main>
+
     <?php include 'includes/footer.php'; ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('api/tag-frontend-list.php')
+            fetch('/api/tag-frontend-list.php')
                 .then(r => r.json())
                 .then(res => {
                     document.getElementById('tagCloudLoading').style.display = 'none';

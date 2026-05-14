@@ -650,6 +650,12 @@
 
             pendingChanges[groupKey][itemKey].group_key = groupKey;
 
+            // 保留排序值，防止保存时被覆盖
+            if (footerData[groupKey]) {
+                const orig = footerData[groupKey].find(i => i.item_key === itemKey);
+                if (orig && orig.sort_order !== undefined) pendingChanges[groupKey][itemKey].sort_order = orig.sort_order;
+            }
+
         }
 
 
@@ -677,6 +683,12 @@
             pendingChanges[groupKey][itemKey].item_key = itemKey;
 
             pendingChanges[groupKey][itemKey].group_key = groupKey;
+
+            // 保留排序值，防止保存时被覆盖
+            if (footerData[groupKey]) {
+                const orig = footerData[groupKey].find(i => i.item_key === itemKey);
+                if (orig && orig.sort_order !== undefined) pendingChanges[groupKey][itemKey].sort_order = orig.sort_order;
+            }
 
             // 同步保存 item_value 和 item_label 的一致性：当编辑任意链接字段时，也确保 item_value 被记录
 
@@ -841,6 +853,16 @@
 
                 Object.keys(pendingChanges).forEach(gk => {
 
+                    // 先为该组所有项重新分配 sort_order（基于数组索引，保证一致性）
+                    if (footerData[gk]) {
+                        footerData[gk].forEach((item, idx) => {
+                            item.sort_order = idx + 1;
+                            if (pendingChanges[gk][item.item_key]) {
+                                pendingChanges[gk][item.item_key].sort_order = idx + 1;
+                            }
+                        });
+                    }
+
                     Object.keys(pendingChanges[gk]).forEach(ik => {
 
                         const ch = pendingChanges[gk][ik];
@@ -856,6 +878,8 @@
                                 if (!ch.item_label) ch.item_label = orig.item_label;
 
                                 if (!ch.item_value) ch.item_value = orig.item_value || '';
+
+                                if (ch.sort_order === undefined) ch.sort_order = orig.sort_order;
 
                             }
 

@@ -115,22 +115,33 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
     </style>
 </head>
 <body>
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo"><img src="images/logo.png" alt="Yao资金网"></a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">首页</a></li>
-                <li><a href="/services.html" class="nav-link">业务范围</a></li>
-                <li><a href="/cases.html" class="nav-link">成功案例</a></li>
-                <li><a href="/advantages.html" class="nav-link">服务优势</a></li>
-                <li><a href="/news.php" class="nav-link">行业资讯</a></li>
-                <li><a href="/faq.html" class="nav-link">常见问题</a></li>
-                <li><a href="/contact.html" class="nav-link">联系我们</a></li>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="images/logo.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
+
+            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <section class="tag-detail-header">
+    <main>
+        <section class="tag-detail-header">
         <div class="tag-detail-header-container">
             <a href="/tags.php" class="tag-back-btn"><i class="fas fa-arrow-left"></i> 返回标签列表</a>
             <h1 class="tag-detail-title" id="tagTitle">...</h1>
@@ -149,6 +160,8 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
         <div class="tag-pagination" id="tagPagination" style="display:none;"></div>
         <div class="empty-state" id="tagEmpty" style="display:none;"><i class="fas fa-inbox"></i><p>该分类暂无内容</p></div>
     </div>
+
+    </main>
 
     <?php include 'includes/footer.php'; ?>
 

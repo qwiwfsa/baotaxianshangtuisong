@@ -386,7 +386,6 @@
         
         // 绑定事件（确保只执行一次）
         function bindEvents() {
-            // 搜索框防抖处理
             const searchInput = document.getElementById('searchInput');
             if (searchInput) {
                 searchInput.addEventListener('keyup', debounce(function() {
@@ -775,6 +774,7 @@
             });
             updateBatchBar();
         }
+        window.toggleSelectAll = toggleSelectAll;
 
         // 打开批量删除确认对话框
         function openBatchDeleteModal() {
@@ -786,6 +786,7 @@
             document.getElementById('batchDeleteModalMessage').textContent = `确定要删除选中的 ${selectedIds.length} 篇文章吗？此操作不可撤销。`;
             document.getElementById('batchDeleteModal').classList.add('show');
         }
+        window.openBatchDeleteModal = openBatchDeleteModal;
 
         // 关闭批量删除确认对话框
         function closeBatchDeleteModal() {
@@ -836,7 +837,7 @@
                 showToast(errorMsg, 'error');
                 closeBatchDeleteModal();
             }
-        
+        }
 
         // ========== 批量添加标签 ==========
         // 打开批量添加标签对话框
@@ -849,11 +850,13 @@
             loadTagCheckboxes();
             document.getElementById('batchTagModal').classList.add('show');
         }
+        window.openBatchTagModal = openBatchTagModal;
 
         // 关闭批量添加标签对话框
         function closeBatchTagModal() {
             document.getElementById('batchTagModal').classList.remove('show');
         }
+        window.closeBatchTagModal = closeBatchTagModal;
 
         // 加载标签复选框列表
         async function loadTagCheckboxes() {
@@ -937,7 +940,7 @@
                 closeBatchTagModal();
             }
         }
-}
+        window.confirmBatchTag = confirmBatchTag;
 
         // 显示提示
         function showToast(message, type = 'success') {
@@ -964,6 +967,7 @@
             loadCategoryOptions();
             document.getElementById('batchCategoryModal').classList.add('show');
         }
+        window.openBatchCategoryModal = openBatchCategoryModal;
 
         // 关闭批量修改分类对话框
         function closeBatchCategoryModal() {

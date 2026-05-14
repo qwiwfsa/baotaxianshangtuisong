@@ -64,13 +64,13 @@ if ($case_id_seo > 0) {
     <meta name="twitter:description" content="<?php echo htmlspecialchars($case_seo_desc ?: '查看Yao资金网成功案例', ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">跳转到主要内容/a>
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
     <!-- 导航栏-->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航>
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网站首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
+<a href="/" class="logo" aria-label="Yao资金网站首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
                 <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
                 <li role="none"><a href="/cases.html" class="nav-link active" role="menuitem">成功案例</a></li>
@@ -79,6 +79,39 @@ if ($case_id_seo > 0) {
                 <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
                 <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
             </ul>
+            <script>
+                // 动态加载导航菜单
+                (function() {
+                    const defaultNavItems = [
+                        { id: '1', name: '首页', url: '/', icon: 'fas fa-home' },
+                        { id: '2', name: '业务范围', url: '/services.html', icon: 'fas fa-briefcase' },
+                        { id: '3', name: '成功案例', url: '/cases.html', icon: 'fas fa-trophy' },
+                        { id: '4', name: '服务优势', url: '/advantages.html', icon: 'fas fa-star' },
+                        { id: '5', name: '行业资讯', url: '/news.php', icon: 'fas fa-newspaper' },
+                        { id: '6', name: '常见问题', url: '/faq.html', icon: 'fas fa-question-circle' },
+                        { id: '7', name: '联系我们', url: '/contact.html', icon: 'fas fa-phone' }
+                    ];
+
+                    let navItems = defaultNavItems;
+                    try {
+                        const stored = localStorage.getItem('cms_nav_items');
+                        if (stored) {
+                            const parsed = JSON.parse(stored);
+                            if (Array.isArray(parsed) && parsed.length > 0) {
+                                navItems = parsed;
+                            }
+                        }
+                    } catch (e) {}
+
+                    const menuContainer = document.getElementById('dynamicNavMenu');
+                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+                    menuContainer.innerHTML = navItems.map(item => {
+                        const isActive = item.url === currentPage || (currentPage === '' && item.url === 'index.html');
+                        return '<li role="none"><a href="' + item.url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
+                    }).join('');
+                })();
+            </script>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -89,6 +122,22 @@ if ($case_id_seo > 0) {
                 <span></span>
                 <span></span>
             </button>
+        </div>
+
+        <!-- 搜索框 -->
+        <div class="search-overlay" id="searchOverlay" role="search" aria-hidden="true">
+            <div class="search-container">
+                <form class="search-form" id="searchForm" action="#" method="get">
+                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、案例、资讯..." aria-label="搜索内容">
+                    <button type="submit" class="search-submit" aria-label="搜索">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions" aria-live="polite"></div>
+                <button class="search-close" id="searchClose" aria-label="关闭搜索">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -154,8 +203,8 @@ if ($case_id_seo > 0) {
                             <div class="case-contact-avatar">
                                 <i class="fas fa-user-tie"></i>
                             </div>
-                            <h3 class="case-contact-name">王总/h3>
-                            <p class="case-contact-title">资金业务总经理/p>
+                            <h3 class="case-contact-name">王总</h3>
+                            <p class="case-contact-title">资金业务总经理</p>
                             <div class="case-contact-phone">
                                 <i class="fas fa-phone"></i>
                                 135-5288-3008
@@ -184,19 +233,19 @@ if ($case_id_seo > 0) {
                                 </div>
                                 <div class="case-guarantee-item">
                                     <i class="fas fa-check-circle"></i>
-                                    <span>快速响应，3个工作日内放款/span>
+                                    <span>快速响应，3个工作日内放款</span>
                                 </div>
                                 <div class="case-guarantee-item">
                                     <i class="fas fa-check-circle"></i>
-                                    <span>专业团队，10年行业经验/span>
+                                    <span>专业团队，10年行业经验</span>
                                 </div>
                                 <div class="case-guarantee-item">
                                     <i class="fas fa-check-circle"></i>
-                                    <span>严格保密，保护客户隐私/span>
+                                    <span>严格保密，保护客户隐私</span>
                                 </div>
                                 <div class="case-guarantee-item">
                                     <i class="fas fa-check-circle"></i>
-                                    <span>合规操作，风险可控/span>
+                                    <span>合规操作，风险可控</span>
                                 </div>
                             </div>
                         </div>
@@ -225,13 +274,13 @@ if ($case_id_seo > 0) {
         <button class="viewer-close" onclick="closeImageViewer()" aria-label="关闭">
             <i class="fas fa-times"></i>
         </button>
-        <button class="viewer-nav prev" id="viewerPrev" onclick="prevImage()" aria-label="上一张>
+        <button class="viewer-nav prev" id="viewerPrev" onclick="prevImage()" aria-label="上一张">
             <i class="fas fa-chevron-left"></i>
         </button>
         <div class="viewer-container">
             <img src="" alt="" class="viewer-image" id="viewerImage">
         </div>
-        <button class="viewer-nav next" id="viewerNext" onclick="nextImage()" aria-label="下一张>
+        <button class="viewer-nav next" id="viewerNext" onclick="nextImage()" aria-label="下一张">
             <i class="fas fa-chevron-right"></i>
         </button>
         <div class="viewer-counter" id="viewerCounter">1 / 1</div>
@@ -244,7 +293,7 @@ if ($case_id_seo > 0) {
         // 全局基础路径（如 /）
         const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
 
-        // 鑾峰彇绫诲瀷鏍峰紡绫诲悕
+        // 获取类型样式类名
         function getTypeClass(type) {
             const typeMap = {
                 '过桥': 'bridge',
@@ -257,7 +306,7 @@ if ($case_id_seo > 0) {
             return typeMap[type] || 'bridge';
         }
 
-        // 娓叉煋案例详情
+        // 渲染案例详情
         function renderCaseDetail(caseId) {
             const caseItem = casesData.find(c => String(c.id) === String(caseId));
             
@@ -267,7 +316,7 @@ if ($case_id_seo > 0) {
             }
 
             // 更新页面标题
-            document.title = `${caseItem.title} - 案例详情 - Yao璧勯噾缃慲;
+            document.title = `${caseItem.title} - 案例详情 - Yao资金网`;
 
             const typeClass = getTypeClass(caseItem.type);
 
@@ -316,8 +365,8 @@ if ($case_id_seo > 0) {
                 </div>
             `).join('');
 
-            // 娓叉煋操作流程
-            const processSteps = caseItem.process || ['初步沟通需求, '提供相关资料', '资方审核评估', '签署合作协议', '资金到位操作', '业务完成结算'];
+            // 渲染操作流程
+            const processSteps = caseItem.process || ['初步沟通需求', '提供相关资料', '资方审核评估', '签署合作协议', '资金到位操作', '业务完成结算'];
             document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
                 <div class="case-highlight-item">
                     <i class="fas fa-check-circle"></i>
@@ -325,7 +374,7 @@ if ($case_id_seo > 0) {
                 </div>
             `).join('');
 
-            // 娓叉煋相关案例锛堝悓绫诲瀷浼樺厛锛屼笉瓒?涓椂琛ュ厖鍏朵粬绫诲瀷锛?
+            // 渲染相关案例锛堝悓绫诲瀷浼樺厛锛屼笉瓒?涓椂琛ュ厖鍏朵粬绫诲瀷锛?
             let relatedCases = casesData
                 .filter(c => c.type === caseItem.type && c.id !== caseItem.id);
             
@@ -349,10 +398,10 @@ if ($case_id_seo > 0) {
                     </div>
                     <div class="case-related-info">
                         <h4 class="case-related-item-title">${c.title}</h4>
-                        <span class="case-related-item-type">${c.type} ? ${c.amount}</span>
+                        <span class="case-related-item-type">${c.type} - ${c.amount}</span>
                     </div>
                 </a>
-            `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">鏆傛棤相关案例</p>';
+            `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">暂无相关案例</p>';
 
             // 更多案例区块已移除
         }
@@ -568,7 +617,7 @@ if ($case_id_seo > 0) {
                     updateLocalCase(serverData);
                     return;
                 } else {
-                    serverError = result.message || '案例不存在或已下架;
+                    serverError = result.message || '案例不存在或已下架';
                 }
             } catch (error) {
                 console.log('CMS API加载失败:', error);
@@ -696,18 +745,18 @@ if ($case_id_seo > 0) {
                     <i class="fas fa-check-circle"></i>
                     <span>${h}</span>
                 </div>
-            `).join('') || '<p style="color: #9ca3af;">鏆傛棤璧勬柟閰嶅悎淇℃伅</p>';
+            `).join('') || '<p style="color: #9ca3af;">暂无资方配合信息</p>';
 
             // 娓叉煋操作流程
-            const processSteps = caseData.process || ['初步沟通需求, '提供相关资料', '资方审核评估', '签署合作协议', '资金到位操作', '业务完成结算'];
+            const processSteps = caseData.process || ['初步沟通需求', '提供相关资料', '资方审核评估', '签署合作协议', '资金到位操作', '业务完成结算'];
             document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
                 <div class="case-highlight-item">
                     <i class="fas fa-check-circle"></i>
                     <span>${index + 1}. ${step}</span>
                 </div>
-            `).join('') || '<p style="color: #9ca3af;">鏆傛棤操作流程</p>';
+            `).join('') || '<p style="color: #9ca3af;">暂无相关案例</p>';
             
-            // 鍒ゆ柇鍥剧墖姣斾緥骞惰缃鍣ㄧ被鍚嶏紙鐢ㄤ簬相关案例缂╃暐鍥撅級
+            // 判断图片比例并设置容器类名（用于相关案例缩略图）
         function detectRelatedImageRatio(imgElement, container) {
             if (!imgElement || !container) return;
             
@@ -717,8 +766,8 @@ if ($case_id_seo > 0) {
                 
                 if (width && height) {
                     const ratio = width / height;
-                    // 妯浘锛氬楂樻瘮 >= 1.2锛屼娇鐢?4:3
-                    // 绔栧浘锛氬楂樻瘮 < 1.2锛屼娇鐢?3:4
+                    // 横图：宽高比 >= 1.2，使用4:3
+                    // 竖图：宽高比 < 1.2，使用3:4
                     if (ratio >= 1.2) {
                         container.classList.remove('ratio-portrait');
                         container.classList.add('ratio-landscape');
@@ -739,8 +788,10 @@ if ($case_id_seo > 0) {
                 };
             }
         }
+        // Expose globally for inline onload handlers
+        window.detectRelatedImageRatio = detectRelatedImageRatio;
 
-        // 娓叉煋相关案例锛堝悓绫诲瀷浼樺厛锛屼笉瓒?涓椂琛ュ厖鍏朵粬绫诲瀷锛?
+        // 渲染相关案例（同类型优先，不足5个时补充其他类型）
             let relatedCases = casesData
                 .filter(c => c.type === caseData.type && c.id !== caseData.id);
             
@@ -755,7 +806,7 @@ if ($case_id_seo > 0) {
             relatedCases = relatedCases.slice(0, 5);
             
             document.getElementById('relatedCases').innerHTML = relatedCases.map(c => {
-                // 浼樺厛浣跨敤 coverImage 瀛楁锛屽叾娆′娇鐢?images 鏁扮粍鐨勭涓€寮狅紙澶勭悊鏂版棫鏍煎紡锛夛紝鏈€鍚庝娇鐢?image 瀛楁
+                // 优先使用 coverImage 字段，其次使用 images 数组的第一张（处理新旧格式），最后使用 image 字段
                 let relatedImage = c.coverImage;
                 if (relatedImage && !relatedImage.startsWith('http') && !relatedImage.startsWith('/') && !relatedImage.startsWith('data:')) {
                     relatedImage = basePath + relatedImage;
@@ -779,10 +830,10 @@ if ($case_id_seo > 0) {
                     </div>
                     <div class="case-related-info">
                         <h4 class="case-related-item-title">${c.title}</h4>
-                        <span class="case-related-item-type">${c.type} ? ${c.amount}</span>
+                        <span class="case-related-item-type">${c.type} - ${c.amount}</span>
                     </div>
                 </a>
-            `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">鏆傛棤相关案例</p>';
+            `}).join('') || '<p style="color: #9ca3af; text-align: center; padding: 20px;">暂无相关案例</p>';
             
             // 更多案例区块已移除
         }
@@ -790,41 +841,41 @@ if ($case_id_seo > 0) {
     
         <!-- CMS Editor -->
     <script>
-        // 妫€鏌ユ槸鍚﹂渶瑕佸姞杞界紪杈戝櫒
+        // 检查是否需要加载编辑器
         (function() {
-            console.log('[CMS] 鍒濆鍖栨鏌?..');
+            console.log('[CMS] 初始化检查.....');
             
             const urlParams = new URLSearchParams(window.location.search);
             const isEditMode = urlParams.get('edit') === 'true';
             const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
             
-            console.log('[CMS] 缂栬緫妯″紡:', isEditMode);
-            console.log('[CMS] 鐧诲綍鐘舵€?', isLoggedIn);
+            console.log('[CMS] 编辑模式:', isEditMode);
+            console.log('[CMS] 登录状态:', isLoggedIn);
             
             if (isEditMode && isLoggedIn) {
-                console.log('[CMS] 寮€濮嬪姞杞界紪杈戝櫒...');
+                console.log('[CMS] 开始加载编辑器...');
                 
-                // 鍔犺浇缂栬緫鍣ㄦ牱寮?
+                // 鍔犺浇编辑器样式
                 const editorCss = document.createElement('link');
                 editorCss.rel = 'stylesheet';
                 editorCss.href = 'admin/editor.css';
                 editorCss.onerror = function() {
-                    console.error('[CMS] 缂栬緫鍣ㄦ牱寮忓姞杞藉け璐?);
+                    console.error('[CMS] 编辑器样式加载失败');
                 };
                 document.head.appendChild(editorCss);
                 
-                // 鍔犺浇缂栬緫鍣ㄨ剼鏈?
+                // 鍔犺浇编辑器脚本
                 const editorScript = document.createElement('script');
                 editorScript.src = 'admin/editor.js';
                 editorScript.onload = function() {
-                    console.log('[CMS] 编辑器脚本加载成功);
+                    console.log('[CMS] 编辑器脚本加载成功');
                 };
                 editorScript.onerror = function() {
-                    console.error('[CMS] 编辑器脚本加载失败);
+                    console.error('[CMS] 编辑器脚本加载失败');
                 };
                 document.body.appendChild(editorScript);
             } else if (isEditMode && !isLoggedIn) {
-                console.log('[CMS] 未登录，重定向到登录页);
+                console.log('[CMS] 未登录，重定向到登录页');
                 window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
             }
         })();

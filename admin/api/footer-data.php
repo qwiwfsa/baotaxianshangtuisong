@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtUpsert = $conn->prepare(
             "INSERT INTO footer_settings (group_key, item_key, item_label, item_value, item_url, sort_order)
              VALUES (?, ?, ?, ?, ?, ?)
-             ON DUPLICATE KEY UPDATE item_label=VALUES(item_label), item_value=VALUES(item_value), item_url=VALUES(item_url)"
+             ON DUPLICATE KEY UPDATE item_label=VALUES(item_label), item_value=VALUES(item_value), item_url=VALUES(item_url), sort_order=VALUES(sort_order)"
         );
         
         $sort = 0;
