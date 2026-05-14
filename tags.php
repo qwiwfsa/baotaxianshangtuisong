@@ -118,7 +118,7 @@ DeviceDetector::redirect();
         </div>
     </div>
 
-    <?php include 'inc_footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

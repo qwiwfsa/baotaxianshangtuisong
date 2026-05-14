@@ -5,6 +5,8 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.yaozijin.com/news.php">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Yao资金网行业资讯 - 亮资知识、摆账流程、资金行业政策、企业融资常识。了解最新行业动态与业务资讯">
@@ -12,7 +14,7 @@ DeviceDetector::redirect();
     <title>行业资讯 - Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.css?v=20250514">
     <link rel="stylesheet" href="css/page-custom.css">
     <!-- Logo动态加载 -->
     <script>
@@ -529,10 +531,10 @@ DeviceDetector::redirect();
                 <article style="display:flex;gap:24px;align-items:stretch;padding:20px 0;border-bottom:1px solid #f0f0f0;margin-bottom:0">
                     ${imageHtml}
                     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding-right:20px">
-                        <h3 style="margin:0 0 10px 0;font-size:20px;font-weight:600;line-height:1.5"><a href="news-detail.php?id=${articleId}" style="color:#1e293b;text-decoration:none;letter-spacing:1px">${title}</a></h3>
+                        <h3 style="margin:0 0 10px 0;font-size:20px;font-weight:600;line-height:1.5"><a href="news-detail.php?id=${articleId}&page=${currentPage}" style="color:#1e293b;text-decoration:none;letter-spacing:1px">${title}</a></h3>
                         <p style="margin:0 0 14px 0;font-size:15px;color:#8e959f;line-height:1.7;letter-spacing:1px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${summary}</p>
                         <div style="display:flex;align-items:center">
-                            <a href="news-detail.php?id=${articleId}" style="font-size:14px;color:#1e3a8a;text-decoration:none">查看更多 →</a>
+                            <a href="news-detail.php?id=${articleId}&page=${currentPage}" style="font-size:14px;color:#1e3a8a;text-decoration:none">查看更多 →</a>
                             <time style="font-size:14px;color:#b0b4ba;margin-left:auto;padding-right:20px">${formattedDate}</time>
                         </div>
                     </div>
@@ -545,6 +547,14 @@ DeviceDetector::redirect();
         let allNewsArticles = [];
         
         // 页面加载完成后执行
+        // 从URL读取page参数，返回列表时保持页码
+        (function() {
+            var p = new URLSearchParams(window.location.search).get('page');
+            if (p && !isNaN(p) && parseInt(p) > 0) {
+                currentPage = parseInt(p);
+            }
+        })();
+
         document.addEventListener('DOMContentLoaded', async function() {
             // 先加载分类，再加载文章（确保分类最新后再加载文章）
             await loadCategoriesFromServer();

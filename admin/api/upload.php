@@ -70,14 +70,14 @@ if ($file['error'] !== UPLOAD_ERR_OK) {
     exit;
 }
 
-// 检查文件类型
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
-$mimeType = finfo_file($finfo, $file['tmp_name']);
-finfo_close($finfo);
+// 检查文件类型（使用扩展名验证，兼容无fileinfo扩展的环境）
+$extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+$extMap = ['jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif', 'webp' => 'image/webp'];
+$mimeType = isset($extMap[$extension]) ? $extMap[$extension] : $file['type'];
 
 if (!in_array($mimeType, $allowedTypes)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => '不支持的文件类型，只允许: ' . implode(', ', $allowedTypes)]);
+    echo json_encode(['success' => false, 'message' => '不支持的文件类型，只允许: JPG, PNG, GIF, WebP']);
     exit;
 }
 

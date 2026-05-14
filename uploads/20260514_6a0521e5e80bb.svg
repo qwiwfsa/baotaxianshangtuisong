@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a365d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d5a8e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#eab308;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Chart line -->
+  <polyline points="100,450 200,380 300,420 400,250 500,300 600,180 700,220 800,150 900,200 1000,120 1100,160"
+    fill="none" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <!-- Grid lines -->
+  <line x1="100" y1="500" x2="1100" y2="500" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <line x1="100" y1="400" x2="1100" y2="400" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <line x1="100" y1="300" x2="1100" y2="300" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <line x1="100" y1="200" x2="1100" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <line x1="100" y1="100" x2="1100" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <!-- Dollar sign -->
+  <text x="600" y="130" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="rgba(255,255,255,0.05)" text-anchor="middle">￥</text>
+  <!-- Building icons -->
+  <rect x="250" y="380" width="60" height="120" rx="4" fill="rgba(255,255,255,0.08)"/>
+  <rect x="270" y="400" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="270" y="430" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="270" y="460" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="350" y="340" width="60" height="160" rx="4" fill="rgba(255,255,255,0.08)"/>
+  <rect x="370" y="360" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="370" y="390" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="370" y="420" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="370" y="450" width="20" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="450" y="300" width="60" height="200" rx="4" fill="rgba(255,255,255,0.12)"/>
+  <rect x="470" y="320" width="20" height="20" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="470" y="350" width="20" height="20" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="470" y="380" width="20" height="20" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="470" y="410" width="20" height="20" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <!-- Title area -->
+  <rect x="0" y="520" width="1200" height="110" fill="rgba(0,0,0,0.3)"/>
+  <text x="600" y="570" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">企业摆账是什么意思？</text>
+  <text x="600" y="610" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="18" fill="rgba(255,255,255,0.7)" text-anchor="middle">一文详解摆账的操作流程与注意事项 | 行业资讯</text>
+</svg>

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8" />
+    <title>经济晚报网</title>
+    <meta name="keywords" content="经报网-经济晚报网" />
+    <meta name="description" content="《经济晚报》是江西省政府惟一指定全省发布经济运行权威数字的综合性都市日报，是江西省委和省政府指导全省经济工作的主阵地。" />
+    <link rel="stylesheet" type="text/css" href="/statics/jjwbqy/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/statics/jjwbqy/css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/statics/jjwbqy/css/style.css?v=1.0.4"/>
+ <!--
+    <link rel="stylesheet" type="text/css" href="/statics/jjwbqy/css/redtheme.css"/>
+  -->
+  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+  <script>LA.init({id: "JVoyDVYxccEOyQJZ",ck: "JVoyDVYxccEOyQJZ"})</script>
+	<style>
+   .swiper-pagination-bullets {
+    display: none;
+   }
+    </style>
+  </head>
+  <body>
+    <!-- 专题 -->
+<!--广告位不存在-->
+    <!-- 专题 end -->
+
+  <div class="Green" style="display: none;">
+      <a href="javascript:;" class="close">关闭</a>
+
+      
+    </div>
+    <div class="auditorium">
+      <a href="javascript:;" class="close">关闭</a>
+      
+       
+    </div>
+<!--广告位不存在-->
+
+     
+<!-- header -->
+ 
+<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+<script>LA.init({id: "JVoyDVYxccEOyQJZ",ck: "JVoyDVYxccEOyQJZ"})</script>
+  <header class="header">
+	<div class="head_top">
+	  <div class="container">
+		<div class="effect">
+		  <p class="red_color">影响有影响力的人</p>
+		</div>
+		<div class="effect effect22" style="margin-left: 300px;">
+		  <p class="red_color" style="color: black;"><strong></strong></p>
+		</div>
+		<div class="rapid">
+		  <div class="times">
+			<span id="time">
+			  
+			</span>
+		  </div>
+		  <div class="k_nav_btn">
+			<a href="javascript:;" title="">
+			  <b></b>
+			  <b></b>
+			  <b></b>
+			</a>
+		  </div>
+		  <ul class="rapid_nav clearfix">
+		 <!--    <li>
+			  <a href="mailto:news@cepaper.cn">
+				381529540@qq.com
+			  </a>
+			</li> -->
+			<li class="wx" style="position: relative;">
+			  <a style="cursor: pointer;">
+				<img src="/statics/jjwbqy/img/tb_033.png" >
+			  </a>
+			</li>
+			<li>
+			  <a href="https://weibo.com/u/3769250065?sudaref=www.cnjjwb.com&sudaref=passport.weibo.com&display=0&retcode=6102&is_all=1" target="_blank">
+				<img src="/statics/jjwbqy/img/tb_055.png" >
+			  </a>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </header>
+			  <div class="weichat" style="display:none;">
+								  <div class="saosao">
+									<div class="sao_text">
+									  <p>微信扫描二维码 关注我们</p>
+									<a class="gb" href="javascript:;">
+				  <img src="/statics/jjwbqy/img/close.png" alt=""></a>
+									  </div>
+				  <img src="/statics/jjwbqy/img/wx.jpg" alt="">
+									</div>
+			  </div>
+  <!-- header end -->
+	
+   
+	
+	
+	
+	
+  <!-- nav -->
+  <div class="fisrt">
+	<div class="container">
+	  
+	<!--   
+	<div class="qglh2024" style="height: 100%;margin: 0 auto;">  <a href="http://www.cnjjwb.com/news-list-zbxxcjq.html"><img src="/statics/jjwbqy/img/20240530173714.jpg" style=""></a></div>  -->
+	
+	  
+	  <div class="tb clearfix">
+		<div class="logo">
+		  <a href="/"><img src="/statics/jjwbqy/img/jjwv_logo3.jpg" style="width:192px;height:55px"></a>
+		  
+		</div>
+				  <script src="/statics/jjwbqy/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/statics/jjwbqy/js/script.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/statics/jjwbqy/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<div class="search">
+
+
+			<a href="http://www.cnjjwb.com/news-list-xxgcddesjszqhjs.html" target="_blank">
+		  <img src="/uploadfile/133/202510/c677ae12a4.jpg"  width="500" height="66">
+		</a>
+	  
+
+					  <input name="c" type="hidden" value="so">
+					<input name="module" type="hidden" value="MOD_DIR">
+		  <input type="text" id="keyword" name="keyword" value="" placeholder="输入关键字" />
+		  <button type="submit" id="search" class="red_bg">搜索</button>
+		</div>
+			   
+			   <script>
+		   
+				  $(function(){
+				   
+					 $('#search').click(function(){
+						  var search = $('#keyword').val();
+						 let obj = {
+							  field: "",
+							  inputorder: "1",
+							  keyword: search,
+							  messagetype: "",
+							  siteid: "133",
+							  size: "20",
+							  time: "all"
+						  }
+						  sessionStorage.setItem("lastname", JSON.stringify(obj))
+						  window.location.href = "/fullsearchs/keyword-"+search+"-time-all-time-all-inputorder-1-size-20.html";
+					 });
+				  });
+					
+				  $('.from-control').bind('keypress',function(event){  
+					  if(event.keyCode == "13"){
+						  var search = $('#keyword').val();
+						  let obj = {
+							  field: "",
+							  inputorder: "1",
+							  keyword: search,
+							  messagetype: "",
+							  siteid: "133",
+							  size: "20",
+							  time: "all"
+						  }
+						  sessionStorage.setItem("lastname", JSON.stringify(obj))
+						  window.location.href = "/fullsearchs/keyword-"+search+"-time-all-time-all-inputorder-1-size-20.html";
+					  }  
+				  });
+				
+				  </script> 
+			
+	  </div>
+	  <nav class="ov red_bg">
+		<div class="column">
+		  <ul class="clearfix">
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-toutiao.html" target="_blank">头条</a>
+			  <!--
+			  <div class="drop_nav">
+				<div class="slideTxtBox">
+				  <div class="hd">
+					<ul>
+					 					</ul>
+				  </div>
+				</div>
+			  </div>
+			   -->
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-shizheng.html" target="_blank">时政</a>
+			  
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-gongye.html" target="_blank">工信</a>
+			  <!--        
+			  <div class="drop_nav">
+				<div class="slideTxtBox">
+				  <div class="hd">
+					<ul>
+					 					<li><a href="http://www.cnjjwb.com/news-list-yuanchuang16.html" target="_blank">原创</a></li>
+					 					<li><a href="http://www.cnjjwb.com/news-list-guonei66.html" target="_blank">国内</a></li>
+					 					</ul>
+				  </div>
+				</div>
+			  </div>
+			   -->
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-caijing.html" target="_blank">财经</a>
+			  
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-shehui.html" target="_blank">社会</a>
+			  
+			</li>
+
+			 <li>
+			  <a href="http://www.cnjjwb.com/news-list-luyou.html" target="_blank">文旅</a>
+			  
+			</li>
+
+
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-jiaoyu.html" target="_blank">教育</a>
+			  
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-fangchans.html" target="_blank">房产</a>
+			  
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-xiaofei.html" target="_blank">消费</a>
+			  
+			</li>
+
+			 <li>
+			  <a href="http://www.cnjjwb.com/news-list-jiankang.html" target="_blank">健康</a>
+			  
+			</li>
+					  
+			 <li>
+			  <a href="http://www.cnjjwb.com/news-list-dishidongtai.html" target="_blank">地市动态</a>
+			  
+			</li>
+
+		   <!--
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-zhijian.html" target="_blank">监督哨</a>
+			  
+			</li>
+			
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-chanjing.html" target="_blank">新闻在线</a>
+			  
+			</li>
+			<li>
+			  <a href="http://www.cnjjwb.com/news-list-zhibojian.html" target="_blank">直播间</a>
+			  
+			</li>
+			-->
+		  </ul>
+		  <b class="pull"></b>
+		</div>
+	  </nav>
+	</div>
+  </div>
+  <!-- nav end -->
+    <!-- main -->
+    <div class="main">
+      <div class="container">
+      
+      <div class="insurance" style="    margin-bottom: 8px;">
+                </div>
+
+
+<div class="insurance">
+                </div>
+
+
+        <div class="splendid_news">
+                     <div class="spl_news">
+            <h3>树立和践行正确政绩观学习教育中央第一指导组进驻江西见面会召开<a href="http://www.cnjjwb.com/news-show-178716.html" target="_blank">［详细］</a></h3>
+        <!--    <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202604/f0651cadd9.jpg" > -->
+          </div>
+                   <div class="spl_news">
+            <h3>尹弘叶建春会见国家电网公司董事长张智刚一行<a href="http://www.cnjjwb.com/news-show-181115.html" target="_blank">［详细］</a></h3>
+        <!--    <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/4b78b7846e.jpg" > -->
+          </div>
+                   <div class="spl_news">
+            <h3>尹弘在江西交投集团调研时强调  聚焦省属功能保障类国企战略定..<a href="http://www.cnjjwb.com/news-show-181097.html" target="_blank">［详细］</a></h3>
+        <!--    <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/da75436167.jpg" > -->
+          </div>
+         
+          <div class="spl_list">
+            <ul class="clearfix ul_last_red">
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-181099.html" target="_blank" style="font-size: 17px;">省委书记尹弘围绕进一步深化国资国企改革赴江西交通投资集团调研|</a>
+              </p>
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-181037.html" target="_blank" style="font-size: 17px;">江西构建现代化水库运行管理新格局|</a>
+              </p>
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-180999.html" target="_blank" style="font-size: 17px;">尹弘主持召开省赣南等原中央苏区振兴发展工作领导小组会议时强调  持续..|</a>
+              </p>
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-180875.html" target="_blank" style="font-size: 17px;">尹弘深入吉安调研树立和践行正确政绩观学习教育学查改工作|</a>
+              </p>
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-180780.html" target="_blank" style="font-size: 17px;">尹弘主持召开省委人才工作领导小组会议时强调  坚持需求导向培养引进用..|</a>
+              </p>
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-180701.html" target="_blank" style="font-size: 17px;">2030年的江西家底更厚实 日子更红火|</a>
+              </p>
+                          <p style="display: inline;line-height: 28px;">
+                <a href="http://www.cnjjwb.com/news-show-180677.html" target="_blank" style="font-size: 17px;">这才是赣超该有的样子|</a>
+              </p>
+                          <li>
+                <a href="http://www.cnjjwb.com/news-list-toutiao.html" target="_blank">［点击更多精彩内容］</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="line">
+          <img src="/statics/jjwbqy/img/ht_03.png" >
+        </div>
+        <div class="hot_news">
+          <div class="row">
+            <div class="col-sm-8 pl">
+              <div class="swiper-container">
+                <ul class="swiper-wrapper">
+
+                              
+                    <li class="swiper-slide">
+                    <a href="http://www.cnjjwb.com/news-show-181099.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/da75436167.jpg" >
+                    </a>
+                    <span class="hot_titile">省委书记尹弘围绕进一步深化国资国企改革赴江西交通投资集团调研</span>
+                  </li>
+            
+                              
+                    <li class="swiper-slide">
+                    <a href="http://www.cnjjwb.com/news-show-180999.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/cc4621b68b.jpg" >
+                    </a>
+                    <span class="hot_titile">尹弘主持召开省赣南等原中央苏区振兴发展工作领导小组会议时强调..</span>
+                  </li>
+            
+                              
+                    <li class="swiper-slide">
+                    <a href="http://www.cnjjwb.com/news-show-180875.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/27f49d8eec.jpg" >
+                    </a>
+                    <span class="hot_titile">尹弘深入吉安调研树立和践行正确政绩观学习教育学查改工作</span>
+                  </li>
+            
+                              
+                    <li class="swiper-slide">
+                    <a href="http://www.cnjjwb.com/news-show-180780.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/bbcbe0e2ae.jpg" >
+                    </a>
+                    <span class="hot_titile">尹弘主持召开省委人才工作领导小组会议时强调  坚持需求导向培..</span>
+                  </li>
+            
+                              
+                    <li class="swiper-slide">
+                    <a href="http://www.cnjjwb.com/news-show-180701.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/Attachment/365c73c5b9.png" >
+                    </a>
+                    <span class="hot_titile">2030年的江西家底更厚实 日子更红火</span>
+                  </li>
+            
+                              
+                    <li class="swiper-slide">
+                    <a href="http://www.cnjjwb.com/news-show-180677.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/1273b680eb.jpg" >
+                    </a>
+                    <span class="hot_titile">这才是赣超该有的样子</span>
+                  </li>
+            
+                
+
+                 
+                </ul>
+                <!-- Add Pagination -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+              </div>
+            </div>
+            <div class="col-sm-4 pr">
+              <div class="txt_news">
+          <div class="news_head clearfix">
+            <h3>最新</h3>
+          </div>
+                <div class="txt_list">
+                  <ul class="ul_first_red">
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-181099.html" target="_blank">省委书记尹弘围绕进一步深化国资国企改革赴江西交通投资集团调研</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-181037.html" target="_blank">江西构建现代化水库运行管理新格局</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180999.html" target="_blank">尹弘主持召开省赣南等原中央苏区振兴发展工作领导小组会议时强调..</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180875.html" target="_blank">尹弘深入吉安调研树立和践行正确政绩观学习教育学查改工作</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180780.html" target="_blank">尹弘主持召开省委人才工作领导小组会议时强调  坚持需求导向培..</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180701.html" target="_blank">2030年的江西家底更厚实 日子更红火</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180677.html" target="_blank">这才是赣超该有的样子</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180529.html" target="_blank">身上有汗，眼里有光，心中有谱</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180528.html" target="_blank">“赣超”赛场免费为中小微和“三农”企业打广告</a>
+                    </li>
+                                      <li>
+                      <a href="http://www.cnjjwb.com/news-show-180523.html" target="_blank">红土地上的奋斗者| 夯爆了！江西青年以坚守致青春</a>
+                    </li>
+                                    </ul>
+                </div>
+                                                                                                                 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="insurance insurance1">
+        	<a href="http://www.cnjjwb.com/news-list-gcqmydgjsxshjjdwjqmyddh.html">
+           <!-- <img src="/statics/jjwbqy/img/20240919105441.png" data-src="/statics/jjwbqy/img/20240919105441.png"> -->
+            <img src="/statics/jjwbqy/img/lh.png.jpg" data-src="/statics/jjwbqy/img/sxyd.png"> 
+          </a>
+          <a href="http://www.cnjjwb.com/news-list-apchy.html">
+           <!-- <img src="/statics/jjwbqy/img/20240919105441.png" data-src="/statics/jjwbqy/img/20240919105441.png"> -->
+            <img src="/statics/jjwbqy/img/20250328090828.png" data-src="/statics/jjwbqy/img/20250328090828.png"> 
+          </a>
+
+        </div>
+		
+        <div class="insurance insurance1">
+        
+          
+
+            <img src="/statics/jjwbqy/img/jkys.jpg" data-src="/statics/jjwbqy/img/jkys.jpg"> 
+          
+
+        </div>
+
+        <div class="news">
+          <div class="row">
+            <div class="col-sm-9 nl">
+              <div class="plitics">
+                <div class="news_head clearfix">
+                  <h3>时政</h3>
+                  <a href="http://www.cnjjwb.com/news-list-shizheng.html" target="_blank">更多+</a>
+                </div>
+                <div class="news_content">
+                  <div class="row">
+                    <div class="col-sm-5">
+                                          <div class="img_item">
+                        <a href="http://www.cnjjwb.com/news-show-181098.html" target="_blank">
+                          <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/da75436167.jpg" >
+                          <span>尹弘在江西交投集团调研时强调  聚焦省属功能保障类..</span>
+                        </a>
+                      </div>
+                                          <div class="plitics_swiper">
+                        <div class="swiper-wrapper">
+
+                                              <div class="swiper-slide">
+                          <a href="http://www.cnjjwb.com/news-show-181000.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/cc4621b68b.jpg" >
+                            <span>尹弘主持召开省赣南等原中央苏区振兴发展工作领导小组..</span>
+                          </a>
+                        </div>
+                                              <div class="swiper-slide">
+                          <a href="http://www.cnjjwb.com/news-show-180781.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/bbcbe0e2ae.jpg" >
+                            <span>尹弘主持召开省委人才工作领导小组会议时强调  坚持..</span>
+                          </a>
+                        </div>
+                                             
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-plitics"></div>
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="news_list">
+                        <ul class="ul_first_red">
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-181098.html" target="_blank">尹弘在江西交投集团调研时强调  聚焦省属功能保障类国企战略定..</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-181000.html" target="_blank">尹弘主持召开省赣南等原中央苏区振兴发展工作领导小组会议时强调..</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180781.html" target="_blank">尹弘主持召开省委人才工作领导小组会议时强调  坚持需求导向培..</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180525.html" target="_blank">尹弘主持召开省委常委会会议</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180484.html" target="_blank">大力弘扬劳模精神劳动精神工匠精神  江西省劳动模范和先进工作..</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180163.html" target="_blank">尹弘主持召开省生态文明建设领导小组暨省生态环境保护委员会会议</a>
+                          </li>
+                                              
+                        </ul>
+                      </div>
+                      <div class="news_list d2">
+                        <ul class="ul_first_red">
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180041.html" target="_blank">尹弘主持召开十五届省委全面依法治省委员会第五次会议时强调  ..</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180042.html" target="_blank">尹弘在江西铜业集团调研时强调  加大力度全面深化国资国企改革..</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-179898.html" target="_blank">我省与芬兰拉普兰大区建立国际友好省区关系  尹弘会见哈努·塔..</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-179801.html" target="_blank">尹弘在调研高校毕业生就业创业工作时强调  完善供需对接机制 ..</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-179706.html" target="_blank">省委理论学习中心组举行集体学习  进一步强化立党为公为民造福..</a>
+                          </li>
+                                              </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="society">
+                <div class="news_head clearfix">
+                  <h3>社会</h3>
+                  <a href="http://www.cnjjwb.com/news-list-shehui.html" target="_blank">更多+</a>
+                </div>
+                <div class="news_content">
+                  <div class="row">
+                    <div class="col-sm-5">
+                                            <div class="img_item">
+                        <a href="http://www.cnjjwb.com/news-show-180545.html" target="_blank">
+                          <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/0a8e2166af.png" >
+                          <span>&quot;五一&quot;“英雄城”南昌国门：护..</span>
+                        </a>
+                      </div>
+                                          <div class="times_news">
+                        <ul>
+                                                  <li>
+                            <span class="news-time">05/06</span>
+                            <a href="http://www.cnjjwb.com/news-show-180545.html" target="_blank">
+                              &quot;五一&quot;“英雄城”南昌国门：护..                            </a>
+                          </li>
+                                                  <li>
+                            <span class="news-time">05/03</span>
+                            <a href="http://www.cnjjwb.com/news-show-180530.html" target="_blank">
+                              红土地上的奋斗者｜他们的名字闪闪发光，为优秀的江西..                            </a>
+                          </li>
+                                                  <li>
+                            <span class="news-time">04/28</span>
+                            <a href="http://www.cnjjwb.com/news-show-180331.html" target="_blank">
+                              2026江西宠物博览会5月15日至17日举行                            </a>
+                          </li>
+                                                  <li>
+                            <span class="news-time">04/27</span>
+                            <a href="http://www.cnjjwb.com/news-show-180180.html" target="_blank">
+                              “95后”江西小伙“手搓”飞机，打破世界纪录                            </a>
+                          </li>
+                                                  
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="news_list">
+                        <ul class="ul_first_red">
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-181155.html" target="_blank">泾口收费站：筑牢安全防线 ，护航平安运营</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-181123.html" target="_blank">“2026‘润田翠’健康饮水我知道”科普进校园活动走进上饶广..</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-181122.html" target="_blank">为400余名迷途少年按下“回家键”铁路女警以温情守护青春归途</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-181040.html" target="_blank">南昌市西湖区举办母亲节文艺展演活动</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-181156.html" target="_blank">蓝线成局，赫塔菲俱乐部与九游娱乐建立区域合作</a>
+                          </li>
+                                              </ul>
+                      </div>
+                      <div class="news_list d2">
+                        <ul class="ul_first_red">
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180878.html" target="_blank">今年全国防灾减灾日主场活动“赣”味十足</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180877.html" target="_blank">我回去，是因为怕“回不去”</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180876.html" target="_blank">时评｜“奥德赛时期”困不住愿意迈步的人</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180839.html" target="_blank">快乐8惊喜来袭！888万元赠票活动今日开启！</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180815.html" target="_blank">江西擘画水运高质量发展新图景</a>
+                          </li>
+                                              </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="employment">
+                <div class="news_head clearfix">
+                  <h3>工信</h3>
+                  <a href="http://www.cnjjwb.com/news-list-gongye.html" target="_blank">更多+</a>
+                </div>
+                <div class="news_content">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="img_item">
+                                              <a href="http://www.cnjjwb.com/news-show-181124.html" target="_blank">
+                          <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/7e7089aad0.jpg" >
+                          <span>“活水”如何润赣鄱——专访著名金融学家吴晓求</span>
+                        </a>
+                      
+
+                      </div>
+                      <div class="plitics_swiper">
+                        <div class="swiper-wrapper">
+                                                  <div class="swiper-slide">
+                          <a href="http://www.cnjjwb.com/news-show-181134.html" target="_blank">
+                              <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202605/d47dec5955.jpg" >
+                            <span>鹰潭保税物流中心（B型）正式封关运营</span>
+                          </a>
+                        </div>
+                                                  <div class="swiper-slide">
+                          <a href="http://www.cnjjwb.com/news-show-180713.html" target="_blank">
+                              <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/Attachment/a0e193fe70.png" >
+                            <span>不靠海，也“吃海”</span>
+                          </a>
+                        </div>
+                        
+                          
+
+
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-plitics"></div>
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="news_list">
+                        <ul class="ul_first_red">
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-181124.html" target="_blank">“活水”如何润赣鄱——专访著名金融学家吴晓求</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-181134.html" target="_blank">鹰潭保税物流中心（B型）正式封关运营</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180714.html" target="_blank">留在江西，也是一种“出海”</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180713.html" target="_blank">不靠海，也“吃海”</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180711.html" target="_blank">一根网线如何撬动全球市场？</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180709.html" target="_blank">解码江西制造如何以“智”焕新</a>
+                          </li>
+                                              
+                        </ul>
+                      </div>
+                      <div class="news_list d2">
+                        <ul class="ul_first_red">
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180452.html" target="_blank">江西电信劳模群体谱写高质量发展奋斗篇章</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180347.html" target="_blank">大江观察 | 五年后江西有多“香”？人均GDP1.4万美元给..</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180752.html" target="_blank">助力1.43万家企业精准对接创新成果</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180751.html" target="_blank">全省地区生产总值同比增长5.0%</a>
+                          </li>
+                                                <li>
+                            <a href="http://www.cnjjwb.com/news-show-180743.html" target="_blank">从“轰隆隆”到“静悄悄”</a>
+                          </li>
+                      
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="AD">
+              
+              </div>
+              <div class="CnTech">
+                <div class="news_head clearfix">
+                  <h3>消费</h3>
+                  <a href="http://www.cnjjwb.com/news-list-xiaofei.html" target="_blank">更多+</a>
+                </div>
+                <div class="news_content">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="plitics_swiper" style="margin-top: 0;">
+                        <div class="swiper-wrapper">
+                                                  <div class="swiper-slide" target="_blank">
+                          <a href="http://www.cnjjwb.com/news-show-180388.html">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202604/38a791ad86.jpg" >
+                            <span>广交会外贸增长观察：PhotonPay光子易从单点提效到收付..</span>
+                          </a>
+                        </div>
+                                                  <div class="swiper-slide" target="_blank">
+                          <a href="http://www.cnjjwb.com/news-show-180035.html">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202604/4ad9b22257.png" >
+                            <span>铁皮棚里“缝”出烟火气，南昌这条街藏着一座城市的温度</span>
+                          </a>
+                        </div>
+                                                </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-plitics"></div>
+                      </div>
+                      <!-- <div class="list_item clearfix">
+                                          <div class="items">
+                          <a href="http://www.cnjjwb.com/news-show-165470.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202504/c74985109d.png" >
+                            <span>神州数码举办2024年度业绩说明会</span>
+                          </a>
+                        </div>
+                                          <div class="items">
+                          <a href="http://www.cnjjwb.com/news-show-165444.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202504/74b83709a5.jpeg" >
+                            <span>湖南二〇八三箭齐发！助推高性价比惯性导航与测量组件国产化浪潮</span>
+                          </a>
+                        </div>
+                                        </div> -->
+                      <div class="times_news">
+                        <ul>
+                                                <li>
+                              <a href="http://www.cnjjwb.com/news-show-180747.html" target="_blank">
+                                锐评丨善待员工才是服务底色                              </a>
+                            </li>
+                                                <li>
+                              <a href="http://www.cnjjwb.com/news-show-180740.html" target="_blank">
+                                宠物粮添“赣味” 猪饲料提“肉香”                              </a>
+                            </li>
+                                            </ul>
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="news_list">
+                        <ul class="ul_first_red">
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180227.html" target="_blank">​  江西蔬菜罐头借政策东风扬帆出海</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180035.html" target="_blank">铁皮棚里“缝”出烟火气，南昌这条街藏着一座城市的温度</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180747.html" target="_blank">锐评丨善待员工才是服务底色</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-180740.html" target="_blank">宠物粮添“赣味” 猪饲料提“肉香”</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-179439.html" target="_blank">江西体育与李宁集团达成战略合作</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-178149.html" target="_blank">第114届糖酒会江西白酒组团亮相 赣鄱美酒香飘蓉城引关注</a>
+                          </li>
+                                              <li>
+                            <a href="http://www.cnjjwb.com/news-show-178122.html" target="_blank">祛痘淡印产品哪款好用？2026祛痘淡化痘印产品排行榜第一名推..</a>
+                          </li>
+                                              
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3 nr">
+              <div class="EvePost">
+                <div class="news_head clearfix">
+                  <h3 style="position: relative;">经济晚报数字报</h3>
+                                    <a href="index.php?s=szb&c=home&m=index&periodical_id=9750" target="_blank">更多+</a>
+                                  </div>
+                <div class="row">
+                                  
+                  <div class="col-sm-6">
+                                        <a href="index.php?s=szb&c=home&m=index&periodical_id=9750" target="_blank"><img src="/statics/jjwbqy/img/nopic.png" data-src="uploadfile/202605/3da1f91429.jpg" width="160" height="208"></a>
+                                      </div>
+                  <div class="col-sm-6">
+                    <ul class="clearfix zhoubao">
+                                            <li><a href="index.php?s=szb&c=home&m=index&periodical_id=9750" target="_blank">2026-05-07</a></li>
+                                            <li><a href="index.php?s=szb&c=home&m=index&periodical_id=9749" target="_blank">2026-04-30</a></li>
+                                            <li><a href="index.php?s=szb&c=home&m=index&periodical_id=9748" target="_blank">2026-04-23</a></li>
+                                            <li><a href="index.php?s=szb&c=home&m=index&periodical_id=9747" target="_blank">2026-04-16</a></li>
+                                            <li><a href="index.php?s=szb&c=home&m=index&periodical_id=9746" target="_blank">2026-04-09</a></li>
+                                            <li><a href="index.php?s=szb&c=home&m=index&periodical_id=9745" target="_blank">2026-04-02</a></li>
+                                          </ul>
+                  </div>
+                                   
+                                                        
+                </div>
+              </div>
+              <div class="supervise" style="display: none;">
+                <!-- <div class="right_title clearfix">
+                  <h3>舆情监督</h3>
+                  <a href="http://www.cnjjwb.com/news-list-zhijian.html" target="_blank">更多+</a>
+                </div> -->
+
+                <div class="news_head clearfix">
+                  <h3 style="position: relative;">舆情监督</h3>
+                  <a href="http://www.cnjjwb.com/news-list-zhijian.html" target="_blank">更多+</a>
+                </div>
+                <div class="right_cont">
+                  <div class="right_news clearfix">
+
+                  
+
+                  </div>
+                  <div class="right_list">
+                    <ul>
+                                          
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="apparent">
+                <!-- <div class="right_title clearfix">
+                  <h3>经视</h3>
+                  <a href="http://www.cnjjwb.com/news-list-chanjing.html" target="_blank">更多+</a>
+                </div> -->
+                <div class="news_head clearfix">
+                  <h3 style="position: relative;">经晚视频</h3>
+                  <a href="http://www.cnjjwb.com/news-list-chanjing.html" target="_blank">更多+</a>
+                </div>
+                <div class="right_cont">
+                <div class="hot_right">
+                                    <a href="http://www.cnjjwb.com/news-show-145954.html" target="_blank">
+                      <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/Attachment/17adf860cc.jpg" >
+                      <span>看！新版记者证换发专题宣传片来了</span>
+                    </a>
+                                    </div>
+                  <div class="right_news clearfix">
+                                          <div class="news_items">
+                          <a href="http://www.cnjjwb.com/news-show-141452.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/Attachment/aeec3835a6.jpg" >
+                            <span>太壮观：穿越大草原之路连通中蒙俄</span>
+                          </a>
+                        </div>
+                                                <div class="news_items">
+                          <a href="http://www.cnjjwb.com/news-show-141451.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/Attachment/6fe691a006.jpg" >
+                            <span>不简单：这个非洲厨娘能做地道江西菜</span>
+                          </a>
+                        </div>
+                                          </div>
+                  <div class="right_list">
+                    <ul>
+                                          <li>
+                          <a href="http://www.cnjjwb.com/news-show-141451.html" target="_blank">
+                            不简单：这个非洲厨娘能做地道江西菜                          </a>
+                        </li>
+                                              <li>
+                          <a href="http://www.cnjjwb.com/news-show-141450.html" target="_blank">
+                            真及时：“江西井”为非洲千人村落解渴                          </a>
+                        </li>
+                                              <li>
+                          <a href="http://www.cnjjwb.com/news-show-141449.html" target="_blank">
+                            更便捷：肯尼亚公路带你看动物大迁徙                          </a>
+                        </li>
+                                              <li>
+                          <a href="http://www.cnjjwb.com/news-show-141448.html" target="_blank">
+                            大挑战：登顶百米高的越南海上风机作业                          </a>
+                        </li>
+                                          </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="apparent">
+                <div class="news_head clearfix">
+                  <h3 style="position: relative;text-align: left;" id="dang20da" >特色专栏</h3>
+                  <style>
+                    #dang20da {
+                        width: 266px;
+                    }
+                    #dang20da::before {
+                        width: 266px;
+                    }
+                  </style>
+                <!--  <a href="http://www.cnjjwb.com/news-list-xsxqdxzsjjxg.html" target="_blank">更多+</a> -->
+                </div>
+                <div class="right_cont" style=" justify-content: center;">
+                   <!--                         <a href="http://www.cnjjwb.com/news-list-fjqglkbxzc.html">
+                     <img src="/uploadfile/133/202409/6908feb95c.png" alt="" style="height: 100px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                                  <a href="http://www.cnjjwb.com/news-list-xyesd.html">
+                     <img src="/uploadfile/202307/62cfd81e93.png" alt="" style="height: 100px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                                  <a href="http://www.cnjjwb.com/news-list-xxgcxjpxsdzgtsshzysxztjy.html">
+                     <img src="" alt="" style="height: 100px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                           -->
+                                           <a href="http://www.cnjjwb.com/news-list-jingwanguancha .html">
+                     <img src="/uploadfile/133/202512/af5483cb41.jpg" alt="" style="height: 105px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                            <a href="http://www.cnjjwb.com/news-list-gyxc.html">
+                     <img src="/uploadfile/202307/0032941310.jpg" alt="" style="height: 105px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                            <a href="http://www.cnjjwb.com/news-list-fzxcjy.html">
+                     <img src="/uploadfile/133/202508/8f521222f3.jpg" alt="" style="height: 105px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                            <a href="http://www.cnjjwb.com/news-list-aqscjxs.html">
+                     <img src="/uploadfile/202307/99edac255d.jpg" alt="" style="height: 105px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                            <a href="http://www.cnjjwb.com/news-list-tebiecehua1.html">
+                     <img src="/uploadfile/202307/22ee6c4a4a.jpg" alt="" style="height: 105px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                            <a href="http://www.cnjjwb.com/news-list-bwgz.html">
+                     <img src="/uploadfile/202307/2de78f935f.jpg" alt="" style="height: 105px;width: 286px;margin-bottom: 10px;">
+                    </a>
+                                      
+                  
+                </div>
+              </div>
+              <div class="News_studio" style="display: none;">
+                <!-- <div class="right_title clearfix">
+                  <h3>直播间</h3>
+                  <a href="http://www.cnjjwb.com/news-list-zhibojian.html" target="_blank">更多+</a>
+                </div> -->
+                <div class="news_head clearfix">
+                  <h3 style="position: relative;">经晚直播间</h3>
+                  <a href="http://www.cnjjwb.com/news-list-zhibojian.html" target="_blank">更多+</a>
+                </div>
+                <div class="right_cont">
+                  <div class="hot_right">
+                                  </div>
+                  <div class="right_news clearfix">
+                                    </div>
+                  <div class="right_list">
+                    <ul>
+                                          
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="News_studio" style="display:none">
+                <!-- <div class="right_title clearfix">
+                  <h3>直播间</h3>
+                  <a href="http://www.cnjjwb.com/news-list-zhibojian.html" target="_blank">更多+</a>
+                </div> -->
+                <div class="news_head clearfix">
+                  <h3 style="position: relative;">特别策划</h3>
+                 <!--  <a href="http://www.cnjjwb.com/news-list-lhzg.html" target="_blank">更多+</a> -->
+                </div>
+                <div class="right_cont">
+                  <div class="hot_right" style="display:none">
+                                  </div>
+                  <div class="right_news clearfix">
+                                          <div class="news_items">
+                          <a href="http://www.cnjjwb.com/news-show-181065.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202601/05ff2a8e77.png" >
+                            <span>锐评｜三五零零，满电狂飙！</span>
+                          </a>
+                        </div>
+                                            <div class="news_items">
+                          <a href="http://www.cnjjwb.com/news-show-181066.html" target="_blank">
+                            <img src="/statics/jjwbqy/img/nopic.png" data-src="/uploadfile/133/202601/3a38ff7f09.png" >
+                            <span>锐评｜巨资落子 赣电生金</span>
+                          </a>
+                        </div>
+                                      </div>
+                  <div class="right_list">
+                    <ul>
+                                          <li>
+                        <a href="http://www.cnjjwb.com/news-show-181063.html" target="_blank">
+                          锐评 | 马年纪念币秒空 文化热不应沦为炒作狂欢                        </a>
+                      </li>
+                                          <li>
+                        <a href="http://www.cnjjwb.com/news-show-181061.html" target="_blank">
+                          锐评丨主播偷税屡禁不止？大数据时代别心存侥幸                        </a>
+                      </li>
+                                          <li>
+                        <a href="http://www.cnjjwb.com/news-show-181067.html" target="_blank">
+                          经晚观察 | 一馆藏古今，一展见匠心                        </a>
+                      </li>
+                                          
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+ <!--<div class="insurance" style="margin-bottom: 0;">
+          <a href="http://www.cnjjwb.com/news-list-xxexzgex.html">
+            <img src="/uploadfile/133/202512/7f7cf3c716.jpg" style="width: 100%;">
+          </a>
+        </div>-->
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--    main end -->
+
+  
+  <script type="text/javascript" src="/statics/js/tj.js"></script>	<footer class="footer">
+			<div class="foot_nav red_bg">
+				<div class="container">
+					<ul>
+						<li>
+							<a href="/" style="border-right: 1px solid #fff;">返回主页</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-show-180297.html" target="_blank" style="border-right: 1px solid #fff;">经济晚报</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-list-tuanduijieshao.html" target="_blank" style="border-right: 1px solid #fff;">团队介绍</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-show-180298.html" target="_blank" style="border-right: 1px solid #fff;">关于经网</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-show-13924.html" target="_blank" style="border-right: 1px solid #fff;">媒体服务</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-list-zhaoxiannashi.html" target="_blank" style="border-right: 1px solid #fff;">招贤纳士</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-list-lianxiwomen.html" target="_blank" style="border-right: 1px solid #fff;">联系我们</a>
+						</li>
+												<li>
+							<a href="http://www.cnjjwb.com/news-show-180338.html" target="_blank" style="border-right: 1px solid #fff;">法律声明</a>
+						</li>
+						                         <li>
+                  <a href="index.php?s=szb&c=home&m=index&periodical_id=9750" target="_blank">数字报</a>
+                  </li>
+                  					</ul>
+				</div>
+			</div>
+			<div class="subject foot_subj">
+				<div class="container foot_jub" style="width: 1200px;margin: 0 auto;">
+					<ul style="height: 100px;display: flex;overflow: hidden;" >
+					                     
+						<li>
+							<a href="https://www.12377.cn/" target="_blank">
+								<img style="object-fit: cover; height: 100%;" src="/statics/admin/images/nopic.png" data-src="/uploadfile/133/202603/f612dbff32.png"  style="width: 232px;height: 65px;">
+							</a>
+						</li>
+                           
+					                     
+						<li>
+							<a href="https://12389.mps.gov.cn/" target="_blank">
+								<img style="object-fit: cover; height: 100%;" src="/statics/admin/images/nopic.png" data-src="/uploadfile/133/202603/8cd3e2e963.jpg"  style="width: 232px;height: 65px;">
+							</a>
+						</li>
+                           
+					                     
+						<li>
+							<a href="https://www.jxcn.cn/jbzx/" target="_blank">
+								<img style="object-fit: cover; height: 100%;" src="/statics/admin/images/nopic.png" data-src="/uploadfile/133/202508/69af365a6d.png"  style="width: 232px;height: 65px;">
+							</a>
+						</li>
+                           
+					                     
+						<li>
+							<a href="#" target="_blank">
+								<img style="object-fit: cover; height: 100%;" src="/statics/admin/images/nopic.png" data-src="/uploadfile/133/202603/8fb9eada9e.png"  style="width: 232px;height: 65px;">
+							</a>
+						</li>
+                           
+										
+					</ul>
+				</div>
+			</div>
+			<div class="link">
+				<div class="container">
+					<div class="site">
+						<h3>合作站点：</h3>
+						<ul>
+							
+							
+						</ul>
+					</div>
+					<div class="AQ">
+				<p style="font-size: 14px;color: #666666;">	<a href="https://beian.miit.gov.cn/" target="_blank" style="font-size: 14px;color: #666666;">	互联网新闻信息服务许可证编号:36120230006 &nbsp;&nbsp;&nbsp;&nbsp;  赣ICP备2020013341号 </a> &nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36010202000276" style="font-size: 14px;color: #666666;">赣公安网备 36010202000276</a>&nbsp;<a target="_blank" href="https://www.12377.cn/" style="font-size: 14px;color: #666666;">中国互联网举报中心</a><br>Copyright 2019 www.cnjjwb.com 经济晚报社 rights reserved.</p>
+                        <script type="text/javascript">document.write(unescape("%3Cspan id='_ideConac' %3E%3C/span%3E%3Cscript src='http://dcs.conac.cn/js/15/000/0000/41139985/CA150000000411399850001.js' type='text/javascript'%3E%3C/script%3E"));</script>
+                        
+                        <script language="javascript" src="http://count24.51yes.com/click.aspx?id=244032143&logo=1" charset="gb2312"></script>
+                                                                    
+					</div>
+				</div>
+			</div>
+		</footer>
+  </body>
+  <script src="/statics/jjwbqy/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/statics/jjwbqy/js/data.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/statics/jjwbqy/js/script.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/statics/jjwbqy/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/statics/jjwbqy/js/jquery.SuperSlide.2.1.3.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/statics/jjwbqy/js/loading.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+      var swiper = new Swiper('.swiper-container', {
+            autoplay: {
+              delay: 5000,
+              stopOnLastSlide: false,
+              disableOnInteraction: true,
+            },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+        var swiper1 = new Swiper('.plitics .plitics_swiper', {
+            autoplay: {
+              delay: 5000,
+              stopOnLastSlide: false,
+              disableOnInteraction: true,
+            },
+          slidesPerView: 2,
+          spaceBetween: 10,
+          freeMode: true,
+          pagination: {
+            el: '.swiper-plitics',
+            clickable: true,
+          },
+        });
+      var swiper2 = new Swiper('.employment .plitics_swiper', {
+            autoplay: {
+              delay: 5000,
+              stopOnLastSlide: false,
+              disableOnInteraction: true,
+            },
+          slidesPerView: 2,
+          spaceBetween: 10,
+          freeMode: true,
+          pagination: {
+            el: '.swiper-plitics',
+            clickable: true,
+          },
+        });
+      var swiper3 = new Swiper('.CnTech .plitics_swiper', {
+            autoplay: {
+              delay: 5000,
+              stopOnLastSlide: false,
+              disableOnInteraction: true,
+            },
+          slidesPerView: 2,
+          spaceBetween: 10,
+          freeMode: true,
+          pagination: {
+            el: '.swiper-plitics',
+            clickable: true,
+          },
+        });
+                                             
+    jQuery(".slideTxtBox").slide({delayTime:0,pnLoop:false});
+                
+    
+    $(".bg_close").click(function() {
+        $("body").css("background", "none");
+        $(".bg_cover").hide();
+    })
+  </script>
+  
+ 
+ </html>

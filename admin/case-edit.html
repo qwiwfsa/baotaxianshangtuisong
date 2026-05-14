@@ -736,7 +736,7 @@
                     }
                     
                     // PHP上传失败，回退到Node.js本地服务器
-                    const nodeResponse = await fetchWithTimeout('http://localhost:3000/api/upload', {
+                    const nodeResponse = await fetchWithTimeout('/admin/api/upload.php', {
                         method: 'POST',
                         body: formData
                     }, 30000);

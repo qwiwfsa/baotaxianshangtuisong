@@ -1,6 +1,30 @@
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+// ===== 动态 SEO - 标签页 =====
+$tag_seo_title = '标签 - Yao资金网';
+$tag_seo_desc = '浏览Yao资金网相关标签内容';
+$tag_seo_keywords = '';
+$tag_slug_seo = trim($_GET['slug'] ?? '');
+if ($tag_slug_seo) {
+    try {
+        require_once __DIR__ . '/config/db.php';
+        $db_tag = getDB();
+        $stmt_tag = $db_tag->prepare("SELECT name, seo_title, seo_keywords, seo_description FROM tags WHERE slug = ? LIMIT 1");
+        $stmt_tag->bind_param('s', $tag_slug_seo);
+        $stmt_tag->execute();
+        $result_tag = $stmt_tag->get_result();
+        if ($row_tag = $result_tag->fetch_assoc()) {
+            $tag_name_seo = $row_tag['name'];
+            $tag_seo_title = !empty($row_tag['seo_title']) ? $row_tag['seo_title'] : ($tag_name_seo . ' - Yao资金网');
+            $tag_seo_desc = !empty($row_tag['seo_description']) ? $row_tag['seo_description'] : ('浏览与' . $tag_name_seo . '相关的文章和案例');
+            $tag_seo_keywords = !empty($row_tag['seo_keywords']) ? $row_tag['seo_keywords'] : $tag_name_seo;
+        }
+        $stmt_tag->close();
+        $db_tag->close();
+    } catch (Exception $e) {}
+}
+
 
 // Get slug from URL
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
@@ -8,24 +32,27 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link rel="canonical" href="https://www.yaozijin.com/tag/<?php echo htmlspecialchars($tag_slug_seo, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="robots" content="index, follow">
     <meta charset="UTF-8">
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Yao资金网标签聚合页 - 浏览该标签下的所有相关文章和案例">
+    <meta name="description" content="<?php echo htmlspecialchars($tag_seo_desc, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="keywords" content="亮资,摆账,企业融资,过桥资金">
-    <title>标签 - Yao资金网</title>
+    <title><?php echo htmlspecialchars($tag_seo_title, ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.css?v=20250514">
     <link rel="stylesheet" href="css/page-custom.css">
     <script>
     (function(){
         var xhr=new XMLHttpRequest();
-        xhr.open('GET','admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.open('GET','/admin/api/fetch-logo.php?t='+Date.now(),true);
         xhr.onload=function(){
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p:p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -105,7 +132,7 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
     <section class="tag-detail-header">
         <div class="tag-detail-header-container">
-            <a href="tags.php" class="tag-back-btn"><i class="fas fa-arrow-left"></i> 返回标签列表</a>
+            <a href="/tags.php" class="tag-back-btn"><i class="fas fa-arrow-left"></i> 返回标签列表</a>
             <h1 class="tag-detail-title" id="tagTitle">...</h1>
             <p class="tag-detail-count" id="tagCount">加载中...</p>
         </div>
@@ -123,7 +150,7 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
         <div class="empty-state" id="tagEmpty" style="display:none;"><i class="fas fa-inbox"></i><p>该分类暂无内容</p></div>
     </div>
 
-    <?php include 'inc_footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 
     <script>
         const slug = '<?php echo addslashes($slug); ?>';
@@ -148,7 +175,7 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
             document.getElementById('tagPagination').style.display = 'none';
             document.getElementById('tagEmpty').style.display = 'none';
 
-            fetch(`api/tag-frontend-detail.php?slug=${encodeURIComponent(slug)}&type=${currentType}&page=${currentPage}&limit=10`)
+            fetch(`/api/tag-frontend-detail.php?slug=${encodeURIComponent(slug)}&type=${currentType}&page=${currentPage}&limit=10`)
                 .then(r => r.json())
                 .then(res => {
                     document.getElementById('tagLoading').style.display = 'none';

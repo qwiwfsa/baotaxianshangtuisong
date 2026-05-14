@@ -157,7 +157,66 @@ const pageConfigs = {
     }
 };
 
-// 默认数据
+
+    advantages: {
+        name: '优势介绍',
+        file: 'advantages.html',
+        fields: [
+            { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+            ]},
+            { section: 'content', title: '优势内容', icon: 'fa-star', fields: [
+                { name: 'advantage1Title', label: '优势1-标题', type: 'text' },
+                { name: 'advantage1Content', label: '优势1-内容', type: 'richtext' },
+                { name: 'advantage2Title', label: '优势2-标题', type: 'text' },
+                { name: 'advantage2Content', label: '优势2-内容', type: 'richtext' },
+                { name: 'advantage3Title', label: '优势3-标题', type: 'text' },
+                { name: 'advantage3Content', label: '优势3-内容', type: 'richtext' },
+                { name: 'advantage4Title', label: '优势4-标题', type: 'text' },
+                { name: 'advantage4Content', label: '优势4-内容', type: 'richtext' }
+            ]}
+        ]
+    },
+    privacy: {
+        name: '隐私政策',
+        file: 'privacy.html',
+        fields: [
+            { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+            ]},
+            { section: 'content', title: '隐私内容', icon: 'fa-shield-alt', fields: [
+                { name: 'content', label: '隐私政策内容', type: 'richtext' }
+            ]}
+        ]
+    },
+    compliance: {
+        name: '合规声明',
+        file: 'compliance.html',
+        fields: [
+            { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+            ]},
+            { section: 'content', title: '合规内容', icon: 'fa-balance-scale', fields: [
+                { name: 'content', label: '合规声明内容', type: 'richtext' }
+            ]}
+        ]
+    },
+    sitemap: {
+        name: '网站地图',
+        file: 'sitemap.html',
+        fields: [
+            { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+            ]}
+        ]
+    }
+};
+
+//// 默认数据
 const defaultData = {
     index: {
         heroTitle: '专业资金解决方案\n助力企业稳健发展',

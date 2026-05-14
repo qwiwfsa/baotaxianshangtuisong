@@ -19,6 +19,54 @@
         return /Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
+    function isWechatApp() {
+        return /MicroMessenger/i.test(navigator.userAgent);
+    }
+
+    function tryOpenApp(url, fallbackFn, timeout) {
+        var opened = false;
+        var timer;
+
+        function visHandler() {
+            if (document.hidden || document.webkitHidden) {
+                opened = true;
+                clearTimeout(timer);
+                document.removeEventListener('visibilitychange', visHandler);
+                document.removeEventListener('webkitvisibilitychange', visHandler);
+            }
+        }
+        document.addEventListener('visibilitychange', visHandler);
+        document.addEventListener('webkitvisibilitychange', visHandler);
+
+        // Method 1: Create <a> and click (most reliable for URL schemes)
+        try {
+            var a = document.createElement('a');
+            a.style.cssText = 'display:none';
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 100);
+        } catch(e) {}
+
+        // Method 2: iframe
+        try {
+            var ifr = document.createElement('iframe');
+            ifr.style.cssText = 'display:none';
+            ifr.src = url;
+            document.body.appendChild(ifr);
+            setTimeout(function() { if (ifr.parentNode) ifr.parentNode.removeChild(ifr); }, 3000);
+        } catch(e) {}
+
+        // Method 3: location.href
+        try { window.location.href = url; } catch(e) {}
+
+        timer = setTimeout(function() {
+            document.removeEventListener('visibilitychange', visHandler);
+            document.removeEventListener('webkitvisibilitychange', visHandler);
+            if (!opened && fallbackFn) fallbackFn();
+        }, timeout || 2500);
+    }
+
     // === QR Code for WeChat (fallback) ===
     var qrModalEl = null;
 
@@ -70,10 +118,22 @@
         var u = encodeURIComponent(url);
         var t = encodeURIComponent(title || getShareTitle());
         if (isMobile()) {
-            try { window.location.href = 'mqqapi://share/to_friend?url=' + u + '&title=' + t + '&description=' + t; } catch(e) {}
-            setTimeout(function() {
-                window.open('https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t, '_blank');
-            }, 800);
+            var qqUrl = 'mqqapi://share/to_friend?src=web&srcId=1001&url=' + u + '&title=' + t + '&description=' + t + '&share_type=html';
+            function fallback() {
+                if (navigator.share) {
+                    navigator.share({ title: title || getShareTitle(), url: url }).catch(function(){});
+                } else {
+                    window.location.href = 'https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t;
+                }
+            }
+            if (/Android/i.test(navigator.userAgent) && !isWechatApp()) {
+                var intentUrl = 'intent://share/to_friend?src=web&srcId=1001&url=' + u + '&title=' + t + '&description=' + t + '&share_type=html#Intent;scheme=mqqapi;package=com.tencent.mobileqq;end';
+                tryOpenApp(intentUrl, function() {
+                    tryOpenApp(qqUrl, fallback, 2000);
+                }, 1500);
+            } else {
+                tryOpenApp(qqUrl, fallback, 2500);
+            }
         } else {
             window.open('https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t, '_blank', 'width=680,height=520');
         }
@@ -81,8 +141,17 @@
 
     window.shareToWechat = function(url, title) {
         if (isMobile()) {
-            try { window.location.href = 'weixin://'; } catch(e) {}
-            setTimeout(function() { openWechatShare(url); }, 1000);
+            if (isWechatApp()) {
+                openWechatShare(url);
+                return;
+            }
+            tryOpenApp('weixin://', function() {
+                if (navigator.share) {
+                    navigator.share({ title: title || getShareTitle(), url: url }).catch(function(){});
+                } else {
+                    openWechatShare(url);
+                }
+            }, 2500);
         } else {
             openWechatShare(url);
         }
@@ -90,8 +159,17 @@
 
     window.shareToMoments = function(url, title) {
         if (isMobile()) {
-            try { window.location.href = 'weixin://dl/moments'; } catch(e) {}
-            setTimeout(function() { openWechatShare(url); }, 1000);
+            if (isWechatApp()) {
+                openWechatShare(url);
+                return;
+            }
+            tryOpenApp('weixin://dl/moments', function() {
+                if (navigator.share) {
+                    navigator.share({ title: title || getShareTitle(), url: url }).catch(function(){});
+                } else {
+                    openWechatShare(url);
+                }
+            }, 2500);
         } else {
             openWechatShare(url);
         }

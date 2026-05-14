@@ -467,9 +467,9 @@ function renderComments(comments, total, page) {
             '<td><span class="comment-nickname">' + escapeHtml(c.nickname) + '</span></td>' +
             '<td><div class="comment-content">' + escapeHtml(c.content) + '</div></td>' +
             '<td><div class="comment-article" title="' + escapeHtml(articleTitle) + '">' + escapeHtml(articleTitle) + '</div></td>' +
-            '<td>' + statusLabel + '</td>' +
+            '<td style="white-space:nowrap;">' + statusLabel + '</td>' +
             '<td><span class="comment-date">' + dateStr + '</span></td>' +
-            '<td><div class="cms-actions">' +
+            '<td style="white-space:nowrap;"><div class="cms-actions">' +
                 approveBtn + rejectBtn +
                 '<button class="cms-btn cms-btn-danger cms-btn-sm" onclick="deleteComment(' + c.id + ')"><i class="fas fa-trash"></i>删除</button>' +
             '</div></td>';

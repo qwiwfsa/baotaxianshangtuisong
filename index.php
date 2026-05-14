@@ -15,8 +15,11 @@ DeviceDetector::redirect();
     <meta property="og:title" content="Yao资金网 - 专业资金业务服务商">
     <meta property="og:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="zh_CN">
-    <link rel="canonical" href="https://www.hengxinziben.com/">
+    <meta property="og:locale"
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Yao资金网 - 专业资金业务服务商">
+    <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务"> content="zh_CN">
+    <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -25,7 +28,7 @@ DeviceDetector::redirect();
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/css/style.css?v=20250504">
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <!-- 动态内容加载脚本 -->
     <script>
         // 从localStorage加载编辑后的内容
@@ -61,7 +64,7 @@ DeviceDetector::redirect();
         "@type": "FinancialService",
         "name": "Yao资金网",
         "description": "专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等服务",
-        "url": "https://www.hengxinziben.com",
+        "url": "https://www.yaozijin.com",
         "telephone": "+86-13552883008",
         "email": "wanglizhongguo@126.com",
         "address": {
@@ -131,33 +134,7 @@ DeviceDetector::redirect();
     xhr.send();
 })();
 </script>
-<script>
-(function() {
-    var pageName = window.location.pathname.split('/').pop() || 'index.html';
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            try {
-                var data = JSON.parse(xhr.responseText);
-                if (data && data.code === 0 && data.data) {
-                    var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
-                    if (seo.meta_keywords) {
-                        var kw = document.querySelector('meta[name="keywords"]');
-                        if (kw) kw.content = seo.meta_keywords;
-                    }
-                    if (seo.meta_description) {
-                        var desc = document.querySelector('meta[name="description"]');
-                        if (desc) desc.content = seo.meta_description;
-                    }
-                }
-            } catch(e) {}
-        }
-    };
-    xhr.send();
-})();
-</script>
+
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -488,7 +465,7 @@ DeviceDetector::redirect();
                 <p class="section-subtitle">与多家银行建立深度合作关系</p>
             </div>
             <div class="bank-logos-wrapper">
-                <img src="/uploads/合作银行logo.jpg" alt="合作银行" class="bank-logos-image">
+                <img src="/uploads/bank-logos.jpg" alt="合作银行" class="bank-logos-image">
             </div>
         </div>
     </section>

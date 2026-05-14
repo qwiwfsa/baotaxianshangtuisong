@@ -49,6 +49,8 @@
         .batch-bar .selected-count { font-size: 14px; color: #4338ca; font-weight: 500; }
         .batch-bar .btn-batch-delete { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
         .batch-bar .btn-batch-delete:hover { background: #dc2626; }
+        .batch-bar .btn-batch-tag { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #8b5cf6; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .batch-bar .btn-batch-tag:hover { background: #7c3aed; }
         .batch-bar .btn-batch-category { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s; margin-left: auto; }
         .batch-bar .btn-batch-category:hover { background: #2563eb; }
         .batch-delete-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
@@ -223,6 +225,9 @@
                     <button class="btn-batch-delete" onclick="openBatchDeleteModal()" id="batchDeleteBtn" disabled>
                         <i class="fas fa-trash-alt"></i> 批量删除
                     </button>
+                    <button class="btn-batch-tag" onclick="openBatchTagModal()" id="batchTagBtn" disabled>
+                        <i class="fas fa-tags"></i> 批量添加标签
+                    </button>
                 </div>
 
                 <div id="articleList">
@@ -292,7 +297,29 @@
                 <button class="btn btn-primary" onclick="confirmBatchCategory()">确认修改</button>
             </div>
         </div>
+    </div>    <!-- 批量添加标签模态框 -->
+    <div class="modal-overlay" id="batchTagModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">批量添加标签</h3>
+                <button class="modal-close" onclick="closeBatchTagModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">选择要添加的标签（可多选）：</p>
+                <div id="batchTagList" style="max-height: 300px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px;">
+                    <div class="loading" style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin"></i> 加载标签...</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBatchTagModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmBatchTag()" style="background:#8b5cf6;">确定添加</button>
+            </div>
+        </div>
     </div>
+
+
 
     <!-- 提示消息 -->
     <div class="toast" id="toast">
@@ -450,6 +477,15 @@
         // 注意：不再使用本地存储加载文章列表
         // 所有文章数据统一从数据库读取
 
+        // 读取 URL 中的 page 参数
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var p = params.get('page');
+            if (p && !isNaN(p) && parseInt(p) > 0) {
+                currentPage = parseInt(p);
+            }
+        })();
+
         // 加载文章列表（使用防抖）
         const debouncedLoadArticles = debounce(async function() {
             await doLoadArticles();
@@ -474,7 +510,7 @@
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 5000);
                 
-                const response = await fetch(`../../api/news/list.php?page=${currentPage}&limit=16&category=${category}&status=${status}&keyword=${encodeURIComponent(keyword)}`, {
+                const response = await fetch(`../../api/news/list.php?page=${currentPage}&limit=24&category=${category}&status=${status}&keyword=${encodeURIComponent(keyword)}`, {
                     signal: controller.signal
                 });
                 
@@ -606,12 +642,12 @@
 
         // 新建文章
         function openEditModal() {
-            window.location.href = 'article-edit.html';
+            window.location.href = `article-edit.html?page=${currentPage}`;
         }
 
         // 编辑文章
         function editArticle(id) {
-            window.location.href = `article-edit.html?id=${id}`;
+            window.location.href = `article-edit.html?id=${id}&page=${currentPage}`;
         }
 
         // 预览文章
@@ -694,6 +730,7 @@
             const selectedCount = document.getElementById('selectedCount');
             const batchDeleteBtn = document.getElementById('batchDeleteBtn');
             const batchCategoryBtn = document.getElementById('batchCategoryBtn');
+            const batchTagBtn = document.getElementById('batchTagBtn');
 
             // 更新已选数量
             selectedCount.textContent = `已选择 ${count} 篇`;
@@ -703,10 +740,12 @@
                 batchBar.classList.add('show');
                 if (batchDeleteBtn) batchDeleteBtn.disabled = false;
                 if (batchCategoryBtn) batchCategoryBtn.disabled = false;
+                if (batchTagBtn) batchTagBtn.disabled = false;
             } else {
                 batchBar.classList.remove('show');
                 if (batchDeleteBtn) batchDeleteBtn.disabled = true;
                 if (batchCategoryBtn) batchCategoryBtn.disabled = true;
+                if (batchTagBtn) batchTagBtn.disabled = true;
             }
 
             // 高亮选中的卡片
@@ -797,7 +836,108 @@
                 showToast(errorMsg, 'error');
                 closeBatchDeleteModal();
             }
+        
+
+        // ========== 批量添加标签 ==========
+        // 打开批量添加标签对话框
+        function openBatchTagModal() {
+            const selectedIds = getSelectedIds();
+            if (selectedIds.length === 0) {
+                showToast('请选择要添加标签的文章', 'error');
+                return;
+            }
+            loadTagCheckboxes();
+            document.getElementById('batchTagModal').classList.add('show');
         }
+
+        // 关闭批量添加标签对话框
+        function closeBatchTagModal() {
+            document.getElementById('batchTagModal').classList.remove('show');
+        }
+
+        // 加载标签复选框列表
+        async function loadTagCheckboxes() {
+            const container = document.getElementById('batchTagList');
+            try {
+                const response = await fetch('../../api/tags/tag-options.php');
+                const result = await response.json();
+
+                if (!result.success || !result.data || result.data.length === 0) {
+                    container.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">暂无可用标签，请先创建标签</p>';
+                    return;
+                }
+
+                container.innerHTML = result.data.map(tag =>
+                    `<label style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;border-radius:4px;transition:background 0.15s;"
+                            onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background=''">
+                        <input type="checkbox" class="tag-checkbox" value="${tag.id}" style="width:16px;height:16px;accent-color:#8b5cf6;cursor:pointer;">
+                        <span style="font-size:14px;">${tag.name}</span>
+                    </label>`
+                ).join('');
+            } catch (error) {
+                console.error('加载标签失败:', error);
+                container.innerHTML = '<p style="text-align:center;color:#ef4444;padding:20px;">加载标签失败: ' + (error.message || '网络异常') + '</p>';
+            }
+        }
+
+        // 确定批量添加标签
+        async function confirmBatchTag() {
+            const selectedIds = getSelectedIds();
+            const checkedTags = document.querySelectorAll('.tag-checkbox:checked');
+            const tagIds = Array.from(checkedTags).map(cb => parseInt(cb.value));
+
+            if (selectedIds.length === 0) {
+                showToast('请选择要添加标签的文章', 'error');
+                closeBatchTagModal();
+                return;
+            }
+
+            if (tagIds.length === 0) {
+                showToast('请选择至少一个标签', 'error');
+                return;
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch('../../api/news/batch-tag.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ids: selectedIds.map(id => parseInt(id)),
+                        tag_ids: tagIds
+                    }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(`成功为 ${selectedIds.length} 篇文章添加标签`, 'success');
+                    closeBatchTagModal();
+                    // 取消全选
+                    const selectAll = document.getElementById('selectAll');
+                    if (selectAll) selectAll.checked = false;
+                    updateBatchBar();
+                    // 重新加载列表
+                    loadArticles();
+                } else {
+                    showToast(result.message || '批量添加标签失败', 'error');
+                    closeBatchTagModal();
+                }
+            } catch (error) {
+                console.error('批量添加标签失败:', error);
+                let errorMsg = '批量添加标签失败: ' + (error.message || '网络异常');
+                if (error.name === 'AbortError') {
+                    errorMsg = '请求超时，请检查服务器是否正常';
+                }
+                showToast(errorMsg, 'error');
+                closeBatchTagModal();
+            }
+        }
+}
 
         // 显示提示
         function showToast(message, type = 'success') {

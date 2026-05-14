@@ -5,6 +5,8 @@ DeviceDetector::redirect();
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.yaozijin.com/advantages.html">
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -13,7 +15,7 @@ DeviceDetector::redirect();
     <title>服务优势 - Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <link rel="stylesheet" href="/css/page-custom.css">
     <!-- Logo动态加载 -->
     <script>

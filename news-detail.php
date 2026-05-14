@@ -1,6 +1,76 @@
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+// ===== 动态 SEO =====
+$seo_title = '';
+$seo_desc = '';
+$seo_keywords = '';
+$seo_url = 'https://www.yaozijin.com/news-detail.php?id=' . intval($_GET['id'] ?? 0);
+$article_id_seo = intval($_GET['id'] ?? 0);
+if ($article_id_seo > 0) {
+    try {
+        require_once __DIR__ . '/config/db.php';
+        $db_seo = getDB();
+        $stmt_seo = $db_seo->prepare("SELECT title, seo_title, seo_keywords, seo_description, summary FROM cms_articles WHERE id = ? AND status = 'published' LIMIT 1");
+        $stmt_seo->bind_param('i', $article_id_seo);
+        $stmt_seo->execute();
+        $result_seo = $stmt_seo->get_result();
+        if ($row_seo = $result_seo->fetch_assoc()) {
+            $seo_title = !empty($row_seo['seo_title']) ? $row_seo['seo_title'] : ($row_seo['title'] . ' - Yao资金网');
+            $seo_desc = !empty($row_seo['seo_description']) ? $row_seo['seo_description'] : (!empty($row_seo['summary']) ? mb_substr($row_seo['summary'], 0, 200) : '');
+            $seo_keywords = !empty($row_seo['seo_keywords']) ? $row_seo['seo_keywords'] : '';
+        }
+        $stmt_seo->close();
+        $db_seo->close();
+    } catch (Exception $e) {}
+}
+
+// ===== 相关推荐 =====
+$related_articles = [];
+if ($article_id_seo > 0) {
+    try {
+        require_once __DIR__ . '/config/db.php';
+        $db_rel = getDB();
+        // Get current article's category
+        $cat_stmt = $db_rel->prepare("SELECT category_id FROM cms_articles WHERE id = ?");
+        $cat_stmt->bind_param('i', $article_id_seo);
+        $cat_stmt->execute();
+        $cat_result = $cat_stmt->get_result();
+        $cat_row = $cat_result->fetch_assoc();
+        $category_id = $cat_row ? (int)$cat_row['category_id'] : 0;
+        $cat_stmt->close();
+
+        if ($category_id > 0) {
+            $rel_stmt = $db_rel->prepare("SELECT id, title, cover_image, created_at FROM cms_articles WHERE category_id = ? AND id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
+            $rel_stmt->bind_param('ii', $category_id, $article_id_seo);
+            $rel_stmt->execute();
+            $rel_result = $rel_stmt->get_result();
+            while ($row = $rel_result->fetch_assoc()) {
+                if (!empty($row['cover_image']) && strpos($row['cover_image'], 'http') !== 0 && strpos($row['cover_image'], '/') !== 0) {
+                    $row['cover_image'] = '/' . $row['cover_image'];
+                }
+                $related_articles[] = $row;
+            }
+            $rel_stmt->close();
+        }
+
+        if (empty($related_articles)) {
+            $rel_stmt2 = $db_rel->prepare("SELECT id, title, cover_image, created_at FROM cms_articles WHERE id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
+            $rel_stmt2->bind_param('i', $article_id_seo);
+            $rel_stmt2->execute();
+            $rel_result2 = $rel_stmt2->get_result();
+            while ($row = $rel_result2->fetch_assoc()) {
+                if (!empty($row['cover_image']) && strpos($row['cover_image'], 'http') !== 0 && strpos($row['cover_image'], '/') !== 0) {
+                    $row['cover_image'] = '/' . $row['cover_image'];
+                }
+                $related_articles[] = $row;
+            }
+            $rel_stmt2->close();
+        }
+        $db_rel->close();
+    } catch (Exception $e) {}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -8,12 +78,12 @@ DeviceDetector::redirect();
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Yao资金网行业资讯详情 - 了解最新行业动态与业务资讯">
-    <meta name="keywords" content="行业资讯,亮资知识,摆账流程,资金行业政策,企业融资常识">
-    <title>文章详情 - Yao资金网</title>
+    <meta name="description" content="<?php echo htmlspecialchars($seo_desc ?: 'Yao资金网行业资讯详情', ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($seo_keywords ?: '行业资讯,亮资知识,摆账流程', ENT_QUOTES, 'UTF-8'); ?>">
+    <title><?php echo htmlspecialchars($seo_title ?: '文章详情 - Yao资金网', ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <style>
         /* 文章详情页样式 */
         .article-detail-header {
@@ -63,15 +133,17 @@ DeviceDetector::redirect();
         }
         
         .article-detail-title {
-            font-size: 32px;
+            font-size: 40px;
             font-weight: 700;
             line-height: 1.4;
             margin-bottom: 20px;
+            text-align: center;
         }
         
         .article-detail-meta {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 24px;
             color: rgba(255,255,255,0.8);
             font-size: 14px;
@@ -387,7 +459,8 @@ DeviceDetector::redirect();
             }
             
             .article-detail-title {
-                font-size: 24px;
+                font-size: 28px;
+                text-align: center;
             }
             
             .article-detail-main {
@@ -726,6 +799,26 @@ main#main-content {
 </script>
     <!-- 社交分享样式 -->
     <link rel="stylesheet" href="/css/social-share.css">
+    <link rel="canonical" href="<?php echo htmlspecialchars($seo_url, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="robots" content="index, follow">
+    <!-- Article Structured Data -->
+    <script type="application/ld+json">
+<?php if ($article_id_seo > 0 && $seo_title): ?>{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "<?php echo htmlspecialchars($seo_title, ENT_QUOTES, 'UTF-8'); ?>",
+    "description": "<?php echo htmlspecialchars($seo_desc, ENT_QUOTES, 'UTF-8'); ?>",
+    "url": "<?php echo htmlspecialchars($seo_url, ENT_QUOTES, 'UTF-8'); ?>",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "<?php echo htmlspecialchars($seo_url, ENT_QUOTES, 'UTF-8'); ?>" },
+    "publisher": { "@type": "Organization", "name": "Yao资金网" }
+}<?php endif; ?>
+    </script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($seo_title ?: 'Yao资金网', ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($seo_desc ?: '了解最新行业动态与业务资讯', ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($seo_url, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_CN">
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -772,6 +865,7 @@ main#main-content {
                 <div id="articleContent">
                     <!-- 动态填充 -->
                 </div>
+        <div class="article-tags" id="articleTags"></div>
             </div>
         </section>
 
@@ -822,7 +916,26 @@ main#main-content {
                     </a>
                 </div>
                 <div class="related-articles-grid" id="relatedArticles">
-                    <!-- 动态填充 -->
+                    <?php if (!empty($related_articles)): ?>
+                        <?php foreach ($related_articles as $ra): ?>
+                            <?php
+                            $ra_title = htmlspecialchars($ra['title'] ?: '无标题', ENT_QUOTES, 'UTF-8');
+                            $ra_img = !empty($ra['cover_image']) ? htmlspecialchars($ra['cover_image'], ENT_QUOTES, 'UTF-8') : '';
+                            $ra_date = date('Y-m-d', strtotime($ra['created_at']));
+                            ?>
+                            <a href="news-detail.php?id=<?= $ra['id'] ?>" class="related-article-card">
+                                <?php if ($ra_img): ?>
+                                <div class="related-article-thumb"><img src="<?= $ra_img ?>" alt="<?= $ra_title ?>" loading="lazy"></div>
+                                <?php else: ?>
+                                <div class="related-article-thumb placeholder"><div class="placeholder-bg"></div></div>
+                                <?php endif; ?>
+                                <div class="related-article-content">
+                                    <h3 class="related-article-title"><?= $ra_title ?></h3>
+                                    <span class="related-article-date"><?= $ra_date ?></span>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
@@ -887,7 +1000,7 @@ main#main-content {
                 if (!articles) return [];
                 return articles.filter(a => String(a.id) !== String(currentId)).slice(0, 4);
             } catch (e) {
-                console.error('[News Detail] 加载相关文章失败:', e);
+                console.error('[News Detail] Error:', e);
                 return [];
             }
         }
@@ -928,15 +1041,20 @@ main#main-content {
 
             // 内容 - 修复图片URL（兼容各种存储格式）
             let content = article.content || '<p>暂无内容</p>';
-            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
-            const prefix = basePath.replace(/\/$/, '') + '/';
+            var basePath = '/';
+            var pathname = window.location.pathname;
+            var secondSlash = pathname.indexOf('/', 1);
+            if (secondSlash > 0) {
+                basePath = pathname.substring(0, secondSlash + 1);
+            }
             // 1) 替换 http://localhost/uploads/ -> /uploads/
-            content = content.replace(/https?:\/\/[^\/]+\/uploads\//g, prefix + 'uploads/');
+            content = content.replace(/https?:\/\/[^\/]+\/uploads\//g, '/uploads/');
             // 2) 替换 ../../../uploads/ -> /uploads/
-            content = content.replace(/src="(?:\.\.\/)+(uploads\/)/g, 'src="' + prefix.replace(/\/$/, '') + '/$1');
-            // 3) 替换 /uploads/ -> /uploads/（确保不重复加）
-            content = content.replace(new RegExp('src="' + prefix.replace(/\//g, '\/') + 'uploads\/', 'g'), 'src="' + prefix.replace(/\/$/, '') + '/uploads/');
-            content = content.replace(/src="\/uploads\//g, 'src="' + prefix.replace(/\/$/, '') + '/uploads/');
+            content = content.replace(/src="(?:\.\.\/)+(uploads\/)/g, 'src="/$1');
+            // 3) 确保 /uploads/ 路径正确
+            content = content.replace(/src="\/uploads\//g, 'src="/uploads/');
+            // 4) 替换 /admin/uploads/ -> /uploads/（管理员上传的图片前台可访问）
+            content = content.replace(/src="\/admin\/uploads\//g, 'src="\/uploads\/');
             document.getElementById('articleContent').innerHTML = `
                 <div class="article-detail-main">
                     <div class="article-body">${content}</div>
@@ -976,16 +1094,17 @@ main#main-content {
         
             // Render tags
             const tagsContainer = document.getElementById('articleTags');
-            if (article.tags && article.tags.length > 0) {
-                tagsContainer.innerHTML = '<span class="tag-label"><i class="fas fa-tags"></i></span>' +
-                    article.tags.map(t => '<a href="/tag/' + t.slug + '" class="tag-link">' + t.name + '</a>').join('');
-                tagsContainer.style.display = 'flex';
-            } else {
-                tagsContainer.style.display = 'none';
+            if (tagsContainer) {
+                if (article.tags && article.tags.length > 0) {
+                    tagsContainer.innerHTML = '<span class="tag-label"><i class="fas fa-tags"></i></span>' +
+                        article.tags.map(t => '<a href="/tag/' + t.slug + '" class="tag-link">' + t.name + '</a>').join('');
+                    tagsContainer.style.display = 'flex';
+                } else {
+                    tagsContainer.style.display = 'none';
+                }
             }
-}
-
         // 渲染相关文章
+        }
         function renderRelated(articles) {
             if (articles.length === 0) {
                 document.getElementById('relatedArticles').innerHTML = `
@@ -1157,6 +1276,20 @@ main#main-content {
     })();
     </script>
 
+<script>
+    // 从URL读取page参数，用于返回列表时保持页码
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        var page = params.get('page');
+        if (page) {
+            // 更新导航中"行业资讯"链接，保留页码
+            var newsLinks = document.querySelectorAll('a[href="/news.php"]');
+            for (var i = 0; i < newsLinks.length; i++) {
+                newsLinks[i].href = '/news.php?page=' + page;
+            }
+        }
+    })();
+</script>
 </body>
 </html>
 

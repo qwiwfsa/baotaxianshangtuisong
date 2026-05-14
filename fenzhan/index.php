@@ -57,6 +57,7 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTTL) {
 $city_name = $city['city_name'];
 $phone = !empty($city['phone']) ? $city['phone'] : '13552883008';
 $province = $city['province'] ?? '';
+$city_content = $city['content'] ?? '';
 
 // ---------- SEO 自动生成 ----------
 $page_title = $city_name . '资金_过桥短拆_实资摆账_资金证明 - Yao资金网';
@@ -239,6 +240,13 @@ try {
         </section>
         <?php renderServicesSection($homepageContent, $city_name); ?>
         <?php echo $districtHtml; ?>
+        <?php if (!empty($city_content)): ?>
+        <section class="city-content-section">
+            <div class="section-container">
+                <?php echo $city_content; ?>
+            </div>
+        </section>
+        <?php endif; ?>
         <section class="cases-showcase" id="casesShowcase">
             <div class="section-container">
                 <div class="section-header">
@@ -565,10 +573,12 @@ if (!empty($templateContent)) {
         <meta name="description" content="<?php echo $escapedDesc; ?>">
         <meta name="keywords" content="<?php echo $escapedKeywords; ?>">
         <title><?php echo $escapedTitle; ?></title>
-        <link rel="stylesheet" href="/css/style.css?v=20260513e">
+        <link rel="stylesheet" href="/css/style.min.css?v=20260514">
         <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <base href="/">
+    <link rel="canonical" href="https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html">
+    <meta name="robots" content="index, follow">
     </head>
     <body>
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -688,6 +698,20 @@ if (!empty($templateContent)) {
         </section>
         <?php renderServicesSection($homepageContent, $city_name); ?>
         <?php echo $districtHtml; ?>
+        <?php if (!empty($city_content)): ?>
+        <section class="city-content-section">
+            <div class="section-container">
+                <?php echo $city_content; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+        <?php if (!empty($city_content)): ?>
+        <section class="city-content-section">
+            <div class="section-container">
+                <?php echo $city_content; ?>
+            </div>
+        </section>
+        <?php endif; ?>
         <section class="cases-showcase" id="casesShowcase">
             <div class="section-container">
                 <div class="section-header">
