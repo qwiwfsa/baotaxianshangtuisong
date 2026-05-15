@@ -1,4 +1,6 @@
 <html lang="zh-CN"><head>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="展示多行业资金业务成功案例，包含企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等场景参考。">
@@ -150,6 +152,7 @@
     font-weight: 500;
 }
 </style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -158,15 +161,10 @@
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
 <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260501_234314_69f51e721c7d0.png" alt="Yao资金网" style="height:48px;width:auto;" class=""></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="cases.html" class="nav-link active" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-            </ul>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+
+
+
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -1046,66 +1044,6 @@
 
 
     <script src="../js/footer-loader.js"></script>
-<script>
-(function() {
-    // Ĭ�ϵ�����Ŀ - APIʧ��ʱʹ��
-    var defaultNavItems = [
-        { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
-        { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
-        { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-        { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
-        { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
-        { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
-    ];
 
-    function renderNav(items) {
-        var container = document.getElementById('dynamicNavMenu');
-        if (!container) return;
-        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-        container.innerHTML = items.map(function(item) {
-            var url = item.url;
-            if (isMobile && url.indexOf('/') === 0) {
-                url = url === '/' ? 'index.html' : url.substring(1);
-            }
-            var isActive = url === currentPage || (currentPage === '' && url === 'index.html');
-            return '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
-        }).join('');
-        try { localStorage.setItem('cms_nav_items', JSON.stringify(items)); } catch(e) {}
-    }
-
-    // 1. 先从数据库加载
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../admin/api/nav-save.php?type=nav&t=' + Date.now(), true);
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 400) {
-            try {
-                var resp = JSON.parse(xhr.responseText);
-                if (resp.code === 0 && resp.data && resp.data.length > 0) {
-                    renderNav(resp.data);
-                    return;
-                }
-            } catch(e) {}
-        }
-        loadFromLocal();
-    };
-    xhr.onerror = function() { loadFromLocal(); };
-    xhr.send();
-
-    function loadFromLocal() {
-        try {
-            var stored = localStorage.getItem('cms_nav_items');
-            if (stored) {
-                var parsed = JSON.parse(stored);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    renderNav(parsed);
-                    return;
-                }
-            }
-        } catch(e) {}
-        renderNav(defaultNavItems);
-    }
-})();
-</script>
+<script src="../js/nav-loader.js"></script>
 </body></html>

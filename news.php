@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+require_once __DIR__ . '/includes/news-prerender.php';
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -25,7 +26,7 @@ DeviceDetector::redirect();
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -139,11 +140,10 @@ DeviceDetector::redirect();
 
     </style>
 
-<script>
-(function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p+window.location.search;}}})();
-</script>
+
     <!-- 社交分享样式 -->
     <link rel="stylesheet" href="/css/social-share.css">
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -151,16 +151,8 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="images/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="/news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-            </ul>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -195,8 +187,9 @@ DeviceDetector::redirect();
                 <div class="editable-section" data-section="news-categories">
                     <div class="news-categories" id="newsCategories">
                         <a href="#" class="news-category active" data-cat-id="0">全部资讯</a>
-                        <!-- 分类将通过JS动态加载 -->
-                    </div>
+                        <?php foreach ($allCategories as $cat): ?>
+                        <a href="#" class="news-category" data-cat-id="<?php echo $cat['id']; ?>"><?php echo htmlspecialchars($cat['name']); ?></a>
+                        <?php endforeach; ?>
                 </div>
 
 
@@ -211,9 +204,13 @@ DeviceDetector::redirect();
                 <!-- 资讯列表 - 卡片式设计 -->
                 <div class="editable-section" data-section="news-list">
                     <div class="news-list-container">
-                        <!-- 文章由JS动态加载 -->
+                        <?php if (!empty($allArticles)): ?>
+                        <?php foreach ($allArticles as $article): echo renderArticleCard($article, $page); endforeach; ?>
+                        <?php else: ?>
+                        <div class="news-empty"><p>暂无新闻</p></div>
+                        <?php endif; ?>
                     </div><div class="news-pagination">
-                        <a href="#" class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></a><a href="#" class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></a>
+                        <?php echo renderPagination($page, $totalPages); ?>
                     </div>
                 </div>
 
@@ -231,9 +228,7 @@ DeviceDetector::redirect();
 
     <!-- 页脚 -->
 <?php include 'includes/footer.php'; ?>
-
-
-    <script src="/js/main.js"></script>
+<script src="/js/main.js"></script>
     
     <!-- 动态加载资讯文章 -->
     <script>
@@ -306,21 +301,27 @@ DeviceDetector::redirect();
             const prevSelected = currentCategoryId;
             
             // 重建容器 - 保留"全部资讯"
-            categoriesContainer.innerHTML = '';
-            
-            // "全部资讯"链接
-            const allLink = document.createElement('a');
-            allLink.href = '#';
-            allLink.className = 'news-category' + (prevSelected === 0 ? ' active' : '');
-            allLink.textContent = '全部资讯';
-            allLink.dataset.catId = '0';
-            allLink.addEventListener('click', function(e) {
+            // 保留全部资讯避免闪烁 - 只移除动态分类
+            while (categoriesContainer.children.length > 1) {
+                categoriesContainer.removeChild(categoriesContainer.lastChild);
+            }
+            if (categoriesContainer.children.length === 0) {
+                const allLinkReset = document.createElement('a');
+                allLinkReset.href = '#';
+                allLinkReset.className = 'news-category';
+                allLinkReset.textContent = '全部资讯';
+                allLinkReset.dataset.catId = '0';
+                categoriesContainer.appendChild(allLinkReset);
+            }
+            categoriesContainer.firstElementChild.className = 'news-category' + (prevSelected === 0 ? ' active' : '');
+            categoriesContainer.firstElementChild.addEventListener('click', function(e) {
                 e.preventDefault();
                 currentCategoryId = 0;
                 updateActiveCategory();
                 loadNewsByCategory();
             });
-            categoriesContainer.appendChild(allLink);
+            
+            
             
             // 添加CMS分类
             if (categories.length > 0) {
@@ -475,7 +476,21 @@ DeviceDetector::redirect();
             paginationContainer.innerHTML = html;
         }
         
-        // 跳转到指定页
+        // Helper for pagination UI update
+        function renderPaginationHelper(page, totalPages) {
+            var c = document.querySelector('.news-pagination');
+            if (!c) return;
+            if (totalPages <= 1) { c.innerHTML = ''; return; }
+            var h = '';
+            if (page > 1) h += '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' + (page - 1) + ')"><i class="fas fa-chevron-left"></i></a>';
+            else h += '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></a>';
+            h += '<span class="pagination-current">' + page + '</span>';
+            if (page < totalPages) h += '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' + (page + 1) + ')"><i class="fas fa-chevron-right"></i></a>';
+            else h += '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></a>';
+            c.innerHTML = h;
+        }
+
+// 跳转到指定页
         function goToPage(page) {
             currentPage = page;
             if (allNewsArticles && allNewsArticles.length > 0) {
@@ -555,7 +570,23 @@ DeviceDetector::redirect();
             }
         })();
 
+        // Check if content is already pre-rendered by server
+        var preRendered = document.querySelector('.news-list-container article');
+
         document.addEventListener('DOMContentLoaded', async function() {
+            if (preRendered) {
+                console.log('[News] Using pre-rendered content');
+                try {
+                    var prerenderData = <?php echo $preRenderData; ?>;
+                    currentPage = prerenderData.page || 1;
+                    allNewsArticles = <?php echo $articlesJson; ?>;
+                } catch(e) {}
+                loadCategoriesFromServer();
+                loadCategories();
+                return;
+            }
+
+            // Fallback: original async loading
             // 先加载分类，再加载文章（确保分类最新后再加载文章）
             await loadCategoriesFromServer();
             loadCategories();

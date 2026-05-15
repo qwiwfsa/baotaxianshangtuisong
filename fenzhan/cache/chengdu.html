@@ -356,8 +356,8 @@
                                                 <li><a href="https://yaozijin.com/fenzhan/hangzhou.html">杭州</a></li>
                                                 <li><a href="https://yaozijin.com/fenzhan/chongqing.html">重庆</a></li>
                                                 <li><a href="https://yaozijin.com/fenzhan/chengdu.html">成都</a></li>
-                                                <li><a href="#">网站地图</a></li>
                                                 <li><a href="#">友情链接</a></li>
+                                                <li><a href="#">网站地图</a></li>
                                             </ul>
                 </div>
 
@@ -391,6 +391,27 @@
             </div>
         </div>
     </footer>
+<!-- Analytics -->
+<!-- Baidu Tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?BAIDU_TONGJI_ID";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX');
+</script>
+<!-- End Analytics -->
         <script src="/js/main.js?v=20260513e"></script>
 
     <!-- Cases Showcase Script -->
@@ -525,7 +546,7 @@
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);

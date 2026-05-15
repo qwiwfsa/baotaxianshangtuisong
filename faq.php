@@ -50,7 +50,7 @@ if ($activeCat) {
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -127,15 +127,7 @@ if ('caches' in window) {
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
 <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="/faq.html" class="nav-link active" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-            </ul>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -378,8 +370,7 @@ if ('caches' in window) {
         </div>
     </footer>
     <script src="admin/assets/cms.js"></script>
-
-    <script src="/js/main.js"></script>
+<script src="/js/main.js"></script>
     <script>
         // 显示/隐藏电话号码
         function showPhoneNumber() {

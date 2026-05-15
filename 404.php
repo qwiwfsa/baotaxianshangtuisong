@@ -1,4 +1,4 @@
-<?php http_response_code(404); ?>
+<?php http_response_code(404); header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-cache");header("Expires: 0");?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -25,47 +25,9 @@
 <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
 <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
-                <!-- 动态菜单将在这里加载 -->
-            </ul>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
             
             <script>
-                // 动态加载导航菜单
-                (function() {
-                    const defaultNavItems = [
-                        { id: '1', name: '首页', url: '/', icon: 'fas fa-home' },
-                        { id: '2', name: '业务范围', url: '/services.html', icon: 'fas fa-briefcase' },
-                        { id: '3', name: '成功案例', url: '/cases.html', icon: 'fas fa-trophy' },
-                        { id: '4', name: '服务优势', url: '/advantages.html', icon: 'fas fa-star' },
-                        { id: '5', name: '行业资讯', url: '/news.php', icon: 'fas fa-newspaper' },
-                        { id: '6', name: '常见问题', url: '/faq.html', icon: 'fas fa-question-circle' },
-                        { id: '7', name: '联系我们', url: '/contact.html', icon: 'fas fa-phone' }
-                    ];
-                    
-                    // 从 localStorage 读取菜单
-                    let navItems = defaultNavItems;
-                    try {
-                        const stored = localStorage.getItem('cms_nav_items');
-                        if (stored) {
-                            const parsed = JSON.parse(stored);
-                            if (Array.isArray(parsed) && parsed.length > 0) {
-                                navItems = parsed;
-                            }
-                        }
-                    } catch (e) {
-                        console.log('读取菜单失败，使用默认菜单');
-                    }
-                    
-                    // 渲染菜单
-                    const menuContainer = document.getElementById('dynamicNavMenu');
-                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                    
-                    menuContainer.innerHTML = navItems.map(item => {
-                        const isActive = item.url === currentPage || (currentPage === '' && item.url === 'index.html');
-                        return `<li role="none"><a href="${item.url}" class="nav-link${isActive ? ' active' : ''}" role="menuitem">${item.name}</a></li>`;
-                    }).join('');
-                })();
-            </script>
 
             <!-- 搜索按钮 -->
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">

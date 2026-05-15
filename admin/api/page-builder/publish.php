@@ -240,11 +240,12 @@ function generateFullPage($pageId, $content) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>' . htmlspecialchars($pageId) . '</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <link rel="stylesheet" href="/css/page-custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/page-builder.css">
     <style>
-        .page-content { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .page-content { max-width: 1200px; margin: 0 auto; padding: 20px; padding-top: 84px; }
         .img-placeholder { display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#9ca3af; flex-direction:column; gap:8px; font-size:14px; }
         .img-placeholder i { font-size:32px; }
         .img-placeholder-banner { width:100%; height:100%; min-height:300px; }
@@ -253,20 +254,43 @@ function generateFullPage($pageId, $content) {
         .card-image.card-image-placeholder i { font-size:36px; }
         .banner-img, .image-module-img, .card-img { max-width:100%; }
     </style>
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("GET","admin/api/fetch-logo.php?t="+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==="/"?p.substring(1):p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector(".logo img");
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector(".footer-logo img");
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
 </head>
 <body>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航栏">
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
-                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">核心优势</a></li>
-                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-            </ul>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单"><span></span><span></span><span></span></button>
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
     <main id="main-content"><div class="page-content">' . $content . '</div></main>
@@ -277,7 +301,7 @@ function generateFullPage($pageId, $content) {
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
-                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
+                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
                 <div class="footer-nav" data-footer-group="quick_links"><h4 class="footer-nav-title">快速导航</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="service_links"><h4 class="footer-nav-title">服务项目</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>
@@ -285,9 +309,10 @@ function generateFullPage($pageId, $content) {
             <div class="footer-bottom"><p class="footer-copyright"></p><p class="footer-disclaimer"></p></div>
         </div>
     </footer>
-    <script>document.addEventListener("error",function(e){if(e.target.tagName==="IMG"){e.target.style.display="none";var p=e.target.parentElement;if(p&&!p.querySelector(".img-placeholder")){var d=document.createElement("div");d.className="img-placeholder";d.innerHTML="<i class=\"fas fa-image\"></i><span>Image Error</span>";p.appendChild(d)}}},true);</script>
+    <script>document.addEventListener("error",function(e){if(e.target.tagName==="IMG"){e.target.style.display="none";var p=e.target.parentElement;if(p&&!p.querySelector(".img-placeholder")){var d=document.createElement("div");d.className="img-placeholder";d.innerHTML="<i class=\'fas fa-image\'></i><span>Image Error</span>";p.appendChild(d)}}},true);</script>
     <script src="/js/footer-loader.js"></script>
     <script src="/assets/js/page-builder.js"></script>
+    <script src="/js/nav-loader.js?v=2"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>';

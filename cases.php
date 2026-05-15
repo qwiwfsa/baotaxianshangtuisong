@@ -1,6 +1,26 @@
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+require_once __DIR__ . '/config/db.php';
+$caseDB = getDB();
+$caseResult = $caseDB->query("SELECT id, title, company, amount, period, category, description, image, content FROM cases WHERE status = 1 ORDER BY sort_order ASC, id DESC LIMIT 8");
+$allCases = [];
+while ($r = $caseResult->fetch_assoc()) {
+    $cd = json_decode($r['content'], true) ?: [];
+    $allCases[] = [
+        'id' => $r['id'],
+        'title' => $r['title'],
+        'type' => $r['category'],
+        'city' => $r['company'],
+        'amount' => $r['amount'],
+        'summary' => $r['description'],
+        'image' => $r['image'],
+        'coverImage' => $cd['coverImage'] ?? $r['image'],
+        'detail' => $cd['detail'] ?? $r['description'],
+    ];
+}
+$caseResult->close();
+$caseDB->close();
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -26,7 +46,7 @@ DeviceDetector::redirect();
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -101,6 +121,7 @@ DeviceDetector::redirect();
     xhr.send();
 })();
 </script>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -108,16 +129,8 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="/cases.html" class="nav-link active" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-            </ul>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -169,6 +182,26 @@ DeviceDetector::redirect();
 
                 <!-- 案例卡片网格 -->
                 <div class="cases-grid-enhanced" id="casesGrid">
+                    <?php foreach ($allCases as $case): ?>
+                    <?php $img = $case['coverImage'] ?: $case['image']; ?>
+                    <article class="case-card-enhanced" data-id="<?php echo $case['id']; ?>">
+                        <div class="case-card-image" onclick="openLightbox('<?php echo htmlspecialchars($img); ?>')">
+                            <img src="<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($case['title']); ?>" loading="lazy">
+                        </div>
+                        <div class="case-card-content">
+                            <h3 class="case-card-title" onclick="window.location.href='case-detail.html?id=<?php echo $case['id']; ?>'" style="cursor:pointer"><?php echo htmlspecialchars($case['title']); ?></h3>
+                            <p class="case-card-summary" onclick="window.location.href='case-detail.html?id=<?php echo $case['id']; ?>'" style="cursor:pointer"><?php echo htmlspecialchars($case['summary'] ?: ''); ?></p>
+                            <div class="case-card-meta">
+                                <div class="case-card-amount" onclick="window.location.href='case-detail.html?id=<?php echo $case['id']; ?>'" style="cursor:pointer">
+                                    <span class="case-card-amount-label">融资金额</span>
+                                    <span class="case-card-amount-value"><?php echo htmlspecialchars($case['amount'] ?: '-'); ?></span>
+                                </div>
+                                <button class="btn-view-detail" onclick="window.location.href='case-detail.html?id=<?php echo $case['id']; ?>'">查看详情</button>
+                            </div>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
+                
                     <!-- 案例卡片将通过JS动态生成 -->
                 </div>
 
@@ -239,9 +272,7 @@ DeviceDetector::redirect();
 
     <!-- 页脚 -->
 <?php include 'includes/footer.php'; ?>
-
-
-    <script src="/js/main.js"></script>
+<script src="/js/main.js"></script>
     <script>
         // 案例数据 - 将从CMS数据源动态加载
         let casesData = [];
@@ -611,7 +642,13 @@ DeviceDetector::redirect();
         }
 
         // 初始化
+        // Check if cases pre-rendered by server
+        var casesPrerendered = document.querySelector('#casesGrid article') !== null;
+
         document.addEventListener('DOMContentLoaded', function() {
+            if (casesPrerendered) {
+                console.log('[Cases] Using server pre-rendered content, loading data in background');
+            }
             loadCasesData();
             
             window.addEventListener('storage', function(e) {

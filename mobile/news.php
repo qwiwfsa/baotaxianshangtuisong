@@ -1,6 +1,19 @@
+<?php header("Cache-Control: no-cache, no-store, must-revalidate"); header("Pragma: no-cache"); header("Expires: 0"); ?>
 <?php header('Cache-Control: no-cache, no-store, must-revalidate'); header('Pragma: no-cache'); header('Expires: 0'); ?>
 <!DOCTYPE html>
-<html lang="zh-CN"><head>
+<html lang="zh-CN"
+data-share-label="分享到："
+data-share-to="分享到"
+data-share-wx="微信"
+data-share-moments="朋友圈"
+data-share-wx-desc="打开微信扫一扫，分享给好友或朋友圈"
+data-share-wx-hint="打开微信「扫一扫」分享"
+data-share-close="关闭"
+data-share-copied="链接已复制"
+data-share-copy-fail="复制失败"
+data-share-copy="复制链接"><head>
+
+
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -118,6 +131,7 @@
 
 
                     if(resp.code===0&&resp.data){
+                        function fixSubDir(p){return p&&p.indexOf('http')!==0?'../'+(p.charAt(0)==='/'?p.substring(1):p):p;}
 
 
 
@@ -135,7 +149,7 @@
 
 
 
-                            if(hl)hl.src=resp.data.header_logo;
+                            if(hl)hl.src=fixSubDir(resp.data.header_logo);
 
 
 
@@ -159,7 +173,7 @@
 
 
 
-                            if(fl)fl.src=resp.data.footer_logo;
+                            if(fl)fl.src=fixSubDir(resp.data.footer_logo);
 
 
 
@@ -189,7 +203,7 @@
 
 
 
-                            lk.href=resp.data.favicon;
+                            lk.href=fixSubDir(resp.data.favicon);
 
 
 
@@ -567,7 +581,10 @@
 
 
 
-<link rel="icon" href="../uploads/logo/logo_20260504_045101_69f80995372b0.png"></head>
+<link rel="icon" href="../uploads/logo/logo_20260504_045101_69f80995372b0.png">    <!-- 社交分享样式 -->
+    <link rel="stylesheet" href="../css/social-share.css">
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+</head>
 
 
 
@@ -615,55 +632,17 @@
 
 
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
+            <ul class="nav-menu" role="menubar">
+<li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
+<li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+<li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
+<li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+<li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+<li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+<li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+</ul>
 
 
-
-
-
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-
-
-
-
-
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-
-
-
-
-
-                <li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-
-
-
-
-
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-
-
-
-
-
-                <li role="none"><a href="news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
-
-
-
-
-
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-
-
-
-
-
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-
-
-
-
-
-            </ul>
 
 
 
@@ -861,7 +840,7 @@
 
 
 
-                    <div class="news-categories" id="newsCategories"><a href="#" class="news-category active" data-cat-id="0">全部资讯</a><a href="#" class="news-category" data-cat-id="5">企业摆账</a><a href="#" class="news-category" data-cat-id="1">过桥短拆</a><a href="#" class="news-category" data-cat-id="4">实缴验资</a><a href="#" class="news-category" data-cat-id="2">显账亮资</a><a href="#" class="news-category" data-cat-id="3">金融知识</a></div>
+                    <div class="news-categories" id="newsCategories"><a href="#" class="news-category active" data-cat-id="0">全部资讯</a></div>
 
 
 
@@ -1029,13 +1008,8 @@
 
 
 
-                <p class="footer-copyright">© 2024 Yao资金网 版权所有</p>
-
-
-
-
-
-                <p class="footer-disclaimer">投资有风险，理财需谨慎。本网站内容仅供参考，不构成投资建议。</p>
+                <p class="footer-copyright" id="footerCopyright">© 2024 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer" id="footerDisclaimer">粤ICP备2026052915号</p>
 
 
 
@@ -1073,81 +1047,68 @@
 
     <script src="../js/main.js"></script>
 <script>
-(function(){
-    // ===== 状态管理 =====
-    var STATE = {all:[], page:1, per:10, loading:false, catId:0, categories:[]};
+(async function(){
+    var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
     var el = document.querySelector('.news-list-container');
     if(!el) return;
 
-    // ===== 保存原始SEO数据（全部资讯时恢复） =====
-    var defaultSEOTitle = document.title;
-    var defaultSEOKeywords = (document.querySelector('meta[name="keywords"]')||{}).content || '';
-    var defaultSEODesc = (document.querySelector('meta[name="description"]')||{}).content || '';
+    // 默认SEO（全部资讯）
+    var NEWS_DEFAULT_SEO = {
+        title: '资金行业资讯 | 企业摆账 - 过桥短拆行业动态',
+        keywords: '资金行业新闻，企业融资资讯，银行冲量政策，工程亮资新规，实缴验资政策',
+        description: '提供资金行业最新政策、市场动态解读，包含过桥短拆、工程亮资、实缴验资、企业摆账行业新规资讯。'
+    };
 
-    // ===== 更新页面SEO（根据当前分类） =====
-    function updateSEO() {
-        if (STATE.catId === 0) {
-            document.title = defaultSEOTitle;
-            var kwMeta = document.querySelector('meta[name="keywords"]');
-            if (kwMeta) kwMeta.content = defaultSEOKeywords;
-            var descMeta = document.querySelector('meta[name="description"]');
-            if (descMeta) descMeta.content = defaultSEODesc;
+    // 分类SEO同步
+    function syncCategorySEO(catId) {
+        if (catId === 0) {
+            document.title = NEWS_DEFAULT_SEO.title;
+            var kw = document.querySelector('meta[name="keywords"]');
+            if (kw) kw.content = NEWS_DEFAULT_SEO.keywords;
+            var desc = document.querySelector('meta[name="description"]');
+            if (desc) desc.content = NEWS_DEFAULT_SEO.description;
             return;
         }
-        var cat = null;
-        for (var i = 0; i < STATE.categories.length; i++) {
-            if (parseInt(STATE.categories[i].id) === STATE.catId) {
-                cat = STATE.categories[i];
-                break;
+        var seoXhr = new XMLHttpRequest();
+        seoXhr.open('GET', '../api/category-seo.php?type=news&id=' + catId, true);
+        seoXhr.onload = function() {
+            if (seoXhr.status === 200) {
+                try {
+                    var resp = JSON.parse(seoXhr.responseText);
+                    if (resp.code === 0 && resp.data) {
+                        var seo = resp.data;
+                        if (seo.seo_title) document.title = seo.seo_title;
+                        var kw = document.querySelector('meta[name="keywords"]');
+                        if (kw && seo.seo_keywords) kw.content = seo.seo_keywords;
+                        var desc = document.querySelector('meta[name="description"]');
+                        if (desc && seo.seo_description) desc.content = seo.seo_description;
+                    }
+                } catch(e) {}
             }
-        }
-        if (cat) {
-            if (cat.seo_title) document.title = cat.seo_title;
-            if (cat.seo_keywords) {
-                var kwMeta = document.querySelector('meta[name="keywords"]');
-                if (kwMeta) kwMeta.content = cat.seo_keywords;
-            }
-            if (cat.seo_description) {
-                var descMeta = document.querySelector('meta[name="description"]');
-                if (descMeta) descMeta.content = cat.seo_description;
-            }
-        }
+        };
+        seoXhr.send();
     }
 
-
-    // ===== 分类点击事件绑定 =====
-    function bindCategoryClicks() {
-        var cats = document.querySelectorAll('.news-category');
-        cats.forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                var cid = parseInt(this.getAttribute('data-cat-id')) || 0;
-                STATE.catId = cid;
-                STATE.page = 1;
-                // 更新active样式
-                cats.forEach(function(c) { c.classList.remove('active'); });
-                this.classList.add('active');
-                loadNews();
-            });
-        });
-    }
-
-    // ===== 从API加载文章 =====
     async function loadNews(){
         STATE.loading = true;
         el.innerHTML = '<div style="text-align:center;padding:40px;color:#666;font-size:16px">加载中...</div>';
         try {
             var url = 'api/news.php?page=1&limit=100&t='+Date.now();
-            if (STATE.catId > 0) url += '&category_id=' + STATE.catId;
+            if(STATE.currentCategory > 0) url += '&category_id='+STATE.currentCategory;
             var r = await fetch(url, {method:'GET',cache:'no-store'});
             if(!r.ok) throw new Error('HTTP '+r.status);
             var d = JSON.parse(await r.text());
-            if(!d.success || !d.data || !d.data.news || d.data.news.length===0) {
+            if(!d.success || !d.data) {
+                el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>'; return;
+            }
+            // Update categories dynamically
+            if(d.data.categories && Array.isArray(d.data.categories)) {
+                updateCategories(d.data.categories);
+            }
+            if(!d.data.news || d.data.news.length===0) {
                 el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>'; return;
             }
             STATE.all = d.data.news;
-            STATE.categories = d.data.categories || [];
-            updateSEO();
             renderPage();
         } catch(e) {
             el.innerHTML = '<div style="text-align:center;padding:40px;color:red;font-size:18px">加载失败: '+e.message+'</div>';
@@ -1155,7 +1116,44 @@
         STATE.loading = false;
     }
 
-    // ===== 渲染文章列表 =====
+    function updateCategories(cats){
+        var container = document.getElementById('newsCategories');
+        if(!container) return;
+        var current = container.querySelectorAll('.news-category');
+        var existingHtml = '';
+        for(var i=0;i<current.length;i++){
+            existingHtml += current[i].outerHTML;
+        }
+        // Build new category list from API data
+        var html = '<a href="#" class="news-category'+(STATE.currentCategory===0?' active':'')+'" data-cat-id="0">全部资讯</a>';
+        for(var i=0;i<cats.length;i++){
+            var c = cats[i];
+            var active = (parseInt(c.id) === STATE.currentCategory) ? ' active' : '';
+            html += '<a href="#" class="news-category'+active+'" data-cat-id="'+c.id+'">'+escapeHtml(c.name)+'</a>';
+        }
+        container.innerHTML = html;
+        // Bind click events
+        container.querySelectorAll('.news-category').forEach(function(link){
+            link.addEventListener('click', function(e){
+                e.preventDefault();
+                var catId = parseInt(this.dataset.catId);
+                STATE.currentCategory = catId;
+                STATE.page = 1;
+                // Update active class
+                container.querySelectorAll('.news-category').forEach(function(l){l.classList.remove('active');});
+                this.classList.add('active');
+                syncCategorySEO(catId);
+                loadNews();
+            });
+        });
+    }
+
+    function escapeHtml(str){
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
     function renderPage(){
         var total = STATE.all.length, pages = Math.ceil(total/STATE.per)||1;
         var pg = STATE.page; if(pg<1) pg=1; if(pg>pages) pg=pages; STATE.page=pg;
@@ -1167,7 +1165,7 @@
             var t = a.title||'', s = a.summary||'', dt = (a.date||a.created_at||'').substring(0,10);
             var img = a.cover_image ? '../'+a.cover_image : '';
             var imgHtml = '';
-            if(img) imgHtml = '<div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.remove()"></div>';
+            if(img) imgHtml = '<div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display=\'none\'"></div>';
             html += '<div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">';
             if(imgHtml) html += imgHtml;
             html += '<div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">';
@@ -1178,16 +1176,26 @@
         }
         if(items.length===0) html = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>';
 
-        // 分页
-        var pag = '<div style="display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0">';
-        pag += '<button onclick="changePage(-1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#9ca3af"'+(pg<=1?' disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb"':'')+'>&lt;</button>';
-        pag += '<button onclick="changePage(1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#9ca3af"'+(pg>=pages?' disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb"':'')+'>&gt;</button>';
-        pag += '</div>';
+        var pag = '';
+        if(pages > 1){
+            pag = '<div style="display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0">';
+            if(pg > 1) {
+                pag += '<button onclick="changePage(-1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#333">&lt;</button>';
+            } else {
+                pag += '<button disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb">&lt;</button>';
+            }
+            pag += '<span style="width:38px;text-align:center;font-size:13px;color:#666">'+pg+'/'+pages+'</span>';
+            if(pg < pages) {
+                pag += '<button onclick="changePage(1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#333">&gt;</button>';
+            } else {
+                pag += '<button disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb">&gt;</button>';
+            }
+            pag += '</div>';
+        }
 
         el.innerHTML = html + pag;
     }
 
-    // ===== 翻页（暴露到window供onclick调用） =====
     window.changePage = function(dir){
         STATE.page += dir;
         renderPage();
@@ -1199,71 +1207,45 @@
         window.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
     };
 
-    // ===== 初始化 =====
-    bindCategoryClicks();
     loadNews();
 })();</script>
-    <script src="../js/footer-loader.js"></script>
+
 <script>
-(function() {
-    // Ĭ�ϵ�����Ŀ - APIʧ��ʱʹ��
-    var defaultNavItems = [
-        { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
-        { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
-        { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-        { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
-        { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
-        { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
-    ];
-
-    function renderNav(items) {
-        var container = document.getElementById('dynamicNavMenu');
-        if (!container) return;
-        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-        container.innerHTML = items.map(function(item) {
-            var url = item.url;
-            if (isMobile && url.indexOf('/') === 0) {
-                url = url === '/' ? 'index.html' : url.substring(1);
-            }
-            var isActive = url === currentPage || (currentPage === '' && url === 'index.html');
-            return '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
-        }).join('');
-        try { localStorage.setItem('cms_nav_items', JSON.stringify(items)); } catch(e) {}
-    }
-
-    // 1. 先从数据库加载
+// 从API同步页脚数据
+(function(){
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../admin/api/nav-save.php?type=nav&t=' + Date.now(), true);
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 400) {
-            try {
+    xhr.open('GET', '../admin/api/footer-data.php?t=' + Date.now(), true);
+    xhr.onload = function(){
+        if(xhr.status >= 200 && xhr.status < 400){
+            try{
                 var resp = JSON.parse(xhr.responseText);
-                if (resp.code === 0 && resp.data && resp.data.length > 0) {
-                    renderNav(resp.data);
-                    return;
+                if(resp.code === 0 && resp.data && resp.grouped){
+                    var bottom = resp.grouped['bottom'] || [];
+                    var copyright = '', disclaimer = '';
+                    for(var i = 0; i < bottom.length; i++){
+                        if(bottom[i].item_key === 'copyright_text'){
+                            copyright = bottom[i].item_value || '';
+                        } else if(bottom[i].item_key === 'disclaimer_text'){
+                            disclaimer = bottom[i].item_value || '';
+                        }
+                    }
+                    if(copyright){
+                        var el = document.getElementById('footerCopyright');
+                        if(el) el.innerHTML = copyright;
+                    }
+                    if(disclaimer){
+                        var el = document.getElementById('footerDisclaimer');
+                        if(el) el.innerHTML = disclaimer;
+                    }
                 }
-            } catch(e) {}
+            }catch(e){}
         }
-        loadFromLocal();
     };
-    xhr.onerror = function() { loadFromLocal(); };
     xhr.send();
-
-    function loadFromLocal() {
-        try {
-            var stored = localStorage.getItem('cms_nav_items');
-            if (stored) {
-                var parsed = JSON.parse(stored);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    renderNav(parsed);
-                    return;
-                }
-            }
-        } catch(e) {}
-        renderNav(defaultNavItems);
-    }
 })();
 </script>
+    <!-- 社交分享功能 -->
+    <script src="../js/social-share.js"></script>
+
+<script src="../js/footer-loader.js"></script>
 </body></html>

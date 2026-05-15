@@ -1,4 +1,6 @@
 <html lang="zh-CN" data-immersive-translate-page-theme="light"><head>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="提供企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等一站式资金业务服务，高效合规，专业对接。">
@@ -164,7 +166,8 @@
     font-weight: 500;
 }
 </style>
-<style data-id="immersive-translate-input-injected-css"></style></head>
+<style data-id="immersive-translate-input-injected-css"></style><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+</head>
 <body>
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -176,76 +179,10 @@
         <div class="navbar-container">
 <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;"></a>
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"><li role="none"><a href="index.html" class="nav-link active" role="menuitem">首页</a></li><li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li><li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li><li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li><li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li><li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li><li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li></ul>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
 
-            <script>
-                // 动态加载导航菜单 — 优先从数据库，回退localStorage，兜底默认数据
-                (function() {
-                    const defaultNavItems = [
-                        { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
-                        { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
-                        { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-                        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-                        { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
-                        { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
-                        { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
-                    ];
 
-                    function renderNav(items) {
-                        const container = document.getElementById('dynamicNavMenu');
-                        if (!container) return;
-                        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                        const isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-                        container.innerHTML = items.map(function(item) {
-                            // 手机端：将API返回的绝对路径转为移动端相对路径
-                            var url = item.url;
-                            if (isMobile && url.indexOf('/') === 0) {
-                                url = url === '/' ? 'index.html' : url.substring(1);
-                            }
-                            const isActive = url === currentPage || (currentPage === '' && url === 'index.html');
-                            return '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
-                        }).join('');
-                        // 同步到localStorage
-                        try { localStorage.setItem('cms_nav_items', JSON.stringify(items)); } catch(e) {}
-                    }
-
-                    // 1. 优先从数据库加载
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('GET', '../admin/api/nav-save.php?type=nav&t=' + Date.now(), true);
-                    xhr.onload = function() {
-                        if (xhr.status >= 200 && xhr.status < 400) {
-                            try {
-                                var resp = JSON.parse(xhr.responseText);
-                                if (resp.code === 0 && resp.data && resp.data.length > 0) {
-                                    renderNav(resp.data);
-                                    return;
-                                }
-                            } catch(e) {}
-                        }
-                        // 2. API失败或无数据，从localStorage加载
-                        loadFromLocal();
-                    };
-                    xhr.onerror = function() { loadFromLocal(); };
-                    xhr.send();
-
-                    function loadFromLocal() {
-                        try {
-                            var stored = localStorage.getItem('cms_nav_items');
-                            if (stored) {
-                                var parsed = JSON.parse(stored);
-                                if (Array.isArray(parsed) && parsed.length > 0) {
-                                    renderNav(parsed);
-                                    return;
-                                }
-                            }
-                        } catch(e) {
-                            console.log('读取本地菜单失败');
-                        }
-                        // 3. 兜底默认值
-                        renderNav(defaultNavItems);
-                    }
-                })();
-</script>
+            
 
             <!-- 搜索按钮 -->
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -774,7 +711,7 @@
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
+    <script src="../js/main.js?v=3"></script>
 
     <!-- CMS Data Integration -->
     <script src="../admin/assets/cms.js"></script>
@@ -1174,4 +1111,5 @@
 
 
     <script src="../js/footer-loader.js"></script>
+<script src="../js/nav-loader.js"></script>
 </body></html>

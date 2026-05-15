@@ -2240,3 +2240,6 @@ footer {
         margin-bottom: 14px;
     }
 }
+
+/* 禁用navbar过渡动画，防止页面切换频闪 */
+.navbar,.nav-menu,.nav-menu a{transition:none !important}

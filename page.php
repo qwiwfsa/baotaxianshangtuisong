@@ -64,7 +64,7 @@ $db->close();
 $pageTitle = $pageInfo ? ($pageInfo['seo_title'] ?: $pageInfo['title'] ?: $pageInfo['page_name']) : '预览页面';
 $seoKeywords = $pageInfo['seo_keywords'] ?? '';
 $seoDescription = $pageInfo['seo_description'] ?? '';
-?>
+header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-cache");header("Expires: 0");?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -109,39 +109,12 @@ $seoDescription = $pageInfo['seo_description'] ?? '';
             <a href="index.html" class="logo" aria-label="Yao资金网首页">
                 <img src="uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;">
             </a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索"><i class="fas fa-search"></i></button>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单"><span></span><span></span><span></span></button>
         </div>
     </nav>
     <script>
-    // 动态导航
-    (function() {
-        var defaultNav = [
-            { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
-            { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
-            { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-            { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-            { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
-            { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
-            { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
-        ];
-        function r(items) {
-            var c = document.getElementById('dynamicNavMenu'), cur = window.location.pathname.split('/').pop();
-            if (!c) return;
-            c.innerHTML = items.map(function(i) { return '<li role="none"><a href="'+i.url+'" class="nav-link">'+i.name+'</a></li>'; }).join('');
-        }
-        var x = new XMLHttpRequest();
-        x.open('GET', 'admin/api/nav-save.php?type=nav&t='+Date.now(), true);
-        x.onload = function() {
-            try { var d = JSON.parse(x.responseText); if (d.code===0 && d.data && d.data.length) { r(d.data); return; } } catch(e) {}
-            try { var s = localStorage.getItem('cms_nav_items'); if (s) { var p = JSON.parse(s); if (Array.isArray(p) && p.length) { r(p); return; } } } catch(e) {}
-            r(defaultNav);
-        };
-        x.onerror = function() { r(defaultNav); };
-        x.send();
-    })();
-    </script>
 
     <main id="main-content">
         <section class="page-builder-content" style="padding:60px 0;min-height:60vh">

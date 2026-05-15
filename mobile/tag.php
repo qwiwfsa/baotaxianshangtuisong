@@ -36,7 +36,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.css?v=20250514">
     <style>
         html, body { height: 100%; margin: 0; }
         body { display: flex; flex-direction: column; min-height: 100vh; }
@@ -69,12 +69,13 @@ header('Content-Type: text/html; charset=utf-8');
             .mobile-tag-detail { padding: 16px; }
         }
     </style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../images/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="..//uploads/logo/logo_20260505_122045_69f9c47d515d1.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar">
                 <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
                 <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>

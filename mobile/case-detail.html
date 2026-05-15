@@ -4,6 +4,8 @@
 
 <head>
 
+
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -219,175 +221,7 @@
 
 
         /* 评论区样式 */
-        .comments-section {
-            max-width: 900px;
-            margin: 40px auto 20px;
-            padding: 0 20px;
-        }
-        .comments-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .comments-title i { color: #3b82f6; }
-        .comments-title span {
-            font-size: 14px;
-            font-weight: 400;
-            color: #9ca3af;
-        }
-        .comment-form {
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-        .comment-form .form-group { margin-bottom: 16px; }
-        .comment-form label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 6px;
-        }
-        .comment-form input[type="text"] {
-            width: 100%;
-            max-width: 300px;
-            padding: 10px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .comment-form input[type="text"]:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-        }
-        .comment-form textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 10px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            outline: none;
-            resize: vertical;
-            transition: border-color 0.2s;
-        }
-        .comment-form textarea:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-        }
-        .comment-form .form-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .comment-form .form-tip { font-size: 13px; color: #9ca3af; }
-        .comment-submit-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 28px;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .comment-submit-btn:hover {
-            background: linear-gradient(135deg, #1e40af, #2563eb);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
-        }
-        .comment-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .comment-list { list-style: none; padding: 0; }
-        .comment-item {
-            padding: 20px 0;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        .comment-item:last-child { border-bottom: none; }
-        .comment-item-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .comment-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-        .comment-author {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1f2937;
-        }
-        .comment-time {
-            font-size: 13px;
-            color: #9ca3af;
-            margin-left: auto;
-        }
-        .comment-text {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #374151;
-            padding-left: 46px;
-        }
-        .comment-empty {
-            text-align: center;
-            padding: 40px 20px;
-            color: #9ca3af;
-        }
-        .comment-empty i {
-            font-size: 40px;
-            color: #d1d5db;
-            margin-bottom: 12px;
-        }
-        .comment-empty p { font-size: 15px; }
-        .comment-success {
-            text-align: center;
-            padding: 20px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 12px;
-            color: #065f46;
-            font-size: 15px;
-            margin-bottom: 24px;
-            display: none;
-        }
-        .comment-success.show { display: block; }
-        .comment-error {
-            color: #ef4444;
-            font-size: 13px;
-            margin-top: 4px;
-            display: none;
-        }
-        .comment-error.show { display: block; }
-        @media (max-width: 640px) {
-            .comments-section { margin: 24px auto 16px; padding: 0 16px; }
-            .comment-form { padding: 16px; }
-            .comment-form input[type="text"] { max-width: 100%; }
-        }
+        
 
     </style>
 
@@ -561,6 +395,7 @@
 
 </script>
 
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
@@ -575,25 +410,12 @@
 
         <div class="navbar-container">
 
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../images/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="..//uploads/logo/logo_20260505_122045_69f9c47d515d1.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
 
-                <li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
 
-                <li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
 
-                <li role="none"><a href="cases.html" class="nav-link active" role="menuitem">成功案例</a></li>
-
-                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-
-                <li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-
-                <li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-
-                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-
-            </ul>
 
 
 
@@ -854,40 +676,7 @@
 
 
         <!-- 用户评论 -->
-        <section class="comments-section">
-            <h2 class="comments-title">
-                <i class="far fa-comment-dots"></i>
-                用户评论
-                <span id="commentCount">(0)</span>
-            </h2>
-
-            <div class="comment-form">
-                <div class="form-group">
-                    <label for="commentNickname">昵称</label>
-                    <input type="text" id="commentNickname" placeholder="请输入您的昵称" maxlength="20">
-                </div>
-                <div class="form-group">
-                    <label for="commentContent">评论内容</label>
-                    <textarea id="commentContent" placeholder="来说点什么吧..." maxlength="2000"></textarea>
-                    <div class="comment-error" id="commentError"></div>
-                </div>
-                <div class="form-footer">
-                    <span class="form-tip">评论审核通过后显示</span>
-                    <button class="comment-submit-btn" id="commentSubmitBtn" onclick="submitComment()">
-                        <i class="fas fa-paper-plane"></i>
-                        提交评论
-                    </button>
-                </div>
-            </div>
-
-            <div class="comment-success" id="commentSuccess"></div>
-
-            <ul class="comment-list" id="commentList"></ul>
-            <div class="comment-empty" id="commentEmpty">
-                <i class="far fa-comment-dots"></i>
-                <p>暂无评论，快来抢沙发吧~</p>
-            </div>
-        </section>
+        
 
 
     <!-- 页脚 -->
@@ -2087,178 +1876,20 @@
                 console.log('[CMS] 未登录，重定向到登录页');
 
                 window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
-
-            }
-
-        })();
+})();
 
     </script>
 
     
         <!-- 案例评论功能 -->
         <script>
-        (function() {
-            var caseId = new URLSearchParams(window.location.search).get('id');
-            if (!caseId) return;
-
-            function loadCaseComments() {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', '../api/case-comment-list.php?case_id=' + caseId + '&t=' + Date.now(), true);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        try {
-                            var resp = JSON.parse(xhr.responseText);
-                            if (resp.success && resp.data) renderCaseComments(resp.data);
-                        } catch(e) {}
-                    }
-                };
-                xhr.send();
-            }
-
-            function renderCaseComments(comments) {
-                var list = document.getElementById('commentList');
-                var empty = document.getElementById('commentEmpty');
-                var count = document.getElementById('commentCount');
-                if (!list) return;
-                list.innerHTML = '';
-                if (!comments || comments.length === 0) {
-                    if (empty) empty.style.display = 'block';
-                    if (count) count.textContent = '(0)';
-                    return;
-                }
-                if (empty) empty.style.display = 'none';
-                if (count) count.textContent = '(' + comments.length + ')';
-                comments.forEach(function(c) {
-                    var nickname = c.nickname || '匿名';
-                    var li = document.createElement('li');
-                    li.className = 'comment-item';
-                    li.innerHTML =
-                        '<div class="comment-item-header">' +
-                            '<div class="comment-avatar">' + esc(nickname.charAt(0)) + '</div>' +
-                            '<span class="comment-author">' + esc(nickname) + '</span>' +
-                            '<span class="comment-time">' + esc(c.created_at || '') + '</span>' +
-                        '</div>' +
-                        '<div class="comment-text">' + esc(c.content || '') + '</div>';
-                    list.appendChild(li);
-                });
-            }
-
-            function esc(t) { if (!t) return ''; var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
-
-            window.submitComment = function() {
-                var nickname = document.getElementById('commentNickname');
-                var content = document.getElementById('commentContent');
-                var error = document.getElementById('commentError');
-                var btn = document.getElementById('commentSubmitBtn');
-                var success = document.getElementById('commentSuccess');
-                if (!nickname || !content) return;
-                var nameVal = nickname.value.trim();
-                var contentVal = content.value.trim();
-                if (error) error.classList.remove('show');
-
-                if (nameVal.length > 20) { if (error) { error.textContent = '昵称不能超过20个字符'; error.classList.add('show'); } return; }
-                if (!contentVal) { content.focus(); if (error) { error.textContent = '请输入评论内容'; error.classList.add('show'); } return; }
-                if (contentVal.length < 2) { content.focus(); if (error) { error.textContent = '评论内容至少2个字符'; error.classList.add('show'); } return; }
-                if (contentVal.length > 2000) { if (error) { error.textContent = '评论内容不能超过2000字'; error.classList.add('show'); } return; }
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
-                var formData = new FormData();
-                formData.append('case_id', caseId);
-                formData.append('nickname', nameVal);
-                formData.append('content', contentVal);
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../api/case-comment-submit.php', true);
-                xhr.onload = function() {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> 提交评论';
-                    if (xhr.status === 200) {
-                        try {
-                            var resp = JSON.parse(xhr.responseText);
-                            if (resp.success) {
-                                nickname.value = ''; content.value = '';
-                                if (success) { success.textContent = '评论提交成功，等待审核后显示'; success.classList.add('show'); setTimeout(function() { success.classList.remove('show'); }, 4000); }
-                                setTimeout(loadCaseComments, 2000);
-                            } else { if (error) { error.textContent = resp.message || '提交失败'; error.classList.add('show'); } }
-                        } catch(e) { if (error) { error.textContent = '提交失败，请稍后再试'; error.classList.add('show'); } }
-                    } else { if (error) { error.textContent = '网络错误 (' + xhr.status + ')'; error.classList.add('show'); } }
-                };
-                xhr.onerror = function() { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> 提交评论'; if (error) { error.textContent = '网络请求失败'; error.classList.add('show'); } };
-                xhr.send(formData);
-            };
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadCaseComments);
-            } else {
-                loadCaseComments();
-            }
-        })();
+        
         </script>
 
     <script src="../admin/assets/cms.js"></script>
 
     <script src="../js/footer-loader.js"></script>
-<script>
-(function() {
-    // Ĭ�ϵ�����Ŀ - APIʧ��ʱʹ��
-    var defaultNavItems = [
-        { id: '1', name: '首页', url: 'index.html', icon: 'fas fa-home' },
-        { id: '2', name: '业务范围', url: 'services.html', icon: 'fas fa-briefcase' },
-        { id: '3', name: '成功案例', url: 'cases.html', icon: 'fas fa-trophy' },
-        { id: '4', name: '服务优势', url: 'advantages.html', icon: 'fas fa-star' },
-        { id: '5', name: '行业资讯', url: 'news.php', icon: 'fas fa-newspaper' },
-        { id: '6', name: '常见问题', url: 'faq.html', icon: 'fas fa-question-circle' },
-        { id: '7', name: '联系我们', url: 'contact.html', icon: 'fas fa-phone' }
-    ];
 
-    function renderNav(items) {
-        var container = document.getElementById('dynamicNavMenu');
-        if (!container) return;
-        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-        container.innerHTML = items.map(function(item) {
-            var url = item.url;
-            if (isMobile && url.indexOf('/') === 0) {
-                url = url === '/' ? 'index.html' : url.substring(1);
-            }
-            var isActive = url === currentPage || (currentPage === '' && url === 'index.html');
-            return '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + item.name + '</a></li>';
-        }).join('');
-        try { localStorage.setItem('cms_nav_items', JSON.stringify(items)); } catch(e) {}
-    }
-
-    // 1. 先从数据库加载
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../admin/api/nav-save.php?type=nav&t=' + Date.now(), true);
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 400) {
-            try {
-                var resp = JSON.parse(xhr.responseText);
-                if (resp.code === 0 && resp.data && resp.data.length > 0) {
-                    renderNav(resp.data);
-                    return;
-                }
-            } catch(e) {}
-        }
-        loadFromLocal();
-    };
-    xhr.onerror = function() { loadFromLocal(); };
-    xhr.send();
-
-    function loadFromLocal() {
-        try {
-            var stored = localStorage.getItem('cms_nav_items');
-            if (stored) {
-                var parsed = JSON.parse(stored);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    renderNav(parsed);
-                    return;
-                }
-            }
-        } catch(e) {}
-        renderNav(defaultNavItems);
-    }
-})();
-</script>
 
     <!-- 移动端链接拦截器：确保点击标签/链接时保持在手机端 -->
     <script>
@@ -2334,10 +1965,10 @@
             document.addEventListener('DOMContentLoaded', rewriteExistingLinks);
         } else {
             rewriteExistingLinks();
-        }
-    })();
+})();
     </script>
 
+<script src="../js/nav-loader.js"></script>
 </body>
 
 </html>

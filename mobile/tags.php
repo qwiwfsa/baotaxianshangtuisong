@@ -2,7 +2,7 @@
 /**
  * 手机端 - 热门标签页
  */
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config/db.php';
 $basePath = '/';
 header('Content-Type: text/html; charset=utf-8');
 ?>
@@ -13,7 +13,7 @@ header('Content-Type: text/html; charset=utf-8');
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>热门标签 - Yao资金网</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.min.css?v=20250514">
     <style>
         .mobile-tags { padding: 20px; }
         .mobile-tags h1 { font-size: 22px; color: #1f2937; margin-bottom: 20px; text-align: center; }
@@ -23,6 +23,7 @@ header('Content-Type: text/html; charset=utf-8');
         .mobile-tag-count { font-size: 12px; color: #9ca3af; }
         .loading { text-align: center; padding: 40px; color: #9ca3af; }
     </style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <?php include '../inc_header.php'; ?>

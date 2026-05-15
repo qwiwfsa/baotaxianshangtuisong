@@ -71,7 +71,7 @@ if ($article_id_seo > 0) {
     } catch (Exception $e) {}
 }
 
-?>
+header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-cache");header("Expires: 0");?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -505,7 +505,7 @@ if ($article_id_seo > 0) {
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==='/'?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector('.logo img');
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -527,7 +527,7 @@ if ($article_id_seo > 0) {
         document.addEventListener('error', function(e){
             var t = e.target;
             if(t.tagName==='IMG' && /logo/i.test(t.src)){
-                t.src='images/logo.png';
+                t.src='/uploads/logo/logo_20260505_122045_69f9c47d515d1.png
             }
         }, true);
         xhr.send();
@@ -1062,6 +1062,8 @@ main#main-content {
     <meta property="og:url" content="<?php echo htmlspecialchars($seo_url, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:type" content="article">
     <meta property="og:locale" content="zh_CN">
+
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -1069,16 +1071,8 @@ main#main-content {
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/biaoqianlogo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
-                <li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
-                <li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-                <li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-                <li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-                <li role="none"><a href="/news.php" class="nav-link active" role="menuitem">行业资讯</a></li>
-                <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-                <li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-            </ul>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
