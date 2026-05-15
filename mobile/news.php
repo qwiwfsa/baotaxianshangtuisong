@@ -626,21 +626,13 @@ data-share-copy="复制链接"><head>
 
 
 
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260501_234314_69f51e721c7d0.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
 
 
 
 
 
-            <ul class="nav-menu" role="menubar">
-<li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li>
-<li role="none"><a href="cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-<li role="none"><a href="services.html" class="nav-link" role="menuitem">业务范围</a></li>
-<li role="none"><a href="advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-<li role="none"><a href="news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-<li role="none"><a href="contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-<li role="none"><a href="faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-</ul>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
 
 
 
@@ -1248,4 +1240,5 @@ data-share-copy="复制链接"><head>
     <script src="../js/social-share.js"></script>
 
 <script src="../js/footer-loader.js"></script>
+<script src="../js/nav-loader.js?v=2"></script>
 </body></html>

@@ -1,11 +1,16 @@
 /**
- * 导航栏动态加载 - 同步渲染无闪烁
- * 先读localStorage立即渲染，再后台更新
+ * 导航动态加载 - 同步渲染无闪烁
+ * 先读localStorage缓存渲染，再后台更新
+ * v2: 修复移动端URL，支持分站
  */
 (function() {
     'use strict';
     if (window.__navLoaded) return;
     window.__navLoaded = true;
+
+    var pathname = window.location.pathname;
+    var isMobile = pathname.indexOf('/mobile/') === 0;
+    var isFenzhan = pathname.indexOf('/fenzhan/') === 0;
 
     var NAV_API = '/admin/api/nav-save.php?type=nav&t=' + Date.now();
 
@@ -13,17 +18,29 @@
         {name:'首页',url:'/'},
         {name:'业务范围',url:'/services.html'},
         {name:'成功案例',url:'/cases.html'},
-        {name:'服务优势',url:'/advantages.html'},
+        {name:'核心优势',url:'/advantages.html'},
         {name:'行业资讯',url:'/news.php'},
         {name:'常见问题',url:'/faq.html'},
         {name:'联系我们',url:'/contact.html'}
     ];
 
+    function fixUrl(url) {
+        if (!url || url === '#' || url === '/') return url;
+        if (isMobile && url.indexOf('/mobile/') !== 0) {
+            // /cases.html -> cases.html (relative to /mobile/)
+            return url.replace(/^\//, '');
+        }
+        return url;
+    }
+
     function getActiveClass(url) {
-        var path = window.location.pathname;
-        var cp = path.replace(/^\/pages\//, '/');
-        if (url === '/') return cp === '/' || cp === '/index.php' || cp === '/index.html';
-        return cp === url || cp === url.replace('.html', '.php');
+        var p = pathname;
+        if (isMobile) p = p.replace(/^\/mobile/, '');
+        p = p.replace(/^\/pages\//, '/');
+        if (url === '/') return p === '/' || p === '/index.php' || p === '/index.html';
+        var p2 = p.replace('.php', '.html');
+        var u2 = url.replace('.php', '.html');
+        return p === url || p === u2 || p2 === url || p2 === u2;
     }
 
     function renderNav(items) {
@@ -32,13 +49,15 @@
         var html = '';
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
-            var isActive = getActiveClass(item.url);
-            html += '<li role=\"none\"><a href=\"' + item.url + '\" class=\"nav-link' + (isActive ? ' active' : '') + '\" role=\"menuitem\">' + item.name + '</a></li>';
+            var url = fixUrl(item.url || item.value || '');
+            var name = item.name || '';
+            var isActive = getActiveClass(url);
+            html += '<li role="none"><a href="' + url + '" class="nav-link' + (isActive ? ' active' : '') + '" role="menuitem">' + name + '</a></li>';
         }
         navMenu.innerHTML = html;
     }
 
-    // 1. 同步从localStorage渲染（无闪烁）
+    // 1. Render from localStorage immediately
     var stored = null;
     try { stored = localStorage.getItem('cms_nav_items_v2'); } catch(e) {}
     if (stored) {
@@ -56,7 +75,7 @@
         renderNav(DEFAULT_NAV);
     }
 
-    // 2. 后台从API更新
+    // 2. Background API update
     var xhr = new XMLHttpRequest();
     xhr.open('GET', NAV_API, true);
     xhr.onload = function() {
@@ -65,7 +84,6 @@
                 var resp = JSON.parse(xhr.responseText);
                 if (resp.code === 0 && resp.data && resp.data.length > 0) {
                     try { localStorage.setItem('cms_nav_items_v2', JSON.stringify(resp.data)); } catch(e) {}
-                    // 如果数据变了，更新DOM
                     var current = document.getElementById('dynamicNavMenu');
                     if (current) {
                         renderNav(resp.data);
