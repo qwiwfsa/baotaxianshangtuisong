@@ -9,7 +9,7 @@ require_once __DIR__ . '/../config.php';
 try {
     $conn = getDbConnection();
 
-    $pageId = getGetParam('page_id', '');
+    $pageId = getGetParam('page_id', getGetParam('page', ''));
 
     if (empty($pageId)) {
         jsonError('页面ID不能为空');

@@ -165,13 +165,14 @@
         let isDirty = false;
 
         // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             if (localStorage.getItem('cms_logged_in') !== 'true') {
                 window.location.href = '../login.html';
                 return;
             }
 
             // 初始化编辑器
+            await ComponentConfig.init();
             initBuilder('builderContainer', {
                 onChange: (components) => {
                     isDirty = true;
@@ -190,6 +191,28 @@
                 loadPage(pageId);
             }
         });
+
+
+        // 动态加载页面列表到下拉菜单
+        async function loadPageList() {
+            try {
+                const response = await fetch('../api/list-pages.php');
+                const result = await response.json();
+                if (result.success && result.data && result.data.pages) {
+                    const select = document.getElementById('pageSelect');
+                    // 保留第一个默认选项
+                    select.innerHTML = '<option value="">选择要编辑的页面</option>';
+                    result.data.pages.forEach(page => {
+                        const option = document.createElement('option');
+                        option.value = page.pageId;
+                        option.textContent = page.pageName || page.title || page.pageId;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (e) {
+                console.warn('加载页面列表失败:', e);
+            }
+        }
 
         // 切换页面
         function changePage() {

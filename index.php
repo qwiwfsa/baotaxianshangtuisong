@@ -21,9 +21,6 @@ DeviceDetector::redirect();
     <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务"> content="zh_CN">
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Yao资金网 - 北京亮资业务|上市公司过桥资金|企业摆账服务</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">

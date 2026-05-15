@@ -324,5 +324,44 @@ const ComponentConfig = {
 
 // 导出配置
 if (typeof module !== 'undefined' && module.exports) {
+// Dynamic initialization - loads categories from API
+// NOTE: Use Object.defineProperty to avoid breaking Object.entries() iteration in builder
+Object.defineProperty(ComponentConfig, '_initialized', { value: false, writable: true, enumerable: false });
+Object.defineProperty(ComponentConfig, '_initPromise', { value: null, writable: true, enumerable: false });
+Object.defineProperty(ComponentConfig, 'init', {
+    value: async function() {
+        if (ComponentConfig._initialized) return;
+        if (ComponentConfig._initPromise) return ComponentConfig._initPromise;
+        ComponentConfig._initPromise = (async () => {
+            try {
+                const resp = await fetch('../api/news/categories.php');
+                const result = await resp.json();
+                if (result.success && result.data) {
+                    const options = [{ value: 'all', text: '全部' }];
+                    result.data.forEach(cat => {
+                        options.push({ value: cat.id, text: cat.name });
+                    });
+                    if (ComponentConfig.basic && ComponentConfig.basic.components && ComponentConfig.basic.components.articleList) {
+                        const field = ComponentConfig.basic.components.articleList.fields.find(f => f.name === 'category');
+                        if (field) field.options = options;
+                    }
+                    if (ComponentConfig.cms && ComponentConfig.cms.components && ComponentConfig.cms.components.articleList) {
+                        const field = ComponentConfig.cms.components.articleList.fields.find(f => f.name === 'category');
+                        if (field) field.options = options;
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to load categories for component config:', e);
+            }
+            ComponentConfig._initialized = true;
+        })();
+        return ComponentConfig._initPromise;
+    },
+    writable: true,
+    enumerable: false,
+    configurable: true
+});
+
+
     module.exports = ComponentConfig;
 }

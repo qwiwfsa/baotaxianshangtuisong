@@ -17,7 +17,7 @@ if ($nickname === '') $nickname = '匿名';
 if (mb_strlen($nickname) > 50) {
     jsonError('昵称过长', 400);
 }
-if (mb_strlen($content_text) < 2 || mb_strlen($content_text) > 2000) {
+if (mb_strlen($content_text) < 1 || mb_strlen($content_text) > 2000) {
     jsonError('评论内容长度不合法（2-2000字）', 400);
 }
 
@@ -36,7 +36,7 @@ try {
     $stmt->execute();
     $count_res = $stmt->get_result()->fetch_row();
     $count = $count_res ? $count_res[0] : 0;
-    if ($count >= 5) {
+    if ($count >= 50) {
         jsonError('评论过于频繁，请稍后再试', 429);
     }
 
@@ -66,7 +66,8 @@ try {
     }
 
     $stmt = $db->prepare("INSERT INTO article_comments (article_id, parent_id, nickname, content, ip_address, status) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iisssi', $article_id, $parent_id > 0 ? $parent_id : null, $nickname, $content_text, $ip, $status);
+        $parent_id_val = $parent_id > 0 ? $parent_id : null;
+        $stmt->bind_param('iisssi', $article_id, $parent_id_val, $nickname, $content_text, $ip, $status);
     $stmt->execute();
 
     $msg = $status ? '评论提交成功' : '评论提交成功，等待审核';
@@ -74,3 +75,4 @@ try {
 } catch (Exception $e) {
     jsonError('提交失败: ' . $e->getMessage());
 }
+

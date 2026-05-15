@@ -1196,11 +1196,11 @@
             let html = '';
             html += '<div class="property-field">';
             html += '<label class="property-label">高度 (px)</label>';
-            html += '<input type="number" class="property-input" value="' + data.height + '" onchange="updateModuleProperty('height', this.value)">';
+            html += '<input type="number" class="property-input" value="' + data.height + '" onchange="updateModuleProperty(\'height\', this.value)">';
             html += '</div>';
             html += '<div class="property-field">';
             html += '<label class="property-checkbox">';
-            html += '<input type="checkbox" ' + (data.autoplay ? 'checked' : '') + ' onchange="updateModuleProperty('autoplay', this.checked)">';
+            html += '<input type="checkbox" ' + (data.autoplay ? 'checked' : '') + ' onchange="updateModuleProperty(\'autoplay\', this.checked)">';
             html += '<span>自动播放</span>';
             html += '</label>';
             html += '</div>';
@@ -1211,10 +1211,10 @@
                 html += '<span style="font-weight: 600; font-size: 13px;">项目 ' + (index + 1) + '</span>';
                 html += '<button type="button" onclick="removeBannerItem(' + index + ')" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px;"><i class="fas fa-trash"></i></button>';
                 html += '</div>';
-                html += '<div class="property-field"><label class="property-label">图片地址</label><div style="display:flex;gap:4px;"><input type="text" class="property-input" value="' + (item.image || '') + '" onchange="updateBannerItem(' + index + ', 'image', this.value)" style="flex:1;"><button type="button" onclick="var inp=this.previousElementSibling;openImageUploader(function(url){if(inp){inp.value=url;updateBannerItem(' + index + ',\'image\',url)}})" style="padding:6px 10px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;cursor:pointer;font-size:12px;"><i class="fas fa-upload"></i></button></div></div>';
-                html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (item.title || '') + '" onchange="updateBannerItem(' + index + ', 'title', this.value)"></div>';
-                html += '<div class="property-field"><label class="property-label">副标题</label><input type="text" class="property-input" value="' + (item.subtitle || '') + '" onchange="updateBannerItem(' + index + ', 'subtitle', this.value)"></div>';
-                html += '<div class="property-field"><label class="property-label">链接地址</label><input type="text" class="property-input" value="' + (item.link || '') + '" onchange="updateBannerItem(' + index + ', 'link', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">图片地址</label><div style="display:flex;gap:4px;"><input type="text" class="property-input" value="' + (item.image || '') + '" onchange="updateBannerItem(' + index + ', \'image\', this.value)" style="flex:1;"><button type="button" onclick="var inp=this.previousElementSibling;openImageUploader(function(url){if(inp){inp.value=url;updateBannerItem(' + index + ',\'image\',url)}})" style="padding:6px 10px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;cursor:pointer;font-size:12px;"><i class="fas fa-upload"></i></button></div></div>';
+                html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (item.title || '') + '" onchange="updateBannerItem(' + index + ', \'title\', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">副标题</label><input type="text" class="property-input" value="' + (item.subtitle || '') + '" onchange="updateBannerItem(' + index + ', \'subtitle\', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">链接地址</label><input type="text" class="property-input" value="' + (item.link || '') + '" onchange="updateBannerItem(' + index + ', \'link\', this.value)"></div>';
                 html += '</div>';
             });
             html += '<button type="button" onclick="addBannerItem()" style="width:100%;padding:8px;background:#f3f4f6;border:1px dashed #d1d5db;border-radius:6px;cursor:pointer;font-size:13px;color:#374151;"><i class="fas fa-plus"></i> 添加Banner项目</button>';
@@ -1264,7 +1264,7 @@
             let html = '';
             html += '<div class="property-field">';
             html += '<label class="property-label">列数</label>';
-            html += '<select class="property-select" onchange="updateModuleProperty('columns', parseInt(this.value))">';
+            html += '<select class="property-select" onchange="updateModuleProperty(\'columns\', parseInt(this.value))">';
             html += '<option value="2"' + (data.columns === 2 ? ' selected' : '') + '>2列</option>';
             html += '<option value="3"' + (data.columns === 3 ? ' selected' : '') + '>3列</option>';
             html += '<option value="4"' + (data.columns === 4 ? ' selected' : '') + '>4列</option>';
@@ -1272,7 +1272,7 @@
             html += '</div>';
             html += '<div class="property-field">';
             html += '<label class="property-label">样式</label>';
-            html += '<select class="property-select" onchange="updateModuleProperty('style', this.value)">';
+            html += '<select class="property-select" onchange="updateModuleProperty(\'style\', this.value)">';
             html += '<option value="modern"' + (data.style === 'modern' ? ' selected' : '') + '>现代</option>';
             html += '<option value="classic"' + (data.style === 'classic' ? ' selected' : '') + '>经典</option>';
             html += '</select>';
@@ -1284,10 +1284,10 @@
                 html += '<span style="font-weight: 600; font-size: 13px;">卡片 ' + (index + 1) + '</span>';
                 html += '<button type="button" onclick="removeCardItem(' + index + ')" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px;"><i class="fas fa-trash"></i></button>';
                 html += '</div>';
-                html += '<div class="property-field"><label class="property-label">图片地址</label><input type="text" class="property-input" value="' + (item.image || '') + '" onchange="updateCardItem(' + index + ', 'image', this.value)"></div>';
-                html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (item.title || '') + '" onchange="updateCardItem(' + index + ', 'title', this.value)"></div>';
-                html += '<div class="property-field"><label class="property-label">描述</label><textarea class="property-input property-textarea" onchange="updateCardItem(' + index + ', 'description', this.value)">' + (item.description || '') + '</textarea></div>';
-                html += '<div class="property-field"><label class="property-label">链接地址</label><input type="text" class="property-input" value="' + (item.link || '') + '" onchange="updateCardItem(' + index + ', 'link', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">图片地址</label><input type="text" class="property-input" value="' + (item.image || '') + '" onchange="updateCardItem(' + index + ', \'image\', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (item.title || '') + '" onchange="updateCardItem(' + index + ', \'title\', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">描述</label><textarea class="property-input property-textarea" onchange="updateCardItem(' + index + ', \'description\', this.value)">' + (item.description || '') + '</textarea></div>';
+                html += '<div class="property-field"><label class="property-label">链接地址</label><input type="text" class="property-input" value="' + (item.link || '') + '" onchange="updateCardItem(' + index + ', \'link\', this.value)"></div>';
                 html += '</div>';
             });
             html += '<button type="button" onclick="addCardItem()" style="width:100%;padding:8px;background:#f3f4f6;border:1px dashed #d1d5db;border-radius:6px;cursor:pointer;font-size:13px;color:#374151;"><i class="fas fa-plus"></i> 添加卡片项目</button>';
@@ -1391,38 +1391,38 @@
         
         function generateButtonProperties(data) {
             let html = '';
-            html += '<div class="property-field"><label class="property-label">按钮文字</label><input type="text" class="property-input" value="' + (data.text || '') + '" onchange="updateModuleProperty('text', this.value)"></div>';
-            html += '<div class="property-field"><label class="property-label">链接地址</label><input type="text" class="property-input" value="' + (data.link || '') + '" onchange="updateModuleProperty('link', this.value)"></div>';
-            html += '<div class="property-field"><label class="property-label">按钮样式</label><select class="property-select" onchange="updateModuleProperty('type', this.value)">';
+            html += '<div class="property-field"><label class="property-label">按钮文字</label><input type="text" class="property-input" value="' + (data.text || '') + '" onchange="updateModuleProperty(\'text\', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-label">链接地址</label><input type="text" class="property-input" value="' + (data.link || '') + '" onchange="updateModuleProperty(\'link\', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-label">按钮样式</label><select class="property-select" onchange="updateModuleProperty(\'type\', this.value)">';
             ['primary', 'secondary', 'success', 'danger', 'outline'].forEach(function(t) { html += '<option value="' + t + '"' + (data.type === t ? ' selected' : '') + '>' + t + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-label">大小</label><select class="property-select" onchange="updateModuleProperty('size', this.value)">';
+            html += '<div class="property-field"><label class="property-label">大小</label><select class="property-select" onchange="updateModuleProperty(\'size\', this.value)">';
             ['small', 'medium', 'large'].forEach(function(s) { html += '<option value="' + s + '"' + (data.size === s ? ' selected' : '') + '>' + s + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-label">对齐方式</label><select class="property-select" onchange="updateModuleProperty('align', this.value)">';
+            html += '<div class="property-field"><label class="property-label">对齐方式</label><select class="property-select" onchange="updateModuleProperty(\'align\', this.value)">';
             [{v:'left',l:'左对齐'},{v:'center',l:'居中'},{v:'right',l:'右对齐'}].forEach(function(a) { html += '<option value="' + a.v + '"' + (data.align === a.v ? ' selected' : '') + '>' + a.l + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.newWindow ? 'checked' : '') + ' onchange="updateModuleProperty('newWindow', this.checked)"><span>新窗口打开</span></label></div>';
+            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.newWindow ? 'checked' : '') + ' onchange="updateModuleProperty(\'newWindow\', this.checked)"><span>新窗口打开</span></label></div>';
             return html;
         }
 
         function generateCarouselProperties(data) {
             var items = data.items || [];
             var html = '';
-            html += '<div class="property-field"><label class="property-label">高度 (px)</label><input type="number" class="property-input" value="' + (data.height || 400) + '" onchange="updateModuleProperty('height', this.value)"></div>';
-            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.autoplay ? 'checked' : '') + ' onchange="updateModuleProperty('autoplay', this.checked)"><span>自动播放</span></label></div>';
-            html += '<div class="property-field"><label class="property-label">切换间隔(秒)</label><select class="property-select" onchange="updateModuleProperty('interval', parseInt(this.value))">';
+            html += '<div class="property-field"><label class="property-label">高度 (px)</label><input type="number" class="property-input" value="' + (data.height || 400) + '" onchange="updateModuleProperty(\'height\', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.autoplay ? 'checked' : '') + ' onchange="updateModuleProperty(\'autoplay\', this.checked)"><span>自动播放</span></label></div>';
+            html += '<div class="property-field"><label class="property-label">切换间隔(秒)</label><select class="property-select" onchange="updateModuleProperty(\'interval\', parseInt(this.value))">';
             ['3','5','7','10'].forEach(function(v) { html += '<option value="' + v + '"' + (String(data.interval) === v ? ' selected' : '') + '>' + v + '秒</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.showDots !== false ? 'checked' : '') + ' onchange="updateModuleProperty('showDots', this.checked)"><span>显示指示点</span></label></div>';
-            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.showArrows !== false ? 'checked' : '') + ' onchange="updateModuleProperty('showArrows', this.checked)"><span>显示箭头</span></label></div>';
+            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.showDots !== false ? 'checked' : '') + ' onchange="updateModuleProperty(\'showDots\', this.checked)"><span>显示指示点</span></label></div>';
+            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.showArrows !== false ? 'checked' : '') + ' onchange="updateModuleProperty(\'showArrows\', this.checked)"><span>显示箭头</span></label></div>';
             html += '<div class="property-group-title">轮播项目</div>';
             items.forEach(function(item, index) {
                 html += '<div style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; background: #f9fafb;">';
                 html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;"><span style="font-weight: 600; font-size: 13px;">项目 ' + (index + 1) + '</span>';
                 html += '<button type="button" onclick="removeCarouselItem(' + index + ')" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px;"><i class="fas fa-trash"></i></button></div>';
-                html += '<div class="property-field"><label class="property-label">图片地址</label><input type="text" class="property-input" value="' + (item.image || '') + '" onchange="updateCarouselItem(' + index + ', 'image', this.value)"></div>';
-                html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (item.title || '') + '" onchange="updateCarouselItem(' + index + ', 'title', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">图片地址</label><input type="text" class="property-input" value="' + (item.image || '') + '" onchange="updateCarouselItem(' + index + ', \'image\', this.value)"></div>';
+                html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (item.title || '') + '" onchange="updateCarouselItem(' + index + ', \'title\', this.value)"></div>';
                 html += '</div>';
             });
             html += '<button type="button" onclick="addCarouselItem()" style="width:100%;padding:8px;background:#f3f4f6;border:1px dashed #d1d5db;border-radius:6px;cursor:pointer;font-size:13px;color:#374151;"><i class="fas fa-plus"></i> 添加轮播项目</button>';
@@ -1431,27 +1431,27 @@
 
         function generateImageTextProperties(data) {
             var html = '';
-            html += '<div class="property-field"><label class="property-label">图片地址</label><input type="text" class="property-input" value="' + (data.image || '') + '" onchange="updateModuleProperty('image', this.value)"></div>';
-            html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (data.title || '') + '" onchange="updateModuleProperty('title', this.value)"></div>';
-            html += '<div class="property-field"><label class="property-label">内容</label><textarea class="property-input property-textarea" onchange="updateModuleProperty('content', this.value)">' + (data.content || '') + '</textarea></div>';
-            html += '<div class="property-field"><label class="property-label">布局</label><select class="property-select" onchange="updateModuleProperty('layout', this.value)">';
+            html += '<div class="property-field"><label class="property-label">图片地址</label><input type="text" class="property-input" value="' + (data.image || '') + '" onchange="updateModuleProperty(\'image\', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-label">标题</label><input type="text" class="property-input" value="' + (data.title || '') + '" onchange="updateModuleProperty(\'title\', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-label">内容</label><textarea class="property-input property-textarea" onchange="updateModuleProperty(\'content\', this.value)">' + (data.content || '') + '</textarea></div>';
+            html += '<div class="property-field"><label class="property-label">布局</label><select class="property-select" onchange="updateModuleProperty(\'layout\', this.value)">';
             [{v:'image-left',l:'图片居左'},{v:'image-right',l:'图片居右'},{v:'image-top',l:'图片居上'}].forEach(function(a) { html += '<option value="' + a.v + '"' + (data.layout === a.v ? ' selected' : '') + '>' + a.l + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-label">图片宽度</label><input type="text" class="property-input" value="' + (data.imageWidth || '40%') + '" onchange="updateModuleProperty('imageWidth', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-label">图片宽度</label><input type="text" class="property-input" value="' + (data.imageWidth || '40%') + '" onchange="updateModuleProperty(\'imageWidth\', this.value)"></div>';
             return html;
         }
 
         function generateContainerProperties(data) {
             var html = '';
-            html += '<div class="property-field"><label class="property-label">宽度</label><select class="property-select" onchange="updateModuleProperty('width', this.value)">';
+            html += '<div class="property-field"><label class="property-label">宽度</label><select class="property-select" onchange="updateModuleProperty(\'width\', this.value)">';
             ['100%','90%','80%','1200px','1000px','800px'].forEach(function(v) { html += '<option value="' + v + '"' + (data.width === v ? ' selected' : '') + '>' + v + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-label">内边距</label><select class="property-select" onchange="updateModuleProperty('padding', this.value)">';
+            html += '<div class="property-field"><label class="property-label">内边距</label><select class="property-select" onchange="updateModuleProperty(\'padding\', this.value)">';
             ['0','16px','24px','32px','48px','64px'].forEach(function(v) { html += '<option value="' + v + '"' + (data.padding === v ? ' selected' : '') + '>' + v + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-label">背景颜色</label><input type="color" class="property-input" value="' + (data.bgColor || '#ffffff') + '" onchange="updateModuleProperty('bgColor', this.value)" style="height:36px;padding:2px;"></div>';
-            html += '<div class="property-field"><label class="property-label">背景图片</label><input type="text" class="property-input" value="' + (data.bgImage || '') + '" onchange="updateModuleProperty('bgImage', this.value)"></div>';
-            html += '<div class="property-field"><label class="property-label">圆角</label><select class="property-select" onchange="updateModuleProperty('borderRadius', this.value)">';
+            html += '<div class="property-field"><label class="property-label">背景颜色</label><input type="color" class="property-input" value="' + (data.bgColor || '#ffffff') + '" onchange="updateModuleProperty(\'bgColor\', this.value)" style="height:36px;padding:2px;"></div>';
+            html += '<div class="property-field"><label class="property-label">背景图片</label><input type="text" class="property-input" value="' + (data.bgImage || '') + '" onchange="updateModuleProperty(\'bgImage\', this.value)"></div>';
+            html += '<div class="property-field"><label class="property-label">圆角</label><select class="property-select" onchange="updateModuleProperty(\'borderRadius\', this.value)">';
             ['0','4px','8px','12px','16px','24px'].forEach(function(v) { html += '<option value="' + v + '"' + (data.borderRadius === v ? ' selected' : '') + '>' + v + '</option>'; });
             html += '</select></div>';
             return html;
@@ -1459,13 +1459,13 @@
 
         function generateColumnsProperties(data) {
             var html = '';
-            html += '<div class="property-field"><label class="property-label">列数</label><select class="property-select" onchange="updateModuleProperty('columns', parseInt(this.value))">';
+            html += '<div class="property-field"><label class="property-label">列数</label><select class="property-select" onchange="updateModuleProperty(\'columns\', parseInt(this.value))">';
             ['2','3','4','5'].forEach(function(v) { html += '<option value="' + v + '"' + (String(data.columns) === v ? ' selected' : '') + '>' + v + '列</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-label">列间距</label><select class="property-select" onchange="updateModuleProperty('gap', this.value)">';
+            html += '<div class="property-field"><label class="property-label">列间距</label><select class="property-select" onchange="updateModuleProperty(\'gap\', this.value)">';
             ['16px','24px','32px','48px'].forEach(function(v) { html += '<option value="' + v + '"' + (data.gap === v ? ' selected' : '') + '>' + v + '</option>'; });
             html += '</select></div>';
-            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.equalHeight ? 'checked' : '') + ' onchange="updateModuleProperty('equalHeight', this.checked)"><span>等高列</span></label></div>';
+            html += '<div class="property-field"><label class="property-checkbox"><input type="checkbox" ' + (data.equalHeight ? 'checked' : '') + ' onchange="updateModuleProperty(\'equalHeight\', this.checked)"><span>等高列</span></label></div>';
             return html;
         }
 
@@ -1713,7 +1713,7 @@
                         select.innerHTML = '<option value="">选择页面</option>';
                         data.data.pages.forEach(page => {
                             const opt = document.createElement('option');
-                            opt.value = page.page_name || page.slug || page.id;
+                            opt.value = page.page_id || page.page_name || page.slug || page.id;
                             opt.textContent = page.title || page.menu_name || page.name || page.page_name;
                             select.appendChild(opt);
                         });
