@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh-CN"><head>
 
 
@@ -98,7 +99,13 @@
     xhr.send();
 })();
 </script>
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
+        .faq-category-item{transition:none!important;animation:none!important}
+        .faq-categories{min-height:50px}
+
+#faqCategoryButtons{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;overflow:hidden}
+#faqCategoryButtons .faq-category-item{flex-shrink:0;white-space:nowrap}
+</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -152,47 +159,26 @@
 
                 <!-- FAQ分类 -->
                 <div class="editable-section" data-section="faq-categories">
-                    <div class="faq-categories" id="faqCategoryButtons">
-                    <div class="faq-category-item active" data-category="all">
+                    <div class="faq-categories" id="faqCategoryButtons" style="visibility:hidden">
+                    <div class="faq-category-item active" data-category="all" onclick="filterFAQByCategory('all');document.querySelectorAll('.faq-category-item').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
                         <i class="fas fa-th-large"></i>
-                        <span>全部问题</span>
+                        <span>全部</span>
                     </div>
-                
-                        <div class="faq-category-item" data-category="baizhang">
-                            <i class="fas fa-university"></i>
-                            <span>摆账业务</span>
-                        </div>
-                    
-                        <div class="faq-category-item" data-category="general">
-                            <i class="fas fa-info-circle"></i>
-                            <span>一般问题</span>
-                        </div>
-                    
-                        <div class="faq-category-item" data-category="receivable">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                            <span>云信融资出表</span>
-                        </div>
-                    
-                        <div class="faq-category-item" data-category="bridge">
-                            <i class="fas fa-exchange-alt"></i>
-                            <span class="">过桥资金</span>
-                        </div>
-                    
-                        <div class="faq-category-item" data-category="liangzi">
-                            <i class="fas fa-lightbulb"></i>
-                            <span>亮资业务</span>
-                        </div>
-                    
-                        <div class="faq-category-item" data-category="deposit">
-                            <i class="fas fa-landmark"></i>
-                            <span>银行存款</span>
-                        </div>
+                    <div class="faq-category-item" style="opacity:0.5">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>加载中...</span>
                     </div>
+                </div>
                 </div>
 
                 <!-- FAQ列表 -->
                                             <div class="editable-section" data-section="faq-list">
-                                <div class="faq-custom-container"></div>
+                                <div class="faq-custom-container" style="min-height:400px">
+                        <div class="faq-loading" id="faqLoading" style="text-align:center;padding:60px 20px;">
+                            <i class="fas fa-spinner fa-spin" style="font-size:24px;color:#1e3a8a;display:block;margin-bottom:12px;"></i>
+                            <p style="color:#6b7280;font-size:14px;">加载中...</p>
+                        </div>
+                    </div>
                             </div>
 
                 <!-- 更多问题 -->
@@ -308,7 +294,7 @@
                 const categoryButtonsContainer = document.getElementById('faqCategoryButtons');
                 if (categoryButtonsContainer) {
                     let buttonsHtml = `
-                        <div class="faq-category-item active" data-category="all">
+                        <div class="faq-category-item active" data-category="all" onclick="filterFAQByCategory('all');document.querySelectorAll('.faq-category-item').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
                             <i class="fas fa-th-large"></i>
                             <span>全部问题</span>
                         </div>
@@ -321,7 +307,25 @@
                         buttonsHtml += '<div class="faq-category-item" data-category="' + cat + '"><i class="fas ' + catIcon + '"></i><span>' + catName + '</span></div>';
                     });
 
-                    categoryButtonsContainer.innerHTML = buttonsHtml;
+                                        // Remove loading placeholder
+                    var loadPlaceholder = document.querySelector('#faqCategoryButtons .faq-category-item[style]');
+                    if (loadPlaceholder) loadPlaceholder.remove();
+                    // Only append new categories, keep existing 全部 button
+                    var existingCats = {};
+                    document.querySelectorAll('#faqCategoryButtons .faq-category-item').forEach(function(el) {
+                        existingCats[el.dataset.category] = true;
+                    });
+                    // Use DocumentFragment to add all categories at once (no flash)
+                    var temp = document.createElement('div');
+                    temp.innerHTML = buttonsHtml;
+                    var fragment = document.createDocumentFragment();
+                    temp.querySelectorAll('.faq-category-item').forEach(function(el) {
+                        if (!existingCats[el.dataset.category]) {
+                            fragment.appendChild(el);
+                        }
+                    });
+                    categoryButtonsContainer.appendChild(fragment);
+                    categoryButtonsContainer.style.visibility = 'visible';
 
                     // 重新绑定分类点击事件
                     bindCategoryEvents();
@@ -394,7 +398,10 @@
 
                     // 如果有数据，替换显示
                     if (hasContent || Object.keys(categoryLabels).length > 0) {
-                        container.innerHTML = html;
+                                            // Hide loading skeleton
+                    var loading = document.getElementById('faqLoading');
+                    if (loading) loading.style.display = 'none';
+                    container.innerHTML = html;
                     }
                 }
             } catch (error) {
@@ -543,7 +550,9 @@
 
 
 
+    
+
     <script src="../js/footer-loader.js"></script>
 
-<script src="../js/nav-loader.js?v=2"></script>
+<script src="../js/nav-loader.js?v=4"></script>
 </body></html>

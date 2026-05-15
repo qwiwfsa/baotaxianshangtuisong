@@ -204,6 +204,6 @@ header('Content-Type: text/html; charset=utf-8');
             }
         }
     </script>
-<script src="../js/nav-loader.js?v=2"></script>
+<script src="../js/nav-loader.js?v=4"></script>
 </body>
 </html>

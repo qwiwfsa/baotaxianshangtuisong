@@ -23,6 +23,20 @@ try {
     $outputPath = __DIR__ . '/../../../pages/' . $pageId . '.html';
     $fullHtml = generateFullPage($pageId, $html);
     if (file_put_contents($outputPath, $fullHtml)) {
+    $mobileDir = __DIR__ . '/../../../mobile/pages';
+    if (!is_dir($mobileDir)) { mkdir($mobileDir, 0755, true); }
+    $mobilePath = $mobileDir . '/' . $pageId . '.html';
+    $mobileHtml = $fullHtml;
+    $mobileHtml = str_replace('href="/css/', 'href="../../css/', $mobileHtml);
+        $mobileHtml = str_replace('src="/js/', 'src="../../js/', $mobileHtml);
+        $mobileHtml = str_replace('src="/uploads/', 'src="../../uploads/', $mobileHtml);
+        $mobileHtml = str_replace('src="/images/', 'src="../../images/', $mobileHtml);
+        $mobileHtml = str_replace('href="/assets/', 'href="../../assets/', $mobileHtml);
+        $mobileHtml = str_replace('src="/assets/', 'src="../../assets/', $mobileHtml);
+        $mobileHtml = str_replace('"/admin/api/', '"../../admin/api/', $mobileHtml);
+        $mobileHtml = str_replace('nav-loader.js?v=2', 'nav-loader.js?v=3', $mobileHtml);
+        file_put_contents($mobilePath, $mobileHtml);
+
         jsonSuccess(['html_path' => $outputPath], '发布成功');
     } else {
         jsonError('写入HTML文件失败');
@@ -240,6 +254,8 @@ function generateFullPage($pageId, $content) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>' . htmlspecialchars($pageId) . '</title>
+    <link rel="icon" href="/favicon.ico?v=20260502" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico?v=20260502" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <link rel="stylesheet" href="/css/page-custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -262,7 +278,7 @@ function generateFullPage($pageId, $content) {
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==="/"?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector(".logo img");
                             if(hl)hl.src=fixPath(resp.data.header_logo);

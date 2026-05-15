@@ -138,7 +138,9 @@ require_once __DIR__ . '/includes/news-prerender.php';
         }
 
 
-    </style>
+    
+.news-category{transition:none!important;animation:none!important}
+</style>
 
 
     <!-- 社交分享样式 -->

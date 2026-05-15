@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>page_1778812378_8757bb</title>
+    <link rel="icon" href="/favicon.ico?v=20260502" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico?v=20260502" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <link rel="stylesheet" href="/css/page-custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,12 +23,12 @@
     <script>
     (function(){
         var xhr=new XMLHttpRequest();
-        xhr.open("GET","admin/api/fetch-logo.php?t="+Date.now(),true);
+        xhr.open("GET","/admin/api/fetch-logo.php?t="+Date.now(),true);
         xhr.onload=function(){
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==="/"?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector(".logo img");
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -47,7 +49,7 @@
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
             <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -65,7 +67,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
-                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
+                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
                 <div class="footer-nav" data-footer-group="quick_links"><h4 class="footer-nav-title">快速导航</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="service_links"><h4 class="footer-nav-title">服务项目</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>

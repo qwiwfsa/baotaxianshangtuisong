@@ -25,14 +25,17 @@
     ];
 
     function fixUrl(url) {
-        if (!url || url === '#' || url === '/') return url;
+        if (!url || url === '#') return url;
+        if (url === '/') {
+            if (isMobile) return 'index.html';
+            return url;
+        }
         if (isMobile && url.indexOf('/mobile/') !== 0) {
-            // /cases.html -> cases.html (relative to /mobile/)
-            return url.replace(/^\//, '');
+            // Use absolute /mobile/ prefix to avoid relative path issues
+            return '/mobile' + url;
         }
         return url;
     }
-
     function getActiveClass(url) {
         var p = pathname;
         if (isMobile) p = p.replace(/^\/mobile/, '');

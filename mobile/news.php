@@ -1,4 +1,29 @@
-<?php header("Cache-Control: no-cache, no-store, must-revalidate"); header("Pragma: no-cache"); header("Expires: 0"); ?>
+<?php header("Cache-Control: no-cache, no-store, must-revalidate"); header("Pragma: no-cache"); header("Expires: 0"); 
+// Server-side news pre-render
+require_once __DIR__ . '/../config/db.php';
+$newsDB = getDB();
+$catRes = $newsDB->query("SELECT id, name FROM cms_categories ORDER BY sort_order ASC, id ASC");
+$allCategories = [];
+while ($r = $catRes->fetch_assoc()) { $allCategories[] = $r; }
+$catRes->close();
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$perPage = 10;
+$offset = ($page - 1) * $perPage;
+$totalRes = $newsDB->query("SELECT COUNT(*) as cnt FROM cms_articles WHERE status='published'");
+$totalRow = $totalRes->fetch_assoc();
+$totalCnt = $totalRow['cnt'];
+$totalPages = max(1, ceil($totalCnt / $perPage));
+$totalRes->close();
+$artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT $offset, $perPage");
+$allArticles = [];
+while ($r = $artRes->fetch_assoc()) { $allArticles[] = $r; }
+$artRes->close();
+$articlesJson = json_encode($allArticles, JSON_UNESCAPED_UNICODE);
+$categoriesJson = json_encode($allCategories, JSON_UNESCAPED_UNICODE);
+$newsDB->close();
+
+?>
+<!DOCTYPE html>
 <?php header('Cache-Control: no-cache, no-store, must-revalidate'); header('Pragma: no-cache'); header('Expires: 0'); ?>
 <!DOCTYPE html>
 <html lang="zh-CN"
@@ -583,7 +608,8 @@ data-share-copy="复制链接"><head>
 
 <link rel="icon" href="../uploads/logo/logo_20260504_045101_69f80995372b0.png">    <!-- 社交分享样式 -->
     <link rel="stylesheet" href="../css/social-share.css">
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
+.news-category{transition:none!important;animation:none!important}</style>
 </head>
 
 
@@ -832,7 +858,11 @@ data-share-copy="复制链接"><head>
 
 
 
-                    <div class="news-categories" id="newsCategories"><a href="#" class="news-category active" data-cat-id="0">全部资讯</a></div>
+                    <div class="news-categories" id="newsCategories"><a href="#" class="news-category active" data-cat-id="0" >全部资讯</a>
+                    <?php foreach ($allCategories as $cat): ?>
+                    <a href="#" class="news-category" data-cat-id="<?php echo $cat['id']; ?>" ><?php echo htmlspecialchars($cat['name']); ?></a>
+                    <?php endforeach; ?>
+                    </div>
 
 
 
@@ -905,6 +935,25 @@ data-share-copy="复制链接"><head>
 
 
                     <div class="news-list-container">
+                    <?php if (!empty($allArticles)): ?>
+                        <?php foreach ($allArticles as $article): ?>
+                        <div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">
+                            <?php $img = $article['cover_image'] ?? ''; if ($img): ?>
+                            <div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="../<?php echo htmlspecialchars($img); ?>" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'"></div>
+                            <?php endif; ?>
+                            <div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">
+                                <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id=<?php echo $article['id']; ?>" style="color:#1e3a8a;text-decoration:none"><?php echo htmlspecialchars($article['title'] ?? ''); ?></a></h3>
+                                <?php $s = $article['summary'] ?? ''; if ($s): ?>
+                                <p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><?php echo htmlspecialchars($s); ?></p>
+                                <?php endif; ?>
+                                <span style="font-size:12px;color:#999"><?php echo substr($article['created_at'] ?? '', 0, 10); ?></span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div style="text-align:center;padding:40px;color:#999">暂无新闻</div>
+                    <?php endif; ?>
+
 
 
 
@@ -1040,8 +1089,27 @@ data-share-copy="复制链接"><head>
     <script src="../js/main.js"></script>
 <script>
 (async function(){
-    var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
-    var el = document.querySelector('.news-list-container');
+    // Bind category click handlers via delegation
+    (function bindCats() {
+        var catContainer = document.getElementById('newsCategories');
+        if (catContainer) {
+            catContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('news-category')) {
+                    e.preventDefault();
+                    var catId = parseInt(e.target.dataset.catId);
+                    STATE.currentCategory = catId;
+                    STATE.page = 1;
+                    updateActiveCategory(catId);
+                    syncCategorySEO(catId);
+                    loadNews();
+                }
+            });
+        }
+    })();
+
+var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
+    // Check for server pre-rendered content
+        var el = document.querySelector('.news-list-container');
     if(!el) return;
 
     // 默认SEO（全部资讯）
@@ -1082,8 +1150,17 @@ data-share-copy="复制链接"><head>
     }
 
     async function loadNews(){
+        if (STATE.loading) return;
         STATE.loading = true;
-        el.innerHTML = '<div style="text-align:center;padding:40px;color:#666;font-size:16px">加载中...</div>';
+        // Show loading bar without clearing content
+        var existBar = document.getElementById('newsLoadingBar');
+        if (!existBar) {
+            var bar = document.createElement('div');
+            bar.id = 'newsLoadingBar';
+            bar.style.cssText = 'text-align:center;padding:8px;background:#f0f4ff;color:#1e3a8a;font-size:13px;position:sticky;top:0;z-index:5;';
+            bar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
+            el.insertBefore(bar, el.firstChild);
+        }
         try {
             var url = 'api/news.php?page=1&limit=100&t='+Date.now();
             if(STATE.currentCategory > 0) url += '&category_id='+STATE.currentCategory;
@@ -1091,62 +1168,74 @@ data-share-copy="复制链接"><head>
             if(!r.ok) throw new Error('HTTP '+r.status);
             var d = JSON.parse(await r.text());
             if(!d.success || !d.data) {
-                el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>'; return;
+                STATE.loading = false;
+                el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无新闻</div>'; return;
             }
-            // Update categories dynamically
             if(d.data.categories && Array.isArray(d.data.categories)) {
                 updateCategories(d.data.categories);
             }
             if(!d.data.news || d.data.news.length===0) {
-                el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>'; return;
+                STATE.loading = false;
+                el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无新闻</div>'; return;
             }
             STATE.all = d.data.news;
             renderPage();
         } catch(e) {
+            STATE.loading = false;
             el.innerHTML = '<div style="text-align:center;padding:40px;color:red;font-size:18px">加载失败: '+e.message+'</div>';
+            return;
         }
+        var bar2 = document.getElementById('newsLoadingBar'); if (bar2) bar2.remove();
         STATE.loading = false;
+    }
+
+    function updateActiveCategory(catId) {
+        var container = document.getElementById('newsCategories');
+        if (!container) return;
+        container.querySelectorAll('.news-category').forEach(function(l) {
+            l.classList.remove('active');
+            if (parseInt(l.dataset.catId) === catId) l.classList.add('active');
+        });
     }
 
     function updateCategories(cats){
         var container = document.getElementById('newsCategories');
         if(!container) return;
-        var current = container.querySelectorAll('.news-category');
-        var existingHtml = '';
-        for(var i=0;i<current.length;i++){
-            existingHtml += current[i].outerHTML;
-        }
-        // Build new category list from API data
-        var html = '<a href="#" class="news-category'+(STATE.currentCategory===0?' active':'')+'" data-cat-id="0">全部资讯</a>';
+        // Only add new categories, don't rebuild existing ones
+        var existingIds = {};
+        container.querySelectorAll('.news-category').forEach(function(l) {
+            existingIds[parseInt(l.dataset.catId)] = true;
+        });
         for(var i=0;i<cats.length;i++){
             var c = cats[i];
-            var active = (parseInt(c.id) === STATE.currentCategory) ? ' active' : '';
-            html += '<a href="#" class="news-category'+active+'" data-cat-id="'+c.id+'">'+escapeHtml(c.name)+'</a>';
+            if (!existingIds[parseInt(c.id)]) {
+                var link = document.createElement('a');
+                link.href = '#';
+                link.className = 'news-category';
+                link.dataset.catId = c.id;
+                link.textContent = c.name;
+                link.addEventListener('click', function(e){
+                    e.preventDefault();
+                    var catId = parseInt(this.dataset.catId);
+                    STATE.currentCategory = catId;
+                    STATE.page = 1;
+                    updateActiveCategory(catId);
+                    syncCategorySEO(catId);
+                    loadNews();
+                });
+                container.appendChild(link);
+            }
         }
-        container.innerHTML = html;
-        // Bind click events
-        container.querySelectorAll('.news-category').forEach(function(link){
-            link.addEventListener('click', function(e){
-                e.preventDefault();
-                var catId = parseInt(this.dataset.catId);
-                STATE.currentCategory = catId;
-                STATE.page = 1;
-                // Update active class
-                container.querySelectorAll('.news-category').forEach(function(l){l.classList.remove('active');});
-                this.classList.add('active');
-                syncCategorySEO(catId);
-                loadNews();
-            });
-        });
+        updateActiveCategory(STATE.currentCategory);
     }
-
-    function escapeHtml(str){
+function escapeHtml(str){
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(str));
         return div.innerHTML;
     }
 
     function renderPage(){
+        var bar = document.getElementById('newsLoadingBar'); if (bar) bar.remove();
         var total = STATE.all.length, pages = Math.ceil(total/STATE.per)||1;
         var pg = STATE.page; if(pg<1) pg=1; if(pg>pages) pg=pages; STATE.page=pg;
         var start = (pg-1)*STATE.per, end = Math.min(start+STATE.per, total);
@@ -1240,5 +1329,5 @@ data-share-copy="复制链接"><head>
     <script src="../js/social-share.js"></script>
 
 <script src="../js/footer-loader.js"></script>
-<script src="../js/nav-loader.js?v=2"></script>
+<script src="../js/nav-loader.js?v=4"></script>
 </body></html>
