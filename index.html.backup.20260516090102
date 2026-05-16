@@ -131,7 +131,7 @@
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
     <!-- 导航栏 -->
-    <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="主导航">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
 <a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar"><li role="none"><a href="/" class="nav-link active" role="menuitem">首页</a></li>
@@ -141,7 +141,7 @@
 <li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
 <li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
 <li role="none"><a href="/pages/page_1778812379_0b9248.html" class="nav-link" role="menuitem">测试问题</a></li>
-<li role="none" class=""><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+<li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
 </ul>
             
             
@@ -184,11 +184,12 @@
                 <span>专业资金服务 · 值得信赖</span>
             </div>
             
-            <h1 class="hero-title" id="hero-title">专业资金解决方案
-                助力企业稳健发展</h1>
+            <h1 class="hero-title" id="hero-title">  专业资金解决方案 助力企业稳健发展<br><span class="highlight"></span></h1>
             
             
-            <p class="hero-subtitle">提供上市公司短拆、企业摆账、银行存款、资金证明等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。</p>
+            <p class="hero-subtitle">
+                提供上市公司短拆、企业摆账、银行存款、应收账款融资等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。
+            </p>
             
             <div class="hero-buttons">
                 <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
@@ -243,7 +244,7 @@
             </div>
             
             <div class="services-grid">
-                <article class="service-card" data-service="listed" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <article class="service-card" data-service="listed" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">上市公司类</h3>
                     <ul class="service-list">
                         <li>短拆、股票解质押过桥</li>
@@ -253,7 +254,7 @@
                     </ul>
                 </article>
                 
-                <article class="service-card" data-service="摆账" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <article class="service-card" data-service="摆账" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">企业/个人摆账</h3>
                     <ul class="service-list">
                         <li>长短期定存摆账、云信票据实摆</li>
@@ -263,7 +264,7 @@
                     </ul>
                 </article>
                 
-                <article class="service-card" data-service="deposit" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <article class="service-card" data-service="deposit" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">银行存款类</h3>
                     <ul class="service-list">
                         <li>时点冲量、日均业务</li>
@@ -273,8 +274,8 @@
                     </ul>
                 </article>
                 
-                <article class="service-card" data-service="receivable" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
-                    <h3 class="service-title">云信融资出表</h3>
+                <article class="service-card" data-service="receivable" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
+                    <h3 class="service-title">应收账款融资</h3>
                     <ul class="service-list">
                         <li>置换云信票据</li>
                         <li>可拆分流转支付</li>
@@ -286,7 +287,7 @@
 
             <!-- 业务详情扩展 -->
             <div class="service-details" id="serviceDetails">
-                <div class="detail-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <div class="detail-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h4 class="detail-title"><i class="fas fa-star" aria-hidden="true"></i> 核心优势</h4>
                     <ul class="detail-list">
                         <li>资金实力雄厚，单笔可提供数亿至数十亿资金支持</li>
@@ -295,7 +296,7 @@
                         <li>合规安全，严格遵循金融监管要求</li>
                     </ul>
                 </div>
-                <div class="detail-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <div class="detail-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h4 class="detail-title"><i class="fas fa-calculator" aria-hidden="true"></i> 收费说明</h4>
                     <ul class="detail-list">
                         <li>按实际使用天数计费，透明无隐藏费用</li>
@@ -304,7 +305,7 @@
                         <li>具体费用以双方签署协议为准</li>
                     </ul>
                 </div>
-                <div class="detail-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <div class="detail-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h4 class="detail-title"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> 风险提示</h4>
                     <ul class="detail-list">
                         <li>资金业务存在市场风险，请根据自身情况谨慎决策</li>
@@ -659,7 +660,7 @@ var _hmt = _hmt || [];
 <script src="/js/main.js?v=20260513b"></script>
     
     <!-- CMS Data Integration -->
-    <script src="/admin/assets/cms-v2.js"></script>
+    <script src="/admin/assets/cms.js?v=20260513b"></script>
     
     <!-- 成功案例展示脚本 -->
     <script>

@@ -550,7 +550,7 @@ try {
 <script src="/js/main.js?v=20260513b"></script>
     
     <!-- CMS Data Integration -->
-    <script src="/admin/assets/cms.js?v=20260513b"></script>
+    <script src="/admin/assets/cms-v2.js"></script>
     
     <!-- 成功案例展示脚本 -->
     <script>
