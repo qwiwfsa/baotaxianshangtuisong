@@ -4,8 +4,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="展示多行业资金业务成功案例，包含企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等场景参考。">
-    <meta name="keywords" content="企业摆账案例，过桥短拆案例，银行冲量案例，实缴验资，工程亮资案例">
+    <meta name="description" content="<?php echo htmlspecialchars(!empty($page_description) ? $page_description : '展示多行业资金业务成功案例，包含企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等场景参考。'); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars(!empty($page_keywords) ? $page_keywords : '企业摆账案例，过桥短拆案例，银行冲量案例，实缴验资，工程亮资案例'); ?>">
     <title><?php echo htmlspecialchars($page_title ?: "资金业务成功案例 | 企业摆账 - 过桥短拆真实案例"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -115,7 +115,7 @@
     xhr.send();
 })();
 </script>
-<link rel="icon" href="../uploads/logo/logo_20260504_045101_69f80995372b0.png"><style>
+<link rel="icon" href="/favicon-v2.png"><style>
 .cases-showcase-pagination {
     display: flex;
     justify-content: center;

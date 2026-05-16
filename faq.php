@@ -11,7 +11,7 @@ require_once __DIR__ . '/includes/page-seo.php';
 // 动态SEO：根据URL参数获取分类SEO信息
 require_once __DIR__ . '/config/db.php';
 $conn = getDB();
-$pageSeo = ['title' => !empty($page_title) ? $page_title : '常见问题 - Yao资金网', 'keywords' => '常见问题,亮资业务,过桥资金,摆账业务,云信融资出表,FAQ', 'description' => 'Yao资金网常见问题 - 解答您关于资金业务的常见疑问'];
+$pageSeo = ['title' => !empty($page_title) ? $page_title : '常见问题 - Yao资金网', 'keywords' => !empty($page_keywords) ? $page_keywords : '常见问题,亮资业务,过桥资金,摆账业务,云信融资出表,FAQ', 'description' => !empty($page_description) ? $page_description : 'Yao资金网常见问题 - 解答您关于资金业务的常见疑问'];
 $activeCat = isset($_GET['cat']) ? $_GET['cat'] : '';
 if ($activeCat) {
     $stmt = $conn->prepare("SELECT cat_label, seo_title, seo_keywords, seo_description FROM faq_categories WHERE cat_key = ?");
@@ -38,7 +38,8 @@ if ($activeCat) {
     <meta name="description" content="<?php echo htmlspecialchars($pageSeo['description']); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($pageSeo['keywords']); ?>">
     <title><?php echo htmlspecialchars($pageSeo['title']); ?></title>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link rel="icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <link rel="stylesheet" href="/css/page-custom.css?v=20260504">

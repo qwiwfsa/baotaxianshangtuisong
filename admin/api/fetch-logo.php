@@ -1,10 +1,8 @@
 <?php
 /**
- * 前台获取Logo设置API
- * 只读取logo-settings.json返回JSON数据
+ * Logo settings API for frontend
+ * Returns logo paths from logo-settings.json
  */
-
-// CORS 跨域头
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -15,24 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// 数据文件路径
 $dataFile = dirname(__DIR__) . '/data/logo-settings.json';
 
-// 默认Logo设置
 $defaults = [
     'header_logo' => 'images/logo.png',
     'footer_logo' => 'images/logo.png',
-    'favicon' => 'images/favicon.ico',
+    'favicon' => '/favicon-v2.png',
     'admin_logo' => 'images/logo.png',
     'updated_at' => ''
 ];
 
 if (!file_exists($dataFile)) {
-    echo json_encode([
-        'code' => 0,
-        'msg' => 'success',
-        'data' => $defaults
-    ], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['code' => 0, 'msg' => 'success', 'data' => $defaults], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -43,30 +35,20 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($settings)) {
     $settings = $defaults;
 }
 
-// 统一处理路径：改为绝对路径以 / 开头，确保前台所有页面（含子目录）都能正确显示
+// Normalize paths
 $baseUrl = '/';
-$pathFields = ['header_logo', 'footer_logo', 'favicon', 'admin_logo'];
+$pathFields = ['header_logo', 'footer_logo', 'admin_logo'];
 foreach ($pathFields as $field) {
     if (!empty($settings[$field])) {
-        $path = $settings[$field];
-        // 替换反斜杠为正斜杠
-        $path = str_replace('\\', '/', $path);
-        // 去掉 ../ 或 ./ 前缀
+        $path = str_replace(chr(92), '/', $settings[$field]);
         while (strpos($path, '../') === 0 || strpos($path, './') === 0) {
-            if (strpos($path, '../') === 0) {
-                $path = substr($path, 3);
-            } else {
-                $path = substr($path, 2);
-            }
+            $path = (strpos($path, '../') === 0) ? substr($path, 3) : substr($path, 2);
         }
-        // 加上绝对路径前缀
-        $path = $baseUrl . ltrim($path, '/');
-        $settings[$field] = $path;
+        $settings[$field] = $baseUrl . ltrim($path, '/');
     }
 }
 
-echo json_encode([
-    'code' => 0,
-    'msg' => 'success',
-    'data' => $settings
-], JSON_UNESCAPED_UNICODE);
+// Favicon always from dynamic endpoint
+$settings['favicon'] = '/favicon-v2.png';
+
+echo json_encode(['code' => 0, 'msg' => 'success', 'data' => $settings], JSON_UNESCAPED_UNICODE);

@@ -22,6 +22,18 @@ try {
     $stmt->close();
     $outputPath = __DIR__ . '/../../../pages/' . $pageId . '.html';
     $fullHtml = generateFullPage($pageId, $html);
+
+    // Load favicon from admin settings
+    $faviconPath = '/favicon.ico';
+    $logoJsonFile = __DIR__ . '/../../data/logo-settings.json';
+    if (file_exists($logoJsonFile)) {
+        $logoData = json_decode(file_get_contents($logoJsonFile), true);
+        if (!empty($logoData['favicon'])) {
+            $faviconPath = str_replace('\/', '/', $logoData['favicon']);
+            $faviconPath = preg_replace('#^\.?/#', '/', $faviconPath);
+            if (strpos($faviconPath, '/') !== 0) $faviconPath = '/' . $faviconPath;
+        }
+    }
     if (file_put_contents($outputPath, $fullHtml)) {
     $mobileDir = __DIR__ . '/../../../mobile/pages';
     if (!is_dir($mobileDir)) { mkdir($mobileDir, 0755, true); }
@@ -252,6 +264,7 @@ function generateFullPage($pageId, $content) {
     <link rel="stylesheet" href="/css/page-custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/page-builder.css">
+    <link rel="icon" href="/favicon-v2.png" type="image/x-icon">
     <style>
         .page-content { max-width: 1200px; margin: 0 auto; padding: 20px; padding-top: 84px; }
         .img-placeholder { display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#9ca3af; flex-direction:column; gap:8px; font-size:14px; }
@@ -270,7 +283,7 @@ function generateFullPage($pageId, $content) {
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==="/"?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector(".logo img");
                             if(hl)hl.src=fixPath(resp.data.header_logo);

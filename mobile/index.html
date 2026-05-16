@@ -1,24 +1,50 @@
+<?php
+$page_title = '';
+$meta_keywords = '';
+$meta_description = '';
+try {
+    require_once __DIR__ . '/../config/db.php';
+    $db = getDB();
+    $stmt = $db->prepare("SELECT page_title, meta_keywords, meta_description FROM seo_settings WHERE page_id = ? LIMIT 1");
+    $stmt->bind_param('s', $page_id);
+    $page_id = 'index.html';
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($row = $res->fetch_assoc()) {
+        if (!empty($row['page_title'])) $page_title = $row['page_title'];
+        if (!empty($row['meta_keywords'])) $meta_keywords = $row['meta_keywords'];
+        if (!empty($row['meta_description'])) $meta_description = $row['meta_description'];
+    }
+    $stmt->close();
+    $db->close();
+} catch (Exception $e) {}
+
+// Dynamic favicon served via /favicon.php (no-cache, reads admin settings)
+$favicon_path = '/favicon.php';
+
+?>
+
 <html lang="zh-CN" data-immersive-translate-page-theme="light"><head>
 
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="专业资金服务平台，主营上市公司短拆、股票解质押过桥、企业个人摆账亮资、实缴验资、资金证明、银行时点日均冲量、工程亮资、定期存款、应收账款融资及云信票据置换，优化财务报表、增资产降负债，诚邀渠道代理合作。">
+    <meta name="description" content="<?php echo htmlspecialchars(!empty($meta_description) ? $meta_description : '专业资金服务平台，主营上市公司短拆、股票解质押过桥、企业个人摆账亮资、实缴验资、资金证明、银行时点日均冲量、工程亮资、定期存款、应收账款融资及云信票据置换，优化财务报表、增资产降负债，诚邀渠道代理合作。'); ?>">
 
-    <meta name="keywords" content="上市公司短拆,股票解质押过桥,企业摆账,个人亮资,资金证明,实缴验资,银行冲量,工程亮资,过桥短拆,定期存款,应收账款融资,优化财务报表,降负债">
+    <meta name="keywords" content="<?php echo htmlspecialchars(!empty($meta_keywords) ? $meta_keywords : '上市公司短拆,股票解质押过桥,企业摆账,个人亮资,资金证明,实缴验资,银行冲量,工程亮资,过桥短拆,定期存款,应收账款融资,优化财务报表,降负债'); ?>">
     <meta name="author" content="Yao资金">
 
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Yao资金- 专业资金业务服务。">
+    <meta property="og:title" content="<?php echo htmlspecialchars(!empty($page_title) ? $page_title : 'Yao资金- 专业资金业务服务。'); ?>">
 
     <meta property="og:type" content="website">
     <meta property="og:locale" content="zh_CN">
-    <link rel="canonical" href="https://www.hengxinziben.com/">
+    <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <title>要资金网 - 过桥短拆 | 摆账亮资 | 资金证明 | 实缴验资 | 银行存款冲量</title>
+    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "首页 - Yao资金网"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
-    <noscript>&amp;amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;amp;gt;</noscript>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="stylesheet" href="../css/style.css?v=202605092200">
 
     <!-- Structured Data -->
@@ -28,7 +54,7 @@
         "@type": "FinancialService",
         "name": "Yao资金",
         "description": "专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等服务",
-        "url": "https://www.hengxinziben.com",
+        "url": "https://www.yaozijin.com",
         "telephone": "+86-13552883008",
         "email": "wanglizhongguo@126.com",
         "address": {
@@ -128,7 +154,7 @@
     xhr.send();
 })();
 </script>
-<link rel="icon" href="../uploads/logo/logo_20260504_045101_69f80995372b0.png"><style>
+<link rel="icon" href="<?php echo htmlspecialchars($favicon_path); ?>"><style>
 .cases-showcase-pagination {
     display: flex;
     justify-content: center;

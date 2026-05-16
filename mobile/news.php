@@ -59,13 +59,13 @@ data-share-copy="复制链接"><head>
 
 
 
-    <meta name="description" content="提供资金行业最新政策、市场动态解读，包含过桥短拆、工程亮资、实缴验资、企业摆账行业新规资讯。">
+    <meta name="description" content="<?php echo htmlspecialchars(!empty($page_description) ? $page_description : '提供资金行业最新政策、市场动态解读，包含过桥短拆、工程亮资、实缴验资、企业摆账行业新规资讯。'); ?>">
 
 
 
 
 
-    <meta name="keywords" content="资金行业新闻，企业融资资讯，银行冲量政策，工程亮资新规，实缴验资政策">
+    <meta name="keywords" content="<?php echo htmlspecialchars(!empty($page_keywords) ? $page_keywords : '资金行业新闻，企业融资资讯，银行冲量政策，工程亮资新规，实缴验资政策'); ?>">
 
 
 
@@ -606,7 +606,7 @@ data-share-copy="复制链接"><head>
 
 
 
-<link rel="icon" href="../uploads/logo/logo_20260504_045101_69f80995372b0.png">    <!-- 社交分享样式 -->
+<link rel="icon" href="/favicon-v2.png">    <!-- 社交分享样式 -->
     <link rel="stylesheet" href="../css/social-share.css">
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
 .news-category{transition:none!important;animation:none!important}</style>

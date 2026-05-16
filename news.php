@@ -33,7 +33,8 @@ try {
     <meta name="description" content="<?php echo htmlspecialchars($news_page_desc); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
     <title><?php echo htmlspecialchars($news_page_title); ?></title>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link rel="icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.min.css?v=20250514">
     <link rel="stylesheet" href="css/page-custom.css">

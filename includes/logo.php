@@ -12,7 +12,7 @@ function getLogoData() {
     $defaults = [
         'header_logo' => '/uploads/logo/logo_20260505_122045_69f9c47d515d1.png',
         'footer_logo' => '/uploads/logo/logo_20260502_190529_69f62ed969290.png',
-        'favicon' => '/uploads/logo/logo_20260504_045101_69f80995372b0.png',
+        'favicon' => '/uploads/logo/logo_20260516_071314_6a07a88a2cd5c.png',
     ];
 
     if (file_exists($jsonFile)) {
@@ -37,4 +37,4 @@ function getLogoData() {
 $logoData = getLogoData();
 $header_logo = $logoData['header_logo'];
 $footer_logo = $logoData['footer_logo'];
-$favicon = $logoData['favicon'];
+$favicon = '/favicon-v2.png';

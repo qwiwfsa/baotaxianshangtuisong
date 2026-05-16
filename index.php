@@ -34,10 +34,10 @@ try {
     <meta property="og:title" content="Yao资金网 - 专业资金业务服务商">
     <meta property="og:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务">
     <meta property="og:type" content="website">
-    <meta property="og:locale"
+    <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Yao资金网 - 专业资金业务服务商">
-    <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务"> content="zh_CN">
+    <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务">
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "Yao资金网"); ?></title>
