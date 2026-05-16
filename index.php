@@ -3,6 +3,22 @@ require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 
 DeviceDetector::redirect();
+
+// Server-side CMS hero data to prevent style flash
+$cmsHeroTitle = '';
+$cmsHeroSubtitle = '';
+$cmsHeroButtonText = '';
+try {
+    $cmsFile = __DIR__ . '/admin/data/cms-index.json';
+    if (file_exists($cmsFile)) {
+        $cmsData = json_decode(file_get_contents($cmsFile), true);
+        if ($cmsData) {
+            $cmsHeroTitle = $cmsData['heroTitle'] ?? '';
+            $cmsHeroSubtitle = $cmsData['heroSubtitle'] ?? '';
+            $cmsHeroButtonText = $cmsData['heroButtonText'] ?? '';
+        }
+    }
+} catch (Exception $e) {}
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -187,7 +203,7 @@ DeviceDetector::redirect();
             
             <h1 class="hero-title" id="hero-title">
                 专业资金解决方案<br>
-                <span class="highlight">助力企业稳健发展</span>
+                <span class="highlight">助力企业稳健发展</h1>
             </h1>
             
             <p class="hero-subtitle">
@@ -798,7 +814,10 @@ DeviceDetector::redirect();
         .case-card-image:hover img {
             transform: scale(1.05);
         }
-    </style>
+    
+        .hero-title,.hero-subtitle,.hero .btn-primary{transition:none!important;animation:none!important}
+        .hero-badge,.hero-title,.hero-subtitle{will-change:auto!important}
+</style>
 
     <!-- 访问统计代码 -->
     <script>

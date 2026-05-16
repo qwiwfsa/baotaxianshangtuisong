@@ -67,14 +67,14 @@
     function getPageMappings(pageId) {
         const mappings = {
             index: [
-                // Hero区域
+                // Hero
                 { selector: '.hero-title', field: 'heroTitle', type: 'text' },
                 { selector: '.hero-subtitle', field: 'heroSubtitle', type: 'text' },
                 { selector: '.btn-primary', field: 'heroButtonText', type: 'text' },
                 { selector: '.btn-primary', field: 'heroButtonLink', type: 'attr', attr: 'href' },
                 
-                // 统计数据
-                { selector: '.stat-card:nth-child(1) .stat-number', field: 'stat1Number', type: 'text' },
+                // stat-card:nth-child(1) .stat-number', field: 'stat1Number', type: 'text' },
+                stat-card:nth-child(1) .stat-number', field: 'stat1Number', type: 'text' },
                 { selector: '.stat-card:nth-child(1) .stat-label', field: 'stat1Label', type: 'text' },
                 { selector: '.stat-card:nth-child(2) .stat-number', field: 'stat2Number', type: 'text' },
                 { selector: '.stat-card:nth-child(2) .stat-label', field: 'stat2Label', type: 'text' },
