@@ -511,7 +511,7 @@ header("Expires: 0");
         .case-description-text {
             word-break: break-word;
             overflow-wrap: anywhere;
-            padding-right: 2px;
+            /* padding equalized */;
             width: 100%;
             max-width: 100%;
             max-width: 100% !important;
@@ -620,6 +620,16 @@ header("Expires: 0");
                 padding: 12px;
             }
         }
+        html {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
         .case-media-thumb img {
             width: 100% !important;
             height: 80px !important;
@@ -716,6 +726,23 @@ header("Expires: 0");
                             <?php $cover = $case_content['coverImage'] ?? $case_data['image'] ?? ''; ?>
                             <?php $first_img = !empty($images) ? $images[0] : $cover; ?>
                             <?php if ($first_img): ?>
+<script>
+// Pre-populate image data from PHP for immediate zoom
+var currentCaseImages = [];
+var currentImageIndex = 0;
+<?php
+$images = $case_content['images'] ?? [];
+if (!empty($images)) {
+    echo 'currentCaseImages = ' . json_encode(array_map(function($img) {
+        return (strpos($img, 'http') === 0 || $img[0] === '/' || strpos($img, 'data:') === 0) ? $img : '../' . $img;
+    }, $images)) . ';';
+} elseif (!empty($case_data['image'])) {
+    $img = $case_data['image'];
+    $url = (strpos($img, 'http') === 0 || $img[0] === '/' || strpos($img, 'data:') === 0) ? $img : '../' . $img;
+    echo 'currentCaseImages = ["' . addslashes($url) . '"];';
+}
+?>
+</script>
                             <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage" onclick="openImageViewer(0)">
                             <?php endif; ?>
                             <?php endif; ?>
@@ -757,7 +784,14 @@ header("Expires: 0");
 
                             <div class="case-highlights-list" id="caseHighlights">
 
-                                <!-- 动态填充 -->
+                                <?php
+                            $highlights = $case_content['highlights'] ?? [];
+                            foreach ($highlights as $h): ?>
+                            <div class="case-highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span><?php echo htmlspecialchars($h); ?></span>
+                            </div>
+                            <?php endforeach; ?>
 
                             </div>
 
@@ -779,7 +813,14 @@ header("Expires: 0");
 
                             <div class="case-highlights-list" id="caseProcess">
 
-                                <!-- 动态填充 -->
+                                <?php
+                            $process_steps = $case_content['process'] ?? [];
+                            foreach ($process_steps as $idx => $step): ?>
+                            <div class="case-highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span><?php echo ($idx + 1) . ". " . htmlspecialchars($step); ?></span>
+                            </div>
+                            <?php endforeach; ?>
 
                             </div>
 
@@ -1038,25 +1079,7 @@ header("Expires: 0");
 
             // 渲染媒体区域
 
-            let mediaHtml = `
-
-                <div class="case-media-main" id="mainMedia" onclick="openImageViewer(currentImageIndex)">
-
-                    ${caseItem.hasVideo ? `
-
-                        <div class="case-video-play" onclick="event.stopPropagation(); playVideo('${caseItem.video}')">
-
-                            <i class="fas fa-play"></i>
-
-                        </div>
-
-                    ` : ''}
-
-                    <img src="${caseItem.images[0]}" alt="${caseItem.title}" id="mainImage" style="width:100%;object-fit:cover">
-
-                </div>
-
-            `;
+            // mediaHtml removed - using PHP-rendered image
 
 
 
@@ -1112,7 +1135,9 @@ header("Expires: 0");
 
             // 渲染亮点（资方能配合哪些）
 
-            document.getElementById('caseHighlights').innerHTML = caseItem.highlights.map(h => `
+            // Only fill if empty
+            if (!document.getElementById('caseHighlights').children.length) {
+                document.getElementById('caseHighlights').innerHTML = caseItem.highlights.map(h => `
 
                 <div class="case-highlight-item">
 
@@ -1130,7 +1155,9 @@ header("Expires: 0");
 
             const processSteps = caseItem.process || ['初步沟通需求', '提供相关资料', '资方审核评估', '签订合作协议', '资金到位操作', '业务完成结算'];
 
-            document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
+            // Only fill if empty
+            if (!document.getElementById('caseProcess').children.length) {
+                document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
 
                 <div class="case-highlight-item">
 
@@ -1772,49 +1799,11 @@ header("Expires: 0");
 
             // 渲染媒体区域
 
-            let mediaHtml = `
-
-                <div class="case-media-main" id="mainMedia" onclick="openImageViewer(currentImageIndex)">
-
-                    ${hasVideo ? `
-
-                        <div class="case-video-play" onclick="event.stopPropagation(); playVideo('${videoUrl}')">
-
-                            <i class="fas fa-play"></i>
-
-                        </div>
-
-                    ` : ''}
-
-                    <img src="${images.length > 0 ? images[0] : basePath + 'images/cases/default.jpg'}" alt="${caseData.title}" id="mainImage" style="width:100%;object-fit:cover">
-
-                </div>
-
-            `;
+            // mediaHtml removed - using PHP-rendered image
 
             
 
-            if (images.length > 1) {
-
-                mediaHtml += `
-
-                    <div class="case-media-thumbs">
-
-                        ${images.map((img, idx) => `
-
-                            <div class="case-media-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
-
-                                <img src="${img}" alt="${caseData.title} - ${idx + 1}">
-
-                            </div>
-
-                        `).join('')}
-
-                    </div>
-
-                `;
-
-            }
+            // Thumbs handled below
 
             
 
@@ -1848,7 +1837,9 @@ header("Expires: 0");
 
             const highlights = caseData.highlights || [];
 
-            document.getElementById('caseHighlights').innerHTML = highlights.map(h => `
+            // Only fill if empty
+            if (!document.getElementById('caseHighlights').children.length) {
+                document.getElementById('caseHighlights').innerHTML = highlights.map(h => `
 
                 <div class="case-highlight-item">
 
@@ -1866,7 +1857,9 @@ header("Expires: 0");
 
             const processSteps = caseData.process || ['初步沟通需求', '提供相关资料', '资方审核评估', '签订合作协议', '资金到位操作', '业务完成结算'];
 
-            document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
+            // Only fill if empty
+            if (!document.getElementById('caseProcess').children.length) {
+                document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
 
                 <div class="case-highlight-item">
 
