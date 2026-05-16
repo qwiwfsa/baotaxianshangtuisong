@@ -113,23 +113,25 @@ try {
     justify-content: center;
     min-width: 38px;
     height: 38px;
-    margin: 0 4px;
+    margin: 0 12px;
+    padding: 0 8px;
     font-size: 14px;
     font-weight: 500;
-    background: #1e3a8a;
-    color: #fff;
+    background: transparent;
+    color: #6b7280;
     border-radius: 6px;
+    white-space: nowrap;
 }
 
 .pagination-btn {
-            min-width: 38px;
-            height: 38px;
-            padding: 0 10px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #9ca3af;
+            min-width: 80px;
+            height: 40px;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e3a8a;
             background: #fff;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #1e3a8a;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -138,6 +140,7 @@ try {
             justify-content: center;
             text-decoration: none;
             box-sizing: border-box;
+            white-space: nowrap;
         }
         .news-pagination .pagination-btn:hover {
             border-color: #1e3a8a;
@@ -149,14 +152,12 @@ try {
             border-color: #1e3a8a;
         }
         .news-pagination .pagination-btn.disabled {
-            color: #e5e7eb;
-            border-color: #f0f0f0;
-            background: #f9fafb;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        .news-pagination .pagination-btn i {
-            font-size: 13px;
+            color: #1e3a8a;
+            border-color: #1e3a8a;
+            background: #fff;
+            cursor: pointer;
+            pointer-events: auto;
+            opacity: 0.7;
         }
 
 
@@ -265,8 +266,8 @@ try {
             try {
                 const ts = Date.now();
                 const apiUrl = currentCategoryId
-                    ? '/mobile/api/news.php?category_id=' + currentCategoryId + '&limit=100&t=' + ts
-                    : '/mobile/api/news.php?limit=100&t=' + ts;
+                    ? '/mobile/api/news.php?category_id=' + currentCategoryId + '&limit=1000&t=' + ts
+                    : '/mobile/api/news.php?limit=1000&t=' + ts;
                 const response = await fetch(apiUrl, {
                     method: 'GET',
                     cache: 'no-store',
@@ -484,17 +485,17 @@ try {
             
             // 上一页
             if (page > 1) {
-                html += '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' + (page - 1) + ')"><i class="fas fa-chevron-left"></i></a>';
+                html += '<button class="pagination-btn" onclick="goToPage(' + (page - 1) + ')">上一页</button>';
             } else {
-                html += '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></a>';
+                html += '<button class="pagination-btn disabled" onclick="goToPage(1)">上一页</button>';
             }
             // 当前页
-            html += '<span class="pagination-current">' + page + '</span>';
+            html += '<span class="pagination-current">' + page + ' / ' + totalPages + '</span>';
             // 下一页
             if (page < totalPages) {
-                html += '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' + (page + 1) + ')"><i class="fas fa-chevron-right"></i></a>';
+                html += '<button class="pagination-btn" onclick="goToPage(' + (page + 1) + ')">下一页</button>';
             } else {
-                html += '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></a>';
+                html += '<button class="pagination-btn disabled" onclick="goToPage(' + totalPages + ')">下一页</button>';
             }
             
             paginationContainer.innerHTML = html;
@@ -506,22 +507,24 @@ try {
             if (!c) return;
             if (totalPages <= 1) { c.innerHTML = ''; return; }
             var h = '';
-            if (page > 1) h += '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' + (page - 1) + ')"><i class="fas fa-chevron-left"></i></a>';
-            else h += '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></a>';
-            h += '<span class="pagination-current">' + page + '</span>';
-            if (page < totalPages) h += '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' + (page + 1) + ')"><i class="fas fa-chevron-right"></i></a>';
-            else h += '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></a>';
+            if (page > 1) h += '<button class="pagination-btn" onclick="goToPage(' + (page - 1) + ')">上一页</button>';
+            else h += '<button class="pagination-btn disabled" disabled>上一页</button>';
+            h += '<span class="pagination-current">' + page + ' / ' + totalPages + '</span>';
+            if (page < totalPages) h += '<button class="pagination-btn" onclick="goToPage(' + (page + 1) + ')">下一页</button>';
+            else h += '<button class="pagination-btn disabled" disabled>下一页</button>';
             c.innerHTML = h;
         }
 
 // 跳转到指定页
         function goToPage(page) {
             currentPage = page;
-            if (allNewsArticles && allNewsArticles.length > 0) {
-                renderArticles(allNewsArticles);
-            } else {
-                console.warn('[News] 没有文章数据，无法翻页');
-            }
+            // Always load all articles from API for proper pagination
+            loadNewsFromServer().then(function(articles) {
+                if (articles && articles.length > 0) {
+                    allNewsArticles = articles;
+                    renderArticles(articles);
+                }
+            });
         }
         
         // 验证图片数据是否有效
@@ -604,6 +607,15 @@ try {
                     var prerenderData = <?php echo $preRenderData; ?>;
                     currentPage = prerenderData.page || 1;
                     allNewsArticles = <?php echo $articlesJson; ?>;
+                    // If more than one page, load full article list for proper pagination
+                    if (prerenderData.totalPages > 1) {
+                        loadNewsFromServer().then(function(articles) {
+                            if (articles && articles.length > 0) {
+                                allNewsArticles = articles;
+                                renderPagination(currentPage, Math.ceil(articles.length / 10), articles);
+                            }
+                        });
+                    }
                 } catch(e) {}
                 loadCategoriesFromServer();
                 loadCategories();
@@ -611,15 +623,13 @@ try {
             }
 
             // Fallback: original async loading
-            // 先加载分类，再加载文章（确保分类最新后再加载文章）
             await loadCategoriesFromServer();
             loadCategories();
             
-            // 再从API加载全部文章
             loadNewsFromServer().then(articles => {
                 if (articles && articles.length > 0) {
-                    renderArticles(articles);
                     allNewsArticles = articles;
+                    renderArticles(articles);
                 }
             });
         });

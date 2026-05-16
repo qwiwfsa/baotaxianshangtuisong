@@ -13,7 +13,7 @@ $categoryId = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
 if ($page < 1) $page = 1;
-if ($limit < 1 || $limit > 200) $limit = 50;
+if ($limit < 1 || $limit > 2000) $limit = 50;
 $offset = ($page - 1) * $limit;
 
 $db = getDB();

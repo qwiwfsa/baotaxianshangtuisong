@@ -78,19 +78,18 @@ function renderPagination($page, $totalPages) {
     if ($totalPages <= 1) return '';
     $html = '';
     if ($page > 1) {
-        $html .= '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' . ($page - 1) . ')"><i class="fas fa-chevron-left"></i></a>';
+        $html .= '<button class="pagination-btn" onclick="goToPage(' . ($page - 1) . ')">上一页</button>';
     } else {
-        $html .= '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></a>';
+        $html .= '<button class="pagination-btn disabled" onclick="goToPage(1)">上一页</button>';
     }
-    $html .= '<span class="pagination-current">' . $page . '</span>';
+    $html .= '<span class="pagination-current">' . $page . ' / ' . $totalPages . '</span>';
     if ($page < $totalPages) {
-        $html .= '<a href="javascript:void(0)" class="pagination-btn" onclick="goToPage(' . ($page + 1) . ')"><i class="fas fa-chevron-right"></i></a>';
+        $html .= '<button class="pagination-btn" onclick="goToPage(' . ($page + 1) . ')">下一页</button>';
     } else {
-        $html .= '<a href="javascript:void(0)" class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></a>';
+        $html .= '<button class="pagination-btn disabled" onclick="goToPage(' . $totalPages . ')">下一页</button>';
     }
     return $html;
 }
-
 // Encode data for JS
 $categoriesJson = json_encode($allCategories, JSON_UNESCAPED_UNICODE);
 $articlesJson = json_encode($allArticles, JSON_UNESCAPED_UNICODE);

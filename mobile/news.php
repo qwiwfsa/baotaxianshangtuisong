@@ -13,6 +13,7 @@ $totalRes = $newsDB->query("SELECT COUNT(*) as cnt FROM cms_articles WHERE statu
 $totalRow = $totalRes->fetch_assoc();
 $totalCnt = $totalRow['cnt'];
 $totalPages = max(1, ceil($totalCnt / $perPage));
+require_once __DIR__ . "/../includes/news-prerender.php";
 $totalRes->close();
 $artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT $offset, $perPage");
 $allArticles = [];
@@ -609,7 +610,30 @@ data-share-copy="复制链接"><head>
 <link rel="icon" href="/favicon-v2.png">    <!-- 社交分享样式 -->
     <link rel="stylesheet" href="../css/social-share.css">
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
-.news-category{transition:none!important;animation:none!important}</style>
+.news-category{transition:none!important;animation:none!important}
+        .news-pagination {
+            display: flex; justify-content: center; align-items: center; gap: 6px;
+            margin-top: 20px; padding: 14px 0;
+        }
+        .news-pagination .pagination-current {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 38px; height: 38px; margin: 0 12px; padding: 0 8px;
+            font-size: 14px; font-weight: 500; background: transparent; color: #6b7280;
+            border-radius: 6px; white-space: nowrap;
+        }
+        .pagination-btn {
+            min-width: 80px; height: 40px; padding: 0 20px; font-size: 14px;
+            font-weight: 500; color: #1e3a8a; background: #fff;
+            border: 1px solid #1e3a8a; border-radius: 6px; cursor: pointer;
+            transition: all 0.2s ease; display: inline-flex;
+            align-items: center; justify-content: center; text-decoration: none;
+            box-sizing: border-box; white-space: nowrap;
+        }
+        .news-pagination .pagination-btn.disabled {
+            color: #1e3a8a; border-color: #1e3a8a; background: #fff;
+            cursor: pointer; pointer-events: auto; opacity: 0.7;
+        }
+</style>
 </head>
 
 
@@ -959,31 +983,9 @@ data-share-copy="复制链接"><head>
 
 
 
-<div class="editable-section" data-section="news-pagination">
-
-
-
-
-
-                    <div class="news-pagination">
-
-
-
-
-
-                        <a href="#" class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></a><a href="#" class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></a>
-
-
-
-
-
+<div class="news-pagination">
+                        <?php echo renderPagination($page, $totalPages); ?>
                     </div>
-
-
-
-
-
-                </div>
 
 
 
@@ -1259,17 +1261,17 @@ function escapeHtml(str){
 
         var pag = '';
         if(pages > 1){
-            pag = '<div style="display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0">';
+            pag = '<div class="news-pagination" style="display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0">';
             if(pg > 1) {
-                pag += '<button onclick="changePage(-1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#333">&lt;</button>';
+                pag += '<button class="pagination-btn" onclick="changePage(-1)">上一页</button>';
             } else {
-                pag += '<button disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb">&lt;</button>';
+                pag += '<button class="pagination-btn disabled" onclick="changePage(-1)">上一页</button>';
             }
-            pag += '<span style="width:38px;text-align:center;font-size:13px;color:#666">'+pg+'/'+pages+'</span>';
+            pag += '<span class="pagination-current">'+pg+' / '+pages+'</span>';
             if(pg < pages) {
-                pag += '<button onclick="changePage(1)" style="width:38px;height:38px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;color:#333">&gt;</button>';
+                pag += '<button class="pagination-btn" onclick="changePage(1)">下一页</button>';
             } else {
-                pag += '<button disabled style="width:38px;height:38px;border:1px solid #f0f0f0;border-radius:6px;background:#f9fafb;font-size:13px;color:#e5e7eb">&gt;</button>';
+                pag += '<button class="pagination-btn disabled" onclick="changePage(1)">下一页</button>';
             }
             pag += '</div>';
         }
