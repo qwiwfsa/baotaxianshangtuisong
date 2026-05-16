@@ -1,7 +1,5 @@
 <?php
-require_once __DIR__ . '/device-detect.php';
-DeviceDetector::redirect();
-
+require_once __DIR__ . '/../device-detect.php';
 $case_id_seo = intval($_GET['id'] ?? 0);
 $case_seo_title = '';
 $case_seo_desc = '';
@@ -11,7 +9,7 @@ $case_content = [];
 
 if ($case_id_seo > 0) {
     try {
-        require_once __DIR__ . '/config/db.php';
+        require_once __DIR__ . '/../config/db.php';
         $db_case = getDB();
         
         $stmt = $db_case->prepare("SELECT title, seo_title, seo_keywords, seo_description, description FROM cases WHERE id = ? AND status = 1 LIMIT 1");
@@ -60,7 +58,7 @@ header("Expires: 0");
 
     <meta name="keywords" content="案例详情,资金服务,过桥资金,摆账,亮资,融资案例">
 
-    <title>案例详情 - Yao资金网</title>
+    <title><?php echo htmlspecialchars($case_seo_title ?: '案例详情 - Yao资金网', ENT_QUOTES, 'UTF-8'); ?></title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -91,9 +89,9 @@ header("Expires: 0");
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
-    <link rel="stylesheet" href="/css/case-detail.css">
+    <link rel="stylesheet" href="../css/case-detail.css">
 
     <script>
 
@@ -279,7 +277,7 @@ header("Expires: 0");
 
         var xhr=new XMLHttpRequest();
 
-        xhr.open('GET','/admin/api/fetch-logo.php?t='+Date.now(),true);
+        xhr.open('GET','../admin/api/fetch-logo.php?t='+Date.now(),true);
 
         xhr.onload=function(){
 
@@ -341,7 +339,7 @@ header("Expires: 0");
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', '/admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.open('GET', '../admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
 
     xhr.onload = function() {
 
@@ -395,7 +393,7 @@ header("Expires: 0");
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', '/admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
+    xhr.open('GET', '../admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
 
     xhr.onload = function() {
 
@@ -442,7 +440,6 @@ header("Expires: 0");
 </script>
 
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
@@ -453,23 +450,44 @@ header("Expires: 0");
 
     <!-- 导航栏 -->
 
-        <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+
+<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="..//uploads/logo/logo_20260505_122045_69f9c47d515d1.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+
+
+
+
+
+
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+
                 <i class="fas fa-search" aria-hidden="true"></i>
+
             </button>
+
+            
+
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span><span></span><span></span>
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
             </button>
+
         </div>
+
     </nav>
 
 
 
-
-    <main id="main-content" style="min-height:60vh" class="main-content">
+    <main id="main-content" class="main-content" style="min-height:60vh">
 
         <!-- 返回按钮区域 -->
 
@@ -491,7 +509,7 @@ header("Expires: 0");
 
         <section class="case-detail-content">
 
-            <div class="case-detail-container" style="min-height:400px">
+            <div class="case-detail-container" style="min-height:500px" style="min-height:400px">
 
                 <div class="case-detail-grid">
 
@@ -507,16 +525,7 @@ header("Expires: 0");
                             <?php $cover = $case_content['coverImage'] ?? $case_data['image'] ?? ''; ?>
                             <?php $first_img = !empty($images) ? $images[0] : $cover; ?>
                             <?php if ($first_img): ?>
-                            <img src="<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage">
-                            <?php endif; ?>
-                            <?php if (count($images) > 1): ?>
-                            <div class="case-media-thumbs">
-                                <?php foreach ($images as $idx => $img): ?>
-                                <div class="case-media-thumb <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="changeImage('<?php echo htmlspecialchars($img); ?>', this)">
-                                    <img src="<?php echo htmlspecialchars($img); ?>" alt="">
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
+                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage">
                             <?php endif; ?>
                             <?php endif; ?>
                         </div>
@@ -717,7 +726,7 @@ header("Expires: 0");
 
     <!-- 页脚 -->
 
-    <?php include_once __DIR__ . '/includes/footer.php'; ?>
+    
 
 
 
@@ -758,7 +767,7 @@ header("Expires: 0");
 
 
 
-    <script src="/js/main.js"></script>
+    <script src="../js/main.js"></script>
 
     <script>
 
@@ -1824,82 +1833,7 @@ header("Expires: 0");
 
         <!-- CMS Editor -->
 
-    <script>
-
-        // 检查是否需要加载编辑器
-
-        (function() {
-
-            console.log('[CMS] 初始化检查...');
-
-            
-
-            const urlParams = new URLSearchParams(window.location.search);
-
-            const isEditMode = urlParams.get('edit') === 'true';
-
-            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
-
-            
-
-            console.log('[CMS] 编辑模式:', isEditMode);
-
-            console.log('[CMS] 登录状态:', isLoggedIn);
-
-            
-
-            if (isEditMode && isLoggedIn) {
-
-                console.log('[CMS] 开始加载编辑器...');
-
-                
-
-                // 加载编辑器样式
-
-                const editorCss = document.createElement('link');
-
-                editorCss.rel = 'stylesheet';
-
-                editorCss.href = 'admin/editor.css';
-
-                editorCss.onerror = function() {
-
-                    console.error('[CMS] 编辑器样式加载失败');
-
-                };
-
-                document.head.appendChild(editorCss);
-
-                
-
-                // 加载编辑器脚本
-
-                const editorScript = document.createElement('script');
-
-                editorScript.src = 'admin/editor.js';
-
-                editorScript.onload = function() {
-
-                    console.log('[CMS] 编辑器脚本加载成功');
-
-                };
-
-                editorScript.onerror = function() {
-
-                    console.error('[CMS] 编辑器脚本加载失败');
-
-                };
-
-                document.body.appendChild(editorScript);
-
-            } else if (isEditMode && !isLoggedIn) {
-
-                console.log('[CMS] 未登录，重定向到登录页');
-
-                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
-})();
-
-    </script>
+    
 
     
         <!-- 案例评论功能 -->
@@ -1907,90 +1841,18 @@ header("Expires: 0");
         
         </script>
 
-    <script src="/admin/assets/cms.js"></script>
+    <script src="../admin/assets/cms.js"></script>
 
-    <?php include_once __DIR__ . '/includes/footer.php'; ?>
+    
 
 
     <!-- 移动端链接拦截器：确保点击标签/链接时保持在手机端 -->
-    <script>
-    (function() {
-        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-        if (!isMobile) return;
+    
 
-        // 方案A：页面加载后重写所有现有链接
-        function rewriteExistingLinks() {
-            document.querySelectorAll('a[href^="/"]').forEach(function(a) {
-                var href = a.getAttribute('href');
-                // 只重写根相对路径，排除外部链接、锚点、已移动端路径
-                if (href && href.startsWith('/') &&
-                    !href.startsWith('/mobile/') &&
-                    !href.startsWith('//') &&
-                    !href.startsWith('http') &&
-                    !href.startsWith('mailto:') &&
-                    !href.startsWith('tel:') &&
-                    !href.startsWith('#')) {
-                    a.href = '/mobile' + href;
-                }
-            });
-        }
+<script src="../js/nav-loader.js?v=4"></script>
 
-        // 方案B：拦截点击事件（安全网，捕获动态添加的链接）
-        document.addEventListener('click', function(e) {
-            var a = e.target.closest('a');
-            if (!a) return;
-            var href = a.getAttribute('href');
-            if (!href) return;
-            // 只拦截会导航到桌面端的根相对路径
-            if (href.startsWith('/') &&
-                !href.startsWith('/mobile/') &&
-                !href.startsWith('//') &&
-                !href.startsWith('http') &&
-                !href.startsWith('mailto:') &&
-                !href.startsWith('tel:') &&
-                !href.startsWith('#')) {
-                e.preventDefault();
-                window.location.href = '/mobile' + href;
-            }
-        });
+<footer class="footer"><div class="footer-container"><div class="footer-bottom"><p class="footer-copyright">&copy; 2026 Yao资金网 宏都资本版权所有</p><p class="footer-disclaimer">粤ICP备2026052915号</p></div></div></footer>
 
-        // 方案C：监听DOM变化，重写动态添加的链接
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    mutation.addedNodes.forEach(function(node) {
-                        if (node.nodeType === 1) { // Element node
-                            if (node.tagName === 'A') {
-                                var h = node.getAttribute('href');
-                                if (h && h.startsWith('/') && !h.startsWith('/mobile/') && !h.startsWith('//') && !h.startsWith('http') && !h.startsWith('mailto:') && !h.startsWith('tel:') && !h.startsWith('#')) {
-                                    node.href = '/mobile' + h;
-                                }
-                            }
-                            if (node.querySelectorAll) {
-                                node.querySelectorAll('a[href^="/"]').forEach(function(link) {
-                                    var h2 = link.getAttribute('href');
-                                    if (h2 && !h2.startsWith('/mobile/') && !h2.startsWith('//') && !h2.startsWith('http') && !h2.startsWith('mailto:') && !h2.startsWith('tel:') && !h2.startsWith('#')) {
-                                        link.href = '/mobile' + h2;
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-
-        // 初始执行
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', rewriteExistingLinks);
-        } else {
-            rewriteExistingLinks();
-})();
-    </script>
-
-<script src="/js/nav-loader.js?v=4"></script>
-<?php include_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

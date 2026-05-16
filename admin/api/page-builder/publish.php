@@ -21,40 +21,8 @@ try {
     }
     $stmt->close();
     $outputPath = __DIR__ . '/../../../pages/' . $pageId . '.html';
-    
-    $logoJson = __DIR__ . '/../../data/logo-settings.json';
-    $logoPath = '/uploads/logo/logo_20260505_122045_69f9c47d515d1.png';
-    $faviconPath = '/uploads/logo/logo_20260504_045101_69f80995372b0.png';
-    if (file_exists($logoJson)) {
-        $ld = json_decode(file_get_contents($logoJson), true);
-        if ($ld && !empty($ld["header_logo"])) {
-            $logoPath = str_replace("\\", "/", $ld["header_logo"]);
-            $logoPath = preg_replace("#^\.?/#", "/", $logoPath);
-            if (strpos($logoPath, "/") !== 0) $logoPath = "/" . $logoPath;
-        }
-        if ($ld && !empty($ld["favicon"])) {
-            $faviconPath = str_replace("\\", "/", $ld["favicon"]);
-            $faviconPath = preg_replace("#^\.?/#", "/", $faviconPath);
-            if (strpos($faviconPath, "/") !== 0) $faviconPath = "/" . $faviconPath;
-        }
-    }
-
-$fullHtml = generateFullPage($pageId, $html);
+    $fullHtml = generateFullPage($pageId, $html);
     if (file_put_contents($outputPath, $fullHtml)) {
-    $mobileDir = __DIR__ . '/../../../mobile/pages';
-    if (!is_dir($mobileDir)) { mkdir($mobileDir, 0755, true); }
-    $mobilePath = $mobileDir . '/' . $pageId . '.html';
-    $mobileHtml = $fullHtml;
-    $mobileHtml = str_replace('href="/css/', 'href="../../css/', $mobileHtml);
-        $mobileHtml = str_replace('src="/js/', 'src="../../js/', $mobileHtml);
-        $mobileHtml = str_replace('src="/uploads/', 'src="../../uploads/', $mobileHtml);
-        $mobileHtml = str_replace('src="/images/', 'src="../../images/', $mobileHtml);
-        $mobileHtml = str_replace('href="/assets/', 'href="../../assets/', $mobileHtml);
-        $mobileHtml = str_replace('src="/assets/', 'src="../../assets/', $mobileHtml);
-        $mobileHtml = str_replace('"/admin/api/', '"../../admin/api/', $mobileHtml);
-        $mobileHtml = str_replace('nav-loader.js?v=2', 'nav-loader.js?v=3', $mobileHtml);
-        file_put_contents($mobilePath, $mobileHtml);
-
         jsonSuccess(['html_path' => $outputPath], '发布成功');
     } else {
         jsonError('写入HTML文件失败');
@@ -272,8 +240,6 @@ function generateFullPage($pageId, $content) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>' . htmlspecialchars($pageId) . '</title>
-    <link rel="icon" href=\"$faviconPath\" type="image/x-icon">
-    <link rel="shortcut icon" href=\"$faviconPath\" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <link rel="stylesheet" href="/css/page-custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -296,7 +262,7 @@ function generateFullPage($pageId, $content) {
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==="/"?p.substring(1):p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector(".logo img");
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -317,7 +283,7 @@ function generateFullPage($pageId, $content) {
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src=\"$logoPath\" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
             <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -335,7 +301,7 @@ function generateFullPage($pageId, $content) {
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
-                <div class="footer-brand"><div class="footer-logo"><img src=\"$logoPath\" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
+                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
                 <div class="footer-nav" data-footer-group="quick_links"><h4 class="footer-nav-title">快速导航</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="service_links"><h4 class="footer-nav-title">服务项目</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh-CN" data-immersive-translate-page-theme="light"><head>
 
 
@@ -18,7 +19,7 @@
     <title>要资金网 - 过桥短拆 | 摆账亮资 | 资金证明 | 实缴验资 | 银行存款冲量</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
-    <noscript>&amp;amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;amp;gt;</noscript>
+    <noscript>&amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;gt;</noscript>
     <link rel="stylesheet" href="../css/style.css?v=202605092200">
 
     <!-- Structured Data -->
@@ -177,7 +178,7 @@
     <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="主导航">
 
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;" class=""></a>
+<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;"></a>
 
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu"><li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li><li role="none"><a href="/mobile/services.html" class="nav-link" role="menuitem">业务范围</a></li><li role="none"><a href="/mobile/cases.html" class="nav-link" role="menuitem">成功案例</a></li><li role="none"><a href="/mobile/advantages.html" class="nav-link" role="menuitem">服务优势</a></li><li role="none"><a href="/mobile/news.php" class="nav-link" role="menuitem">行业资讯</a></li><li role="none"><a href="/mobile/faq.html" class="nav-link" role="menuitem">常见问题</a></li><li role="none"><a href="/mobile/pages/page_1778812379_0b9248.html" class="nav-link" role="menuitem">测试问题</a></li><li role="none"><a href="/mobile/contact.html" class="nav-link" role="menuitem">联系我们</a></li></ul>
 

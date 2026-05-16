@@ -1,11 +1,12 @@
+<!DOCTYPE html>
 <html lang="zh-CN" data-immersive-translate-page-theme="light"><head>
 
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="专业资金服务平台，主营上市公司短拆、股票解质押过桥、企业个人摆账亮资、实缴验资、资金证明、银行时点日均冲量、工程亮资、定期存款、应收账款融资及云信票据置换，优化财务报表、增资产降负债，诚邀渠道代理合作。">
+    <meta name="description" content="提供企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等一站式资金业务服务，高效合规，专业对接。">
 
-    <meta name="keywords" content="上市公司短拆,股票解质押过桥,企业摆账,个人亮资,资金证明,实缴验资,银行冲量,工程亮资,过桥短拆,定期存款,应收账款融资,优化财务报表,降负债">
+    <meta name="keywords" content="企业摆账，过桥短拆，银行冲量，实缴验资，工程亮资">
     <meta name="author" content="Yao资金">
 
     <meta name="robots" content="index, follow">
@@ -15,10 +16,10 @@
     <meta property="og:locale" content="zh_CN">
     <link rel="canonical" href="https://www.hengxinziben.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <title>要资金网 - 过桥短拆 | 摆账亮资 | 资金证明 | 实缴验资 | 银行存款冲量</title>
+    <title>Yao 资金网 | 企业摆账 - 过桥短拆一站式资金业务服务</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
-    <noscript>&amp;amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;amp;gt;</noscript>
+    <noscript>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;</noscript>
     <link rel="stylesheet" href="../css/style.css?v=202605092200">
 
     <!-- Structured Data -->
@@ -177,9 +178,9 @@
     <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="主导航">
 
         <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;" class=""></a>
+<a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;"></a>
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"><li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li><li role="none"><a href="/mobile/services.html" class="nav-link" role="menuitem">业务范围</a></li><li role="none"><a href="/mobile/cases.html" class="nav-link" role="menuitem">成功案例</a></li><li role="none"><a href="/mobile/advantages.html" class="nav-link" role="menuitem">服务优势</a></li><li role="none"><a href="/mobile/news.php" class="nav-link" role="menuitem">行业资讯</a></li><li role="none"><a href="/mobile/faq.html" class="nav-link" role="menuitem">常见问题</a></li><li role="none"><a href="/mobile/pages/page_1778812379_0b9248.html" class="nav-link" role="menuitem">测试问题</a></li><li role="none"><a href="/mobile/contact.html" class="nav-link" role="menuitem">联系我们</a></li></ul>
+            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
 
 
             
@@ -224,9 +225,9 @@
             </div>
 
             <h1 class="hero-title" id="hero-title">专业资金解决方案
-                助力企业稳健发展</h1>
+助力企业稳健发展</h1>
 
-            <p class="hero-subtitle">提供上市公司短拆、企业摆账、银行存款、资金证明等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。</p>
+            <p class="hero-subtitle">提供上市公司短拆、企业摆账、银行存款、应收账款融资等全方位资金服务,以专业实力和丰富经验,为您的企业发展保驾护航。</p>
 
 
             <div class="hero-buttons">
@@ -280,49 +281,29 @@
             </div>
 
             <div class="services-grid">
-                <article class="service-card" data-service="listed" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                <article class="service-card" data-service="listed" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">上市公司类</h3>
 
-                    <ul class="service-list">
-                        <li>短拆、股票解质押过桥</li>
-                        <li>募集账户归还过桥、产业基金备案过桥</li>
-                        <li>股票质押、定增、协议转让、代持</li>
-                        <li>财务报表优化、降负债</li>
-                    </ul>
+                    <ul class="service-list"><ul><li>短拆、股票解质押过桥</li><li class="">募集账户归还过桥、产业基金备案过桥</li><li>股票质押、定增、协议转让、代持</li><li>财务报表优化、降负债</li></ul></ul>
 
                 </article>
 
                 <article class="service-card" data-service="摆账" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">企业/个人摆账</h3>
-                    <ul class="service-list">
-                        <li>长短期定存摆账、云信票据实摆</li>
-                        <li>过账实趴、抵押类资金过桥</li>
-                        <li>实缴验资、资金证明、银行保函</li>
-                        <li>贸易增量、显账亮资</li>
-                    </ul>
+                    <ul class="service-list"><ul><li class="">长短期定存摆账、云信票据实摆</li><li class="">过账实趴、抵押类资金过桥</li><li class="">实缴验资、资金证明、银行保函</li><li class="">贸易增量、显账亮资</li></ul></ul>
 
                 </article>
 
                 <article class="service-card" data-service="deposit" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">银行存款类</h3>
 
-                    <ul class="service-list">
-                        <li>时点冲量、日均业务</li>
-                        <li>月末冲量</li>
-                        <li>一年期定期存款</li>
-                        <li>三年期定期存款</li>
-                    </ul>
+                    <ul class="service-list"><ul><li class="">时点冲量、日均业务</li><li class="">月末冲量</li><li>一年期定期存款</li><li>三年期定期存款</li></ul></ul>
 
                 </article>
 
                 <article class="service-card" data-service="receivable" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
-                    <h3 class="service-title">云信融资出表</h3>
-                    <ul class="service-list">
-                        <li>置换云信票据</li>
-                        <li>可拆分流转支付</li>
-                        <li>融资贴现、准入宽松</li>
-                        <li>不看征信、包容执行诉讼主体</li>
-                    </ul>
+                    <h3 class="service-title">应收账款融资</h3>
+                    <ul class="service-list"><ul><li>置换云信票据</li><li class="">可拆分流转支付</li><li class="">融资贴现、准入宽松</li><li>不看征信、包容执行诉讼主体</li></ul></ul>
 
                 </article>
             </div>
@@ -376,8 +357,8 @@
             
             <div class="cases-showcase-grid" id="casesShowcaseGrid">
                     <article class="case-card-enhanced" data-id="1778589809435">
-                        <div class="case-card-image" onclick="window.openLightbox &amp;&amp; window.openLightbox('..//uploads/20260513_6a049f4f44bb7.png')">
-                            <img src="..//uploads/20260513_6a049f4f44bb7.png" alt="3 亿元个人名下资金证明 | 大额个人资产实力证明案例" onerror="this.src='../images/case-default.svg'">
+                        <div class="case-card-image" onclick="window.openLightbox &amp;&amp; window.openLightbox('../uploads/20260512_6a032129407ab.png')">
+                            <img src="../uploads/20260512_6a032129407ab.png" alt="3 亿元个人名下资金证明 | 大额个人资产实力证明案例" onerror="this.src='../images/case-default.svg'">
                         </div>
                         <div class="case-card-content" onclick="window.location.href='case-detail.html?id=1778589809435'" style="cursor:pointer">
                             <h3 class="case-card-title" style="cursor:pointer">3 亿元个人名下资金证明 | 大额个人资产实力证明案例</h3>
@@ -524,8 +505,8 @@
     <section class="advantages" id="advantages" aria-labelledby="advantages-title">
         <div class="section-container">
             <div class="advantages-header">
-                <h2 class="advantages-title" id="advantages-title">服务优势</h2>
-                <p class="advantages-subtitle">专业、高效、安全</p>
+                <h2 class="advantages-title" id="advantages-title">我们的核心优势</h2>
+                <p class="advantages-subtitle">专业 高效 安全 可靠</p>
 
             </div>
 
@@ -624,12 +605,7 @@
                 <h2 class="section-title" id="faq-title">常见问题</h2>
                 <p class="section-subtitle">解答您关于资金业务的常见疑问</p>
             </div>
-            <div id="faqContainer" class="faq-container"><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-lightbulb" aria-hidden="true"></i> 亮资业务</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">什么是亮资服务？</summary><div class="faq-answer">亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</div></details><details class="faq-item"><summary class="faq-question">亮资需要多长时间？</summary><div class="faq-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-exchange-alt" aria-hidden="true"></i> 过桥资金</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">过桥资金的利率是多少？</summary><div class="faq-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间，具体费率需根据实际情况评估。</p></div></details><details class="faq-item"><summary class="faq-question">过桥资金最长可以使用多久？</summary><div class="faq-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-university" aria-hidden="true"></i> 摆账业务</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">摆账业务的资金安全吗？</summary><div class="faq-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。同时会签订正规合同，保障双方权益。</p></div></details><details class="faq-item"><summary class="faq-question">摆账需要提供什么资料？</summary><div class="faq-answer"><p>一般需要提供：营业执照、法人身份证、公司章程、银行开户许可证等基础资料，具体要求根据摆账金额和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> 应收账款融资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">云信与承兑汇票区别</summary><div class="faq-answer"><p>简单通俗来讲它就类似于银行承兑汇票 &nbsp;区别在于一个兑付人是银行，一个兑付人是我们持金融牌照的保理机构也属于国企 到期无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信出表融资操作逻辑</summary><div class="faq-answer"><p>操作逻辑：就是我们保理机构以收购买断企业应收帐款方式（ 不确权 签无追索权保理）等价融资开具云信票据（电子债权凭证）给企业，企业可以流转支付 代替现金使用 到期资方可以无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信融资成本多少？</summary><div class="faq-answer"><p>帮助企业以极低的年化不超过3.5%融资成本用来流转支付 或真实债务出表，代替现金使用一年以内，解决企业现金流不足支付问题。</p></div></details><details class="faq-item"><summary class="faq-question">准备申请材料</summary><div class="faq-answer"><p>准备的申请材料：<br>营业执照 应收账款清单 合同发票， 业务确认表 &nbsp;近三年的财务报表 法人身份证</p></div></details><details class="faq-item"><summary class="faq-question">操作流程</summary><div class="faq-answer"><p>业务操作流程</p>
-<p>阶段一：准备与申请提交申请 材料（所需资料:营业执照 应收账款清单，合同发票，业 务确认表，近三年财报，法人 身份证）&nbsp;</p>
-<p>阶段二：人工审批1个工作日 内完成</p>
-<p>阶段三：审批通过业务立项收 取履约保证金（财务审核履约 保证金金额及公户私户付款比 例)</p>
-<p>阶段四：法大大网签保理协 议，回寄合同资料原件，企业 承诺函扫描上传申请配置额度 （5-7个工作日），开票企业 注册中企云链账户，绑定uk。</p>
-<p>阶段五：全款支付1.财务确认 全款到账（包含对公对私账 户）2.出票给客户t+0或t+1， 出具对公账户收款金额的保理 服务费发票，业务结束。 目来自华为备忘录</p></div></details><details class="faq-item"><summary class="faq-question">云信属性与功能</summary><div class="faq-answer"><p>它的属性就是 可拆分 可流转 可支付 可融资 可贴现，市场上做票据的有大量收云信贴现的你可以了解下</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-piggy-bank" aria-hidden="true"></i> 银行存款</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">银行存款业务有什么优势？</summary><div class="faq-answer"><p>我们与多家银行建立了长期合作关系，可以为客户争取更优惠的存款利率，同时提供专业的资金管理建议。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-question-circle" aria-hidden="true"></i> 其他问题</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">如何联系你们？</summary><div class="faq-answer"><p>您可以通过以下方式联系我们：<br>电话：13552883008<br>邮箱：wanglizhongguo@126.com<br>或直接在网站上点击"立即咨询"按钮。</p></div></details></div></div></div>
+            <div id="faqContainer" class="faq-container"><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-lightbulb" aria-hidden="true"></i> 亮资业务</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">什么是亮资服务？</summary><div class="faq-answer">亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</div></details><details class="faq-item"><summary class="faq-question">亮资需要多长时间？</summary><div class="faq-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-exchange-alt" aria-hidden="true"></i> 过桥资金</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">过桥资金的利率是多少？</summary><div class="faq-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间，具体费率需根据实际情况评估。</p></div></details><details class="faq-item"><summary class="faq-question">过桥资金最长可以使用多久？</summary><div class="faq-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-university" aria-hidden="true"></i> 摆账业务</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">摆账业务的资金安全吗？</summary><div class="faq-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。同时会签订正规合同，保障双方权益。</p></div></details><details class="faq-item"><summary class="faq-question">摆账需要提供什么资料？</summary><div class="faq-answer"><p>一般需要提供：营业执照、法人身份证、公司章程、银行开户许可证等基础资料，具体要求根据摆账金额和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> 应收账款融资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">应收账款融资的额度是多少？</summary><div class="faq-answer"><p>应收账款融资额度一般为应收账款金额的50%-80%，具体比例根据应收账款质量、账期、买方信用等因素确定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-piggy-bank" aria-hidden="true"></i> 银行存款</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">银行存款业务有什么优势？</summary><div class="faq-answer"><p>我们与多家银行建立了长期合作关系，可以为客户争取更优惠的存款利率，同时提供专业的资金管理建议。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-question-circle" aria-hidden="true"></i> 其他问题</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">如何联系你们？</summary><div class="faq-answer"><p>您可以通过以下方式联系我们：<br>电话：13552883008<br>邮箱：wanglizhongguo@126.com<br>或直接在网站上点击"立即咨询"按钮。</p></div></details></div></div></div>
         </div>
     </section>
 
@@ -730,8 +706,8 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
+                <p class="footer-copyright">©  2026 Yao资金网 宏都资本版权所有 </p>
+                <p class="footer-disclaimer">粤ICP备2026052915号 </p>
             </div>
         </div>
     </footer>
@@ -1059,7 +1035,52 @@
     </script>
 
     <!-- CMS Editor -->
-    
+    <script>
+        // 检查是否需要加载编辑器
+        (function() {
+            console.log('[CMS] 初始化检查?..');
+
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const isEditMode = urlParams.get('edit') === 'true';
+            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
+
+            console.log('[CMS] 编辑模式:', isEditMode);
+            console.log('[CMS] 初始化检查?..');
+
+            console.log('[CMS] localStorage cms_logged_in:', localStorage.getItem('cms_logged_in'));
+
+            if (isEditMode && isLoggedIn) {
+                console.log('[CMS] 开始加载编辑器...');
+
+                // 加载编辑器样?                const editorCss = document.createElement('link');
+                editorCss.rel = 'stylesheet';
+                editorCss.href = 'admin/editor.css';
+                editorCss.onerror = function() {
+                    alert('CMS编辑器样式加载失败,请检查文件路径');
+                };
+                document.head.appendChild(editorCss);
+                console.log('[CMS] 样式表已加载');
+
+                // 加载编辑器脚?                const editorScript = document.createElement('script');
+                editorScript.src = 'admin/editor.js';
+                editorScript.onload = function() {
+            console.log('[CMS] 初始化检查?..');
+
+                };
+                editorScript.onerror = function() {
+                    alert('CMS编辑器脚本加载失败,请检查文件路径');
+                };
+                document.body.appendChild(editorScript);
+            } else if (isEditMode && !isLoggedIn) {
+            console.log('[CMS] 初始化检查?..');
+
+                // 未登录,重定向到登录?                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
+            } else {
+                console.log('[CMS] 不在编辑模式或未登录');
+            }
+        })();
+    </script>
     <script>
         // 切换电话号码显示:隐藏按钮,原地显示号码
         function togglePhoneDisplay() {

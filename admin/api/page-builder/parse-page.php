@@ -24,7 +24,13 @@ try {
 
     foreach ($possiblePaths as $path) {
         if (file_exists($path)) {
-            $htmlContent = file_get_contents($path);
+            if (preg_match('/\.php$/i', $path) || strpos(file_get_contents($path), '<?php') !== false) {
+                ob_start();
+                include $path;
+                $htmlContent = ob_get_clean();
+            } else {
+                $htmlContent = file_get_contents($path);
+            }
             $foundPath = $path;
             break;
         }

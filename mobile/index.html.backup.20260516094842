@@ -18,7 +18,7 @@
     <title>要资金网 - 过桥短拆 | 摆账亮资 | 资金证明 | 实缴验资 | 银行存款冲量</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
-    <noscript>&amp;amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;amp;gt;</noscript>
+    <noscript>&amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;gt;</noscript>
     <link rel="stylesheet" href="../css/style.css?v=202605092200">
 
     <!-- Structured Data -->
@@ -226,7 +226,7 @@
             <h1 class="hero-title" id="hero-title">专业资金解决方案
                 助力企业稳健发展</h1>
 
-            <p class="hero-subtitle">提供上市公司短拆、企业摆账、银行存款、资金证明等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。</p>
+            <p class="hero-subtitle">提供上市公司短拆、企业摆账、银行存款、资金证明等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航</p>
 
 
             <div class="hero-buttons">

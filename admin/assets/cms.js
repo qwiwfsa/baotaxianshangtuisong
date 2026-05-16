@@ -19,8 +19,8 @@
 
         try {
             // 从数据库API加载最新数据
-            const CMS_BASE = '';
-            const response = await fetch(CMS_BASE + `admin/api/load.php?page=${pageId}&t=${Date.now()}`);
+            const CMS_BASE = '/';
+            const response = await fetch(CMS_BASE + 'admin/api/load.php?page=' + pageId + '&t=' + Date.now());
             if (response.ok) {
                 const result = await response.json();
                 if (result.success && result.data) {
@@ -129,7 +129,7 @@
     // 加载页脚数据
     async function loadFooter() {
         try {
-            const resp = await fetch('admin/api/footer-data.php');
+            const resp = await fetch('/admin/api/footer-data.php');
             const result = await resp.json();
             if (result.code !== 0 || !result.grouped) return;
             const g = result.grouped;

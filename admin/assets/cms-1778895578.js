@@ -20,7 +20,7 @@
         try {
             // 从数据库API加载最新数据
             const CMS_BASE = '/';
-            const response = await fetch(CMS_BASE + 'admin/api/load.php?page=' + pageId + '&t=' + Date.now());
+            const response = await fetch('/admin/api/load.php?page=' + pageId + '&t=' + Date.now());
             if (response.ok) {
                 const result = await response.json();
                 if (result.success && result.data) {
