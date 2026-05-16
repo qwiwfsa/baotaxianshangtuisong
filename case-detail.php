@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/includes/logo.php'; ?>
 <!DOCTYPE html>
 
 <html lang="zh-CN">
@@ -45,7 +46,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <link rel="stylesheet" href="/css/page-custom.css">
 
     <link rel="stylesheet" href="/css/case-detail.css">
 
@@ -408,8 +410,10 @@
 
         <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="<?php echo $header_logo; 
+require_once __DIR__ . '/includes/logo.php';?>" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
             </button>
@@ -1767,82 +1771,7 @@
 
         <!-- CMS Editor -->
 
-    <script>
-
-        // 检查是否需要加载编辑器
-
-        (function() {
-
-            console.log('[CMS] 初始化检查...');
-
-            
-
-            const urlParams = new URLSearchParams(window.location.search);
-
-            const isEditMode = urlParams.get('edit') === 'true';
-
-            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
-
-            
-
-            console.log('[CMS] 编辑模式:', isEditMode);
-
-            console.log('[CMS] 登录状态:', isLoggedIn);
-
-            
-
-            if (isEditMode && isLoggedIn) {
-
-                console.log('[CMS] 开始加载编辑器...');
-
-                
-
-                // 加载编辑器样式
-
-                const editorCss = document.createElement('link');
-
-                editorCss.rel = 'stylesheet';
-
-                editorCss.href = 'admin/editor.css';
-
-                editorCss.onerror = function() {
-
-                    console.error('[CMS] 编辑器样式加载失败');
-
-                };
-
-                document.head.appendChild(editorCss);
-
-                
-
-                // 加载编辑器脚本
-
-                const editorScript = document.createElement('script');
-
-                editorScript.src = 'admin/editor.js';
-
-                editorScript.onload = function() {
-
-                    console.log('[CMS] 编辑器脚本加载成功');
-
-                };
-
-                editorScript.onerror = function() {
-
-                    console.error('[CMS] 编辑器脚本加载失败');
-
-                };
-
-                document.body.appendChild(editorScript);
-
-            } else if (isEditMode && !isLoggedIn) {
-
-                console.log('[CMS] 未登录，重定向到登录页');
-
-                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
-})();
-
-    </script>
+    
 
     
         <!-- 案例评论功能 -->
@@ -1856,81 +1785,7 @@
 
 
     <!-- 移动端链接拦截器：确保点击标签/链接时保持在手机端 -->
-    <script>
-    (function() {
-        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-        if (!isMobile) return;
-
-        // 方案A：页面加载后重写所有现有链接
-        function rewriteExistingLinks() {
-            document.querySelectorAll('a[href^="/"]').forEach(function(a) {
-                var href = a.getAttribute('href');
-                // 只重写根相对路径，排除外部链接、锚点、已移动端路径
-                if (href && href.startsWith('/') &&
-                    !href.startsWith('/mobile/') &&
-                    !href.startsWith('//') &&
-                    !href.startsWith('http') &&
-                    !href.startsWith('mailto:') &&
-                    !href.startsWith('tel:') &&
-                    !href.startsWith('#')) {
-                    a.href = '/mobile' + href;
-                }
-            });
-        }
-
-        // 方案B：拦截点击事件（安全网，捕获动态添加的链接）
-        document.addEventListener('click', function(e) {
-            var a = e.target.closest('a');
-            if (!a) return;
-            var href = a.getAttribute('href');
-            if (!href) return;
-            // 只拦截会导航到桌面端的根相对路径
-            if (href.startsWith('/') &&
-                !href.startsWith('/mobile/') &&
-                !href.startsWith('//') &&
-                !href.startsWith('http') &&
-                !href.startsWith('mailto:') &&
-                !href.startsWith('tel:') &&
-                !href.startsWith('#')) {
-                e.preventDefault();
-                window.location.href = '/mobile' + href;
-            }
-        });
-
-        // 方案C：监听DOM变化，重写动态添加的链接
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    mutation.addedNodes.forEach(function(node) {
-                        if (node.nodeType === 1) { // Element node
-                            if (node.tagName === 'A') {
-                                var h = node.getAttribute('href');
-                                if (h && h.startsWith('/') && !h.startsWith('/mobile/') && !h.startsWith('//') && !h.startsWith('http') && !h.startsWith('mailto:') && !h.startsWith('tel:') && !h.startsWith('#')) {
-                                    node.href = '/mobile' + h;
-                                }
-                            }
-                            if (node.querySelectorAll) {
-                                node.querySelectorAll('a[href^="/"]').forEach(function(link) {
-                                    var h2 = link.getAttribute('href');
-                                    if (h2 && !h2.startsWith('/mobile/') && !h2.startsWith('//') && !h2.startsWith('http') && !h2.startsWith('mailto:') && !h2.startsWith('tel:') && !h2.startsWith('#')) {
-                                        link.href = '/mobile' + h2;
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-
-        // 初始执行
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', rewriteExistingLinks);
-        } else {
-            rewriteExistingLinks();
-})();
-    </script>
+    
 
 </body>
 

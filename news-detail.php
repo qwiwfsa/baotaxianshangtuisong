@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
 // ===== 动态 SEO =====
@@ -10,6 +11,7 @@ $article_id_seo = intval($_GET['id'] ?? 0);
 if ($article_id_seo > 0) {
     try {
         require_once __DIR__ . '/config/db.php';
+
         $db_seo = getDB();
         $stmt_seo = $db_seo->prepare("SELECT title, seo_title, seo_keywords, seo_description, summary FROM cms_articles WHERE id = ? AND status = 'published' LIMIT 1");
         $stmt_seo->bind_param('i', $article_id_seo);
@@ -30,6 +32,7 @@ $related_articles = [];
 if ($article_id_seo > 0) {
     try {
         require_once __DIR__ . '/config/db.php';
+
         $db_rel = getDB();
         // Get current article's category
         $cat_stmt = $db_rel->prepare("SELECT category_id FROM cms_articles WHERE id = ?");

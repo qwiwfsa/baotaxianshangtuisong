@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
+
 DeviceDetector::redirect();
 ?>
 <!DOCTYPE html>
@@ -140,7 +142,7 @@ DeviceDetector::redirect();
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="<?php echo $header_logo; ?>" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
             
             

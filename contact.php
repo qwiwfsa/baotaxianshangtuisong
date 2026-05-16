@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
+
 DeviceDetector::redirect();
 header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-cache");header("Expires: 0");?>
 <!DOCTYPE html>
@@ -110,7 +112,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="<?php echo $header_logo; ?>" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">

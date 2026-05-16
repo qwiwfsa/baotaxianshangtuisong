@@ -1,7 +1,9 @@
 <?php
+require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
 require_once __DIR__ . '/config/db.php';
+
 $caseDB = getDB();
 $caseResult = $caseDB->query("SELECT id, title, company, amount, period, category, description, image, content FROM cases WHERE status = 1 ORDER BY sort_order ASC, id DESC LIMIT 8");
 $allCases = [];

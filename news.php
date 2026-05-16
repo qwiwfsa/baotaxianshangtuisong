@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
+
 DeviceDetector::redirect();
 require_once __DIR__ . '/includes/news-prerender.php';
 ?>

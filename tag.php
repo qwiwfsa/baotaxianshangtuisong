@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
 // ===== 动态 SEO - 标签页 =====
@@ -9,6 +10,7 @@ $tag_slug_seo = trim($_GET['slug'] ?? '');
 if ($tag_slug_seo) {
     try {
         require_once __DIR__ . '/config/db.php';
+
         $db_tag = getDB();
         $stmt_tag = $db_tag->prepare("SELECT name, seo_title, seo_keywords, seo_description FROM tags WHERE slug = ? LIMIT 1");
         $stmt_tag->bind_param('s', $tag_slug_seo);
