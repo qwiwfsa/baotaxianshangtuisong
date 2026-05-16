@@ -8,7 +8,7 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
 
     <meta name="description" content="Yao资金网成功案例详情 - 查看详细的资金服务案例，了解我们如何帮助企业解决资金需求。">
 
@@ -395,8 +395,121 @@
 
 </script>
 
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
-</head>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style><style></style><style>
+
+        /* 移动端响应式修正 - 确保移动端完全显示不溢出 */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+        .main-content,
+        .case-detail-content,
+        .case-detail-container,
+        .case-back-section {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        .case-detail-container {
+            padding: 0 16px;
+        }
+        .case-detail-main {
+            padding: 20px;
+        }
+        .case-detail-main img,
+        .case-description-text img,
+        .case-highlight-item img,
+        .case-media-main img,
+        .case-media-main video {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        .case-description-text {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        @media (max-width: 1024px) {
+            .case-detail-grid {
+                grid-template-columns: 1fr;
+            }
+            .case-detail-sidebar {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .case-contact-card,
+            .case-related-card,
+            .case-service-guarantee {
+                flex: 1;
+                min-width: 280px;
+            }
+        }
+        @media (max-width: 768px) {
+            .case-back-section {
+                padding: 80px 16px 16px;
+            }
+            .case-detail-content {
+                padding: 24px 0 40px;
+            }
+            .case-detail-main {
+                padding: 16px;
+                border-radius: 12px;
+            }
+            .case-media-thumbs {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .case-media-main {
+                aspect-ratio: 16/10;
+            }
+            .case-detail-sidebar {
+                flex-direction: column;
+            }
+            .case-contact-card,
+            .case-related-card,
+            .case-service-guarantee {
+                min-width: auto;
+                flex: none;
+                width: 100%;
+            }
+            .case-detail-title-content {
+                font-size: 22px;
+            }
+            .footer-bottom {
+                padding: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .case-back-section {
+                padding: 70px 12px 12px;
+            }
+            .case-detail-container {
+                padding: 0 12px;
+            }
+            .case-detail-main {
+                padding: 12px;
+            }
+            .case-detail-title-content {
+                font-size: 18px;
+            }
+            .case-description-text {
+                font-size: 14px;
+            }
+            .case-media-thumbs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .case-highlights {
+                padding: 16px;
+            }
+            .case-contact-card {
+                padding: 16px;
+            }
+            .case-related-card {
+                padding: 16px;
+            }
+        }</style></head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
 
@@ -465,7 +578,7 @@
 
         <section class="case-detail-content">
 
-            <div class="case-detail-container" style="min-height:500px" style="min-height:400px">
+            <div class="case-detail-container" style="min-height:400px">
 
                 <div class="case-detail-grid">
 
@@ -680,6 +793,14 @@
 
 
     <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p class="footer-copyright" id="footerCopyright">&copy; 2025 Yao资金网 版权所有</p>
+                <p class="footer-disclaimer" id="footerDisclaimer">粤ICP备2026052915号</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="../js/footer-loader.js"></script>
 

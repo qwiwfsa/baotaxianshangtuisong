@@ -38,8 +38,10 @@ class DeviceDetector {
             return true;
         }
 
+        // Android 平板：包含 Android 但不含 Mobile，且有平板特征（Tablet 关键字或平板型号）
         if (stripos($userAgent, 'Android') !== false &&
-            stripos($userAgent, 'Mobile') === false) {
+            stripos($userAgent, 'Mobile') === false &&
+            preg_match('/\b(?:tablet|tab\b|smt|gt-p|sch-i|kf\w+)/i', $userAgent)) {
             return true;
         }
 
@@ -67,6 +69,11 @@ class DeviceDetector {
      * @param string $basePath 基础路径
      */
     public static function redirect($basePath = '') {
+        // 启动会话（如果尚未启动）
+        if (session_status() === PHP_SESSION_NONE) {
+            @session_start();
+        }
+
         // 检查是否有强制参数
         if (isset($_GET['force_device'])) {
             $forceDevice = $_GET['force_device'];
@@ -85,8 +92,8 @@ class DeviceDetector {
         // 获取当前页面名
         $currentPage = basename($_SERVER['PHP_SELF']);
 
-        // 如果是移动设备且不在mobile目录，重定向到移动版
-        if ($deviceType === 'mobile' && strpos($_SERVER['REQUEST_URI'], '/mobile/') === false) {
+        // 如果是移动设备或平板且不在mobile目录，重定向到移动版
+        if (in_array($deviceType, ['mobile', 'tablet']) && strpos($_SERVER['REQUEST_URI'], '/mobile/') === false) {
             // 优先尝试 .php，若不存在则尝试 .html（手机端是.html文件）
             // 注意: 路径前加 "/" 防止 DOCUMENT_ROOT 无尾斜杠导致路径拼接错误
             $mobilePage = $basePath . '/mobile/' . $currentPage;

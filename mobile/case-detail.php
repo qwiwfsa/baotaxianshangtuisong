@@ -52,7 +52,7 @@ header("Expires: 0");
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
 
     <meta name="description" content="Yao资金网成功案例详情 - 查看详细的资金服务案例，了解我们如何帮助企业解决资金需求。">
 
@@ -439,8 +439,199 @@ header("Expires: 0");
 
 </script>
 
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
-</head>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style><style>
+
+        /* 移动端响应式修正 - 确保移动端完全显示不溢出 */
+        * { box-sizing: border-box; }
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        .case-detail-container,
+        .main-content,
+        .case-detail-content,
+        .case-back-section {
+            max-width: 100% !important;
+            width: 100% !important;
+            overflow-x: hidden;
+        }
+        .case-detail-grid {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow: hidden;
+        }
+        .case-detail-main {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow: hidden;
+        }
+        .case-description-section {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        img, video, iframe, table, pre, code, blockquote {
+            max-width: 100% !important;
+            height: auto;
+        }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        .main-content,
+        .case-detail-content,
+        .case-detail-container,
+        .case-back-section {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        .case-detail-container {
+            padding: 0 16px;
+        }
+        .case-detail-main {
+            padding: 20px;
+            overflow: hidden;
+        }
+        .case-detail-main img,
+        .case-description-text img,
+        .case-highlight-item img,
+        .case-media-main img,
+        .case-media-main video {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        .case-description-text {
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            padding-right: 2px;
+            width: 100%;
+            max-width: 100%;
+            max-width: 100% !important;
+            overflow-wrap: break-word !important;
+            word-break: break-all !important;
+        }
+        @media (max-width: 1024px) {
+            .case-detail-grid {
+                grid-template-columns: 1fr !important;
+                overflow: hidden;
+        }
+            .case-detail-sidebar {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .case-contact-card,
+            .case-related-card,
+            .case-service-guarantee {
+                flex: 1;
+                min-width: 280px;
+            }
+        }
+        @media (max-width: 768px) {
+            .case-back-section {
+                padding: 80px 16px 16px;
+            }
+            .case-detail-content {
+                padding: 24px 0 40px;
+            }
+            .case-detail-main {
+                padding: 16px;
+                border-radius: 12px;
+                overflow: hidden;
+        }
+            .case-media-thumbs {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .case-media-main {
+                aspect-ratio: 16/10;
+            }
+            .case-detail-sidebar {
+                flex-direction: column;
+            }
+            .case-contact-card,
+            .case-related-card,
+            .case-service-guarantee {
+                min-width: auto;
+                flex: none;
+                width: 100%;
+            }
+            .case-detail-title-content {
+                font-size: 20px;
+            }
+            .case-section-title {
+                font-size: 17px;
+            }
+            .case-highlights-title {
+                font-size: 16px;
+            }
+            .footer-bottom {
+                padding: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .case-back-section {
+                padding: 60px 10px 10px;
+            }
+            .case-detail-container {
+                padding: 0 10px;
+            }
+            .case-detail-main {
+                padding: 10px;
+                overflow: hidden;
+        }
+            .case-detail-title-content {
+                font-size: 16px !important;
+            }
+            .case-description-text {
+                font-size: 13px;
+                max-width: 100% !important;
+            overflow-wrap: break-word !important;
+            word-break: break-all !important;
+        }
+            .case-section-title {
+                font-size: 15px !important;
+            }
+            .case-highlights-title {
+                font-size: 14px !important;
+            }
+            .case-highlight-item {
+                font-size: 13px;
+            }
+            .case-media-thumbs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .case-highlights {
+                padding: 12px;
+            }
+            .case-contact-card {
+                padding: 12px;
+            }
+            .case-related-card {
+                padding: 12px;
+            }
+        }
+        .case-media-thumb img {
+            width: 100% !important;
+            height: 80px !important;
+            object-fit: cover;
+        }
+        @media (max-width: 480px) {
+            #caseMainImage,
+            .case-media-main img {
+                max-height: 220px !important;
+            }
+        }
+</style></head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
 
@@ -509,13 +700,13 @@ header("Expires: 0");
 
         <section class="case-detail-content">
 
-            <div class="case-detail-container" style="min-height:500px" style="min-height:400px">
+            <div class="case-detail-container" style="min-height:400px">
 
                 <div class="case-detail-grid">
 
                     <!-- 主内容区 -->
 
-                    <div class="case-detail-main">
+<div class="case-detail-main" style="overflow:hidden;max-width:100%;width:100%">
 
                         <!-- 图片/视频展示 -->
 
@@ -525,7 +716,7 @@ header("Expires: 0");
                             <?php $cover = $case_content['coverImage'] ?? $case_data['image'] ?? ''; ?>
                             <?php $first_img = !empty($images) ? $images[0] : $cover; ?>
                             <?php if ($first_img): ?>
-                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage">
+                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage" onclick="openImageViewer(0)">
                             <?php endif; ?>
                             <?php endif; ?>
                         </div>
@@ -724,7 +915,7 @@ header("Expires: 0");
         
 
 
-    <!-- 页脚 -->
+<!-- 页脚 -->
 
     
 
@@ -861,7 +1052,7 @@ header("Expires: 0");
 
                     ` : ''}
 
-                    <img src="${caseItem.images[0]}" alt="${caseItem.title}" id="mainImage">
+                    <img src="${caseItem.images[0]}" alt="${caseItem.title}" id="mainImage" style="width:100%;object-fit:cover">
 
                 </div>
 
@@ -893,19 +1084,29 @@ header("Expires: 0");
 
 
 
-            document.getElementById('caseMedia').innerHTML = mediaHtml;
+            // Keep PHP-rendered main image, add thumbs if multiple images
+            if (typeof caseItem !== 'undefined' && caseItem.images && caseItem.images.length > 1) {
+                if (!document.querySelector('#caseMedia .case-media-thumbs')) {
+                    var thumbsHtml = '<div class="case-media-thumbs">' +
+                        caseItem.images.map(function(img, idx) {
+                            return '<div class="case-media-thumb ' + (idx === 0 ? 'active' : '') + '" onclick="changeImage(\'' + img + '\', this)"><img src="' + img + '" alt="' + caseItem.title + ' - ' + (idx + 1) + '"></div>';
+                        }).join('') + '</div>';
+                    document.getElementById('caseMedia').insertAdjacentHTML('beforeend', thumbsHtml);
+                }
+            }
 
 
 
             // 渲染标题到内容区域
 
-            document.getElementById('caseTitleContent').innerHTML = caseItem.title;
+            // document.getElementById('caseTitleContent').innerHTML = caseItem.title;  // PHP already rendered
 
 
 
             // 渲染描述
 
-            document.getElementById('caseDescription').innerHTML = caseItem.detail;
+            // document.getElementById('caseDescription').innerHTML = (caseItem.detail || '').replace(/\n/g, '<br>');  // PHP already rendered
+            
 
 
 
@@ -1585,7 +1786,7 @@ header("Expires: 0");
 
                     ` : ''}
 
-                    <img src="${images.length > 0 ? images[0] : basePath + 'images/cases/default.jpg'}" alt="${caseData.title}" id="mainImage">
+                    <img src="${images.length > 0 ? images[0] : basePath + 'images/cases/default.jpg'}" alt="${caseData.title}" id="mainImage" style="width:100%;object-fit:cover">
 
                 </div>
 
@@ -1617,19 +1818,29 @@ header("Expires: 0");
 
             
 
-            document.getElementById('caseMedia').innerHTML = mediaHtml;
+            // Keep PHP-rendered main image, add thumbs if multiple images
+            if (typeof caseData !== 'undefined' && caseData.images && caseData.images.length > 1) {
+                if (!document.querySelector('#caseMedia .case-media-thumbs')) {
+                    var thumbsHtml2 = '<div class="case-media-thumbs">' +
+                        caseData.images.map(function(img, idx) {
+                            return '<div class="case-media-thumb ' + (idx === 0 ? 'active' : '') + '" onclick="changeImage(\'' + img + '\', this)"><img src="' + img + '" alt="' + caseData.title + ' - ' + (idx + 1) + '"></div>';
+                        }).join('') + '</div>';
+                    document.getElementById('caseMedia').insertAdjacentHTML('beforeend', thumbsHtml2);
+                }
+            }
 
             
 
             // 渲染标题到内容区域
 
-            document.getElementById('caseTitleContent').innerHTML = caseData.title;
+            // document.getElementById('caseTitleContent').innerHTML = caseData.title;  // PHP already rendered
 
             
 
             // 渲染描述
 
-            document.getElementById('caseDescription').innerHTML = caseData.detail;
+            // document.getElementById('caseDescription').innerHTML = (caseData.detail || '').replace(/\n/g, '<br>');  // PHP already rendered
+            
 
             
 

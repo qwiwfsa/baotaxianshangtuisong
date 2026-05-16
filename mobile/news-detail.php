@@ -2475,7 +2475,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <script>window.__shareBarInjected = true;</script>
 
-    <footer style="background:#1f2937;color:#9ca3af;text-align:center;padding:16px;font-size:12px;"><p style="margin:0;">&copy; 2026 Yao资金网 宏都资本版权所有</p><p style="margin:2px 0 0;">粤ICP备2026052915号</p></footer>
 
 
 

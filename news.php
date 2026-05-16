@@ -163,12 +163,7 @@ try {
 
     
 .news-category{transition:none!important;animation:none!important}
-</style>
-
-
-    <!-- 社交分享样式 -->
-    <link rel="stylesheet" href="/css/social-share.css">
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+</style><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -692,9 +687,6 @@ try {
                 window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
             }
         })();
-    </script>
-    <!-- 社交分享功能 -->
-    <script src="/js/social-share.js"></script>
-</body>
+    </script></body>
 </html>
 

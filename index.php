@@ -254,7 +254,7 @@ try {
                     <div class="stat-label">服务企业</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" data-target="100">0</div>
+                    <div class="stat-number" data-target="30">0</div>
                     <div class="stat-label">亿资金规模</div>
                 </div>
                 <div class="stat-card">
@@ -418,7 +418,7 @@ try {
                         </div>
                         <div class="advantages-feature-content">
                             <h3 class="advantages-feature-title">强大的资金实力</h3>
-                            <p class="advantages-feature-desc">累计管理资金规模超100亿元，单笔可提供数亿至数十亿资金支持，满足各类大型项目需求。</p>
+                            <p class="advantages-feature-desc">累计管理资金规模超30亿元，单笔可提供数亿至数十亿资金支持，满足各类大型项目需求。</p>
                         </div>
                     </div>
                     

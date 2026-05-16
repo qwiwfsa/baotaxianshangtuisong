@@ -13,7 +13,7 @@ $totalRes = $newsDB->query("SELECT COUNT(*) as cnt FROM cms_articles WHERE statu
 $totalRow = $totalRes->fetch_assoc();
 $totalCnt = $totalRow['cnt'];
 $totalPages = max(1, ceil($totalCnt / $perPage));
-require_once __DIR__ . "/../includes/news-prerender.php";
+
 $totalRes->close();
 $artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT $offset, $perPage");
 $allArticles = [];
@@ -27,17 +27,7 @@ $newsDB->close();
 <!DOCTYPE html>
 <?php header('Cache-Control: no-cache, no-store, must-revalidate'); header('Pragma: no-cache'); header('Expires: 0'); ?>
 <!DOCTYPE html>
-<html lang="zh-CN"
-data-share-label="分享到："
-data-share-to="分享到"
-data-share-wx="微信"
-data-share-moments="朋友圈"
-data-share-wx-desc="打开微信扫一扫，分享给好友或朋友圈"
-data-share-wx-hint="打开微信「扫一扫」分享"
-data-share-close="关闭"
-data-share-copied="链接已复制"
-data-share-copy-fail="复制失败"
-data-share-copy="复制链接"><head>
+<html lang="zh-CN"><head>
 
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -607,9 +597,7 @@ data-share-copy="复制链接"><head>
 
 
 
-<link rel="icon" href="/favicon-v2.png">    <!-- 社交分享样式 -->
-    <link rel="stylesheet" href="../css/social-share.css">
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
+<link rel="icon" href="/favicon-v2.png"><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
 .news-category{transition:none!important;animation:none!important}
         .news-pagination {
             display: flex; justify-content: center; align-items: center; gap: 6px;
@@ -617,7 +605,7 @@ data-share-copy="复制链接"><head>
         }
         .news-pagination .pagination-current {
             display: inline-flex; align-items: center; justify-content: center;
-            min-width: 38px; height: 38px; margin: 0 12px; padding: 0 8px;
+            min-width: 60px; height: 38px; margin: 0 12px; padding: 0 8px;
             font-size: 14px; font-weight: 500; background: transparent; color: #6b7280;
             border-radius: 6px; white-space: nowrap;
         }
@@ -964,6 +952,8 @@ data-share-copy="复制链接"><head>
                         <div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">
                             <?php $img = $article['cover_image'] ?? ''; if ($img): ?>
                             <div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="../<?php echo htmlspecialchars($img); ?>" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'"></div>
+                            <?php else: ?>
+                            <div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:10px"></div>
                             <?php endif; ?>
                             <div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">
                                 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id=<?php echo $article['id']; ?>" style="color:#1e3a8a;text-decoration:none"><?php echo htmlspecialchars($article['title'] ?? ''); ?></a></h3>
@@ -984,7 +974,16 @@ data-share-copy="复制链接"><head>
 
 
 <div class="news-pagination">
-                        <?php echo renderPagination($page, $totalPages); ?>
+                        <?php
+// Inline pagination matching desktop style
+if ($totalPages > 1):
+    $prevPg = $page - 1;
+    $nextPg = $page + 1;
+?>
+                        <button class="pagination-btn<?php echo $page <= 1 ? ' disabled' : ''; ?>" onclick="changePage(-1)"<?php echo $page <= 1 ? '' : ''; ?>>上一页</button>
+                        <span class="pagination-current"><?php echo $page; ?> / <?php echo $totalPages; ?></span>
+                        <button class="pagination-btn<?php echo $page >= $totalPages ? ' disabled' : ''; ?>" onclick="changePage(1)"<?php echo $page >= $totalPages ? '' : ''; ?>>下一页</button>
+<?php endif; ?>
                     </div>
 
 
@@ -1164,7 +1163,7 @@ var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
             el.insertBefore(bar, el.firstChild);
         }
         try {
-            var url = 'api/news.php?page=1&limit=100&t='+Date.now();
+            var url = 'api/news.php?page=1&limit=1000&t='+Date.now();
             if(STATE.currentCategory > 0) url += '&category_id='+STATE.currentCategory;
             var r = await fetch(url, {method:'GET',cache:'no-store'});
             if(!r.ok) throw new Error('HTTP '+r.status);
@@ -1247,10 +1246,11 @@ function escapeHtml(str){
             var a = items[i];
             var t = a.title||'', s = a.summary||'', dt = (a.date||a.created_at||'').substring(0,10);
             var img = a.cover_image ? '../'+a.cover_image : '';
-            var imgHtml = '';
-            if(img) imgHtml = '<div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display=\'none\'"></div>';
+            var imgHtml = img
+                ? '<div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display=\'none\'"></div>'
+                : '<div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:10px"></div>';
             html += '<div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">';
-            if(imgHtml) html += imgHtml;
+            html += imgHtml;
             html += '<div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">';
             html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id='+a.id+'" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
             if(s) html += '<p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+s+'</p>';
@@ -1326,10 +1326,6 @@ function escapeHtml(str){
     };
     xhr.send();
 })();
-</script>
-    <!-- 社交分享功能 -->
-    <script src="../js/social-share.js"></script>
-
-<script src="../js/footer-loader.js"></script>
+</script><script src="../js/footer-loader.js"></script>
 <script src="../js/nav-loader.js?v=5"></script>
 </body></html>

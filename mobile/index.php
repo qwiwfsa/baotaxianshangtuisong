@@ -284,7 +284,7 @@ $favicon_path = '/favicon-v2.png';
                     <div class="stat-label">服务企业</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" data-target="100">100亿+</div>
+                    <div class="stat-number" data-target="30">30亿+</div>
                     <div class="stat-label">亿资金规模</div>
                 </div>
                 <div class="stat-card">
