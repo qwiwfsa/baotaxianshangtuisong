@@ -24,6 +24,7 @@ header('Content-Type: text/html; charset=utf-8');
         .loading { text-align: center; padding: 40px; color: #9ca3af; }
     </style>
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <?php include '../inc_header.php'; ?>

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+require_once __DIR__ . '/includes/page-seo.php';
 header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-cache");header("Expires: 0");?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -10,9 +11,9 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Yao资金网服务优势 - 专业、高效、安全、可靠的资金服务解决方案">
-    <meta name="keywords" content="服务优势,专业团队,快速响应,安全可靠,资金服务优势">
-    <title>服务优势 - Yao资金网</title>
+    <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
+    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "核心优势 - Yao资金网"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
@@ -58,7 +59,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -85,7 +86,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;

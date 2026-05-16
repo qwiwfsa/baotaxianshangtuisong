@@ -348,7 +348,7 @@ data-share-copy="复制链接"><head>
 
 
 
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title
 
 
 
@@ -510,7 +510,7 @@ data-share-copy="复制链接"><head>
 
 
 
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title
 
 
 

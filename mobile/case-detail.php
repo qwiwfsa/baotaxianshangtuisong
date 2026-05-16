@@ -353,7 +353,7 @@ header("Expires: 0");
 
                     var seo = data.data;
 
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title
 
                     if (seo.meta_keywords) {
 
@@ -407,7 +407,7 @@ header("Expires: 0");
 
                     var seo = data.data;
 
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title
 
                     if (seo.meta_keywords) {
 

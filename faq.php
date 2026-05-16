@@ -6,11 +6,12 @@ header('Expires: 0');
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+require_once __DIR__ . '/includes/page-seo.php';
 
 // 动态SEO：根据URL参数获取分类SEO信息
 require_once __DIR__ . '/config/db.php';
 $conn = getDB();
-$pageSeo = ['title' => '常见问题 - Yao资金网', 'keywords' => '常见问题,亮资业务,过桥资金,摆账业务,云信融资出表,FAQ', 'description' => 'Yao资金网常见问题 - 解答您关于资金业务的常见疑问'];
+$pageSeo = ['title' => !empty($page_title) ? $page_title : '常见问题 - Yao资金网', 'keywords' => '常见问题,亮资业务,过桥资金,摆账业务,云信融资出表,FAQ', 'description' => 'Yao资金网常见问题 - 解答您关于资金业务的常见疑问'];
 $activeCat = isset($_GET['cat']) ? $_GET['cat'] : '';
 if ($activeCat) {
     $stmt = $conn->prepare("SELECT cat_label, seo_title, seo_keywords, seo_description FROM faq_categories WHERE cat_key = ?");
@@ -84,7 +85,7 @@ if ($activeCat) {
                     // 有分类参数时不覆盖，保留PHP设置的分类SEO
                     if (!new URLSearchParams(window.location.search).has('cat')) {
                         var seo = data.data;
-                        if (seo.page_title) document.title = seo.page_title;
+                        // PHP handles title - title set server-side
                         if (seo.meta_keywords) {
                             var kw = document.querySelector('meta[name="keywords"]');
                             if (kw) kw.content = seo.meta_keywords;

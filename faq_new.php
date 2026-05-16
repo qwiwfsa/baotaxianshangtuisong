@@ -25,7 +25,7 @@ DeviceDetector::redirect();
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -52,7 +52,7 @@ DeviceDetector::redirect();
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;

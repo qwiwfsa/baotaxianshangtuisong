@@ -1,3 +1,25 @@
+<?php
+$page_title = '';
+$meta_keywords = '';
+$meta_description = '';
+try {
+    require_once __DIR__ . '/../config/db.php';
+    $db = getDB();
+    $stmt = $db->prepare("SELECT page_title, meta_keywords, meta_description FROM seo_settings WHERE page_id = ? LIMIT 1");
+    $stmt->bind_param('s', $page_id);
+    $page_id = 'index.html';
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($row = $res->fetch_assoc()) {
+        if (!empty($row['page_title'])) $page_title = $row['page_title'];
+        if (!empty($row['meta_keywords'])) $meta_keywords = $row['meta_keywords'];
+        if (!empty($row['meta_description'])) $meta_description = $row['meta_description'];
+    }
+    $stmt->close();
+    $db->close();
+} catch (Exception $e) {}
+?>
+
 <html lang="zh-CN" data-immersive-translate-page-theme="light"><head>
 
 
@@ -15,7 +37,7 @@
     <meta property="og:locale" content="zh_CN">
     <link rel="canonical" href="https://www.hengxinziben.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <title>要资金网 - 过桥短拆 | 摆账亮资 | 资金证明 | 实缴验资 | 银行存款冲量</title>
+    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "首页 - Yao资金网"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
     <noscript>&amp;amp;amp;amp;amp;lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&amp;amp;amp;amp;amp;gt;</noscript>

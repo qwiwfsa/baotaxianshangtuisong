@@ -1,3 +1,34 @@
+<?php
+require_once __DIR__ . '/../config/db.php';
+?>
+<?php
+$article_id = intval($_GET['id'] ?? 0);
+$seo_title = '文章详情 - Yao资金网';
+$seo_keywords = '行业资讯,金融知识,融资服务';
+$seo_description = 'Yao资金网行业资讯中心 - 了解最新行业动态和专业资讯';
+$seo_url = 'https://www.yaozijin.com/news-detail.php?id=' . $article_id;
+
+if ($article_id > 0) {
+    try {
+        require_once __DIR__ . '/../config/db.php';
+        $db = getDB();
+        $stmt = $db->prepare("SELECT title, summary, seo_title, seo_keywords, seo_description FROM cms_articles WHERE id = ? AND status = 'published' LIMIT 1");
+        $stmt->bind_param('i', $article_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $seo_title = !empty($row['seo_title']) ? $row['seo_title'] : ($row['title'] . ' - Yao资金网');
+            $seo_keywords = !empty($row['seo_keywords']) ? $row['seo_keywords'] : '行业资讯,金融知识,融资服务';
+            $seo_description = !empty($row['seo_description']) ? $row['seo_description'] : (!empty($row['summary']) ? strip_tags($row['summary']) : 'Yao资金网行业资讯中心');
+        }
+        $stmt->close();
+        $db->close();
+    } catch (Exception $e) {}
+}
+?>
+
+
+
 <!DOCTYPE html>
 
 <html lang="zh-CN"
@@ -14,15 +45,20 @@ data-share-copy-fail="复制失败">
 
 <head>
 
+<title><?php echo htmlspecialchars($seo_title); ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($seo_description); ?>">
+<meta name="keywords" content="<?php echo htmlspecialchars($seo_keywords); ?>">
+<link rel="canonical" href="<?php echo htmlspecialchars($seo_url); ?>">
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 
-    <meta name="description" content="Yao资金网行业资讯详情 - 了解最新行业动态与业务资讯">
+    <meta ">
 
-    <meta name="keywords" content="行业资讯,亮资知识,摆账流程,资金行业政策,企业融资常识">
+    <meta ">
 
-    <title>文章详情 - Yao资金网</title>
+    ">
+    
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 
@@ -1630,6 +1666,7 @@ data-share-copy-fail="复制失败">
     <link rel="stylesheet" href="../css/social-share.css">
 
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
@@ -1675,7 +1712,7 @@ data-share-copy-fail="复制失败">
 
 
 
-    <main id="main-content" style="min-height:60vh" class="main-content">
+    <main id="main-content" style="min-height:60vh" style="min-height:60vh" class="main-content">
 
         <!-- 文章头部 -->
 
@@ -2438,7 +2475,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <script>window.__shareBarInjected = true;</script>
 
-    <script src="../js/footer-loader.js"></script>
+    <footer style="background:#1f2937;color:#9ca3af;text-align:center;padding:16px;font-size:12px;"><p style="margin:0;">&copy; 2026 Yao资金网 宏都资本版权所有</p><p style="margin:2px 0 0;">粤ICP备2026052915号</p></footer>
 
 
 

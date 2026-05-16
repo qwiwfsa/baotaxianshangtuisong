@@ -70,6 +70,7 @@ header('Content-Type: text/html; charset=utf-8');
         }
     </style>
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 </head>
 <body>
     <!-- 导航栏 -->

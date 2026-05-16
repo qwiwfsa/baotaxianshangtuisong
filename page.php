@@ -91,7 +91,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
                     var data = JSON.parse(xhr.responseText);
                     if (data && data.code === 0 && data.data) {
                         var seo = data.data;
-                        if (seo.page_title) document.title = seo.page_title;
+                        // PHP handles title
                         if (seo.meta_keywords) { var kw = document.querySelector('meta[name="keywords"]'); if (kw) kw.content = seo.meta_keywords; }
                         if (seo.meta_description) { var desc = document.querySelector('meta[name="description"]'); if (desc) desc.content = seo.meta_description; }
                     }

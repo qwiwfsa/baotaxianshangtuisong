@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+require_once __DIR__ . '/includes/page-seo.php';
 
 $case_id_seo = intval($_GET['id'] ?? 0);
 $case_seo_title = '';
@@ -56,11 +57,11 @@ header("Expires: 0");
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 
-    <meta name="description" content="Yao资金网成功案例详情 - 查看详细的资金服务案例，了解我们如何帮助企业解决资金需求。">
+    <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
 
-    <meta name="keywords" content="案例详情,资金服务,过桥资金,摆账,亮资,融资案例">
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
 
-    <title>案例详情 - Yao资金网</title>
+    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "案例详情 - Yao资金网"); ?></title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -355,7 +356,7 @@ header("Expires: 0");
 
                     var seo = data.data;
 
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
 
                     if (seo.meta_keywords) {
 
@@ -409,7 +410,7 @@ header("Expires: 0");
 
                     var seo = data.data;
 
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
 
                     if (seo.meta_keywords) {
 

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
+require_once __DIR__ . '/includes/page-seo.php';
 require_once __DIR__ . '/config/db.php';
 
 $caseDB = getDB();
@@ -32,9 +33,9 @@ $caseDB->close();
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Yao资金网成功案例 - 多年来已成功服务数百家企业，累计管理出资金额超百亿。查看我们的过桥资金、摆账亮资、应收账款融资等成功案例。">
-    <meta name="keywords" content="成功案例,资金服务案例,过桥资金案例,摆账案例,亮资案例,融资案例,Yao资金网">
-    <title>成功案例 - Yao资金网 | 专业资金业务服务商</title>
+    <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
+    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "成功案例 - Yao资金网"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
@@ -80,7 +81,7 @@ $caseDB->close();
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -107,7 +108,7 @@ $caseDB->close();
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;

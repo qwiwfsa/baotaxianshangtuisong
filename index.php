@@ -3,6 +3,7 @@ require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 
 DeviceDetector::redirect();
+require_once __DIR__ . '/includes/page-seo.php';
 
 // Server-side CMS hero data to prevent style flash
 $cmsHeroTitle = '';
@@ -26,8 +27,8 @@ try {
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Yao资金网-专业资金业务服务商，提供北京亮资业务、上市公司过桥资金、企业摆账服务。10年+行业经验，累计服务500+企业，管理资金规模超100亿。">
-    <meta name="keywords" content="北京亮资业务,上市公司过桥资金,企业摆账服务,资金过桥,股票解质押,应收账款融资,银行存款冲量">
+    <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
     <meta name="author" content="Yao资金网">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Yao资金网 - 专业资金业务服务商">
@@ -39,7 +40,7 @@ try {
     <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务"> content="zh_CN">
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <title>Yao资金网 - 北京亮资业务|上市公司过桥资金|企业摆账服务</title>
+    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "Yao资金网"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -133,7 +134,7 @@ try {
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;

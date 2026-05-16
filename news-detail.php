@@ -2,88 +2,20 @@
 require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
-// ===== 动态 SEO =====
-$seo_title = '';
-$seo_desc = '';
-$seo_keywords = '';
-$seo_url = 'https://www.yaozijin.com/news-detail.php?id=' . intval($_GET['id'] ?? 0);
-$article_id_seo = intval($_GET['id'] ?? 0);
-if ($article_id_seo > 0) {
-    try {
-        require_once __DIR__ . '/config/db.php';
-
-        $db_seo = getDB();
-        $stmt_seo = $db_seo->prepare("SELECT title, seo_title, seo_keywords, seo_description, summary FROM cms_articles WHERE id = ? AND status = 'published' LIMIT 1");
-        $stmt_seo->bind_param('i', $article_id_seo);
-        $stmt_seo->execute();
-        $result_seo = $stmt_seo->get_result();
-        if ($row_seo = $result_seo->fetch_assoc()) {
-            $seo_title = !empty($row_seo['seo_title']) ? $row_seo['seo_title'] : ($row_seo['title'] . ' - Yao资金网');
-            $seo_desc = !empty($row_seo['seo_description']) ? $row_seo['seo_description'] : (!empty($row_seo['summary']) ? mb_substr($row_seo['summary'], 0, 200) : '');
-            $seo_keywords = !empty($row_seo['seo_keywords']) ? $row_seo['seo_keywords'] : '';
-        }
-        $stmt_seo->close();
-        $db_seo->close();
-    } catch (Exception $e) {}
-}
-
-// ===== 相关推荐 =====
-$related_articles = [];
-if ($article_id_seo > 0) {
-    try {
-        require_once __DIR__ . '/config/db.php';
-
-        $db_rel = getDB();
-        // Get current article's category
-        $cat_stmt = $db_rel->prepare("SELECT category_id FROM cms_articles WHERE id = ?");
-        $cat_stmt->bind_param('i', $article_id_seo);
-        $cat_stmt->execute();
-        $cat_result = $cat_stmt->get_result();
-        $cat_row = $cat_result->fetch_assoc();
-        $category_id = $cat_row ? (int)$cat_row['category_id'] : 0;
-        $cat_stmt->close();
-
-        if ($category_id > 0) {
-            $rel_stmt = $db_rel->prepare("SELECT id, title, cover_image, created_at FROM cms_articles WHERE category_id = ? AND id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
-            $rel_stmt->bind_param('ii', $category_id, $article_id_seo);
-            $rel_stmt->execute();
-            $rel_result = $rel_stmt->get_result();
-            while ($row = $rel_result->fetch_assoc()) {
-                if (!empty($row['cover_image']) && strpos($row['cover_image'], 'http') !== 0 && strpos($row['cover_image'], '/') !== 0) {
-                    $row['cover_image'] = '/' . $row['cover_image'];
-                }
-                $related_articles[] = $row;
-            }
-            $rel_stmt->close();
-        }
-
-        if (empty($related_articles)) {
-            $rel_stmt2 = $db_rel->prepare("SELECT id, title, cover_image, created_at FROM cms_articles WHERE id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
-            $rel_stmt2->bind_param('i', $article_id_seo);
-            $rel_stmt2->execute();
-            $rel_result2 = $rel_stmt2->get_result();
-            while ($row = $rel_result2->fetch_assoc()) {
-                if (!empty($row['cover_image']) && strpos($row['cover_image'], 'http') !== 0 && strpos($row['cover_image'], '/') !== 0) {
-                    $row['cover_image'] = '/' . $row['cover_image'];
-                }
-                $related_articles[] = $row;
-            }
-            $rel_stmt2->close();
-        }
-        $db_rel->close();
-    } catch (Exception $e) {}
-}
+require_once __DIR__ . '/includes/page-seo.php';
+// ===== SEO =====
+require_once __DIR__ . '/includes/news-seo.php';
+?>
 
 header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-cache");header("Expires: 0");?>
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><?php require_once __DIR__ . '/includes/news-seo.php'; ?>
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="<?php echo htmlspecialchars($seo_desc ?: 'Yao资金网行业资讯详情', ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="keywords" content="<?php echo htmlspecialchars($seo_keywords ?: '行业资讯,亮资知识,摆账流程', ENT_QUOTES, 'UTF-8'); ?>">
-    <title><?php echo htmlspecialchars($seo_title ?: '文章详情 - Yao资金网', ENT_QUOTES, 'UTF-8'); ?></title>
+    ">
+    <?php echo htmlspecialchars($seo_title ?: '文章详情 - Yao资金网', ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
@@ -547,7 +479,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -574,7 +506,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // PHP handles title - title set server-side
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -1045,7 +977,6 @@ main#main-content {
 </script>
     <!-- 社交分享样式 -->
     <link rel="stylesheet" href="/css/social-share.css">
-    <link rel="canonical" href="<?php echo htmlspecialchars($seo_url, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="robots" content="index, follow">
     <!-- Article Structured Data -->
     <script type="application/ld+json">

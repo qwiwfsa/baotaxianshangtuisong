@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="展示多行业资金业务成功案例，包含企业摆账、过桥短拆、银行冲量、实缴验资、工程亮资等场景参考。">
     <meta name="keywords" content="企业摆账案例，过桥短拆案例，银行冲量案例，实缴验资，工程亮资案例">
-    <title>资金业务成功案例 | 企业摆账 - 过桥短拆真实案例</title>
+    <title><?php echo htmlspecialchars($page_title ?: "资金业务成功案例 | 企业摆账 - 过桥短拆真实案例"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css?v=202605092100">
@@ -72,7 +72,7 @@
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    // PHP handles title
+                    // PHP handles title; // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -99,7 +99,7 @@
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    // PHP handles title
+                    // PHP handles title; // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;

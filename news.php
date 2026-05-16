@@ -3,8 +3,26 @@ require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 
 DeviceDetector::redirect();
-require_once __DIR__ . '/includes/news-prerender.php';
+require_once __DIR__ . '/includes/page-seo.php';
+
+// News list page SEO
+$news_page_title = '行业资讯 - Yao资金网';
+$news_page_keywords = '金融知识,融资服务,资金业务政策,企业融资常识,过桥资金,票据业务,银行冲量,应收账款融资';
+$news_page_desc = 'Yao资金网行业资讯 - 金融知识、融资流程、资金业务政策、企业融资常识。了解最新行业动态和专业资讯';
+try {
+    require_once __DIR__ . '/config/db.php';
+    $db_n = getDB();
+    $res_n = $db_n->query("SELECT page_title, meta_keywords, meta_description FROM seo_settings WHERE page_id='news.html' LIMIT 1");
+    if ($res_n && $row_n = $res_n->fetch_assoc()) {
+        if (!empty($row_n['page_title'])) $news_page_title = $row_n['page_title'];
+        if (!empty($row_n['meta_keywords'])) $news_page_keywords = $row_n['meta_keywords'];
+        if (!empty($row_n['meta_description'])) $news_page_desc = $row_n['meta_description'];
+    }
+    $db_n->close();
+} catch (Exception $e) {}
 ?>
+
+<?php require_once __DIR__ . '/includes/news-prerender.php'; ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -12,9 +30,9 @@ require_once __DIR__ . '/includes/news-prerender.php';
     <link rel="canonical" href="https://www.yaozijin.com/news.php">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Yao资金网行业资讯 - 亮资知识、摆账流程、资金行业政策、企业融资常识。了解最新行业动态与业务资讯">
-    <meta name="keywords" content="亮资知识,摆账流程,资金行业政策,企业融资常识,过桥资金,摆账业务,银行存款,应收账款融资">
-    <title>行业资讯 - Yao资金网</title>
+    <meta name="description" content="<?php echo htmlspecialchars($news_page_desc); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
+    <title><?php echo htmlspecialchars($news_page_title); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.min.css?v=20250514">
@@ -51,7 +69,7 @@ require_once __DIR__ . '/includes/news-prerender.php';
     </script>
 <script>
 (function() {
-    var pageName = window.location.pathname.split('/').pop() || 'index.html';
+    var pageName = window.location.pathname.split('/').pop().replace('.php','.html') || 'index.html';
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
     xhr.onload = function() {
@@ -60,7 +78,8 @@ require_once __DIR__ . '/includes/news-prerender.php';
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    if (seo.page_title) document.title = seo.page_title;
+                    // Title handled by PHP server-side
+                    // // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -384,18 +403,18 @@ require_once __DIR__ . '/includes/news-prerender.php';
                 const cat = categories.find(c => parseInt(c.id) === currentCategoryId);
                 if (cat) {
                     // 动态更新页面标题
-                    document.title = (cat.seo_title || cat.name) + ' - 行业资讯 - Yao资金网';
+                    document.title = (cat.page_title || cat.name) + ' - 行业资讯 - Yao资金网';
                     
                     // 更新keywords
-                    if (cat.seo_keywords) {
+                    if (cat.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
-                        if (kw) kw.content = cat.seo_keywords;
+                        if (kw) kw.content = cat.meta_keywords;
                     }
                     
                     // 更新description
-                    if (cat.seo_description) {
+                    if (cat.meta_description) {
                         var desc = document.querySelector('meta[name="description"]');
-                        if (desc) desc.content = cat.seo_description;
+                        if (desc) desc.content = cat.meta_description;
                     }
                 }
             } else {
