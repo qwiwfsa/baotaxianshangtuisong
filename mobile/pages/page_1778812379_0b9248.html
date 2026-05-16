@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>page_1778812379_0b9248</title>
@@ -28,7 +29,7 @@
             if(xhr.status>=200&&xhr.status<400){
                 try{
                     var resp=JSON.parse(xhr.responseText);
-                    if(resp.code===0&&resp.data){function fixPath(p){return p&&p.charAt(0)==="/"?p.substring(1):p;}
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
                         if(resp.data.header_logo){
                             var hl=document.querySelector(".logo img");
                             if(hl)hl.src=fixPath(resp.data.header_logo);
@@ -50,7 +51,7 @@
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="../../uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img src="../../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
             <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -68,7 +69,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
-                <div class="footer-brand"><div class="footer-logo"><img src="../../uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
+                <div class="footer-brand"><div class="footer-logo"><img src="../../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
                 <div class="footer-nav" data-footer-group="quick_links"><h4 class="footer-nav-title">快速导航</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="service_links"><h4 class="footer-nav-title">服务项目</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>
@@ -79,7 +80,7 @@
     <script>document.addEventListener("error",function(e){if(e.target.tagName==="IMG"){e.target.style.display="none";var p=e.target.parentElement;if(p&&!p.querySelector(".img-placeholder")){var d=document.createElement("div");d.className="img-placeholder";d.innerHTML="<i class='fas fa-image'></i><span>Image Error</span>";p.appendChild(d)}}},true);</script>
     <script src="../../js/footer-loader.js"></script>
     <script src="../../assets/js/page-builder.js"></script>
-    <script src="../../js/nav-loader.js?v=4"></script>
+    <script src="../../js/nav-loader.js?v=5"></script>
     <script src="../../js/main.js"></script>
 </body>
 </html>

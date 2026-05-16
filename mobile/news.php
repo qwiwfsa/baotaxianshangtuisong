@@ -1329,5 +1329,5 @@ function escapeHtml(str){
     <script src="../js/social-share.js"></script>
 
 <script src="../js/footer-loader.js"></script>
-<script src="../js/nav-loader.js?v=4"></script>
+<script src="../js/nav-loader.js?v=5"></script>
 </body></html>

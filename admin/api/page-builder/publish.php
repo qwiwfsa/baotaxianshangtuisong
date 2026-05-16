@@ -23,6 +23,14 @@ try {
     $outputPath = __DIR__ . '/../../../pages/' . $pageId . '.html';
     $fullHtml = generateFullPage($pageId, $html);
     if (file_put_contents($outputPath, $fullHtml)) {
+    $mobileDir = __DIR__ . '/../../../mobile/pages';
+    if (!is_dir($mobileDir)) { mkdir($mobileDir, 0755, true); }
+    $mobilePath = $mobileDir . '/' . $pageId . '.html';
+    $mobileHtml = str_replace('href="/css/', 'href="../../css/', $fullHtml);
+    $mobileHtml = str_replace('src="/js/', 'src="../../js/', $mobileHtml);
+    $mobileHtml = str_replace('src="/uploads/', 'src="../../uploads/', $mobileHtml);
+    $mobileHtml = str_replace('src="/images/', 'src="../../images/', $mobileHtml);
+    file_put_contents($mobilePath, $mobileHtml);
         jsonSuccess(['html_path' => $outputPath], '发布成功');
     } else {
         jsonError('写入HTML文件失败');
@@ -283,7 +291,7 @@ function generateFullPage($pageId, $content) {
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
             <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -301,7 +309,7 @@ function generateFullPage($pageId, $content) {
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
-                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
+                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc"></p></div>
                 <div class="footer-nav" data-footer-group="quick_links"><h4 class="footer-nav-title">快速导航</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="service_links"><h4 class="footer-nav-title">服务项目</h4><ul class="footer-nav-list"></ul></div>
                 <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>
@@ -312,7 +320,7 @@ function generateFullPage($pageId, $content) {
     <script>document.addEventListener("error",function(e){if(e.target.tagName==="IMG"){e.target.style.display="none";var p=e.target.parentElement;if(p&&!p.querySelector(".img-placeholder")){var d=document.createElement("div");d.className="img-placeholder";d.innerHTML="<i class=\'fas fa-image\'></i><span>Image Error</span>";p.appendChild(d)}}},true);</script>
     <script src="/js/footer-loader.js"></script>
     <script src="/assets/js/page-builder.js"></script>
-    <script src="/js/nav-loader.js?v=2"></script>
+    <script src="/js/nav-loader.js?v=5"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>';

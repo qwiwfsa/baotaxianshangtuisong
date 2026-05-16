@@ -26,13 +26,21 @@
 
     function fixUrl(url) {
         if (!url || url === '#') return url;
+        // Calculate depth within /mobile/ for correct relative paths
+        var depth = 0;
+        if (isMobile) {
+            var mobilePath = pathname.replace('/mobile/', '');
+            depth = mobilePath.split('/').length - 1;
+        }
+        var prefix = '';
+        for (var i = 0; i < depth; i++) { prefix += '../'; }
+        
         if (url === '/') {
-            if (isMobile) return 'index.html';
+            if (isMobile) return prefix + 'index.html';
             return url;
         }
         if (isMobile && url.indexOf('/mobile/') !== 0) {
-            // Use absolute /mobile/ prefix to avoid relative path issues
-            return '/mobile' + url;
+            return prefix + url.replace(/^\//, '');
         }
         return url;
     }
