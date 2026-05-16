@@ -32,6 +32,18 @@ try {
     $db->close();
 } catch (Exception $e) {}
 
+// Dynamic favicon from admin logo settings
+$favicon_path = '/favicon.ico';
+$logo_json = __DIR__ . '/../admin/data/logo-settings.json';
+if (file_exists($logo_json)) {
+    $logo_data = json_decode(file_get_contents($logo_json), true);
+    if (!empty($logo_data['favicon'])) {
+        $favicon_path = str_replace('\/', '/', $logo_data['favicon']);
+        $favicon_path = preg_replace('#^\.?/#', '/', $favicon_path);
+        if (strpos($favicon_path, '/') !== 0) $favicon_path = '/' . $favicon_path;
+    }
+}
+
 // Legacy bridge for pages using different variable names
 $pageSeo = ['title' => $page_title, 'keywords' => $page_keywords, 'description' => $page_description];
 $seo_title = $page_title;

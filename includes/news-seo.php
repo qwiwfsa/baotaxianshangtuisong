@@ -44,8 +44,8 @@ if ($article_id > 0) {
     } catch (Exception $e) {}
 }
 ?>
-<link rel="icon" href="/favicon.ico?v=20260502" type="image/x-icon">
-<link rel="shortcut icon" href="/favicon.ico?v=20260502" type="image/x-icon">
+<link rel="icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">
+<link rel="shortcut icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">
 <title><?php echo htmlspecialchars($seo_title); ?></title>
 <meta name="description" content="<?php echo htmlspecialchars($seo_description); ?>">
 <meta name="keywords" content="<?php echo htmlspecialchars($seo_keywords); ?>">

@@ -41,6 +41,8 @@ try {
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "Yao资金网"); ?></title>
+    <link rel="icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
