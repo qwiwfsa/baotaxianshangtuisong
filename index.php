@@ -5,20 +5,32 @@ require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
 require_once __DIR__ . '/includes/page-seo.php';
 
-// Server-side CMS hero data to prevent style flash
+// Server-side CMS hero data - read from cms_pages table (visual builder save target)
 $cmsHeroTitle = '';
 $cmsHeroSubtitle = '';
 $cmsHeroButtonText = '';
 try {
-    $cmsFile = __DIR__ . '/admin/data/cms-index.json';
-    if (file_exists($cmsFile)) {
-        $cmsData = json_decode(file_get_contents($cmsFile), true);
-        if ($cmsData) {
-            $cmsHeroTitle = $cmsData['heroTitle'] ?? '';
-            $cmsHeroSubtitle = $cmsData['heroSubtitle'] ?? '';
-            $cmsHeroButtonText = $cmsData['heroButtonText'] ?? '';
+    require_once __DIR__ . '/config/db.php';
+    $cmsDb = getDB();
+    $cmsStmt = $cmsDb->prepare("SELECT title, subtitle, content FROM cms_pages WHERE page_id = 'index' LIMIT 1");
+    $cmsStmt->execute();
+    $cmsRes = $cmsStmt->get_result();
+    if ($cmsRow = $cmsRes->fetch_assoc()) {
+        $cmsHeroTitle = $cmsRow['title'] ?? '';
+        $cmsHeroSubtitle = $cmsRow['subtitle'] ?? '';
+        if (!empty($cmsRow['content'])) {
+            $contentData = json_decode($cmsRow['content'], true);
+            if ($contentData) {
+                // Check nested data structure (visual builder format)
+                $heroData = $contentData['data'] ?? $contentData;
+                $cmsHeroTitle = $cmsHeroTitle ?: ($heroData['heroTitle'] ?? '');
+                $cmsHeroSubtitle = $cmsHeroSubtitle ?: ($heroData['heroSubtitle'] ?? '');
+                $cmsHeroButtonText = $heroData['heroButtonText'] ?? '';
+            }
         }
     }
+    $cmsStmt->close();
+    $cmsDb->close();
 } catch (Exception $e) {}
 ?>
 <!DOCTYPE html>
@@ -32,12 +44,12 @@ try {
     <meta name="author" content="Yao资金网">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Yao资金网 - 专业资金业务服务商">
-    <meta property="og:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务">
+    <meta property="og:description" content="提供上市公司过桥、企业摆账、银行存款、资金证明等全方位资金服务">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Yao资金网 - 专业资金业务服务商">
-    <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务">
+    <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、资金证明等全方位资金服务">
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "Yao资金网"); ?></title>
@@ -201,18 +213,15 @@ try {
         <div class="hero-container">
             <div class="hero-badge">
                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                <span>专业资金服务 · 值得信赖</span>
+                <span class="">专业资金服务 · 值得信赖</span>
             </div>
-            
-            <h1 class="hero-title" id="hero-title">
-                专业资金解决方案<br>
-                <span class="highlight">助力企业稳健发展</h1>
-            </h1>
-            
-            <p class="hero-subtitle">
-                提供上市公司短拆、企业摆账、银行存款、应收账款融资等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。
-            </p>
-            
+
+            <h1 class="hero-title" id="hero-title">专业资金解决方案
+                助力企业稳健发展</h1>
+
+            <p class="hero-subtitle">提供上市公司短拆、企业摆账、银行存款、资金证明等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。</p>
+
+
             <div class="hero-buttons">
                 <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
                     <button class="btn btn-primary" id="consultNowBtn" onclick="togglePhoneDisplay()">
@@ -262,7 +271,7 @@ try {
             <div class="section-header">
                 <div class="section-label">OUR SERVICES</div>
                 <h2 class="section-title" id="services-title">核心业务领域</h2>
-                <p class="section-subtitle">涵盖上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
+                <p class="section-subtitle">涵盖上市公司、企业摆账、银行存款、资金证明等全方位资金服务</p>
             </div>
             
             <div class="services-grid">
@@ -553,7 +562,7 @@ try {
 <script src="/js/main.js?v=20260513b"></script>
     
     <!-- CMS Data Integration -->
-    <script src="/admin/assets/cms-v2.js"></script>
+
     
     <!-- 成功案例展示脚本 -->
     <script>

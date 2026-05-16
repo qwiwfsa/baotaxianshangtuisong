@@ -516,13 +516,16 @@ try {
 }
 
 if (!empty($templateContent)) {
-    $search = array('{{cityName}}', '{{cityPinyin}}', '{{cityPhone}}', '{{cityContent}}', '{{year}}');
+    $search = array('{{cityName}}', '{{cityPinyin}}', '{{cityPhone}}', '{{cityContent}}', '{{year}}', '{{cityTitle}}', '{{cityKeywords}}', '{{cityDescription}}');
     $replace = array(
         $escapedCity,
         htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'),
         $escapedPhone,
         $bodyContent,
-        date('Y')
+        date('Y'),
+        $escapedTitle,
+        $escapedKeywords,
+        $escapedDesc
     );
     $html = str_replace($search, $replace, $templateContent);
 } else {
@@ -626,13 +629,6 @@ if (!empty($templateContent)) {
         </section>
         <?php renderServicesSection($homepageContent, $city_name); ?>
         <?php echo $districtHtml; ?>
-        <?php if (!empty($city_content)): ?>
-        <section class="city-content-section">
-            <div class="section-container">
-                <?php echo $city_content; ?>
-            </div>
-        </section>
-        <?php endif; ?>
         <?php if (!empty($city_content)): ?>
         <section class="city-content-section">
             <div class="section-container">
