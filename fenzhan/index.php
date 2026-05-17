@@ -927,7 +927,7 @@ if (!empty($templateContent)) {
 }
 // ---------- 写入缓存 ----------
 if (!empty($cacheFile)) {
-    file_put_contents($cacheFile, $html);
+    @file_put_contents($cacheFile, $html);
 }
 
 // ---------- 输出 ----------

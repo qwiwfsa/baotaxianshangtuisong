@@ -1,3 +1,47 @@
+<?php
+require_once __DIR__ . '/../device-detect.php';
+$case_id_seo = intval($_GET['id'] ?? 0);
+$case_seo_title = '';
+$case_seo_desc = '';
+$case_seo_keywords = '';
+$case_data = null;
+$case_content = [];
+
+if ($case_id_seo > 0) {
+    try {
+        require_once __DIR__ . '/../config/db.php';
+        $db_case = getDB();
+        
+        $stmt = $db_case->prepare("SELECT title, seo_title, seo_keywords, seo_description, description FROM cases WHERE id = ? AND status = 1 LIMIT 1");
+        $stmt->bind_param('i', $case_id_seo);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $case_seo_title = !empty($row['seo_title']) ? $row['seo_title'] : ($row['title'] . ' - Yao资金网');
+            $case_seo_desc = !empty($row['seo_description']) ? $row['seo_description'] : (!empty($row['description']) ? mb_substr($row['description'], 0, 200) : '');
+            $case_seo_keywords = !empty($row['seo_keywords']) ? $row['seo_keywords'] : '';
+        }
+        $stmt->close();
+        
+        $stmt2 = $db_case->prepare("SELECT id, title, company, amount, period, category, description, image, content FROM cases WHERE id = ? AND status = 1 LIMIT 1");
+        $stmt2->bind_param('i', $case_id_seo);
+        $stmt2->execute();
+        $res2 = $stmt2->get_result();
+        if ($row2 = $res2->fetch_assoc()) {
+            $case_data = $row2;
+            $case_content = json_decode($row2['content'], true) ?: [];
+        }
+        $stmt2->close();
+        
+        $db_case->close();
+    } catch (Exception $e) {}
+}
+
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
+
 <!DOCTYPE html>
 
 <html lang="zh-CN">
@@ -14,7 +58,7 @@
 
     <meta name="keywords" content="案例详情,资金服务,过桥资金,摆账,亮资,融资案例">
 
-    <title>案例详情 - Yao资金网</title>
+    <title><?php echo htmlspecialchars($case_seo_title ?: '案例详情 - Yao资金网', ENT_QUOTES, 'UTF-8'); ?></title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -395,13 +439,51 @@
 
 </script>
 
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style><style></style><style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style><style>
 
         /* 移动端响应式修正 - 确保移动端完全显示不溢出 */
+        * { box-sizing: border-box; }
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        .case-detail-container,
+        .main-content,
+        .case-detail-content,
+        .case-back-section {
+            max-width: 100% !important;
+            width: 100% !important;
+            overflow-x: hidden;
+        }
+        .case-detail-grid {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow: hidden;
+        }
+        .case-detail-main {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow: hidden;
+        }
+        .case-description-section {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        img, video, iframe, table, pre, code, blockquote {
+            max-width: 100% !important;
+            height: auto;
+        }
         html, body {
             overflow-x: hidden;
             width: 100%;
             max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
         }
         .main-content,
         .case-detail-content,
@@ -416,6 +498,7 @@
         }
         .case-detail-main {
             padding: 20px;
+            overflow: hidden;
         }
         .case-detail-main img,
         .case-description-text img,
@@ -427,12 +510,19 @@
         }
         .case-description-text {
             word-break: break-word;
-            overflow-wrap: break-word;
+            overflow-wrap: anywhere;
+            /* padding equalized */;
+            width: 100%;
+            max-width: 100%;
+            max-width: 100% !important;
+            overflow-wrap: break-word !important;
+            word-break: break-all !important;
         }
         @media (max-width: 1024px) {
             .case-detail-grid {
-                grid-template-columns: 1fr;
-            }
+                grid-template-columns: 1fr !important;
+                overflow: hidden;
+        }
             .case-detail-sidebar {
                 display: flex;
                 flex-direction: row;
@@ -456,7 +546,8 @@
             .case-detail-main {
                 padding: 16px;
                 border-radius: 12px;
-            }
+                overflow: hidden;
+        }
             .case-media-thumbs {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 8px;
@@ -475,7 +566,13 @@
                 width: 100%;
             }
             .case-detail-title-content {
-                font-size: 22px;
+                font-size: 20px;
+            }
+            .case-section-title {
+                font-size: 17px;
+            }
+            .case-highlights-title {
+                font-size: 16px;
             }
             .footer-bottom {
                 padding: 16px;
@@ -483,33 +580,68 @@
         }
         @media (max-width: 480px) {
             .case-back-section {
-                padding: 70px 12px 12px;
+                padding: 60px 10px 10px;
             }
             .case-detail-container {
-                padding: 0 12px;
+                padding: 0 10px;
             }
             .case-detail-main {
-                padding: 12px;
-            }
+                padding: 10px;
+                overflow: hidden;
+        }
             .case-detail-title-content {
-                font-size: 18px;
+                font-size: 16px !important;
             }
             .case-description-text {
-                font-size: 14px;
+                font-size: 13px;
+                max-width: 100% !important;
+            overflow-wrap: break-word !important;
+            word-break: break-all !important;
+        }
+            .case-section-title {
+                font-size: 15px !important;
+            }
+            .case-highlights-title {
+                font-size: 14px !important;
+            }
+            .case-highlight-item {
+                font-size: 13px;
             }
             .case-media-thumbs {
                 grid-template-columns: repeat(2, 1fr);
             }
             .case-highlights {
-                padding: 16px;
+                padding: 12px;
             }
             .case-contact-card {
-                padding: 16px;
+                padding: 12px;
             }
             .case-related-card {
-                padding: 16px;
+                padding: 12px;
             }
-        }</style></head>
+        }
+        html {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        .case-media-thumb img {
+            width: 100% !important;
+            height: 80px !important;
+            object-fit: cover;
+        }
+        @media (max-width: 480px) {
+            #caseMainImage,
+            .case-media-main img {
+                max-height: 220px !important;
+            }
+        }
+</style></head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
 
@@ -584,14 +716,36 @@
 
                     <!-- 主内容区 -->
 
-                    <div class="case-detail-main">
+<div class="case-detail-main" style="overflow:hidden;max-width:100%;width:100%">
 
                         <!-- 图片/视频展示 -->
 
                         <div class="case-media-gallery" id="caseMedia">
-
-                            <!-- 动态填充 -->
-
+                            <?php if ($case_data): ?>
+                            <?php $images = $case_content['images'] ?? []; ?>
+                            <?php $cover = $case_content['coverImage'] ?? $case_data['image'] ?? ''; ?>
+                            <?php $first_img = !empty($images) ? $images[0] : $cover; ?>
+                            <?php if ($first_img): ?>
+<script>
+// Pre-populate image data from PHP for immediate zoom
+var currentCaseImages = [];
+var currentImageIndex = 0;
+<?php
+$images = $case_content['images'] ?? [];
+if (!empty($images)) {
+    echo 'currentCaseImages = ' . json_encode(array_map(function($img) {
+        return (strpos($img, 'http') === 0 || $img[0] === '/' || strpos($img, 'data:') === 0) ? $img : '../' . $img;
+    }, $images)) . ';';
+} elseif (!empty($case_data['image'])) {
+    $img = $case_data['image'];
+    $url = (strpos($img, 'http') === 0 || $img[0] === '/' || strpos($img, 'data:') === 0) ? $img : '../' . $img;
+    echo 'currentCaseImages = ["' . addslashes($url) . '"];';
+}
+?>
+</script>
+                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage" onclick="openImageViewer(0)">
+                            <?php endif; ?>
+                            <?php endif; ?>
                         </div>
 
 
@@ -600,7 +754,7 @@
 
                         <div class="case-description-section">
 
-                            <h1 class="case-detail-title-content" id="caseTitleContent"></h1>
+                            <h1 class="case-detail-title-content" id="caseTitleContent"><?php echo htmlspecialchars($case_data["title"] ?? ""); ?></h1>
 
                             <h2 class="case-section-title">
 
@@ -610,11 +764,7 @@
 
                             </h2>
 
-                            <div class="case-description-text" id="caseDescription">
-
-                                <!-- 动态填充 -->
-
-                            </div>
+                            <div class="case-description-text" id="caseDescription"><?php echo ($case_content["detail"] ?? $case_data["description"] ?? ""); ?></div>
 
                         </div>
 
@@ -634,7 +784,14 @@
 
                             <div class="case-highlights-list" id="caseHighlights">
 
-                                <!-- 动态填充 -->
+                                <?php
+                            $highlights = $case_content['highlights'] ?? [];
+                            foreach ($highlights as $h): ?>
+                            <div class="case-highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span><?php echo htmlspecialchars($h); ?></span>
+                            </div>
+                            <?php endforeach; ?>
 
                             </div>
 
@@ -656,7 +813,14 @@
 
                             <div class="case-highlights-list" id="caseProcess">
 
-                                <!-- 动态填充 -->
+                                <?php
+                            $process_steps = $case_content['process'] ?? [];
+                            foreach ($process_steps as $idx => $step): ?>
+                            <div class="case-highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span><?php echo ($idx + 1) . ". " . htmlspecialchars($step); ?></span>
+                            </div>
+                            <?php endforeach; ?>
 
                             </div>
 
@@ -792,17 +956,9 @@
         
 
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright" id="footerCopyright">&copy; 2025 Yao资金网 版权所有</p>
-                <p class="footer-disclaimer" id="footerDisclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
+<!-- 页脚 -->
 
-    <script src="../js/footer-loader.js"></script>
+    
 
 
 
@@ -847,7 +1003,7 @@
 
     <script>
 
-        // 案例数据 - 将从CMS数据源动态加载
+        // 案例数据
 
         let casesData = [];
 
@@ -923,25 +1079,7 @@
 
             // 渲染媒体区域
 
-            let mediaHtml = `
-
-                <div class="case-media-main" id="mainMedia" onclick="openImageViewer(currentImageIndex)">
-
-                    ${caseItem.hasVideo ? `
-
-                        <div class="case-video-play" onclick="event.stopPropagation(); playVideo('${caseItem.video}')">
-
-                            <i class="fas fa-play"></i>
-
-                        </div>
-
-                    ` : ''}
-
-                    <img src="${caseItem.images[0]}" alt="${caseItem.title}" id="mainImage">
-
-                </div>
-
-            `;
+            // mediaHtml removed - using PHP-rendered image
 
 
 
@@ -958,7 +1096,6 @@
                                 <img src="${img}" alt="${caseItem.title} - ${idx + 1}">
 
                             </div>
-
                         `).join('')}
 
                     </div>
@@ -969,25 +1106,37 @@
 
 
 
-            document.getElementById('caseMedia').innerHTML = mediaHtml;
+            // Keep PHP-rendered main image, add thumbs if multiple images
+            if (typeof caseItem !== 'undefined' && caseItem.images && caseItem.images.length > 1) {
+                if (!document.querySelector('#caseMedia .case-media-thumbs')) {
+                    var thumbsHtml = '<div class="case-media-thumbs">' +
+                        caseItem.images.map(function(img, idx) {
+                            return '<div class="case-media-thumb ' + (idx === 0 ? 'active' : '') + '" onclick="changeImage(\'' + img + '\', this)"><img src="' + img + '" alt="' + caseItem.title + ' - ' + (idx + 1) + '"></div>';
+                        }).join('') + '</div>';
+                    document.getElementById('caseMedia').insertAdjacentHTML('beforeend', thumbsHtml);
+                }
+            }
 
 
 
             // 渲染标题到内容区域
 
-            document.getElementById('caseTitleContent').innerHTML = caseItem.title;
+            // document.getElementById('caseTitleContent').innerHTML = caseItem.title;  // PHP already rendered
 
 
 
             // 渲染描述
 
-            document.getElementById('caseDescription').innerHTML = caseItem.detail;
+            // document.getElementById('caseDescription').innerHTML = (caseItem.detail || '').replace(/\n/g, '<br>');  // PHP already rendered
+            
 
 
 
             // 渲染亮点（资方能配合哪些）
 
-            document.getElementById('caseHighlights').innerHTML = caseItem.highlights.map(h => `
+            // Only fill if empty
+            if (!document.getElementById('caseHighlights').children.length) {
+                document.getElementById('caseHighlights').innerHTML = caseItem.highlights.map(h => `
 
                 <div class="case-highlight-item">
 
@@ -1005,7 +1154,9 @@
 
             const processSteps = caseItem.process || ['初步沟通需求', '提供相关资料', '资方审核评估', '签订合作协议', '资金到位操作', '业务完成结算'];
 
-            document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
+            // Only fill if empty
+            if (!document.getElementById('caseProcess').children.length) {
+                document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
 
                 <div class="case-highlight-item">
 
@@ -1085,7 +1236,7 @@
 
         // 切换图片
 
-        function changeImage(src, thumb) {
+        function changeImage(src, thumb, index) {
 
             document.getElementById('mainImage').src = src;
 
@@ -1097,7 +1248,7 @@
 
             const thumbs = document.querySelectorAll('.case-media-thumb');
 
-            currentImageIndex = Array.from(thumbs).indexOf(thumb);
+            currentImageIndex = index;
 
         }
 
@@ -1127,9 +1278,9 @@
 
         // 图片查看器相关变量
 
-        let currentCaseImages = [];
+        // currentCaseImages set from PHP or API
 
-        let currentImageIndex = 0;
+        // currentImageIndex default
 
 
 
@@ -1647,65 +1798,37 @@
 
             // 渲染媒体区域
 
-            let mediaHtml = `
-
-                <div class="case-media-main" id="mainMedia" onclick="openImageViewer(currentImageIndex)">
-
-                    ${hasVideo ? `
-
-                        <div class="case-video-play" onclick="event.stopPropagation(); playVideo('${videoUrl}')">
-
-                            <i class="fas fa-play"></i>
-
-                        </div>
-
-                    ` : ''}
-
-                    <img src="${images.length > 0 ? images[0] : basePath + 'images/cases/default.jpg'}" alt="${caseData.title}" id="mainImage">
-
-                </div>
-
-            `;
+            // mediaHtml removed - using PHP-rendered image
 
             
 
-            if (images.length > 1) {
+            // Thumbs handled below
 
-                mediaHtml += `
+            
 
-                    <div class="case-media-thumbs">
-
-                        ${images.map((img, idx) => `
-
-                            <div class="case-media-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
-
-                                <img src="${img}" alt="${caseData.title} - ${idx + 1}">
-
-                            </div>
-
-                        `).join('')}
-
-                    </div>
-
-                `;
-
+            // Keep PHP-rendered main image, add thumbs if multiple images
+            if (typeof caseData !== 'undefined' && caseData.images && caseData.images.length > 1) {
+                if (!document.querySelector('#caseMedia .case-media-thumbs')) {
+                    var thumbsHtml2 = '<div class="case-media-thumbs">' +
+                        caseData.images.map(function(img, idx) {
+                            return '<div class="case-media-thumb ' + (idx === 0 ? 'active' : '') + '" onclick="changeImage(\'' + img + '\', this)"><img src="' + img + '" alt="' + caseData.title + ' - ' + (idx + 1) + '"></div>';
+                        }).join('') + '</div>';
+                    document.getElementById('caseMedia').insertAdjacentHTML('beforeend', thumbsHtml2);
+                }
             }
-
-            
-
-            document.getElementById('caseMedia').innerHTML = mediaHtml;
 
             
 
             // 渲染标题到内容区域
 
-            document.getElementById('caseTitleContent').innerHTML = caseData.title;
+            // document.getElementById('caseTitleContent').innerHTML = caseData.title;  // PHP already rendered
 
             
 
             // 渲染描述
 
-            document.getElementById('caseDescription').innerHTML = caseData.detail;
+            // document.getElementById('caseDescription').innerHTML = (caseData.detail || '').replace(/\n/g, '<br>');  // PHP already rendered
+            
 
             
 
@@ -1713,7 +1836,9 @@
 
             const highlights = caseData.highlights || [];
 
-            document.getElementById('caseHighlights').innerHTML = highlights.map(h => `
+            // Only fill if empty
+            if (!document.getElementById('caseHighlights').children.length) {
+                document.getElementById('caseHighlights').innerHTML = highlights.map(h => `
 
                 <div class="case-highlight-item">
 
@@ -1731,7 +1856,9 @@
 
             const processSteps = caseData.process || ['初步沟通需求', '提供相关资料', '资方审核评估', '签订合作协议', '资金到位操作', '业务完成结算'];
 
-            document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
+            // Only fill if empty
+            if (!document.getElementById('caseProcess').children.length) {
+                document.getElementById('caseProcess').innerHTML = processSteps.map((step, index) => `
 
                 <div class="case-highlight-item">
 
@@ -1811,11 +1938,28 @@
 
 
 
+
+            // 渲染相关案例（renderCaseFromCMS内）
+            if (casesData.length > 0) {
+                let related = casesData.filter(c => c.type === caseData.type && String(c.id) !== String(caseData.id));
+                if (related.length < 5) {
+                    const others = casesData.filter(c => c.type !== caseData.type && String(c.id) !== String(caseData.id)).slice(0, 5 - related.length);
+                    related = related.concat(others);
+                }
+                related = related.slice(0, 5);
+                var el = document.getElementById('relatedCases');
+                if (el) el.innerHTML = related.map(function(c) {
+                    var img = c.coverImage || c.image;
+                    if (img && img.indexOf('http') !== 0 && img.indexOf('/') !== 0 && img.indexOf('data:') !== 0) img = basePath + img;
+                    if (!img) img = basePath + 'images/cases/default.jpg';
+                    return '<a href="case-detail.html?id=' + c.id + '" class="case-related-item"><div class="case-related-thumb"><img src="' + img + '" alt="' + c.title + '"></div><div class="case-related-info"><h4>' + c.title + '</h4><span>' + (c.type||'') + (c.amount ? ' · ' + c.amount : '') + '</span></div></a>';
+                }).join('') || '<p style="color:#9ca3af;text-align:center;padding:20px;">暂无相关案例</p>';
+            }
         // 渲染相关案例（同类型优先，不足5个时补充其他类型）
 
             let relatedCases = casesData
 
-                .filter(c => c.type === caseData.type && c.id !== caseData.id);
+                .filter(c => c.type === caseData.type && String(c.id) !== String(caseData.id));
 
             
 
@@ -1825,7 +1969,7 @@
 
                 const otherCases = casesData
 
-                    .filter(c => c.type !== caseData.type && c.id !== caseData.id)
+                    .filter(c => c.type !== caseData.type && String(c.id) !== String(caseData.id))
 
                     .slice(0, 5 - relatedCases.length);
 
@@ -1903,88 +2047,14 @@
 
         }
 
+        }        }        }        }
     </script>
 
     
 
         <!-- CMS Editor -->
 
-    <script>
-
-        // 检查是否需要加载编辑器
-
-        (function() {
-
-            console.log('[CMS] 初始化检查...');
-
-            
-
-            const urlParams = new URLSearchParams(window.location.search);
-
-            const isEditMode = urlParams.get('edit') === 'true';
-
-            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
-
-            
-
-            console.log('[CMS] 编辑模式:', isEditMode);
-
-            console.log('[CMS] 登录状态:', isLoggedIn);
-
-            
-
-            if (isEditMode && isLoggedIn) {
-
-                console.log('[CMS] 开始加载编辑器...');
-
-                
-
-                // 加载编辑器样式
-
-                const editorCss = document.createElement('link');
-
-                editorCss.rel = 'stylesheet';
-
-                editorCss.href = 'admin/editor.css';
-
-                editorCss.onerror = function() {
-
-                    console.error('[CMS] 编辑器样式加载失败');
-
-                };
-
-                document.head.appendChild(editorCss);
-
-                
-
-                // 加载编辑器脚本
-
-                const editorScript = document.createElement('script');
-
-                editorScript.src = 'admin/editor.js';
-
-                editorScript.onload = function() {
-
-                    console.log('[CMS] 编辑器脚本加载成功');
-
-                };
-
-                editorScript.onerror = function() {
-
-                    console.error('[CMS] 编辑器脚本加载失败');
-
-                };
-
-                document.body.appendChild(editorScript);
-
-            } else if (isEditMode && !isLoggedIn) {
-
-                console.log('[CMS] 未登录，重定向到登录页');
-
-                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
-})();
-
-    </script>
+    
 
     
         <!-- 案例评论功能 -->
@@ -1994,87 +2064,16 @@
 
     <script src="../admin/assets/cms.js"></script>
 
-    <script src="../js/footer-loader.js"></script>
+    
 
 
     <!-- 移动端链接拦截器：确保点击标签/链接时保持在手机端 -->
-    <script>
-    (function() {
-        var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
-        if (!isMobile) return;
-
-        // 方案A：页面加载后重写所有现有链接
-        function rewriteExistingLinks() {
-            document.querySelectorAll('a[href^="/"]').forEach(function(a) {
-                var href = a.getAttribute('href');
-                // 只重写根相对路径，排除外部链接、锚点、已移动端路径
-                if (href && href.startsWith('/') &&
-                    !href.startsWith('/mobile/') &&
-                    !href.startsWith('//') &&
-                    !href.startsWith('http') &&
-                    !href.startsWith('mailto:') &&
-                    !href.startsWith('tel:') &&
-                    !href.startsWith('#')) {
-                    a.href = '/mobile' + href;
-                }
-            });
-        }
-
-        // 方案B：拦截点击事件（安全网，捕获动态添加的链接）
-        document.addEventListener('click', function(e) {
-            var a = e.target.closest('a');
-            if (!a) return;
-            var href = a.getAttribute('href');
-            if (!href) return;
-            // 只拦截会导航到桌面端的根相对路径
-            if (href.startsWith('/') &&
-                !href.startsWith('/mobile/') &&
-                !href.startsWith('//') &&
-                !href.startsWith('http') &&
-                !href.startsWith('mailto:') &&
-                !href.startsWith('tel:') &&
-                !href.startsWith('#')) {
-                e.preventDefault();
-                window.location.href = '/mobile' + href;
-            }
-        });
-
-        // 方案C：监听DOM变化，重写动态添加的链接
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    mutation.addedNodes.forEach(function(node) {
-                        if (node.nodeType === 1) { // Element node
-                            if (node.tagName === 'A') {
-                                var h = node.getAttribute('href');
-                                if (h && h.startsWith('/') && !h.startsWith('/mobile/') && !h.startsWith('//') && !h.startsWith('http') && !h.startsWith('mailto:') && !h.startsWith('tel:') && !h.startsWith('#')) {
-                                    node.href = '/mobile' + h;
-                                }
-                            }
-                            if (node.querySelectorAll) {
-                                node.querySelectorAll('a[href^="/"]').forEach(function(link) {
-                                    var h2 = link.getAttribute('href');
-                                    if (h2 && !h2.startsWith('/mobile/') && !h2.startsWith('//') && !h2.startsWith('http') && !h2.startsWith('mailto:') && !h2.startsWith('tel:') && !h2.startsWith('#')) {
-                                        link.href = '/mobile' + h2;
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-
-        // 初始执行
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', rewriteExistingLinks);
-        } else {
-            rewriteExistingLinks();
-})();
-    </script>
+    
 
 <script src="../js/nav-loader.js?v=5"></script>
+
+<footer class="footer"><div class="footer-container"><div class="footer-bottom"><p class="footer-copyright">&copy; 2026 Yao资金网 宏都资本版权所有</p><p class="footer-disclaimer">粤ICP备2026052915号</p></div></div></footer>
+
 </body>
 
 </html>

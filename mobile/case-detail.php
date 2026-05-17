@@ -636,7 +636,7 @@ header("Expires: 0");
             object-fit: cover;
         }
         @media (max-width: 480px) {
-            #caseMainImage,
+            #mainImage,
             .case-media-main img {
                 max-height: 220px !important;
             }
@@ -743,10 +743,30 @@ if (!empty($images)) {
 }
 ?>
 </script>
-                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage" onclick="openImageViewer(0)">
+                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="mainImage" onclick="openImageViewer(0)">
+<?php if (count($images) > 1): ?>
+                        <div class="case-media-thumbs">
+                            <?php foreach ($images as $idx => $img): ?>
+                                <div class="case-media-thumb <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="changeImage('../<?php echo htmlspecialchars($img); ?>', this)">
+                                    <img src="../<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?> - <?php echo $idx + 1; ?>">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
                             <?php endif; ?>
                             <?php endif; ?>
                         </div>
+                        <script>
+(function(){
+if(typeof currentCaseImages==="undefined"||!currentCaseImages.length){window.currentCaseImages=[];var t=document.querySelectorAll(".case-media-thumb img");t.forEach(function(e){window.currentCaseImages.push(e.src)});if(!window.currentCaseImages.length){var m=document.getElementById("mainImage");if(m)window.currentCaseImages=[m.src]}}
+window.currentImageIndex=0;
+window.changeImage=window.changeImage||function(e,t,n){var i=document.getElementById("mainImage");if(i)i.src=e;document.querySelectorAll(".case-media-thumb").forEach(function(e){e.classList.remove("active")});if(t)t.classList.add("active");if(typeof n!=="undefined")window.currentImageIndex=n};
+window.openImageViewer=window.openImageViewer||function(e){if(!window.currentCaseImages||!window.currentCaseImages.length)return;window.currentImageIndex=e||0;var t=document.getElementById("imageViewer"),n=document.getElementById("viewerImage");if(!t||!n)return;n.src=window.currentCaseImages[window.currentImageIndex];t.classList.add("active");document.body.style.overflow="hidden";var i=document.getElementById("viewerCounter");if(i)i.textContent=(window.currentImageIndex+1)+" / "+window.currentCaseImages.length};
+window.closeImageViewer=window.closeImageViewer||function(){var e=document.getElementById("imageViewer");if(e)e.classList.remove("active");document.body.style.overflow=""};
+window.prevImage=window.prevImage||function(){if(window.currentImageIndex>0){window.currentImageIndex--;document.getElementById("viewerImage").src=window.currentCaseImages[window.currentImageIndex];var e=document.getElementById("viewerCounter");if(e)e.textContent=(window.currentImageIndex+1)+" / "+window.currentCaseImages.length}};
+window.nextImage=window.nextImage||function(){if(window.currentImageIndex<window.currentCaseImages.length-1){window.currentImageIndex++;document.getElementById("viewerImage").src=window.currentCaseImages[window.currentImageIndex];var e=document.getElementById("viewerCounter");if(e)e.textContent=(window.currentImageIndex+1)+" / "+window.currentCaseImages.length}};
+})();
+</script>
 
 
 
@@ -870,7 +890,7 @@ if (!empty($images)) {
 
                             <div class="case-related-list" id="relatedCases">
 
-                                <!-- 动态填充 -->
+                            <?php include __DIR__ . "/related-cases.php"; ?>
 
                             </div>
 
@@ -1003,7 +1023,7 @@ if (!empty($images)) {
 
     <script>
 
-        // 案例数据 - 将从CMS数据源动态加载
+        // 案例数据
 
         let casesData = [];
 
@@ -1091,12 +1111,11 @@ if (!empty($images)) {
 
                         ${caseItem.images.map((img, idx) => `
 
-                            <div class="case-media-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
+                            <div class="case-media-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this, ${idx})">
 
                                 <img src="${img}" alt="${caseItem.title} - ${idx + 1}">
 
                             </div>
-
                         `).join('')}
 
                     </div>
@@ -1237,7 +1256,7 @@ if (!empty($images)) {
 
         // 切换图片
 
-        function changeImage(src, thumb) {
+        function changeImage(src, thumb, index) {
 
             document.getElementById('mainImage').src = src;
 
@@ -1249,7 +1268,7 @@ if (!empty($images)) {
 
             const thumbs = document.querySelectorAll('.case-media-thumb');
 
-            currentImageIndex = Array.from(thumbs).indexOf(thumb);
+            currentImageIndex = index;
 
         }
 
@@ -1279,9 +1298,9 @@ if (!empty($images)) {
 
         // 图片查看器相关变量
 
-        let currentCaseImages = [];
+        // currentCaseImages set from PHP or API
 
-        let currentImageIndex = 0;
+        // currentImageIndex default
 
 
 
@@ -1939,11 +1958,28 @@ if (!empty($images)) {
 
 
 
+
+            // 渲染相关案例（renderCaseFromCMS内）
+            if (casesData.length > 0) {
+                let related = casesData.filter(c => c.type === caseData.type && String(c.id) !== String(caseData.id));
+                if (related.length < 5) {
+                    const others = casesData.filter(c => c.type !== caseData.type && String(c.id) !== String(caseData.id)).slice(0, 5 - related.length);
+                    related = related.concat(others);
+                }
+                related = related.slice(0, 5);
+                var el = document.getElementById('relatedCases');
+                if (el) el.innerHTML = related.map(function(c) {
+                    var img = c.coverImage || c.image;
+                    if (img && img.indexOf('http') !== 0 && img.indexOf('/') !== 0 && img.indexOf('data:') !== 0) img = basePath + img;
+                    if (!img) img = basePath + 'images/cases/default.jpg';
+                    return '<a href="case-detail.html?id=' + c.id + '" class="case-related-item"><div class="case-related-thumb"><img src="' + img + '" alt="' + c.title + '"></div><div class="case-related-info"><h4>' + c.title + '</h4><span>' + (c.type||'') + (c.amount ? ' · ' + c.amount : '') + '</span></div></a>';
+                }).join('') || '<p style="color:#9ca3af;text-align:center;padding:20px;">暂无相关案例</p>';
+            }
         // 渲染相关案例（同类型优先，不足5个时补充其他类型）
 
             let relatedCases = casesData
 
-                .filter(c => c.type === caseData.type && c.id !== caseData.id);
+                .filter(c => c.type === caseData.type && String(c.id) !== String(caseData.id));
 
             
 
@@ -1953,7 +1989,7 @@ if (!empty($images)) {
 
                 const otherCases = casesData
 
-                    .filter(c => c.type !== caseData.type && c.id !== caseData.id)
+                    .filter(c => c.type !== caseData.type && String(c.id) !== String(caseData.id))
 
                     .slice(0, 5 - relatedCases.length);
 
@@ -2031,6 +2067,7 @@ if (!empty($images)) {
 
         }
 
+        }        }        }        }
     </script>
 
     

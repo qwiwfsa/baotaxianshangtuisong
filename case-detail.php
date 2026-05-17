@@ -508,7 +508,7 @@ header("Expires: 0");
                             <?php $cover = $case_content['coverImage'] ?? $case_data['image'] ?? ''; ?>
                             <?php $first_img = !empty($images) ? $images[0] : $cover; ?>
                             <?php if ($first_img): ?>
-                            <img src="<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="caseMainImage">
+                            <img src="<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="mainImage" onclick="openImageViewer(0)">
                             <?php endif; ?>
                             <?php if (count($images) > 1): ?>
                             <div class="case-media-thumbs">
