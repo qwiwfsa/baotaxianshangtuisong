@@ -30,3 +30,76 @@
 .province-desc-box{max-width:900px;margin:40px auto 0;padding:32px;background:#f8fafc;border-radius:12px;text-align:left}
 .province-desc-title{font-size:22px;font-weight:600;color:#1f2937;margin-bottom:16px}
 .province-desc-text{font-size:15px;color:#4b5563;line-height:1.8;margin-bottom:12px}
+/* ===== 城市深度内容模块（主站风格统一） ===== */
+.city-content-section {
+    padding: 80px 0;
+    background: var(--bg-secondary, #f8fafc);
+}
+
+.city-content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.city-content-card {
+    background: #fff;
+    border-radius: var(--radius-xl, 16px);
+    padding: 40px;
+    box-shadow: var(--shadow-card, 0 1px 3px 0 rgba(0,0,0,0.1));
+    transition: box-shadow 0.3s ease;
+}
+
+.city-content-card:hover {
+    box-shadow: var(--shadow-card-hover, 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04));
+}
+
+.city-content-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary, #0f172a);
+    margin: 32px 0 16px 0;
+    line-height: 1.4;
+}
+
+.city-content-card h3:first-child {
+    margin-top: 0;
+}
+
+.city-content-card p {
+    font-size: 16px;
+    color: var(--text-secondary, #475569);
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+
+.city-content-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .city-content-section {
+        padding: 50px 0;
+    }
+
+    .city-content-card {
+        padding: 24px 20px;
+        border-radius: var(--radius-lg, 12px);
+    }
+
+    .city-content-card h3 {
+        font-size: 18px;
+        margin: 24px 0 12px 0;
+    }
+
+    .city-content-card p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .city-content-section .section-header {
+        margin-bottom: 32px;
+    }
+}
+
+.districts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:20px 0}

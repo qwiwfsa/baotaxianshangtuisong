@@ -13,7 +13,7 @@ if (!function_exists('getDbConnection')) {
 
 // ---------- 缓存配置 ----------
 $cacheDir = __DIR__ . '/cache/';
-$cacheTTL = 600;
+$cacheTTL = 3600;
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 
 if ($slug === '') {
@@ -154,7 +154,7 @@ if (!empty($districts)) {
                 <h2 class="section-title">' . $escapedCity . '服务范围</h2>
                 <p class="section-subtitle">覆盖' . $escapedCity . '全城，为您提供便捷的网点服务</p>
             </div>
-            <div class="districts-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:20px 0;">';
+            <div class="districts-grid" class="districts-grid">';
     foreach ($districts as $d) {
         $dName = htmlspecialchars(trim($d), ENT_QUOTES, 'UTF-8');
         $districtHtml .= '<div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">' . $dName . '</div>';
@@ -179,7 +179,7 @@ try {
                 <!-- 动态菜单将在这里加载 -->
             </ul>
 
-            <script src="/js/nav-loader.js?v=4"></script>
+            <script src="/js/nav-loader.js?v=4" defer></script>
 
             <!-- 搜索按钮 -->
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -312,7 +312,16 @@ try {
         <?php if (!empty($city_content)): ?>
         <section class="city-content-section">
             <div class="section-container">
-                <?php echo $city_content; ?>
+                <div class="section-header">
+                    <div class="section-label">CITY INSIGHTS</div>
+                    <h2 class="section-title"><?php echo htmlspecialchars($city_name); ?>深度解读</h2>
+                    <p class="section-subtitle">深入了解<?php echo htmlspecialchars($city_name); ?>经济环境与资金市场特点</p>
+                </div>
+                <div class="city-content-wrapper">
+                    <div class="city-content-card">
+                        <?php echo $city_content; ?>
+                    </div>
+                </div>
             </div>
         </section>
         <?php endif; ?>
@@ -375,58 +384,7 @@ try {
                     <h2 class="section-title">常见问题</h2>
                     <p class="section-subtitle">为您解答资金业务中的常见疑问</p>
                 </div>
-        <style>
-        .faq-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-        @media (max-width: 768px) {
-            .faq-grid { grid-template-columns: 1fr; }
-        }
-        .faq-grid .faq-custom-category {
-            margin-bottom: 0;
-        }
-                .breadcrumb-nav {
-            background: #f8fafc;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 12px 0;
-        }
-        .breadcrumb-list {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-        .breadcrumb-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .breadcrumb-item + .breadcrumb-item::before {
-            content: "/";
-            color: #d1d5db;
-            font-size: 12px;
-        }
-        .breadcrumb-item a {
-            color: #6b7280;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .breadcrumb-item a:hover {
-            color: #3b82f6;
-        }
-        .breadcrumb-item:last-child a {
-            color: #1f2937;
-            font-weight: 500;
-            pointer-events: none;
-        }
-
-</style>
+        
         <div class="faq-grid">
         <?php
                 try {
@@ -510,7 +468,7 @@ try {
         </section>
         </main>
         <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-        <script src="/js/main.js?v=20260513e"></script>
+        <script src="/js/main.js?v=20260513e" defer></script>
 
     <!-- Cases Showcase Script -->
     <script>
@@ -596,24 +554,7 @@ try {
         </div>
     </div>
 
-    <style>
-        .lightbox-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease;}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        .lightbox-container{position:relative;max-width:90%;max-height:90%;}
-        .lightbox-container img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px;}
-        .lightbox-close{position:absolute;top:-50px;right:0;width:40px;height:40px;background:rgba(255,255,255,0.2);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;}
-        .lightbox-close:hover{background:rgba(255,255,255,0.4);}
-        .case-card-image{cursor:pointer;}
-        .case-card-image img{transition:transform .3s ease;}
-        .case-card-image:hover img{transform:scale(1.05);}
-        .cases-showcase-empty{text-align:center;padding:60px 20px;color:#94a3b8;grid-column:1/-1;}
-        .cases-showcase-empty i{font-size:48px;display:block;margin-bottom:16px;}
-        .cases-showcase-pagination{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:32px;}
-        .pagination-btn{padding:8px 20px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;color:#475569;cursor:pointer;font-size:14px;transition:all .2s;}
-        .pagination-btn:hover:not(:disabled){border-color:#3b82f6;color:#3b82f6;background:#f0f5ff;}
-        .pagination-btn:disabled{opacity:.4;cursor:not-allowed;}
-        .pagination-info{font-size:14px;color:#64748b;min-width:140px;text-align:center;}
-    </style>
+    
 
         <script>
     function togglePhoneDisplay() {
@@ -715,7 +656,7 @@ if (!empty($templateContent)) {
         <link rel="stylesheet" href="/css/style.min.css?v=20260514">
         <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
         <link rel="stylesheet" href="/css/fenzhan.css?v=20260519">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <base href="/">
     <link rel="canonical" href="https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html">
     <meta name="robots" content="index, follow">
@@ -765,7 +706,7 @@ if (!empty($templateContent)) {
                 <!-- 动态菜单将在这里加载 -->
             </ul>
 
-            <script src="/js/nav-loader.js?v=4"></script>
+            <script src="/js/nav-loader.js?v=4" defer></script>
 
             <!-- 搜索按钮 -->
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -841,7 +782,16 @@ if (!empty($templateContent)) {
         <?php if (!empty($city_content)): ?>
         <section class="city-content-section">
             <div class="section-container">
-                <?php echo $city_content; ?>
+                <div class="section-header">
+                    <div class="section-label">CITY INSIGHTS</div>
+                    <h2 class="section-title"><?php echo htmlspecialchars($city_name); ?>深度解读</h2>
+                    <p class="section-subtitle">深入了解<?php echo htmlspecialchars($city_name); ?>经济环境与资金市场特点</p>
+                </div>
+                <div class="city-content-wrapper">
+                    <div class="city-content-card">
+                        <?php echo $city_content; ?>
+                    </div>
+                </div>
             </div>
         </section>
         <?php endif; ?>
@@ -904,19 +854,7 @@ if (!empty($templateContent)) {
                     <h2 class="section-title">常见问题</h2>
                     <p class="section-subtitle">为您解答资金业务中的常见疑问</p>
                 </div>
-        <style>
-        .faq-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-        @media (max-width: 768px) {
-            .faq-grid { grid-template-columns: 1fr; }
-        }
-        .faq-grid .faq-custom-category {
-            margin-bottom: 0;
-        }
-        </style>
+        
         <div class="faq-grid">
         <?php
                 try {
@@ -1000,7 +938,7 @@ if (!empty($templateContent)) {
         </section>
         </main>
         <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-        <script src="/js/main.js?v=20260513e"></script>
+        <script src="/js/main.js?v=20260513e" defer></script>
 
     <!-- Cases Showcase Script -->
     <script>
@@ -1086,24 +1024,7 @@ if (!empty($templateContent)) {
         </div>
     </div>
 
-    <style>
-        .lightbox-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease;}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        .lightbox-container{position:relative;max-width:90%;max-height:90%;}
-        .lightbox-container img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px;}
-        .lightbox-close{position:absolute;top:-50px;right:0;width:40px;height:40px;background:rgba(255,255,255,0.2);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;}
-        .lightbox-close:hover{background:rgba(255,255,255,0.4);}
-        .case-card-image{cursor:pointer;}
-        .case-card-image img{transition:transform .3s ease;}
-        .case-card-image:hover img{transform:scale(1.05);}
-        .cases-showcase-empty{text-align:center;padding:60px 20px;color:#94a3b8;grid-column:1/-1;}
-        .cases-showcase-empty i{font-size:48px;display:block;margin-bottom:16px;}
-        .cases-showcase-pagination{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:32px;}
-        .pagination-btn{padding:8px 20px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;color:#475569;cursor:pointer;font-size:14px;transition:all .2s;}
-        .pagination-btn:hover:not(:disabled){border-color:#3b82f6;color:#3b82f6;background:#f0f5ff;}
-        .pagination-btn:disabled{opacity:.4;cursor:not-allowed;}
-        .pagination-info{font-size:14px;color:#64748b;min-width:140px;text-align:center;}
-    </style>
+    
 
         <script>
     function togglePhoneDisplay() {
