@@ -2980,6 +2980,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script src="../js/nav-loader.js?v=5"></script>
+<script>
+(function() {
+    var p = new URLSearchParams(window.location.search);
+    var page = p.get('page');
+    if (page) {
+        document.querySelectorAll('a[href="news.php"]').forEach(function(a) {
+            a.href = 'news.php?page=' + page;
+        });
+    }
+})();
+</script>
 </body>
 
 </html>

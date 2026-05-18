@@ -72,6 +72,7 @@ header("Expires: 0");
     <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
 
     <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "案例详情 - Yao资金网"); ?></title>
+    <link rel="canonical" href="https://www.yaozijin.com/case-detail.html?id=<?php echo $case_id_seo; ?>">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">

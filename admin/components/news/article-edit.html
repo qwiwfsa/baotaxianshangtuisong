@@ -332,6 +332,9 @@
             // 检查是否是编辑模式
             const urlParams = new URLSearchParams(window.location.search);
             articleId = urlParams.get('id');
+            var listPage = urlParams.get('page') || '1';
+            var bl = document.querySelector('.logo[href*="article-list"]');
+            if (bl) bl.href = './article-list.html?page=' + listPage;
 
             if (articleId) {
                 document.getElementById('pageTitle').textContent = '编辑文章';
@@ -1066,7 +1069,7 @@
                     return;
                 }
             }
-            window.location.href = './article-list.html';
+            window.location.href = './article-list.html?page=' + listPage;
         }
 
         // 显示加载

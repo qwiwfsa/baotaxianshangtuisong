@@ -110,7 +110,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="./article-list.html" class="logo">
+        <a href="./article-list.html" id="backLink" class="logo">
             <i class="fas fa-arrow-left"></i>
             <span id="pageTitle">新建文章</span>
         </a>
@@ -345,6 +345,9 @@
             // 检查是否是编辑模式
             const urlParams = new URLSearchParams(window.location.search);
             articleId = urlParams.get('id');
+            var listPage = urlParams.get('page') || '1';
+            var bl = document.getElementById('backLink');
+            if (bl) bl.href = './article-list.html?page=' + listPage;
 
             if (articleId) {
                 document.getElementById('pageTitle').textContent = '编辑文章';
@@ -1080,7 +1083,7 @@
                     return;
                 }
             }
-            window.location.href = './article-list.html';
+            window.location.href = './article-list.html?page=' + listPage;
         }
 
         // 显示加载

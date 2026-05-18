@@ -2242,4 +2242,4 @@ footer {
 }
 
 /* 禁用navbar过渡动画，防止页面切换频闪 */
-.navbar,.nav-menu,.nav-menu a{transition:none !important}
+.navbar,.nav-menu,.nav-menu a,.footer,.footer-nav-list a{transition:none !important}

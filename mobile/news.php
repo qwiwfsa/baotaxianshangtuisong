@@ -986,7 +986,7 @@ $newsDB->close();
                             <div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:15px"></div>
                             <?php endif; ?>
                             <div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">
-                                <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><a href="news-detail.html?id=<?php echo $article['id']; ?>" style="color:#1e3a8a;text-decoration:none"><?php echo htmlspecialchars($article['title'] ?? ''); ?></a></h3>
+                                <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><a href="news-detail.html?id=<?php echo $article['id']; ?>&page=<?php echo intval($_GET['page'] ?? 1); ?>" style="color:#1e3a8a;text-decoration:none"><?php echo htmlspecialchars($article['title'] ?? ''); ?></a></h3>
                                 <?php $s = $article['summary'] ?? ''; if ($s): ?>
                                 <p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><?php echo htmlspecialchars($s); ?></p>
                                 <?php endif; ?>
@@ -1139,7 +1139,9 @@ var __INIT_DATA__ = {articles:<?php echo $articlesJson; ?>,total:<?php echo $tot
         }
     })();
 
-var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
+var STATE = {all:[], page: (function(){var p=new URLSearchParams(window.location.search).get("page"); if(p) return parseInt(p); var s=sessionStorage.getItem("news_page"); return s?parseInt(s):1; })(), per:10, loading:false, currentCategory:0};
+    // Save current page to sessionStorage
+    window.addEventListener("beforeunload", function(){ sessionStorage.setItem("news_page", STATE.page); });
     // Check for server pre-rendered content
         var el = document.querySelector('.news-list-container');
     if(!el) return;
@@ -1302,7 +1304,7 @@ function escapeHtml(str){
             html += '<div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">';
             html += imgHtml;
             html += '<div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">';
-            html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><a href="news-detail.html?id='+a.id+'\" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
+            html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><a href="news-detail.html?id='+a.id+'&page='+STATE.page+'\" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
             if(s) html += '<p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+s+'</p>';
 
             html += '</div></div>';

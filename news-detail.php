@@ -242,7 +242,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
         }
         
         .article-nav-title {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 600;
             color: #1f2937;
             line-height: 1.5;
@@ -341,6 +341,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
             overflow: hidden;
         }
         
+        .related-article-summary { font-size:12px; color:#6b7280; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:6px 0 0 0; }
         .related-article-date {
             font-size: 12px;
             color: #9ca3af;
@@ -1028,7 +1029,18 @@ html{scroll-behavior:auto;overflow-y:scroll}
         <section class="article-detail-header">
             <div class="article-detail-header-container">
                 <div id="articleHeader">
-                    <!-- 动态填充 -->
+                    <?php if (!empty($article_title)): ?>
+                    <a href="/news.php" class="article-back-btn-top">
+                        <i class="fas fa-arrow-left"></i>
+                        返回资讯列表
+                    </a>
+                    <h1 class="article-detail-title"><?php echo htmlspecialchars($article_title, ENT_QUOTES, 'UTF-8'); ?></h1>
+                    <div class="article-detail-meta">
+                        <span><i class="far fa-calendar"></i> <?php echo htmlspecialchars($article_date, ENT_QUOTES, 'UTF-8'); ?></span>
+                        <span><i class="far fa-user"></i> Yao资金网</span>
+                        <span><i class="far fa-eye"></i> <?php echo intval($article_views); ?> 阅读</span>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
@@ -1037,9 +1049,64 @@ html{scroll-behavior:auto;overflow-y:scroll}
         <section class="article-detail-content">
             <div class="article-detail-container">
                 <div id="articleContent">
-                    <!-- 动态填充 -->
+                    <?php if (!empty($article_title)): ?>
+                    <div class="article-detail-main">
+                        <div class="article-body"><?php echo $article_content; ?></div>
+                        <?php if (!empty($article_tags)): ?>
+                        <div class="article-tags">
+                            <?php foreach ($article_tags as $tag):
+                                $tag_name = htmlspecialchars($tag['name'], ENT_QUOTES, 'UTF-8');
+                                $tag_slug = htmlspecialchars($tag['slug'], ENT_QUOTES, 'UTF-8');
+                            ?>
+                            <a href="/tag/<?php echo $tag_slug; ?>" class="article-tag" style="text-decoration:none;"><?php echo $tag_name; ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
+                        <div class="article-share-full">
+                            <div class="share-left">
+                                <span class="share-title">分享到：</span>
+                                <div class="share-buttons">
+                                    <button class="share-btn wechat" id="shareBtnWechat" title="微信"><i class="fab fa-weixin"></i></button>
+                                    <button class="share-btn wechat-moments" id="shareBtnMoments" title="朋友圈"><i class="fas fa-users"></i></button>
+                                    <button class="share-btn qq" id="shareBtnQQ" title="QQ"><i class="fab fa-qq"></i></button>
+                                    <button class="share-btn weibo" id="shareBtnWeibo" title="微博"><i class="fab fa-weibo"></i></button>
+                                    <button class="share-btn copy" id="shareBtnCopy" title="复制链接"><i class="fas fa-link"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php if ($article_prev || $article_next): ?>
+                        <div class="article-navigation">
+                            <?php if ($article_prev):
+                                $prev_title = htmlspecialchars($article_prev['title'], ENT_QUOTES, 'UTF-8');
+                            ?>
+                            <a href="news-detail.php?id=<?php echo $article_prev['id']; ?>" class="article-nav-item prev">
+                                <div class="article-nav-label"><i class="fas fa-arrow-left"></i> 上一篇</div>
+                                <div class="article-nav-title"><?php echo $prev_title; ?></div>
+                            </a>
+                            <?php endif; ?>
+                            <?php if ($article_next):
+                                $next_title = htmlspecialchars($article_next['title'], ENT_QUOTES, 'UTF-8');
+                            ?>
+                            <a href="news-detail.php?id=<?php echo $article_next['id']; ?>" class="article-nav-item next">
+                                <div class="article-nav-label">下一篇 <i class="fas fa-arrow-right"></i></div>
+                                <div class="article-nav-title"><?php echo $next_title; ?></div>
+                            </a>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php else: ?>
+                    <div class="article-not-found">
+                        <i class="far fa-file-alt"></i>
+                        <h2>文章未找到</h2>
+                        <p>抱歉，您访问的文章不存在或已被删除</p>
+                        <a href="/news.php" class="btn">
+                            <i class="fas fa-arrow-left"></i>
+                            返回资讯列表
+                        </a>
+                    </div>
+                    <?php endif; ?>
                 </div>
-        <div class="article-tags" id="articleTags"></div>
             </div>
         </section>
 
@@ -1135,7 +1202,7 @@ html{scroll-behavior:auto;overflow-y:scroll}
                                 <?php endif; ?>
                                 <div class="related-article-content">
                                     <h3 class="related-article-title"><?= $ra_title ?></h3>
-                                    <span class="related-article-date"><?= $ra_date ?></span>
+                                    <p class="related-article-summary"><?php $s = $ra['summary'] ?? ''; echo htmlspecialchars(mb_substr(strip_tags($s), 0, 120)); ?></p>
                                 </div>
                             </a>
                         <?php endforeach; ?>
@@ -1174,134 +1241,12 @@ html{scroll-behavior:auto;overflow-y:scroll}
             return false;
         }
 
-        // 从后端API加载文章
-        async function loadArticleFromAPI(articleId) {
-            try {
-                const response = await fetch('api/news-detail.php?id=' + articleId + '&t=' + Date.now(), {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (!response.ok) return null;
-                const result = await response.json();
-                // admin的detail.php返回 {success, data}，api/news-detail.php直接返回文章对象
-                return result.data || result;
-            } catch (e) {
-                console.error('[News Detail] API请求失败:', e);
-                return null;
-            }
-        }
-
-        // 从后端加载相关文章
-        async function loadRelatedArticles(currentId) {
-            try {
-                const response = await fetch('api/news.php?limit=10&t=' + Date.now(), {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (!response.ok) return [];
-                const result = await response.json();
-                const articles = result.data ? result.data.news : result.news;
-                if (!articles) return [];
-                return articles.filter(a => String(a.id) !== String(currentId)).slice(0, 4);
-            } catch (e) {
-                console.error('[News Detail] Error:', e);
-                return [];
-            }
-        }
-
-        // 渲染文章
-        function renderArticle(article) {
-            // 更新标题 - 优先使用文章的SEO字段
-            var seoTitle = article.seo_title || article.title || '文章详情';
-            var seoKeywords = article.seo_keywords || '';
-            var seoDesc = article.seo_description || article.summary || '';
-            document.title = seoTitle + ' - Yao资金网';
-            // 更新meta keywords
-            if (seoKeywords) {
-                var kw = document.querySelector('meta[name="keywords"]');
-                if (kw) kw.content = seoKeywords;
-            }
-            // 更新meta description
-            if (seoDesc) {
-                var desc = document.querySelector('meta[name="description"]');
-                if (desc) desc.content = seoDesc;
-            }
-
-            // 头部
-            const date = article.created_at || article.date || new Date().toISOString();
-            const formattedDate = new Date(date).toLocaleDateString('zh-CN');
-            document.getElementById('articleHeader').innerHTML = `
-                <a href="/news.php" class="article-back-btn-top">
-                    <i class="fas fa-arrow-left"></i>
-                    返回资讯列表
-                </a>
-                <h1 class="article-detail-title">${article.title || '无标题'}</h1>
-                <div class="article-detail-meta">
-                    <span><i class="far fa-calendar"></i> ${formattedDate}</span>
-                    <span><i class="far fa-user"></i> ${article.author || 'Yao资金网'}</span>
-                    <span><i class="far fa-eye"></i> ${article.view_count || article.views || 0} 阅读</span>
-                </div>
-            `;
-
-            // 内容 - 修复图片URL（兼容各种存储格式）
-            let content = article.content || '<p>暂无内容</p>';
-            var basePath = '/';
-            var pathname = window.location.pathname;
-            var secondSlash = pathname.indexOf('/', 1);
-            if (secondSlash > 0) {
-                basePath = pathname.substring(0, secondSlash + 1);
-            }
-            // 1) 替换 http://localhost/uploads/ -> /uploads/
-            content = content.replace(/https?:\/\/[^\/]+\/uploads\//g, '/uploads/');
-            // 2) 替换 ../../../uploads/ -> /uploads/
-            content = content.replace(/src="(?:\.\.\/)+(uploads\/)/g, 'src="/$1');
-            // 3) 确保 /uploads/ 路径正确
-            content = content.replace(/src="\/uploads\//g, 'src="/uploads/');
-            // 4) 替换 /admin/uploads/ -> /uploads/（管理员上传的图片前台可访问）
-            content = content.replace(/src="\/admin\/uploads\//g, 'src="\/uploads\/')
-            const tags = article.tags || [];
-            let tagsHtml = '';
-            if (tags.length > 0) {
-                tagsHtml = `
-                    <div class="article-tags">
-                        ${tags.map(function(tag){
-                            var tagName = (typeof tag === 'object') ? tag.name : tag;
-                            var tagSlug = (typeof tag === 'object' && tag.slug) ? tag.slug : '';
-                            if (tagSlug) {
-                                return '<a href="/tag/' + tagSlug + '" class="article-tag" style="text-decoration:none;">' + tagName + '</a>';
-                            }
-                            return '<span class="article-tag">' + tagName + '</span>';
-                        }).join('')}
-                    </div>
-                `;
-            }
-            
-            document.getElementById('articleContent').innerHTML = `
-                <div class="article-detail-main">
-                    <div class="article-body">${content}</div>
-                    ${tagsHtml}
-                    <div class="article-share-full">
-                        <div class="share-left">
-                            <span class="share-title">分享到：</span>
-                            <div class="share-buttons">
-                                <button class="share-btn wechat" id="shareBtnWechat" title="微信"><i class="fab fa-weixin"></i></button>
-                                <button class="share-btn wechat-moments" id="shareBtnMoments" title="朋友圈"><i class="fas fa-users"></i></button>
-                                <button class="share-btn qq" id="shareBtnQQ" title="QQ"><i class="fab fa-qq"></i></button>
-                                <button class="share-btn weibo" id="shareBtnWeibo" title="微博"><i class="fab fa-weibo"></i></button>
-                                <button class="share-btn copy" id="shareBtnCopy" title="复制链接"><i class="fas fa-link"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // 绑定分享按钮事件
+        // 分享按钮事件绑定（在 PHP 渲染的 DOM 上绑定）
+        function bindShareButtons() {
             setTimeout(function() {
                 var url = window.location.href.split('#')[0];
                 var titleEl = document.querySelector('h1.article-detail-title');
                 var title = titleEl ? titleEl.textContent.trim() : document.title;
-                var u = encodeURIComponent(url);
-                var t = encodeURIComponent(title);
                 var wechatBtn = document.getElementById('shareBtnWechat');
                 var momentsBtn = document.getElementById('shareBtnMoments');
                 var qqBtn = document.getElementById('shareBtnQQ');
@@ -1313,81 +1258,10 @@ html{scroll-behavior:auto;overflow-y:scroll}
                 if (weiboBtn) weiboBtn.onclick = function(){ shareToWeibo(url, title); };
                 if (copyBtn) copyBtn.onclick = function(){ copyLink(url, this); };
             }, 100);
-        
-                        // Tags are now rendered inline above share section
-
-        // 渲染相关文章
-        }
-        function renderRelated(articles) {
-            if (articles.length === 0) {
-                document.getElementById('relatedArticles').innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; color: #9ca3af; padding: 40px;">
-                        暂无相关资讯
-                    </div>
-                `;
-                return;
-            }
-
-            const fixCoverPath = (path) => {
-                // API已返回完整路径（如 /uploads/xxx.jpg），直接使用
-                return path || '';
-            };
-            document.getElementById('relatedArticles').innerHTML = articles.map(a => {
-                const title = a.title || '无标题';
-                const d = new Date(a.created_at || a.date || Date.now()).toLocaleDateString('zh-CN');
-                const img = a.cover_image && isValidImage(a.cover_image)
-                    ? `<div class="related-article-thumb"><img src="${fixCoverPath(a.cover_image)}" alt="${title}" loading="lazy"></div>`
-                    : `<div class="related-article-thumb placeholder"><div class="placeholder-bg"></div></div>`;
-                return `
-                    <a href="news-detail.php?id=${a.id}" class="related-article-card">
-                        ${img}
-                        <div class="related-article-content">
-                            <h3 class="related-article-title">${title}</h3>
-                            <span class="related-article-date">${d}</span>
-                        </div>
-                    </a>
-                `;
-            }).join('');
         }
 
-        // 渲染未找到
-        function renderNotFound() {
-            document.getElementById('articleHeader').innerHTML = '';
-            document.getElementById('articleContent').innerHTML = `
-                <div class="article-not-found">
-                    <i class="far fa-file-alt"></i>
-                    <h2>文章未找到</h2>
-                    <p>抱歉，您访问的文章不存在或已被删除</p>
-                    <a href="/news.php" class="btn">
-                        <i class="fas fa-arrow-left"></i>
-                        返回资讯列表
-                    </a>
-                </div>
-            `;
-        }
-
-        // 初始化
-        document.addEventListener('DOMContentLoaded', async function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleId = urlParams.get('id');
-
-            if (!articleId) {
-                renderNotFound();
-                return;
-            }
-
-            // 从API加载文章
-            const article = await loadArticleFromAPI(articleId);
-            if (!article || article.code === 1) {
-                renderNotFound();
-                return;
-            }
-
-            renderArticle(article);
-
-            // 加载相关文章
-            const related = await loadRelatedArticles(articleId);
-            renderRelated(related);
+        document.addEventListener('DOMContentLoaded', function() {
+            bindShareButtons();
         });
     </script>
     <!-- 社交分享功能 -->
@@ -1666,6 +1540,20 @@ html{scroll-behavior:auto;overflow-y:scroll}
             }
         }
     })();
+</script>
+<script>
+(function() {
+    var p = new URLSearchParams(window.location.search);
+    var page = p.get('page');
+    if (page) {
+        document.querySelectorAll('a[href="/news.php"]').forEach(function(a) {
+            a.href = '/news.php?page=' + page;
+        });
+        document.querySelectorAll('a[href="news.php"]').forEach(function(a) {
+            a.href = 'news.php?page=' + page;
+        });
+    }
+})();
 </script>
 </body>
 </html>
