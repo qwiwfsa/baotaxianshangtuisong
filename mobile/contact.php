@@ -102,7 +102,7 @@
     xhr.send();
 })();
 </script>
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}.contact-qr-section{background:#fff;border-radius:12px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-top:20px}.contact-qr-section h3{font-size:16px;color:#1f2937;margin-bottom:16px}.contact-qr-image{width:160px;height:160px;margin:0 auto 12px}.contact-qr-image img{width:100%;height:100%;object-fit:contain}.contact-qr-section p{font-size:13px;color:#9ca3af}.contact-qr-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.contact-qr-image{width:120px;height:120px;margin:0 auto 8px}.contact-qr-image img{width:100%;height:100%;object-fit:contain}.contact-qr-text{font-size:15px;font-weight:600;color:#1f2937;margin:0}.contact-qr-sub{font-size:12px;color:#9ca3af;margin:4px 0 0 0}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -160,19 +160,6 @@
                             <p class="contact-info-note">7×24小时服务</p>
                         </div>
 
-                        <!-- 电子邮箱 -->
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon" style="background: var(--color-accent);">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <h3 class="contact-info-title">电子邮箱</h3>
-                            <p class="contact-info-value">
-                                <a href="mailto:wanglizhongguo@126.com">wanglizhongguo@126.com</a>
-                            </p>
-                            <p class="contact-info-desc">商务合作咨询</p>
-                            <p class="contact-info-note">24小时内回复</p>
-                        </div>
-
                         <!-- 公司地址 -->
                         <div class="contact-info-card">
                             <div class="contact-info-icon" style="background: #10b981;">
@@ -183,21 +170,18 @@
                                 <strong>财富金融中心</strong><br>
                                 北京市朝阳区呼家楼街道东三环中路5号
                             </p>
-
                         </div>
 
-                        <!-- 微信咨询 -->
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon" style="background: #8b5cf6;">
-                                <i class="fab fa-weixin"></i>
+                        <!-- 微信二维码 -->
+                        <div class="contact-info-card contact-qr-card">
+                            <div class="contact-qr-image">
+                                <img src="/uploads/wechat-qr.png" alt="微信二维码" loading="lazy">
                             </div>
-                            <h3 class="contact-info-title">微信咨询</h3>
-                            <p class="contact-info-value">扫码添加微信</p>
-                            <p class="contact-info-desc">即时沟通更便捷</p>
-                            <p class="contact-info-note">7×24小时在线</p>
+                            <p class="contact-qr-text">微信咨询</p>
+                            <p class="contact-qr-sub">扫码添加，即时沟通</p>
                         </div>
-                    </div>
-                </div>
+
+                        
 
                 <!-- 联系详情 -->
                 <div class="editable-section" data-section="contact-details">
@@ -222,11 +206,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">电子邮箱</label>
-                                    <input type="email" id="email" name="email" placeholder="请输入邮箱地址（选填）">
-                                    <span class="form-error" id="emailError"></span>
-                                </div>
-                                <div class="form-group">
                                     <label class="form-label">业务类型 <span class="required">*</span></label>
                                     <select id="serviceType" name="serviceType" required>
                                         <option value="">请选择业务类型</option>
@@ -241,65 +220,13 @@
                                     <label class="form-label">需求描述</label>
                                     <textarea id="message" name="message" rows="4" placeholder="请简要描述您的资金需求..."></textarea>
                                 </div>
-                                <div class="form-group form-checkbox">
-                                    <input type="checkbox" id="privacy" name="privacy" required>
-                                    <label for="privacy">我已阅读并同意<a href="#">隐私政策</a>和<a href="#">服务条款</a></label>
-                                    <span class="form-error" id="privacyError"></span>
-                                </div>
-                                <button type="submit" class="form-submit" id="submitBtn">
-                                    <span class="btn-text">提交咨询</span>
-                                    <span class="btn-loading" hidden>
-                                        <i class="fas fa-spinner fa-spin"></i> 提交中...
-                                    </span>
-                                </button>
+                                <button type="submit" class="submit-btn">提交咨询</button>
                             </form>
-                        </div>
-
-                        <!-- 微信二维码 -->
-                        <div class="contact-side-section">
-                            <!-- 微信二维码 -->
-                            <div class="contact-qr-card">
-                                <h3>扫码添加微信</h3>
-                                <div class="contact-qr-image">
-                                    <img src="../images/wechat-qr.png" alt="微信二维码" loading="lazy">
-                                </div>
-                                <p>微信扫一扫，添加好友咨询</p>
-                            </div>
-
-                            <!-- 工作时间 -->
-                            <div class="contact-hours-card">
-                                <h3><i class="fas fa-clock"></i> 工作时间</h3>
-                                <div class="contact-hours-item">
-                                    <span class="day">周一至周五</span>
-                                    <span class="time">9:00 - 18:00</span>
-                                </div>
-                                <div class="contact-hours-item">
-                                    <span class="day">周六</span>
-                                    <span class="time">9:00 - 12:00</span>
-                                </div>
-                                <div class="contact-hours-item">
-                                    <span class="day">周日</span>
-                                    <span class="time">休息</span>
-                                </div>
-                                <p class="contact-hours-note"><i class="fas fa-info-circle"></i> 紧急需求可随时联系</p>
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                
-
-    </main>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">&copy; 2024 Yao资金网 版权所有</p>
-                <p class="footer-disclaimer">投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。</p>
-            </div>
-        </div>
-    </footer>
+                </footer>
     <script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
 
     <script src="../js/main.js"></script>    <script src="../js/footer-loader.js"></script>

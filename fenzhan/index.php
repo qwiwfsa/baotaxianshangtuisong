@@ -20,28 +20,66 @@ if ($slug === '') {
     http_response_code(404);
     exit('Page not found');
 }
+// ---------- 省份拼音映射 ----------
+$slug_to_province = [
+    'an-hui' => '安徽', 'beijing' => '北京', 'chongqing' => '重庆',
+    'fu-jian' => '福建', 'gan-su' => '甘肃', 'gang-ao-tai' => '港澳台',
+    'guang-dong' => '广东', 'guang-xi' => '广西', 'gui-zhou' => '贵州',
+    'hai-nan' => '海南', 'he-bei' => '河北', 'he-nan' => '河南',
+    'hei-long-jiang' => '黑龙江', 'hu-bei' => '湖北', 'hu-nan' => '湖南',
+    'ji-lin' => '吉林', 'jiang-su' => '江苏', 'jiang-xi' => '江西',
+    'liao-ning' => '辽宁', 'nei-meng-gu' => '内蒙古', 'ning-xia' => '宁夏',
+    'qing-hai' => '青海', 'shaan-xi' => '陕西', 'shan-dong' => '山东',
+    'shan-xi' => '山西', 'shanghai' => '上海', 'si-chuan' => '四川',
+    'tianjin' => '天津', 'xi-zang' => '西藏', 'xin-jiang' => '新疆',
+    'yun-nan' => '云南', 'zhe-jiang' => '浙江',
+];
 
-// ---------- 加载城市数据 ----------
-try {
-    $conn = getDbConnection();
-    $stmt = $conn->prepare("SELECT * FROM fenzhan_cities WHERE slug = ? AND is_active = 1");
-    $stmt->bind_param("s", $slug);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows === 0) {
-        $stmt->close(); $conn->close();
-        http_response_code(404);
-        exit('Page not found');
+// 检测是否省份页（必须在 city query 之前）
+$is_province_page = false;
+$province_name = '';
+$province_slug_param = '';
+if (strpos($slug, 'province-') === 0) {
+    $province_slug_param = substr($slug, 9);
+    if (isset($slug_to_province[$province_slug_param])) {
+        $is_province_page = true;
+        $province_name = $slug_to_province[$province_slug_param];
     }
-    $city = $result->fetch_assoc();
-    $stmt->close();
-    $conn->close();
-} catch (Exception $e) {
-    http_response_code(500);
-    exit('Internal error');
 }
 
-// ---------- 缓存读取 ----------
+
+// ---------- 加载城市数据 ----------
+if (!$is_province_page) {
+    try {
+        $conn = getDbConnection();
+        $stmt = $conn->prepare("SELECT * FROM fenzhan_cities WHERE slug = ? AND is_active = 1");
+        $stmt->bind_param("s", $slug);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0) {
+            $stmt->close(); $conn->close();
+            http_response_code(404);
+            exit('Page not found');
+        }
+        $city = $result->fetch_assoc();
+        $stmt->close();
+        $conn->close();
+    } catch (Exception $e) {
+        http_response_code(500);
+        exit('Internal error');
+    }
+} else {
+    // 省份页：使用空数据，城市列表由 province hero 渲染
+    $city = [
+        'city_name' => $province_name,
+        'phone' => '13552883008',
+        'province' => $province_name,
+        'content' => '',
+        'title' => '',
+        'keywords' => '',
+        'description' => '',
+    ];
+}// ---------- 缓存读取 ----------
 if (!is_dir($cacheDir)) {
     @mkdir($cacheDir, 0755, true);
 }
@@ -57,16 +95,9 @@ if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTTL) {
 $city_name = $city['city_name'];
 $phone = !empty($city['phone']) ? $city['phone'] : '13552883008';
 $province = $city['province'] ?? '';
+$province_slug = !empty($province) && isset($slug_to_province[$province]) ? $slug_to_province[$province] : '';
 $city_content = $city['content'] ?? '';
 
-// ---------- SEO 自动生成 ----------
-$page_title = $city_name . '资金_过桥短拆_实资摆账_资金证明 - Yao资金网';
-$page_keywords = $city_name . '资金,' . $city_name . '过桥短拆,' . $city_name . '实资摆账,' . $city_name . '资金证明,' . $city_name . '大额亮资';
-$page_description = '专业提供' . $city_name . '企业个人、过桥短拆实资摆账、资金证明、大额亮资等资金业务，快速安全，全国多地拥有丰富企业资源，口碑良好。';
-
-if (!empty($city['title'])) $page_title = $city['title'];
-if (!empty($city['keywords'])) $page_keywords = $city['keywords'];
-if (!empty($city['description'])) $page_description = $city['description'];
 
 // ---------- 区县数据加载 ----------
 $districts = [];
@@ -87,6 +118,12 @@ try {
 
 $escapedCity = htmlspecialchars($city_name, ENT_QUOTES, 'UTF-8');
 $escapedPhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
+// 省份页 SEO 覆盖
+if ($is_province_page) {
+    $page_title = $province_name . '资金服务_过桥短拆_实资摆账_资金证明 - Yao资金网';
+    $page_keywords = $province_name . '资金,' . $province_name . '过桥短拆,' . $province_name . '实资摆账,' . $province_name . '资金证明';
+    $page_description = '专业提供' . $province_name . '全省各地企业个人、过桥短拆实资摆账、资金证明、大额亮资等资金业务，覆盖全省各市县，快速安全。';
+}
 $escapedTitle = htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8');
 $escapedKeywords = htmlspecialchars($page_keywords, ENT_QUOTES, 'UTF-8');
 $escapedDesc = htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8');
@@ -162,7 +199,57 @@ try {
         </div>
     </nav>
         <main id="main-content">
-                <section class="hero" id="home" aria-labelledby="hero-title">
+        <nav class="breadcrumb-nav" aria-label="面包屑导航">
+            <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="/" itemprop="item"><span itemprop="name">首页</span></a>
+                    <meta itemprop="position" content="1">
+                </li>
+                <?php if ($is_province_page): ?>
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务</span>
+                    <meta itemprop="position" content="2">
+                </li>
+                <?php else: ?>
+                <?php if (!empty($province)): ?>
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="/fenzhan/province-<?php echo htmlspecialchars($province_slug, ENT_QUOTES, 'UTF-8'); ?>.html" itemprop="item"><span itemprop="name"><?php echo htmlspecialchars($province, ENT_QUOTES, 'UTF-8'); ?>资金服务</span></a>
+                    <meta itemprop="position" content="2">
+                </li>
+                <?php endif; ?>
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html" itemprop="item"><span itemprop="name"><?php echo htmlspecialchars($city_name, ENT_QUOTES, 'UTF-8'); ?>资金服务</span></a>
+                    <meta itemprop="position" content="3">
+                </li>
+                <?php endif; ?>
+            </ol>
+        </nav>
+                <?php if ($is_province_page): ?>
+        <section class="province-hero">
+            <div class="section-container" style="text-align:center;padding:60px 20px;">
+                <div class="section-label" style="color:#3b82f6;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">PROVINCE SERVICE</div>
+                <h1 style="font-size:40px;font-weight:700;color:#1f2937;margin-bottom:16px;"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务</h1>
+                <p style="font-size:18px;color:#6b7280;max-width:600px;margin:0 auto 40px;">覆盖<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省各市县，专业企业资金服务</p>
+                <div class="province-city-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;max-width:900px;margin:0 auto;">
+                    <?php
+                    $pcConn = getDbConnection();
+                    $pcStmt = $pcConn->prepare("SELECT city_name, slug FROM fenzhan_cities WHERE province = ? AND is_active = 1 ORDER BY sort_order ASC, city_name ASC");
+                    $pcStmt->bind_param('s', $province_name);
+                    $pcStmt->execute();
+                    $pcResult = $pcStmt->get_result();
+                    while ($pcRow = $pcResult->fetch_assoc()):
+                        $pcName = htmlspecialchars($pcRow['city_name'], ENT_QUOTES, 'UTF-8');
+                        $pcSlug = htmlspecialchars($pcRow['slug'], ENT_QUOTES, 'UTF-8');
+                    ?>
+                    <a href="/fenzhan/<?php echo $pcSlug; ?>.html" class="province-city-item" style="display:block;padding:16px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;text-decoration:none;color:#374151;font-size:15px;font-weight:500;transition:all 0.2s;" onmouseover="this.style.borderColor='#3b82f6';this.style.background='#eff6ff'" onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#f8fafc'">
+                        <?php echo $pcName; ?>
+                    </a>
+                    <?php endwhile; $pcConn->close(); ?>
+                </div>
+            </div>
+        </section>
+        <?php else: ?>
+        <section class="hero" id="home" aria-labelledby="hero-title">
             <div class="hero-container">
                 <div class="hero-badge">
                     <i class="fas fa-shield-alt" aria-hidden="true"></i>
@@ -202,6 +289,7 @@ try {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
         <?php renderServicesSection($homepageContent, $city_name); ?>
         <?php echo $districtHtml; ?>
         <?php if (!empty($city_content)): ?>
@@ -254,7 +342,46 @@ try {
         .faq-grid .faq-custom-category {
             margin-bottom: 0;
         }
-        </style>
+                .breadcrumb-nav {
+            background: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 0;
+        }
+        .breadcrumb-list {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "/";
+            color: #d1d5db;
+            font-size: 12px;
+        }
+        .breadcrumb-item a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb-item a:hover {
+            color: #3b82f6;
+        }
+        .breadcrumb-item:last-child a {
+            color: #1f2937;
+            font-weight: 500;
+            pointer-events: none;
+        }
+
+</style>
         <div class="faq-grid">
         <?php
                 try {
@@ -546,6 +673,30 @@ if (!empty($templateContent)) {
         <base href="/">
     <link rel="canonical" href="https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html">
     <meta name="robots" content="index, follow">
+        <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "<?php echo $escapedCity; ?>资金服务 - Yao资金网",
+        "description": "<?php echo $escapedDesc; ?>",
+        "url": "https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html",
+        "telephone": "<?php echo $escapedPhone; ?>",
+        "areaServed": {
+            "@type": "City",
+            "name": "<?php echo $escapedCity; ?>"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.yaozijin.com/"},
+            {"@type": "ListItem", "position": 2, "name": "<?php echo $escapedCity; ?>资金服务", "item": "https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html"}
+        ]
+    }
+    </script>
     </head>
     <body>
         <a href="#main-content" class="skip-link">跳转到主要内容</a>

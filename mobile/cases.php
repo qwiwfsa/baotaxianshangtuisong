@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css?v=202605092100">
-    <link rel="stylesheet" href="../css/cases-enhanced.css?v=202605092100">
+    <link rel="stylesheet" href="../css/cases-enhanced.css?v=20260518">
     <!-- Lightbox函数定义 - 放在head确保全局可用 -->
     <script>
         window.openLightbox = function(imageSrc) {
@@ -153,7 +153,8 @@
     font-weight: 500;
 }
 </style>
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}<style>.page-header{padding:24px 0 28px!important}@media(max-width:768px){.page-header{padding:20px 0 20px!important}}.page-content{padding-top:6px!important}.cases-filter-section{margin-bottom:5px!important}</style>
+</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>

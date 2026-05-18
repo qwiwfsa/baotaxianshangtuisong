@@ -184,7 +184,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
 
-            padding: 80px 0 60px;
+            padding: 50px 0 36px;
 
             color: white;
 
@@ -250,7 +250,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
             margin-bottom: 10px;
 
-            margin-top: 30px;
+            margin-top: 40px;
 
             transition: color 0.3s;
 
@@ -886,7 +886,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
             .article-detail-header {
 
-                padding: 60px 0 40px;
+                padding: 40px 0 24px;
 
             }
 

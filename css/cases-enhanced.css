@@ -672,14 +672,14 @@
     }
     
     .filter-btn {
-        padding: 8px 4px;
-        font-size: 12px;
+        padding: 6px 2px;
+        font-size: 11px;
         text-align: center;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
     .cases-grid-enhanced {
         grid-template-columns: 1fr;
         gap: 20px;
