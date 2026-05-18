@@ -149,7 +149,7 @@ function renderAdvantagesSection($content) {
                         <div class="advantages-check"><i class="fas fa-check"></i></div>
                         <div class="advantages-feature-content">
                             <h3 class="advantages-feature-title">强大的资金实力</h3>
-                            <p class="advantages-feature-desc">累计管理资金规模超100亿元，单笔可提供数亿至数十亿资金支持。</p>
+                            <p class="advantages-feature-desc">累计管理资金规模超30亿元，单笔可提供数亿至数十亿资金支持。</p>
                         </div>
                     </div>
                     <div class="advantages-feature">

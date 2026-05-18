@@ -102,7 +102,7 @@
     xhr.send();
 })();
 </script>
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}.contact-qr-section{background:#fff;border-radius:12px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-top:20px}.contact-qr-section h3{font-size:16px;color:#1f2937;margin-bottom:16px}.contact-qr-image{width:160px;height:160px;margin:0 auto 12px}.contact-qr-image img{width:100%;height:100%;object-fit:contain}.contact-qr-section p{font-size:13px;color:#9ca3af}.contact-qr-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.contact-qr-image{width:120px;height:120px;margin:0 auto 8px}.contact-qr-image img{width:100%;height:100%;object-fit:contain}.contact-qr-text{font-size:15px;font-weight:600;color:#1f2937;margin:0}.contact-qr-sub{font-size:12px;color:#9ca3af;margin:4px 0 0 0}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}.contact-qr-section{background:#fff;border-radius:12px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-top:20px}.contact-qr-section h3{font-size:16px;color:#1f2937;margin-bottom:16px}.contact-qr-image{width:160px;height:160px;margin:0 auto 12px}.contact-qr-image img{width:100%;height:100%;object-fit:contain}.contact-qr-section p{font-size:13px;color:#9ca3af}.contact-qr-card{display:flex;flex-direction:column;align-items:center;text-align:center}.contact-qr-image{width:120px;height:120px;margin:0 auto 8px}.contact-qr-image img{width:100%;height:100%;object-fit:contain}.contact-qr-text{font-size:15px;font-weight:600;color:#1f2937;margin:0 0 8px 0}.contact-qr-sub{font-size:12px;color:#9ca3af;margin:4px 0 0 0}</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -174,10 +174,10 @@
 
                         <!-- 微信二维码 -->
                         <div class="contact-info-card contact-qr-card">
+                            <p class="contact-qr-text">微信咨询</p>
                             <div class="contact-qr-image">
                                 <img src="/uploads/wechat-qr.png" alt="微信二维码" loading="lazy">
                             </div>
-                            <p class="contact-qr-text">微信咨询</p>
                             <p class="contact-qr-sub">扫码添加，即时沟通</p>
                         </div>
 
@@ -226,7 +226,14 @@
                     </div>
                 </div>
 
-                </footer>
+                <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 Yao资金网 版权所有</p>
+                <p class="footer-disclaimer">投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。</p>
+            </div>
+        </div>
+    </footer>
     <script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
 
     <script src="../js/main.js"></script>    <script src="../js/footer-loader.js"></script>

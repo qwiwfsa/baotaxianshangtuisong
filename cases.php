@@ -247,7 +247,7 @@ $caseDB->close();
                             <div class="cases-stat-icon">
                                 <i class="fas fa-coins"></i>
                             </div>
-                            <div class="cases-stat-number">100亿+</div>
+                            <div class="cases-stat-number">30亿+</div>
                             <div class="cases-stat-label">累计管理规模</div>
                         </div>
                         <div class="cases-stat-box">

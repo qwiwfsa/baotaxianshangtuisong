@@ -59,6 +59,7 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <style>.nav-menu{display:none}</style>
     <!-- 动态内容加载脚本 -->
     <script>
         // 从localStorage加载编辑后的内容

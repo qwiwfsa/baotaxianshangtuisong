@@ -27,3 +27,4 @@ Disallow: /composer.*
 Disallow: /*.json
 
 Sitemap: https://www.yaozijin.com/sitemap.xml
+Sitemap: https://www.yaozijin.com/fenzhan/sitemap.xml
