@@ -15,7 +15,7 @@
     <link rel="icon" href="<?php echo htmlspecialchars($favicon_path ?? "../uploads/logo/logo_20260516_071314_6a07a88a2cd5c.png?v=2026051701"); ?>">    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/page-custom.css">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20260519.3">
     <!-- Logo动态加载 -->
     <script>
     (function(){
@@ -105,8 +105,8 @@
         .faq-category-item{transition:none!important;animation:none!important}
         .faq-categories{min-height:50px}
 
-#faqCategoryButtons{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;overflow:hidden}
-#faqCategoryButtons .faq-category-item{flex-shrink:0;white-space:nowrap}
+#faqCategoryButtons{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;min-height:44px}
+#faqCategoryButtons .faq-category-item{text-align:center;padding:4px 2px;font-size:11px;white-space:nowrap}
 </style>
 </head>
 <body>

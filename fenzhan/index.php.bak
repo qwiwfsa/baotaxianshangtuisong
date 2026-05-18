@@ -1,0 +1,66 @@
+<?php
+require_once __DIR__ . '/../config/db.php';
+
+$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
+if ($slug === '') { http_response_code(404); exit('Page not found'); }
+
+// Cache
+$cacheDir = __DIR__ . '/cache/';
+$cacheTTL = 600;
+if (!is_dir($cacheDir)) { @mkdir($cacheDir, 0755, true); }
+$cacheKey = preg_replace('/[^a-z0-9-]/', '', $slug);
+$cacheFile = $cacheDir . $cacheKey . '.html';
+if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTTL) {
+    echo file_get_contents($cacheFile);
+    exit;
+}
+
+// Get city data
+try {
+    $conn = getDB();
+    $stmt = $conn->prepare('SELECT * FROM fenzhan_cities WHERE slug = ? AND is_active = 1');
+    $stmt->bind_param('s', $slug);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows === 0) { http_response_code(404); exit('City not found'); }
+    $city = $result->fetch_assoc();
+    $stmt->close(); $conn->close();
+} catch (Exception $e) { http_response_code(500); exit('DB Error'); }
+
+// Get template from DB
+$templateContent = '';
+try {
+    $tplConn = getDB();
+    $tplStmt = $tplConn->prepare("SELECT content FROM cms_sections WHERE page_id='city_template' AND section_id='body' LIMIT 1");
+    $tplStmt->execute();
+    $tplResult = $tplStmt->get_result();
+    if ($tplRow = $tplResult->fetch_assoc()) { $templateContent = $tplRow['content']; }
+    $tplStmt->close(); $tplConn->close();
+} catch (Exception $e) {}
+
+// Replace placeholders
+$cityName = htmlspecialchars($city['city_name'] ?? '');
+$search = ['{{cityName}}', '{{cityPhone}}', '{{cityContent}}', '{{year}}', '{{cityTitle}}', '{{cityKeywords}}', '{{cityDescription}}'];
+$replace = [
+    $cityName,
+    htmlspecialchars($city['phone'] ?? '13552883008'),
+    $city['content'] ?? '',
+    date('Y'),
+    htmlspecialchars($city['title'] ?? $city['city_name']),
+    htmlspecialchars($city['keywords'] ?? ''),
+    htmlspecialchars($city['description'] ?? '')
+];
+if (!empty($templateContent)) {
+    $html = str_replace($search, $replace, $templateContent);
+} else {
+    $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'.$cityName.'</title></head><body><h1>'.$cityName.'</h1></body></html>';
+}
+
+// Fix escaped newlines in template
+$html = str_replace("
+", "
+", $html);
+
+// Cache and output
+if (!empty($cacheFile)) { @file_put_contents($cacheFile, $html); }
+echo $html;

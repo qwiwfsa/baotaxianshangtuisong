@@ -1412,7 +1412,7 @@ footer {
     display: flex;
     justify-content: center;
     gap: 16px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
@@ -2081,7 +2081,7 @@ footer {
 
 @media (max-width: 768px) {
     .page-header {
-        padding: 25px 16px 25px;
+        padding: 25px 16px 10px;
     }
     
     .page-header-title {
@@ -2089,7 +2089,8 @@ footer {
     }
     
     .page-content {
-        padding: 40px 0;
+        padding-top: 0;
+        padding-bottom: 20px;
     }
     
     /* V2 卡片移动端适配 */
