@@ -666,12 +666,18 @@
     }
     
     .filter-buttons {
-        gap: 8px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
     }
     
     .filter-btn {
-        padding: 8px 14px;
-        font-size: 13px;
+        padding: 8px 4px;
+        font-size: 12px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     .cases-grid-enhanced {

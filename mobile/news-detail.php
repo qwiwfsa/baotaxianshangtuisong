@@ -248,7 +248,9 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
             font-size: 14px;
 
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+
+            margin-top: 30px;
 
             transition: color 0.3s;
 
@@ -280,7 +282,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
             line-height: 1.4;
 
-            margin-bottom: 20px;
+            margin-bottom: 10px;
 
         }
 
@@ -386,7 +388,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
         .article-body p {
 
-            margin-bottom: 20px;
+            margin-bottom: 10px;
 
         }
 
@@ -426,7 +428,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
         .article-body ul, .article-body ol {
 
-            margin-bottom: 20px;
+            margin-bottom: 10px;
 
             padding-left: 24px;
 
