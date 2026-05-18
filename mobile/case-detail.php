@@ -467,7 +467,6 @@ header("Expires: 0");
         .case-detail-container,
         .case-back-section,
         .case-detail-grid,
-        .case-detail-main,
         .case-description-section,
         .case-detail-sidebar {
             width: 100%;
@@ -565,18 +564,20 @@ header("Expires: 0");
                 aspect-ratio: 16/10;
             }
             .case-media-thumbs {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                display: flex;
+                flex-wrap: wrap;
                 gap: 6px;
             }
             .case-media-thumb {
+                flex: 0 0 auto;
+                width: 80px;
                 height: 60px;
                 overflow: hidden;
                 border-radius: 6px;
             }
             .case-media-thumb img {
                 width: 100%;
-                height: 60px;
+                height: 100%;
                 object-fit: cover;
             }
             .case-detail-title-content {
@@ -616,10 +617,8 @@ header("Expires: 0");
                 overflow-x: hidden !important;
             }
             .case-detail-main,
-            .case-media-gallery,
             .case-description-section,
             .case-highlights,
-            .case-detail-grid,
             .case-detail-content {
                 overflow-x: hidden !important;
             }
@@ -633,17 +632,20 @@ header("Expires: 0");
                 font-size: 14px;
             }
             .case-media-thumbs {
-                grid-template-columns: repeat(3, 1fr);
+                display: flex;
+                flex-wrap: wrap;
                 gap: 4px;
             }
             .case-media-thumb {
+                flex: 0 0 auto;
+                width: 65px;
                 height: 50px;
                 overflow: hidden;
                 border-radius: 4px;
             }
             .case-media-thumb img {
-                width: 100% !important;
-                height: 50px !important;
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
             }
             .case-highlights {
@@ -652,11 +654,6 @@ header("Expires: 0");
             .case-contact-card,
             .case-related-card {
                 padding: 12px;
-            }
-            .case-media-thumb img {
-                width: 100% !important;
-                height: 60px !important;
-                object-fit: cover;
             }
             #mainImage,
             .case-media-main img {
@@ -669,13 +666,10 @@ header("Expires: 0");
             max-width: 100vw;
             overflow-x: hidden;
         }
-        .case-detail-main,
         .case-description-section,
         .case-description-text,
-        .case-media-gallery,
         .case-highlights,
         .case-highlights-list,
-        .case-detail-grid,
         .case-detail-content,
         .case-detail-container {
             overflow-x: hidden;
@@ -695,6 +689,11 @@ header("Expires: 0");
         .case-detail-main > *,
         .case-detail-sidebar > * {
             min-width: 0;
+        }
+        .case-media-thumb {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
     </style></head>
 

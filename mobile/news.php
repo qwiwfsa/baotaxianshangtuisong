@@ -13,14 +13,20 @@ $totalRes = $newsDB->query("SELECT COUNT(*) as cnt FROM cms_articles WHERE statu
 $totalRow = $totalRes->fetch_assoc();
 $totalCnt = $totalRow['cnt'];
 $totalPages = max(1, ceil($totalCnt / $perPage));
-
 $totalRes->close();
-$artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT 2000");
-$allArticles = [];
-while ($r = $artRes->fetch_assoc()) { $allArticles[] = $r; }
+
+// Fetch articles for HTML template (only current page)
+$artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT $offset, $perPage");
+$pageArticles = [];
+while ($r = $artRes->fetch_assoc()) { $pageArticles[] = $r; }
 $artRes->close();
-$totalCnt = count($allArticles);
-$totalPages = max(1, ceil($totalCnt / $perPage));
+
+// Fetch ALL articles for JS initial data (instant pagination)
+$allRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT 2000");
+$allArticles = [];
+while ($r = $allRes->fetch_assoc()) { $allArticles[] = $r; }
+$allRes->close();
+
 $articlesJson = json_encode($allArticles, JSON_UNESCAPED_UNICODE);
 $categoriesJson = json_encode($allCategories, JSON_UNESCAPED_UNICODE);
 $newsDB->close();
@@ -950,7 +956,7 @@ $newsDB->close();
 
                     <div class="news-list-container">
                     <?php if (!empty($allArticles)): ?>
-                        <?php foreach ($allArticles as $article): ?>
+                        <?php foreach ($pageArticles as $article): ?>
                         <div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">
                             <?php $img = $article['cover_image'] ?? ''; if ($img): ?>
                             <div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="../<?php echo htmlspecialchars($img); ?>" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'"></div>
@@ -1091,7 +1097,7 @@ if ($totalPages > 1):
 
     <script src="../js/main.js"></script>
 <script>
-var __INIT_DATA__ = {articles:<?php echo ; ?>,total:<?php echo ; ?>,categories:<?php echo ; ?>};
+var __INIT_DATA__ = {articles:<?php echo $articlesJson; ?>,total:<?php echo $totalCnt; ?>,categories:<?php echo $categoriesJson; ?>};
 (async function(){
     // Bind category click handlers via delegation
     (function bindCats() {
@@ -1156,6 +1162,16 @@ var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
 
     async function loadNews(){
         if (STATE.loading) return;
+        // Use embedded data for instant render (no API wait)
+        if (STATE.all.length === 0 && window.__INIT_DATA__ && __INIT_DATA__.articles && __INIT_DATA__.articles.length > 0) {
+            STATE.all = __INIT_DATA__.articles;
+            if (__INIT_DATA__.categories && Array.isArray(__INIT_DATA__.categories)) {
+                updateCategories(__INIT_DATA__.categories);
+            }
+            renderPage();
+            STATE.loading = false;
+            return;
+        }
         STATE.loading = true;
         // Show loading bar without clearing content
         var existBar = document.getElementById('newsLoadingBar');
