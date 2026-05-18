@@ -1,4 +1,4 @@
-<?php header("Cache-Control: no-cache, no-store, must-revalidate"); header("Pragma: no-cache"); header("Expires: 0"); 
+﻿<?php header("Cache-Control: no-cache, no-store, must-revalidate"); header("Pragma: no-cache"); header("Expires: 0"); 
 // Server-side news pre-render
 require_once __DIR__ . '/../config/db.php';
 $newsDB = getDB();
@@ -15,10 +15,12 @@ $totalCnt = $totalRow['cnt'];
 $totalPages = max(1, ceil($totalCnt / $perPage));
 
 $totalRes->close();
-$artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT $offset, $perPage");
+$artRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT 2000");
 $allArticles = [];
 while ($r = $artRes->fetch_assoc()) { $allArticles[] = $r; }
 $artRes->close();
+$totalCnt = count($allArticles);
+$totalPages = max(1, ceil($totalCnt / $perPage));
 $articlesJson = json_encode($allArticles, JSON_UNESCAPED_UNICODE);
 $categoriesJson = json_encode($allCategories, JSON_UNESCAPED_UNICODE);
 $newsDB->close();
@@ -1089,6 +1091,7 @@ if ($totalPages > 1):
 
     <script src="../js/main.js"></script>
 <script>
+var __INIT_DATA__ = {articles:<?php echo ; ?>,total:<?php echo ; ?>,categories:<?php echo ; ?>};
 (async function(){
     // Bind category click handlers via delegation
     (function bindCats() {
@@ -1112,6 +1115,7 @@ var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
     // Check for server pre-rendered content
         var el = document.querySelector('.news-list-container');
     if(!el) return;
+
 
     // 默认SEO（全部资讯）
     var NEWS_DEFAULT_SEO = {
@@ -1180,7 +1184,8 @@ var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
                 el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无新闻</div>'; return;
             }
             STATE.all = d.data.news;
-            renderPage();
+            // Don't auto-render, wait for user navigation
+            if (STATE.page > 1) renderPage();
         } catch(e) {
             STATE.loading = false;
             el.innerHTML = '<div style="text-align:center;padding:40px;color:red;font-size:18px">加载失败: '+e.message+'</div>';
@@ -1234,9 +1239,9 @@ function escapeHtml(str){
         div.appendChild(document.createTextNode(str));
         return div.innerHTML;
     }
-
     function renderPage(){
         var bar = document.getElementById('newsLoadingBar'); if (bar) bar.remove();
+        if (STATE.all.length === 0) return;
         var total = STATE.all.length, pages = Math.ceil(total/STATE.per)||1;
         var pg = STATE.page; if(pg<1) pg=1; if(pg>pages) pg=pages; STATE.page=pg;
         var start = (pg-1)*STATE.per, end = Math.min(start+STATE.per, total);
@@ -1252,7 +1257,7 @@ function escapeHtml(str){
             html += '<div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">';
             html += imgHtml;
             html += '<div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">';
-            html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id='+a.id+'" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
+            html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id='+a.id+'\" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
             if(s) html += '<p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+s+'</p>';
             if(dt) html += '<span style="font-size:12px;color:#999">'+dt+'</span>';
             html += '</div></div>';
@@ -1281,6 +1286,7 @@ function escapeHtml(str){
 
     window.changePage = function(dir){
         STATE.page += dir;
+        if (STATE.all.length === 0) return;
         renderPage();
         window.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
     };
@@ -1290,9 +1296,9 @@ function escapeHtml(str){
         window.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
     };
 
-    loadNews();
-})();</script>
-
+        loadNews();
+    })();
+</script>
 <script>
 // 从API同步页脚数据
 (function(){

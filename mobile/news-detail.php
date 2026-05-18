@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
+@ini_set('display_errors', 0);
+error_reporting(0);
+
 ?>
 <?php
 $article_id = intval($_GET['id'] ?? 0);
@@ -12,7 +15,8 @@ if ($article_id > 0) {
     try {
         require_once __DIR__ . '/../config/db.php';
         $db = getDB();
-        $stmt = $db->prepare("SELECT title, summary, seo_title, seo_keywords, seo_description FROM cms_articles WHERE id = ? AND status = 'published' LIMIT 1");
+        // 加载全文数据（包含内容、分类、标签等）
+        $stmt = $db->prepare("SELECT a.*, c.name as category_name FROM cms_articles a LEFT JOIN cms_categories c ON a.category_id = c.id WHERE a.id = ? AND a.status = 'published' LIMIT 1");
         $stmt->bind_param('i', $article_id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -20,14 +24,55 @@ if ($article_id > 0) {
             $seo_title = !empty($row['seo_title']) ? $row['seo_title'] : ($row['title'] . ' - Yao资金网');
             $seo_keywords = !empty($row['seo_keywords']) ? $row['seo_keywords'] : '行业资讯,金融知识,融资服务';
             $seo_description = !empty($row['seo_description']) ? $row['seo_description'] : (!empty($row['summary']) ? strip_tags($row['summary']) : 'Yao资金网行业资讯中心');
+            // 加载标签
+            $tagStmt = $db->prepare("SELECT t.id, t.name, t.slug FROM article_tags at JOIN tags t ON at.tag_id = t.id WHERE at.article_id = ?");
+            $tagStmt->bind_param('i', $article_id);
+            $tagStmt->execute();
+            $tagResult = $tagStmt->get_result();
+            $row['tags'] = $tagResult->fetch_all(MYSQLI_ASSOC);
+            $tagStmt->close();
+            // 上一篇/下一篇
+            $prevStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id < ? AND status = 'published' ORDER BY id DESC LIMIT 1");
+            $prevStmt->bind_param('i', $article_id);
+            $prevStmt->execute();
+            $prevResult = $prevStmt->get_result();
+            $row['prev_article'] = $prevResult->fetch_assoc();
+            $prevStmt->close();
+            $nextStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id > ? AND status = 'published' ORDER BY id ASC LIMIT 1");
+            $nextStmt->bind_param('i', $article_id);
+            $nextStmt->execute();
+            $nextResult = $nextStmt->get_result();
+            $row['next_article'] = $nextResult->fetch_assoc();
+            $nextStmt->close();
+            // 相关文章（同分类下）
+            if (!empty($row['category_id'])) {
+                $relStmt = $db->prepare("SELECT id, title, cover_image, created_at FROM cms_articles WHERE category_id = ? AND id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
+                $relStmt->bind_param('ii', $row['category_id'], $article_id);
+                $relStmt->execute();
+                $relResult = $relStmt->get_result();
+                $row['related_articles'] = $relResult->fetch_all(MYSQLI_ASSOC);
+                $relStmt->close();
+            }
+            $article_data = $row;
         }
         $stmt->close();
         $db->close();
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+        $article_data = null;
+    }
 }
 ?>
 
 
+
+<script>
+<?php if (isset($article_data) && $article_data): ?>
+window.__articleData = <?php echo json_encode($article_data, JSON_UNESCAPED_UNICODE); ?>;
+<?php if (!empty($article_data['related_articles'])): ?>
+window.__relatedArticles = <?php echo json_encode($article_data['related_articles'], JSON_UNESCAPED_UNICODE); ?>;
+<?php endif; ?>
+<?php endif; ?>
+</script>
 
 <!DOCTYPE html>
 
@@ -53,11 +98,8 @@ data-share-copy-fail="复制失败">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 
-    <meta ">
 
-    <meta ">
 
-    ">
     
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -2347,59 +2389,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
             }
 
+            // 使用PHP嵌入的数据，不再依赖API fetch
 
+            <?php if (isset($article_data) && $article_data): ?>
 
-            // 从文章详情API加载（包含标签、上下篇等完整数据）
+            var article = <?php echo json_encode($article_data, JSON_UNESCAPED_UNICODE); ?>;
 
-            fetch('../api/news-detail.php?id=' + articleId + '&t=' + Date.now(), {method:'GET',cache:'no-store'})
+            if (article) {
 
-                .then(function(r){ return r.json(); })
+                document.title = (article.title||'') + ' - Yao资金网';
 
-                .then(function(result){
+                renderArticleHeader(article);
 
-                    if(!result.success || !result.data){
+                renderArticleContent(article);
 
-                        renderNotFound(); return;
+                incrementViews(articleId);
 
-                    }
+                var related = <?php echo isset($article_data['related_articles']) && !empty($article_data['related_articles']) ? json_encode($article_data['related_articles'], JSON_UNESCAPED_UNICODE) : '[]'; ?>;
 
-                    var article = result.data;
+                renderRelatedArticles(articleId, related);
 
-                    // 同时加载全部文章列表用于相关文章
+            } else {
 
-                    fetch('../mobile/api/news.php?limit=10&t=' + Date.now(), {method:'GET',cache:'no-store'})
+                renderNotFound();
 
-                        .then(function(r2){ return r2.json(); })
+            }
 
-                        .then(function(result2){
+            <?php else: ?>
 
-                            var related = (result2.success && result2.data && result2.data.news) ? result2.data.news : [];
+            renderNotFound();
 
-                            renderRelatedArticles(articleId, related);
-
-                        })['catch'](function(){});
-
-                    document.title = (article.title||'') + ' - Yao资金网';
-
-                    renderArticleHeader(article);
-
-                    renderArticleContent(article);
-
-                    incrementViews(articleId);
-
-                })
-
-                ['catch'](function(e){
-
-                    console.error('API load failed:', e);
-
-                    renderNotFound();
-
-                });
+            <?php endif; ?>
 
         })
-
-
 
         // 从API加载页脚数据
 

@@ -441,132 +441,147 @@ header("Expires: 0");
 
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style><style>
 
-        /* 移动端响应式修正 - 确保移动端完全显示不溢出 */
-        * { box-sizing: border-box; }
-        body {
+        /* 移动端响应式修正 */
+        html {
             overflow-x: hidden;
             width: 100%;
         }
-        .case-detail-container,
-        .main-content,
-        .case-detail-content,
-        .case-back-section {
-            max-width: 100% !important;
-            width: 100% !important;
-            overflow-x: hidden;
-        }
-        .case-detail-grid {
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden;
-        }
-        .case-detail-main {
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow: hidden;
-        }
-        .case-description-section {
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-        img, video, iframe, table, pre, code, blockquote {
-            max-width: 100% !important;
-            height: auto;
-        }
-        html, body {
+        body {
             overflow-x: hidden;
             width: 100%;
             max-width: 100%;
             margin: 0;
             padding: 0;
+            position: relative;
         }
-        html {
-            overflow-x: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .main-content,
         .case-detail-content,
         .case-detail-container,
-        .case-back-section {
+        .case-back-section,
+        .case-detail-grid,
+        .case-detail-main,
+        .case-description-section,
+        .case-detail-sidebar {
             width: 100%;
             max-width: 100%;
             overflow-x: hidden;
         }
         .case-detail-container {
-            padding: 0 16px;
+            padding: 0 12px;
         }
         .case-detail-main {
-            padding: 20px;
-            overflow: hidden;
+            padding: 16px;
+            overflow: visible !important;
         }
-        .case-detail-main img,
-        .case-description-text img,
-        .case-highlight-item img,
-        .case-media-main img,
-        .case-media-main video {
+        .case-description-section {
+            overflow: visible !important;
+            overflow-x: visible !important;
+        }
+        .case-description-text {
+            width: 100% !important;
+            max-width: 100% !important;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        img, video, iframe, table, pre, code, blockquote, object, embed, svg {
             max-width: 100% !important;
             height: auto !important;
         }
-        .case-description-text {
-            word-break: break-word;
-            overflow-wrap: anywhere;
-            /* padding equalized */;
-            width: 100%;
-            max-width: 100%;
-            max-width: 100% !important;
-            overflow-wrap: break-word !important;
-            word-break: break-all !important;
+        .logo img,
+        .footer-logo img {
+            height: 48px !important;
+            width: auto !important;
+            max-width: none !important;
         }
+        .case-description-text * {
+            max-width: 100% !important;
+        }
+        .case-description-text table {
+            display: block;
+            width: 100% !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .case-description-text img,
+        .case-description-text video,
+        .case-description-text iframe,
+        .case-description-text table {
+            display: block;
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        .case-description-text table {
+            display: block;
+            overflow-x: auto;
+        }
+        .case-contact-card,
+        .case-related-card,
+        .case-service-guarantee {
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
         @media (max-width: 1024px) {
             .case-detail-grid {
                 grid-template-columns: 1fr !important;
-                overflow: hidden;
-        }
+                overflow: visible;
+            }
             .case-detail-sidebar {
                 display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
+                flex-direction: column;
                 gap: 16px;
             }
             .case-contact-card,
             .case-related-card,
             .case-service-guarantee {
-                flex: 1;
-                min-width: 280px;
+                flex: none;
+                width: 100%;
+                min-width: 0;
             }
         }
+
         @media (max-width: 768px) {
             .case-back-section {
-                padding: 80px 16px 16px;
+                padding: 60px 12px 12px;
             }
             .case-detail-content {
-                padding: 24px 0 40px;
+                padding: 16px 0 32px;
             }
             .case-detail-main {
-                padding: 16px;
+                padding: 12px;
                 border-radius: 12px;
-                overflow: hidden;
-        }
-            .case-media-thumbs {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
+                overflow: visible;
             }
             .case-media-main {
                 aspect-ratio: 16/10;
             }
-            .case-detail-sidebar {
-                flex-direction: column;
+            .case-media-thumbs {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
             }
-            .case-contact-card,
-            .case-related-card,
-            .case-service-guarantee {
-                min-width: auto;
-                flex: none;
+            .case-media-thumb {
+                height: 60px;
+                overflow: hidden;
+                border-radius: 6px;
+            }
+            .case-media-thumb img {
                 width: 100%;
+                height: 60px;
+                object-fit: cover;
             }
             .case-detail-title-content {
                 font-size: 20px;
+                word-break: break-word;
             }
             .case-section-title {
                 font-size: 17px;
@@ -578,70 +593,110 @@ header("Expires: 0");
                 padding: 16px;
             }
         }
+
         @media (max-width: 480px) {
             .case-back-section {
-                padding: 60px 10px 10px;
+                padding: 60px 8px 8px;
             }
             .case-detail-container {
-                padding: 0 10px;
+                padding: 0 8px;
             }
             .case-detail-main {
                 padding: 10px;
-                overflow: hidden;
-        }
+                overflow: visible;
+            }
             .case-detail-title-content {
-                font-size: 16px !important;
+                font-size: 18px !important;
             }
             .case-description-text {
-                font-size: 13px;
+                font-size: 14px;
                 max-width: 100% !important;
-            overflow-wrap: break-word !important;
-            word-break: break-all !important;
-        }
+                overflow-wrap: break-word !important;
+                word-break: break-word !important;
+                overflow-x: hidden !important;
+            }
+            .case-detail-main,
+            .case-media-gallery,
+            .case-description-section,
+            .case-highlights,
+            .case-detail-grid,
+            .case-detail-content {
+                overflow-x: hidden !important;
+            }
             .case-section-title {
-                font-size: 15px !important;
+                font-size: 16px !important;
             }
             .case-highlights-title {
-                font-size: 14px !important;
+                font-size: 15px !important;
             }
             .case-highlight-item {
-                font-size: 13px;
+                font-size: 14px;
             }
             .case-media-thumbs {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            .case-media-thumb {
+                height: 50px;
+                overflow: hidden;
+                border-radius: 4px;
+            }
+            .case-media-thumb img {
+                width: 100% !important;
+                height: 50px !important;
+                object-fit: cover;
             }
             .case-highlights {
                 padding: 12px;
             }
-            .case-contact-card {
-                padding: 12px;
-            }
+            .case-contact-card,
             .case-related-card {
                 padding: 12px;
             }
-        }
-        html {
-            overflow-x: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-        body {
-            overflow-x: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-        .case-media-thumb img {
-            width: 100% !important;
-            height: 80px !important;
-            object-fit: cover;
-        }
-        @media (max-width: 480px) {
+            .case-media-thumb img {
+                width: 100% !important;
+                height: 60px !important;
+                object-fit: cover;
+            }
             #mainImage,
             .case-media-main img {
                 max-height: 220px !important;
             }
         }
-</style></head>
+
+        /* 防止内容溢出 */
+        body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .case-detail-main,
+        .case-description-section,
+        .case-description-text,
+        .case-media-gallery,
+        .case-highlights,
+        .case-highlights-list,
+        .case-detail-grid,
+        .case-detail-content,
+        .case-detail-container {
+            overflow-x: hidden;
+        }
+        .case-description-text,
+        .case-description-text p,
+        .case-description-text div,
+        .case-description-text span,
+        .case-detail-title-content,
+        .case-highlight-item,
+        .case-highlight-item span {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .case-detail-grid > *,
+        .case-detail-main > *,
+        .case-detail-sidebar > * {
+            min-width: 0;
+        }
+    </style></head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">
 
@@ -716,7 +771,7 @@ header("Expires: 0");
 
                     <!-- 主内容区 -->
 
-<div class="case-detail-main" style="overflow:hidden;max-width:100%;width:100%">
+<div class="case-detail-main" style="max-width:100%;width:100%">
 
                         <!-- 图片/视频展示 -->
 
@@ -743,7 +798,7 @@ if (!empty($images)) {
 }
 ?>
 </script>
-                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="mainImage" onclick="openImageViewer(0)">
+                            <img src="../<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="mainImage" onclick="openImageViewer(0)">
 <?php if (count($images) > 1): ?>
                         <div class="case-media-thumbs">
                             <?php foreach ($images as $idx => $img): ?>
