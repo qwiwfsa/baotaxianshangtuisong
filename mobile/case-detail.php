@@ -695,6 +695,24 @@ header("Expires: 0");
             visibility: visible !important;
             opacity: 1 !important;
         }
+        .case-related-thumb {
+            aspect-ratio: 4 / 3 !important;
+            width: 80px;
+            overflow: hidden;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: #e5e7eb;
+        }
+        .case-related-thumb.ratio-portrait,
+        .case-related-thumb.ratio-landscape {
+            aspect-ratio: 4 / 3 !important;
+        }
+
+        .case-related-thumb img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
     </style></head>
 
 <body style="display:flex;flex-direction:column;min-height:100vh">

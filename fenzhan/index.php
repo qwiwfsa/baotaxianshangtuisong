@@ -188,7 +188,7 @@ try {
                 $heroStats = [
                     ['number' => $homepageContent['stat1Number'] ?? '10+', 'label' => $homepageContent['stat1Label'] ?? '行业经验'],
                     ['number' => $homepageContent['stat2Number'] ?? '500+', 'label' => $homepageContent['stat2Label'] ?? '服务企业'],
-                    ['number' => $homepageContent['stat3Number'] ?? '100亿+', 'label' => $homepageContent['stat3Label'] ?? '资金规模'],
+                    ['number' => $homepageContent['stat3Number'] ?? '30亿+', 'label' => $homepageContent['stat3Label'] ?? '资金规模'],
                     ['number' => $homepageContent['stat4Number'] ?? '99%', 'label' => $homepageContent['stat4Label'] ?? '客户满意度'],
                 ];
                 ?>
@@ -613,7 +613,7 @@ if (!empty($templateContent)) {
                 $heroStats = [
                     ['number' => $homepageContent['stat1Number'] ?? '10+', 'label' => $homepageContent['stat1Label'] ?? '行业经验'],
                     ['number' => $homepageContent['stat2Number'] ?? '500+', 'label' => $homepageContent['stat2Label'] ?? '服务企业'],
-                    ['number' => $homepageContent['stat3Number'] ?? '100亿+', 'label' => $homepageContent['stat3Label'] ?? '资金规模'],
+                    ['number' => $homepageContent['stat3Number'] ?? '30亿+', 'label' => $homepageContent['stat3Label'] ?? '资金规模'],
                     ['number' => $homepageContent['stat4Number'] ?? '99%', 'label' => $homepageContent['stat4Label'] ?? '客户满意度'],
                 ];
                 ?>

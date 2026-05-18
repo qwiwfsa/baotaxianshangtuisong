@@ -128,6 +128,12 @@ if (!$caseData) {
 
 // ========== 3. 返回 ==========
 if ($caseData) {
+    if (!isset($caseData['tag_ids'])) {
+        $caseData['tag_ids'] = [];
+    }
+    if (!isset($caseData['images'])) {
+        $caseData['images'] = [];
+    }
     echo json_encode(['success' => true, 'case' => $caseData], JSON_UNESCAPED_UNICODE);
 } else {
     http_response_code(404);

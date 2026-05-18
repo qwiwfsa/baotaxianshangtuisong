@@ -590,18 +590,20 @@
 
         // 切换页面
         window.changePage = function(dir) {
-            console.log('[Pagination] 切换方向:', dir);
             const totalPages = Math.ceil(filteredCases.length / itemsPerPage);
             const newPage = currentPage + dir;
-            console.log('[Pagination] 总页数:', totalPages, '当前页:', currentPage, '新页:', newPage);
             if (newPage < 1 || newPage > totalPages) {
-                console.log('[Pagination] 页面超出范围');
                 return;
             }
             currentPage = newPage;
-            renderCasesPage();
-            renderPagination();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            var grid = document.getElementById('casesGrid');
+            if (grid) { grid.style.opacity = '0.5'; }
+            requestAnimationFrame(function() {
+                renderCasesPage();
+                renderPagination();
+                if (grid) { grid.style.opacity = '1'; grid.style.transition = 'opacity 0.2s'; }
+                window.scrollTo(0, 0);
+            });
         };
 
         // 渲染当前页案例

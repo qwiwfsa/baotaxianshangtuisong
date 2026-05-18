@@ -650,106 +650,69 @@ $favicon_path = '/favicon-v2.png';
                 <h2 class="section-title" id="faq-title">常见问题</h2>
                 <p class="section-subtitle">解答您关于资金业务的常见疑问</p>
             </div>
-            <div id="faqContainer" class="faq-container"><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-lightbulb" aria-hidden="true"></i> 亮资业务</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">什么是亮资服务？</summary><div class="faq-answer">亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</div></details><details class="faq-item"><summary class="faq-question">亮资需要多长时间？</summary><div class="faq-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-exchange-alt" aria-hidden="true"></i> 过桥资金</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">过桥资金的利率是多少？</summary><div class="faq-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间，具体费率需根据实际情况评估。</p></div></details><details class="faq-item"><summary class="faq-question">过桥资金最长可以使用多久？</summary><div class="faq-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-university" aria-hidden="true"></i> 摆账业务</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">摆账业务的资金安全吗？</summary><div class="faq-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。同时会签订正规合同，保障双方权益。</p></div></details><details class="faq-item"><summary class="faq-question">摆账需要提供什么资料？</summary><div class="faq-answer"><p>一般需要提供：营业执照、法人身份证、公司章程、银行开户许可证等基础资料，具体要求根据摆账金额和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> 应收账款融资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">云信与承兑汇票区别</summary><div class="faq-answer"><p>简单通俗来讲它就类似于银行承兑汇票 &nbsp;区别在于一个兑付人是银行，一个兑付人是我们持金融牌照的保理机构也属于国企 到期无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信出表融资操作逻辑</summary><div class="faq-answer"><p>操作逻辑：就是我们保理机构以收购买断企业应收帐款方式（ 不确权 签无追索权保理）等价融资开具云信票据（电子债权凭证）给企业，企业可以流转支付 代替现金使用 到期资方可以无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信融资成本多少？</summary><div class="faq-answer"><p>帮助企业以极低的年化不超过3.5%融资成本用来流转支付 或真实债务出表，代替现金使用一年以内，解决企业现金流不足支付问题。</p></div></details><details class="faq-item"><summary class="faq-question">准备申请材料</summary><div class="faq-answer"><p>准备的申请材料：<br>营业执照 应收账款清单 合同发票， 业务确认表 &nbsp;近三年的财务报表 法人身份证</p></div></details><details class="faq-item"><summary class="faq-question">操作流程</summary><div class="faq-answer"><p>业务操作流程</p>
-<p>阶段一：准备与申请提交申请 材料（所需资料:营业执照 应收账款清单，合同发票，业 务确认表，近三年财报，法人 身份证）&nbsp;</p>
-<p>阶段二：人工审批1个工作日 内完成</p>
-<p>阶段三：审批通过业务立项收 取履约保证金（财务审核履约 保证金金额及公户私户付款比 例)</p>
-<p>阶段四：法大大网签保理协 议，回寄合同资料原件，企业 承诺函扫描上传申请配置额度 （5-7个工作日），开票企业 注册中企云链账户，绑定uk。</p>
-<p>阶段五：全款支付1.财务确认 全款到账（包含对公对私账 户）2.出票给客户t+0或t+1， 出具对公账户收款金额的保理 服务费发票，业务结束。 目来自华为备忘录</p></div></details><details class="faq-item"><summary class="faq-question">云信属性与功能</summary><div class="faq-answer"><p>它的属性就是 可拆分 可流转 可支付 可融资 可贴现，市场上做票据的有大量收云信贴现的你可以了解下</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-piggy-bank" aria-hidden="true"></i> 银行存款</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">银行存款业务有什么优势？</summary><div class="faq-answer"><p>我们与多家银行建立了长期合作关系，可以为客户争取更优惠的存款利率，同时提供专业的资金管理建议。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-question-circle" aria-hidden="true"></i> 其他问题</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">如何联系你们？</summary><div class="faq-answer"><p>您可以通过以下方式联系我们：<br>电话：13552883008<br>邮箱：wanglizhongguo@126.com<br>或直接在网站上点击"立即咨询"按钮。</p></div></details></div></div></div>
-        </div>
+            <div id="faqContainer" class="faq-container">
+<?php
+$faqDb = getDB();
+// Get category config from faq_categories table
+$faqCatResult = $faqDb->query("SELECT cat_key, cat_label FROM faq_categories ORDER BY sort_order ASC");
+$faqCatNames = [];
+$faqOrder = [];
+while ($faqCatRow = $faqCatResult->fetch_assoc()) {
+    $key = $faqCatRow['cat_key'];
+    $faqCatNames[$key] = $faqCatRow['cat_label'];
+    $faqOrder[] = $key;
+}
+// Get FAQ items
+$faqResult = $faqDb->query("SELECT id, category, question, answer FROM faq WHERE (is_active IS NULL OR is_active = 1) ORDER BY sort_order ASC, id ASC");
+$faqItems = [];
+while ($faqRow = $faqResult->fetch_assoc()) {
+    $cat = $faqRow['category'] ?: 'general';
+    if (!isset($faqItems[$cat])) $faqItems[$cat] = [];
+    $faqItems[$cat][] = $faqRow;
+}
+$faqDb->close();
+// Icon mapping (icons not in DB)
+$faqCatIcons = ['liangzi'=>'fa-lightbulb','guoqiao'=>'fa-exchange-alt','baizhang'=>'fa-university','receivable'=>'fa-file-invoice-dollar','deposit'=>'fa-piggy-bank','general'=>'fa-question-circle'];
+$rendered = [];
+foreach ($faqOrder as $cat) {
+    if (!empty($faqItems[$cat])) {
+        $icon = $faqCatIcons[$cat] ?? 'fa-question-circle';
+        $name = $faqCatNames[$cat] ?? $cat;
+        $html = '<div class="faq-category">';
+        $html .= '<h3 class="faq-category-title"><i class="fas ' . $icon . '" aria-hidden="true"></i> ' . htmlspecialchars($name) . '</h3>';
+        $html .= '<div class="faq-list">';
+        foreach ($faqItems[$cat] as $item) {
+            $html .= '<details class="faq-item">';
+            $html .= '<summary class="faq-question">' . htmlspecialchars($item['question']) . '</summary>';
+            $html .= '<div class="faq-answer">' . $item['answer'] . '</div>';
+            $html .= '</details>';
+        }
+        $html .= '</div></div>';
+        $rendered[] = $html;
+    }
+    unset($faqItems[$cat]);
+}
+foreach ($faqItems as $cat => $items) {
+    $icon = $faqCatIcons[$cat] ?? 'fa-question-circle';
+    $name = $faqCatNames[$cat] ?? $cat;
+    $html = '<div class="faq-category">';
+    $html .= '<h3 class="faq-category-title"><i class="fas ' . $icon . '" aria-hidden="true"></i> ' . htmlspecialchars($name) . '</h3>';
+    $html .= '<div class="faq-list">';
+    foreach ($items as $item) {
+        $html .= '<details class="faq-item">';
+        $html .= '<summary class="faq-question">' . htmlspecialchars($item['question']) . '</summary>';
+        $html .= '<div class="faq-answer">' . $item['answer'] . '</div>';
+        $html .= '</details>';
+    }
+    $html .= '</div></div>';
+    $rendered[] = $html;
+}
+echo implode('', $rendered);
+?>
+
     </section>
 
-    <script>
-    // 分类图标映射（英文code -> FontAwesome图标）
-    var faqCategoryIcons = {
-        'liangzi': 'fa-lightbulb',
-        'guoqiao': 'fa-exchange-alt',
-        'baizhang': 'fa-university',
-        'receivable': 'fa-file-invoice-dollar',
-        'deposit': 'fa-piggy-bank',
-        'general': 'fa-question-circle'
-    };
     
-    // 分类中文名映射
-    var faqCategoryNames = {
-        'liangzi': '亮资业务',
-        'guoqiao': '过桥资金',
-        'baizhang': '摆账业务',
-        'receivable': '应收账款融资',
-        'deposit': '银行存款',
-        'general': '其他问题'
-    };
-    
-    // 渲染一个分类
-    function renderFaqCategory(catCode, items) {
-        var catName = faqCategoryNames[catCode] || catCode;
-        var icon = faqCategoryIcons[catCode] || 'fa-question-circle';
-        var html = '<div class="faq-category">';
-        html += '<h3 class="faq-category-title"><i class="fas ' + icon + '" aria-hidden="true"></i> ' + catName + '</h3>';
-        html += '<div class="faq-list">';
-        for (var i = 0; i < items.length; i++) {
-            var q = items[i];
-            html += '<details class="faq-item">';
-            html += '<summary class="faq-question">' + q.question + '</summary>';
-            html += '<div class="faq-answer">' + q.answer + '</div>';
-            html += '</details>';
-        }
-        html += '</div></div>';
-        return html;
-    }
-    
-    // 从API加载FAQ
-    function loadFaq() {
-        var container = document.getElementById('faqContainer');
-        if (!container) return;
-        
-        container.innerHTML = '<div class="faq-loading" style="text-align:center;padding:40px 0;color:#9ca3af;"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i><p style="margin-top:12px;">加载中...</p></div>';
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'api/faq.php?t=' + Date.now(), true);
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 400) {
-                try {
-                    var resp = JSON.parse(xhr.responseText);
-                    if (resp.success && resp.data && resp.data.categories) {
-                        var categories = resp.data.categories;
-                        var html = '';
-                        // Categories in desired order
-                        var catOrder = ['liangzi', 'guoqiao', 'baizhang', 'receivable', 'deposit', 'general'];
-                        for (var i = 0; i < catOrder.length; i++) {
-                            var cat = catOrder[i];
-                            if (categories[cat] && categories[cat].length > 0) {
-                                html += renderFaqCategory(cat, categories[cat]);
-                            }
-                        }
-                        // Any remaining categories not in order
-                        for (var key in categories) {
-                            if (catOrder.indexOf(key) < 0 && categories[key].length > 0) {
-                                html += renderFaqCategory(key, categories[key]);
-                            }
-                        }
-                        container.innerHTML = html;
-                        return;
-                    }
-                } catch(e) {
-                    console.error('FAQ解析失败:', e);
-                }
-            }
-            container.innerHTML = '<div class="faq-loading" style="text-align:center;padding:40px 0;color:#9ca3af;"><p style="margin-top:12px;">FAQ加载失败，请稍后重试</p></div>';
-        };
-        xhr.onerror = function() {
-            container.innerHTML = '<div class="faq-loading" style="text-align:center;padding:40px 0;color:#9ca3af;"><p style="margin-top:12px;">网络错误，请稍后重试</p></div>';
-        };
-        xhr.send();
-    }
-    
-    // DOM加载完成后执行
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadFaq);
-    } else {
-        loadFaq();
-    }
-    </script>
     </main>
 
     <!-- 页脚 -->

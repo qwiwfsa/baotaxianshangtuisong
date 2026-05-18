@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>编辑文章 - CMS管理后台</title>
+    <title>编辑文章 - CMS管理后台 [v6]</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Cropper.js 图片裁切 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
     <!-- TinyMCE 富文本编辑器 (免API Key版本) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.2/tinymce.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; min-height: 100vh; }
@@ -30,7 +28,21 @@
         .form-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
         .form-section-title { font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 8px; }
         .form-section-title i { color: #3b82f6; }
-        
+
+/* Tag selector */
+.tag-selector { margin-top: 4px; }
+.tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
+.tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
+.tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
+.tag-selector__tag i:hover { opacity: 1; }
+.tag-selector__input-wrap { position: relative; }
+.tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; }
+.tag-selector__dropdown.show { display: block; }
+.tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; }
+.tag-option:hover { background: #f3f4f6; }
+.tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
+
+
         .form-group { margin-bottom: 20px; }
         .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 8px; }
         .form-label .required { color: #ef4444; margin-left: 4px; }
@@ -57,7 +69,7 @@
         input:checked + .slider:before { transform: translateX(24px); }
         
         /* 底部操作栏 */
-        .editor-footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; z-index: 90; }
+        .editor-footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: flex-end; z-index: 90; }
         .footer-left { font-size: 14px; color: #6b7280; }
         .footer-right { display: flex; gap: 12px; }
         .btn { padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; display: inline-flex; align-items: center; gap: 8px; }
@@ -83,24 +95,11 @@
         
         /* TinyMCE */
         .tox-tinymce { border-radius: 8px !important; }
-    
-        /* 标签选择器样式 */
-        .tag-selector { margin-top: 4px; }
-        .tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
-        .tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
-        .tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
-        .tag-selector__tag i:hover { opacity: 1; }
-        .tag-selector__input-wrap { position: relative; }
-        .tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; margin-top: 2px; }
-        .tag-selector__dropdown.show { display: block; }
-        .tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; transition: background 0.15s; }
-        .tag-option:hover { background: #f3f4f6; }
-        .tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <header class="header">
-        <a href="./article-list.html" class="logo" id="backLink">
+        <a href="./article-list.html" class="logo">
             <i class="fas fa-arrow-left"></i>
             <span id="pageTitle">新建文章</span>
         </a>
@@ -196,24 +195,22 @@
                 <label class="form-label">SEO描述</label>
                 <textarea class="form-textarea" id="seoDescription" rows="3" placeholder="搜索引擎显示的描述"></textarea>
             </div>
-        <!-- 关联标签 -->
+        </div>
+
+        <!-- 标签管理 -->
         <div class="form-card">
             <h3 class="form-section-title">
                 <i class="fas fa-tags"></i>
-                关联标签
+                标签管理
             </h3>
             <div class="form-group">
                 <label class="form-label">选择标签</label>
                 <div class="tag-selector">
-                    <div class="tag-selector__selected" id="selectedTags"></div>
+                    <div class="tag-selector__selected" id="articleSelectedTags"></div>
                     <div class="tag-selector__input-wrap">
-                        <input type="text" class="form-input" id="tagSearch" placeholder="搜索并选择标签..." oninput="filterTagOptions()">
-                        <div class="tag-selector__dropdown" id="tagDropdown"></div>
+                        <input type="text" class="form-input" id="articleTagSearch" placeholder="搜索标签..." oninput="articleFilterTagOptions()" onfocus="articleFilterTagOptions()">
+                        <div class="tag-selector__dropdown" id="articleTagDropdown"></div>
                     </div>
-                </div>
-                <div style="font-size:12px;color:#9ca3af;margin-top:6px;">
-                    <i class="fas fa-info-circle"></i>
-                    在 <a href="../tags/tag-list.html" style="color:#3b82f6;" target="_blank">标签管理</a> 中创建和管理标签
                 </div>
             </div>
         </div>
@@ -221,6 +218,10 @@
 
     <!-- 底部操作栏 -->
     <div class="editor-footer">
+        <div class="footer-left" id="saveStatus">
+            <i class="fas fa-circle"></i>
+            <span>未保存</span>
+        </div>
         <div class="footer-right">
             <button class="btn btn-secondary" onclick="cancelEdit()">
                 <i class="fas fa-times"></i>
@@ -350,20 +351,18 @@
                 tinymce.init({
                     selector: '#contentEditor',
                     plugins: 'lists link image code table media advlist directionality searchreplace visualblocks',
-                    toolbar: 'undo redo | formatselect fontsizeselect | fontfamily fontsize | lineheight | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | table | link image media | code fullscreen',
+                    toolbar: 'undo redo | formatselect | fontfamily fontsize | lineheight | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | table | link image media | code fullscreen',
                     toolbar_mode: 'wrap',
                     menubar: false,
                     height: 800,
                     branding: false,
                     promotion: false,
-                    language: 'zh-CN',
-                    language_url: '/admin/components/news/tinymce-langs/zh_CN.js',
+                    language: 'zh_CN',
                     statusbar: true,
                     elementpath: true,
                     resize: true,
                     block_formats: '段落=p;标题1=h1;标题2=h2;标题3=h3;标题4=h4;标题5=h5;标题6=h6;预格式化=pre',
                     font_size_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px 48px',
-                    paste_data_images: true,
                     font_family_formats: '思源黑体=Noto Sans SC, Source Han Sans SC, "Noto Sans SC";苹方=PingFang SC, "PingFang SC";微软雅黑=Microsoft YaHei, "Microsoft YaHei";阿里巴巴普惠体=Alibaba PuHuiTi, "Alibaba PuHuiTi";鸿蒙字体=HarmonyOS Sans, "HarmonyOS Sans";宋体=SimSun, SimSun, serif;黑体=SimHei, SimHei, sans-serif;楷体=KaiTi, KaiTi, serif;仿宋=FangSong, FangSong, serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Georgia=georgia,palatino;Impact=impact,chicago;Tahoma=tahoma,arial,helvetica,sans-serif;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva',
                     lineheight_formats: "1.2 1.4 1.5 1.6 1.8 2.0",
                     content_style: [
@@ -401,104 +400,38 @@
                     paste_strip_class_attributes: 'none',
                     paste_retain_style_properties: true,
                     paste_preprocess: function(plugin, args) {
-                        // 过滤掉"图片来源：XXX"格式的文本
-                        args.content = args.content.replace(/图片来源[：:][^<]*/g, '');
-                        // 过滤掉"封面图片来源：XXX"
-                        args.content = args.content.replace(/封面图片来源[：:][^<]*/g, '');
-                        // 合并连续的<br>为段落
                         args.content = args.content.replace(/<br\s*\/?>\s*<br\s*\/?>/gi, '<p></p>');
-                        // 移除meta/link/style/script标签
                         args.content = args.content.replace(/<(meta|link|style|script)[^>]*>[\s\S]*?<\/\1>/gi, '');
                     },
-automatic_uploads: true,
+                    images_upload_handler: async function(blobInfo) {
+                        var formData = new FormData();
+                        formData.append('file', blobInfo.blob(), blobInfo.filename());
+                        try {
+                            var response = await fetch('../../api/upload.php', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            var result = await response.json();
+                            if (result.success === true && result.data && result.data.url) {
+                                return result.data.url;
+                            } else {
+                                console.log('上传失败:', result.message || '未知错误');
+                                return blobInfo.blobUri();
+                            }
+                        } catch (error) {
+                            console.log('上传失败:', error.message);
+                            return blobInfo.blobUri();
+                        }
+                    },
+                    automatic_uploads: true,
                     file_picker_types: 'image',
                     extended_valid_elements: 'span[*],i[*],em[*]',
                     valid_elements: '*[*]',
                     extended_elements: '*[*]',
-
-                    // 图片上传处理 — 使用现有 upload.php
-                    images_upload_handler: function(blobInfo, progress) {
-                        return new Promise(function(resolve, reject) {
-                            var formData = new FormData();
-                            formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('POST', '/api/upload.php');
-
-                            xhr.upload.onprogress = function(e) {
-                                if (e.lengthComputable && progress) {
-                                    progress(e.loaded / e.total * 100);
-                                }
-                            };
-
-                            xhr.onload = function() {
-                                if (xhr.status === 200) {
-                                    try {
-                                        var result = JSON.parse(xhr.responseText);
-                                        if (result.success && result.data && result.data.url) {
-                                            // upload.php 返回相对路径 (uploads/xxx.jpg)
-                                            // 需要转为绝对路径才能正确显示
-                                            var imgUrl = result.data.url;
-                                            if (imgUrl.indexOf('/') !== 0) {
-                                                imgUrl = '/' + imgUrl;
-                                            }
-                                            resolve(imgUrl);
-                                        } else {
-                                            reject('上传失败: ' + (result.message || '未知错误'));
-                                        }
-                                    } catch (e) {
-                                        reject('解析响应失败: ' + e.message);
-                                    }
-                                } else {
-                                    reject('HTTP ' + xhr.status);
-                                }
-                            };
-
-                            xhr.onerror = function() {
-                                reject('网络错误');
-                            };
-
-                            xhr.send(formData);
-                        });
-                    },
-
                     setup: function(editor) {
-                        // 阻止非图片文件拖入时弹出"不支持的格式"错误
-                        editor.on('drop', function(e) {
-                            var files = e.dataTransfer && e.dataTransfer.files;
-                            if (files && files.length > 0) {
-                                for (var i = 0; i < files.length; i++) {
-                                    if (files[i].type && !files[i].type.match('image.*')) {
-                                        e.preventDefault();
-                                        return;
-                                    }
-                                }
-                            }
-                        });
-
-                        // 图片裁切功能 - 右键菜单裁切图片
-                        var cropAction = function() {
-                            var selectedNode = editor.selection.getNode();
-                            if (selectedNode && selectedNode.nodeName === 'IMG') {
-                                openCropModal(selectedNode.src, function(newSrc) {
-                                    editor.undoManager.transact(function() {
-                                        editor.dom.setAttrib(selectedNode, 'src', newSrc);
-                                    });
-                                });
-                            }
-                        };
-                        // 注册工具栏按钮（用于上下文工具栏）
-                        editor.ui.registry.addButton('cropimage', {
-                            text: '裁切',
-                            icon: 'crop',
-                            tooltip: '裁切选中的图片',
-                            onAction: cropAction
-                        });
-                        // 注册右键菜单项
-
-
                         tinymceEditor = editor;
                         editor.on('init', function() {
+                            console.log('TinyMCE editor initialized');
                             resolve(editor);
                         });
                         // 自定义文件选择器 — 支持视频上传
@@ -513,13 +446,13 @@ automatic_uploads: true,
                                     var file = this.files[0];
                                     var formData = new FormData();
                                     formData.append('file', file, file.name);
-                                    fetch('/api/upload.php', {
+                                    fetch('../../api/upload.php', {
                                         method: 'POST',
                                         body: formData
                                     }).then(function(resp) { return resp.json(); })
                                     .then(function(result) {
                                         if (result.success && result.data && result.data.url) {
-                                            editor.insertContent('<video src="' + result.data.url + '" controls width="100%" style="max-width: 100%;"></video>');
+                                            editor.insertContent('<video controls style="max-width:100%"><source src="' + result.data.url + '" type="' + file.type + '"></video>');
                                         } else {
                                             alert('视频上传失败: ' + (result.message || '未知错误'));
                                         }
@@ -533,94 +466,6 @@ automatic_uploads: true,
                     },
                     external_plugins: {}
                 });
-
-                // ========== 图片裁切功能 ==========
-                var cropModalEl = null;
-                var cropperInstance = null;
-                var cropCallback = null;
-
-                window.openCropModal = function(imageSrc, callback) {
-                    cropCallback = callback;
-                    cropModalEl = document.getElementById('cropModal');
-                    if (!cropModalEl) return;
-
-                    var img = document.getElementById('cropImage');
-                    img.src = imageSrc;
-
-                    // 等待图片加载完成后初始化 Cropper
-                    img.onload = function() {
-                        if (cropperInstance) {
-                            cropperInstance.destroy();
-                            cropperInstance = null;
-                        }
-                        cropperInstance = new Cropper(img, {
-                            aspectRatio: NaN,
-                            viewMode: 1,
-                            dragMode: 'crop',
-                            autoCropArea: 0.8,
-                            cropBoxMovable: true,
-                            cropBoxResizable: true,
-                            toggleDragModeOnDblclick: false,
-                        });
-                    };
-
-                    cropModalEl.classList.add('show');
-                };
-
-                window.closeCropModal = function() {
-                    if (cropperInstance) {
-                        cropperInstance.destroy();
-                        cropperInstance = null;
-                    }
-                    if (cropModalEl) {
-                        cropModalEl.classList.remove('show');
-                    }
-                    cropCallback = null;
-                };
-
-                window.confirmCrop = function() {
-                    if (!cropperInstance) return;
-
-                    var canvas = cropperInstance.getCroppedCanvas({
-                        maxWidth: 1200,
-                        maxHeight: 1200,
-                        imageSmoothingQuality: 'high',
-                    });
-
-                    if (!canvas) return;
-
-                    // 显示加载状态
-                    var btn = document.querySelector('#cropModal .btn-primary');
-                    var originalText = btn.textContent;
-                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 处理中...';
-                    btn.disabled = true;
-
-                    // 转为 Blob 上传
-                    canvas.toBlob(function(blob) {
-                        var formData = new FormData();
-                        formData.append('file', blob, 'cropped_' + Date.now() + '.png');
-
-                        fetch('/api/upload.php', {
-                            method: 'POST',
-                            body: formData
-                        }).then(function(resp) { return resp.json(); })
-                        .then(function(result) {
-                            if (result.success && result.data && result.data.url) {
-                                if (cropCallback) {
-                                    cropCallback(result.data.url);
-                                }
-                                closeCropModal();
-                            } else {
-                                alert('上传失败: ' + (result.message || '未知错误'));
-                            }
-                        }).catch(function(err) {
-                            alert('上传出错: ' + err.message);
-                        }).finally(function() {
-                            btn.innerHTML = originalText;
-                            btn.disabled = false;
-                        });
-                    }, 'image/png');
-                };
             });
         }
 
@@ -688,51 +533,68 @@ automatic_uploads: true,
                 
                 if (result.success) {
                     const article = result.data;
-                    document.getElementById('title').value = article.title;
+                    document.getElementById('title').value = article.title || '';
                     document.getElementById('summary').value = article.summary || '';
                     document.getElementById('category').value = article.category_id || 0;
                     document.getElementById('sortOrder').value = article.sort_order || 0;
                     document.getElementById('isTop').checked = article.is_top == 1;
-
-                    // 加载已关联标签
-                    if (article.tag_ids && article.tag_ids.length > 0) {
-                        setSelectedTags(article.tag_ids);
-                    }
                     document.getElementById('seoTitle').value = article.seo_title || '';
                     document.getElementById('seoKeywords').value = article.seo_keywords || '';
                     document.getElementById('seoDescription').value = article.seo_description || '';
+
+                    // Load tags for this article
+                    if (article.tag_ids) {
+                        articleSetSelectedTags(article.tag_ids);
+                    }
                     
                     if (article.cover_image) {
                         document.getElementById('coverImage').value = article.cover_image;
                         
-                        // API返回/开头的绝对路径（如 /uploads/xxx.jpg），需要补上网站子路径
-                                                let previewSrc = article.cover_image;
+                        // 处理封面图片预览路径
+                        let previewSrc = article.cover_image;
                         if (previewSrc.startsWith('/')) {
-                            // 绝对路径（/uploads/xxx.jpg），直接使用
+                            // 已经是根路径，直接使用
                         } else if (!previewSrc.startsWith('http') && !previewSrc.startsWith('data:')) {
-                            // 是相对路径，补全站点目录前缀
-                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
-                            previewSrc = basePath.replace(/\/$/, '') + '/uploads/' + previewSrc;
+                            // 相对路径，添加根路径
+                            previewSrc = '/' + previewSrc;
                         }
-
+                        
+                        // 隐藏占位符，显示图片
+                        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+                        if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
+                        
+                        const coverPreview = document.getElementById('coverPreview');
                         coverPreview.src = previewSrc;
                         coverPreview.style.display = 'block';
                         coverPreview.style.margin = '0 auto';
                         coverPreview.style.maxHeight = '200px';
+                        
+                        // 添加图片加载错误处理
+                        coverPreview.onerror = function() {
+                            console.error('封面图片加载失败:', previewSrc);
+                        };
                     }
                     
                     // 等待编辑器初始化完成后再设置内容
+                    const maxRetries = 20;
+                    let retryCount = 0;
                     const setEditorContent = () => {
-                        if (tinymceEditor) {
+                        if (tinymceEditor && !tinymceEditor.removed && tinymceEditor.initialized) {
                             tinymceEditor.setContent(article.content || '');
+                            console.log('Editor content set successfully, length:', (article.content || '').length);
+                        } else if (retryCount < maxRetries) {
+                            retryCount++;
+                            console.log('Editor not ready, retrying... (' + retryCount + '/' + maxRetries + ')');
+                            setTimeout(setEditorContent, 200);
                         } else {
-                            // 如果编辑器还没初始化，等待一下再试
-                            setTimeout(setEditorContent, 100);
+                            console.error('Editor failed to initialize after ' + maxRetries + ' retries');
+                            showToast('编辑器初始化失败，请刷新页面重试', 'error');
                         }
                     };
-                    setEditorContent();
+                    // 延迟执行以确保编辑器初始化完成
+                    setTimeout(setEditorContent, 500);
                     
-                    ;
+                    updateSaveStatus('saved');
                 }
             } catch (error) {
                 console.error('API加载文章失败:', error);
@@ -826,26 +688,59 @@ automatic_uploads: true,
                     if (result.success && result.data && result.data.url) {
                         const imageUrl = result.data.url;
                         coverImageInput.value = imageUrl;
-                        // 预览路径：补上网站子路径
+                        // 预览路径：正确处理图片URL
                         let previewUrl = imageUrl;
+                        console.log('原始图片URL:', imageUrl);
+                        
+                        // 如果URL以/开头，已经是根路径，直接使用
                         if (previewUrl.startsWith('/')) {
-                            // 绝对路径（/uploads/xxx.jpg），直接使用
-                        } else if (!previewUrl.startsWith('http') && !previewUrl.startsWith('data:')) {
-                            // 相对路径，补全站点目录前缀
-                            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
-                            previewUrl = basePath.replace(/\/$/, '') + '/' + previewUrl;
+                            // URL已经是根路径格式，如 /uploads/xxx.jpg
+                            // 检查是否是正确的路径格式
+                            if (previewUrl.startsWith('/uploads/') || previewUrl.startsWith('/images/')) {
+                                previewUrl = previewUrl; // 保持原样
+                            } else if (previewUrl.includes('/uploads/')) {
+                                // 提取/uploads/后面的部分
+                                const uploadsIndex = previewUrl.indexOf('/uploads/');
+                                previewUrl = previewUrl.substring(uploadsIndex);
+                            }
+                        } else if (previewUrl.startsWith('http://') || previewUrl.startsWith('https://')) {
+                            // 完整URL，直接使用
+                            previewUrl = previewUrl;
+                        } else if (previewUrl.startsWith('data:')) {
+                            // Base64数据，直接使用
+                            previewUrl = previewUrl;
+                        } else {
+                            // 相对路径，添加根路径
+                            previewUrl = '/' + previewUrl;
                         }
+                        console.log('处理后的预览URL:', previewUrl);
                         
                         // 隐藏占位符，显示图片
                         const uploadPlaceholder = document.getElementById('uploadPlaceholder');
                         if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
                         
+                        // 设置图片预览，添加错误处理
                         coverPreview.src = previewUrl;
                         coverPreview.style.display = 'block';
                         coverPreview.style.margin = '0 auto';
                         coverPreview.style.maxHeight = '200px';
+                        
+                        // 添加图片加载错误处理
+                        coverPreview.onerror = function() {
+                            console.error('图片加载失败:', previewUrl);
+                            showToast('图片预览加载失败，请检查图片路径', 'error');
+                            // 恢复占位符显示
+                            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+                            if (uploadPlaceholder) uploadPlaceholder.style.display = 'block';
+                            coverPreview.style.display = 'none';
+                        };
+                        
+                        // 添加图片加载成功处理
+                        coverPreview.onload = function() {
+                            console.log('图片加载成功:', previewUrl);
+                        };
                         isDirty = true;
-                        ;
+                        updateSaveStatus('unsaved');
                         uploaded = true;
                         showToast('图片上传成功', 'success');
                         
@@ -875,7 +770,7 @@ automatic_uploads: true,
                     coverPreview.src = compressed;
                     coverPreview.style.display = 'block';
                     isDirty = true;
-                    ;
+                    updateSaveStatus('unsaved');
                     uploaded = true;
                     
                     showToast('图片已保存到本地（Base64模式）', 'success');
@@ -965,18 +860,27 @@ automatic_uploads: true,
             document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(input => {
                 input.addEventListener('input', () => {
                     isDirty = true;
-                    ;
+                    updateSaveStatus('unsaved');
                 });
             });
             
             document.getElementById('isTop').addEventListener('change', () => {
                 isDirty = true;
-                ;
+                updateSaveStatus('unsaved');
             });
         }
 
         // 更新保存状态
-
+        function updateSaveStatus(status) {
+            const statusEl = document.getElementById('saveStatus');
+            if (status === 'saved') {
+                statusEl.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i><span>已保存</span>';
+            } else if (status === 'unsaved') {
+                statusEl.innerHTML = '<i class="fas fa-circle" style="color: #f59e0b;"></i><span>有未保存的更改</span>';
+            } else if (status === 'saving') {
+                statusEl.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: #3b82f6;"></i><span>正在保存...</span>';
+            }
+        }
 
         // 保存为草稿
         function saveAsDraft() {
@@ -1029,7 +933,7 @@ automatic_uploads: true,
             }
 
             showLoading('正在保存...');
-            ;
+            updateSaveStatus('saving');
 
             // 获取编辑器内容
             let editorContent = '';
@@ -1059,11 +963,10 @@ automatic_uploads: true,
                 // 注意：不允许字符串ID，所有文章ID必须为数据库自增整数
             }
             
-            // 修复编辑器内容中的图片路径：相对路径转绝对路径
-            const basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1) + 1);
+            // Fix editor content image paths: relative to absolute
             editorContent = editorContent.replace(
                 /src="(\.\.\/|\.\.\/\.\.\/|\.\.\/\.\.\/\.\.\/)(uploads\/)/g,
-                'src="' + basePath.replace(/\/$/, '') + '/$2'
+                'src="/$2'
             );
             
             const data = {
@@ -1078,8 +981,8 @@ automatic_uploads: true,
                 sort_order: parseInt(document.getElementById('sortOrder').value) || 0,
                 seo_title: document.getElementById('seoTitle').value,
                 seo_keywords: document.getElementById('seoKeywords').value,
-                seo_description: document.getElementById('seoDescription').value,
-                tag_ids: getSelectedTagIds()
+                tag_ids: articleGetSelectedTagIds(),
+                seo_description: document.getElementById('seoDescription').value
             };
 
             console.log('准备发送的数据:', {
@@ -1122,7 +1025,7 @@ automatic_uploads: true,
                 if (result.success) {
                     articleId = result.data.id;
                     isDirty = false;
-                    ;
+                    updateSaveStatus('saved');
                     showToast(status === 'published' ? '文章发布成功' : '草稿保存成功', 'success');
                     
                     // 更新URL
@@ -1132,7 +1035,7 @@ automatic_uploads: true,
                     }
                 } else {
                     showToast(result.message || '保存失败', 'error');
-                    ;
+                    updateSaveStatus('unsaved');
                 }
             } catch (error) {
                 console.error('API请求失败:', error);
@@ -1146,7 +1049,7 @@ automatic_uploads: true,
                 }
                 
                 showToast(errorMsg, 'error');
-                ;
+                updateSaveStatus('unsaved');
                 
                 // 提示用户手动重试
                 showToast('提示：请确认PHP和MySQL服务已启动，稍后重试', 'info');
@@ -1207,123 +1110,77 @@ automatic_uploads: true,
             }
         });
     </script>
-    <!-- 图片裁切模态框 -->
-    <div class="modal-overlay" id="cropModal" style="z-index: 99999;">
-        <div class="modal" style="max-width: 700px;">
-            <div class="modal-header">
-                <h3 class="modal-title">裁切图片</h3>
-                <button class="modal-close" onclick="closeCropModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" style="text-align:center;">
-                <div style="max-height: 400px; overflow: hidden;">
-                    <img id="cropImage" src="" style="max-width: 100%;">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeCropModal()">取消</button>
-                <button class="btn btn-primary" onclick="confirmCrop()" style="background:#8b5cf6;">确认裁切</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // 读取 page 参数，用于返回列表时保持页码
-        (function() {
-            var params = new URLSearchParams(window.location.search);
-            var page = params.get('page');
-            if (page) {
-                var backLink = document.getElementById('backLink');
-                if (backLink) {
-                    backLink.href = './article-list.html?page=' + page;
-                }
-                window.returnPage = page;
-            }
-        })();
-    
         // ========== 标签选择器 ==========
-        let allTags = [];
-        let selectedTags = [];
+        let articleAllTags = [];
+        let articleSelectedTags = [];
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            var div = document.createElement('div');
-            div.appendChild(document.createTextNode(text));
-            return div.innerHTML;
-        }
-
-        async function loadTagOptions() {
+        async function articleLoadTagOptions() {
             try {
-                const resp = await fetch('/admin/api/tags/tag-options.php');
+                const resp = await fetch('../../api/tags/tag-options.php');
                 const result = await resp.json();
-                if (result.success) {
-                    allTags = result.data || [];
-                }
-            } catch (e) {
-                console.log('Failed to load tags:', e);
-            }
+                if (result.success) articleAllTags = result.data || [];
+            } catch(e) { console.log(e); }
         }
 
-        function filterTagOptions() {
-            const search = document.getElementById('tagSearch').value.toLowerCase();
-            const dropdown = document.getElementById('tagDropdown');
-            const filtered = allTags.filter(t =>
+        function articleFilterTagOptions() {
+            const search = document.getElementById('articleTagSearch').value.toLowerCase();
+            const dd = document.getElementById('articleTagDropdown');
+            const filtered = articleAllTags.filter(t =>
                 (t.name.toLowerCase().includes(search) || t.slug.toLowerCase().includes(search)) &&
-                !selectedTags.includes(parseInt(t.id))
+                !articleSelectedTags.includes(parseInt(t.id))
             );
             if (filtered.length > 0) {
-                dropdown.innerHTML = filtered.map(t =>
-                    `<div class="tag-option" onclick="addTag(${t.id}, '${t.name.replace(/'/g, "\'")}')">${escapeHtml(t.name)} <span style="color:#9ca3af;font-size:12px;">(${escapeHtml(t.slug)})</span></div>`
+                dd.innerHTML = filtered.map(t =>
+                    `<div class="tag-option" onclick="articleAddTag(${t.id}, '${t.name.replace(/'/g, "\\'")}')">${t.name} <span style="color:#9ca3af;font-size:12px;">(${t.slug})</span></div>`
                 ).join('');
-                dropdown.classList.add('show');
+                dd.classList.add('show');
             } else {
-                dropdown.innerHTML = '<div class="tag-option disabled">' + (search ? '无匹配标签' : '输入关键词搜索标签') + '</div>';
-                dropdown.classList.add('show');
+                dd.innerHTML = '<div class="tag-option disabled">' + (search ? '无匹配标签' : '没有可用的标签') + '</div>';
+                dd.classList.add('show');
             }
         }
 
-        function addTag(id, name) {
-            if (!selectedTags.includes(id)) {
-                selectedTags.push(id);
-                renderSelectedTags();
+        function articleAddTag(id, name) {
+            if (!articleSelectedTags.includes(id)) {
+                articleSelectedTags.push(id);
+                articleRenderSelectedTags();
             }
-            document.getElementById('tagSearch').value = '';
-            document.getElementById('tagDropdown').classList.remove('show');
+            document.getElementById('articleTagSearch').value = '';
+            document.getElementById('articleTagDropdown').classList.remove('show');
         }
 
-        function removeTag(id) {
-            selectedTags = selectedTags.filter(t => t !== id);
-            renderSelectedTags();
+        function articleRemoveTag(id) {
+            articleSelectedTags = articleSelectedTags.filter(t => t !== id);
+            articleRenderSelectedTags();
         }
 
-        function setSelectedTags(ids) {
-            selectedTags = ids.map(id => parseInt(id));
-            renderSelectedTags();
+        function articleSetSelectedTags(ids) {
+            articleSelectedTags = ids.map(id => parseInt(id));
+            articleRenderSelectedTags();
         }
 
-        function renderSelectedTags() {
-            const container = document.getElementById('selectedTags');
-            container.innerHTML = selectedTags.map(id => {
-                const tag = allTags.find(t => parseInt(t.id) === id);
-                const name = tag ? escapeHtml(tag.name) : '#' + id;
-                return `<span class="tag-selector__tag">${name} <i class="fas fa-times" onclick="removeTag(${id})"></i></span>`;
+        function articleRenderSelectedTags() {
+            const container = document.getElementById('articleSelectedTags');
+            container.innerHTML = articleSelectedTags.map(id => {
+                const tag = articleAllTags.find(t => parseInt(t.id) === id);
+                const name = tag ? tag.name : '#' + id;
+                return `<span class="tag-selector__tag">${name} <i class="fas fa-times" onclick="articleRemoveTag(${id})"></i></span>`;
             }).join('');
         }
 
-        function getSelectedTagIds() {
-            return selectedTags;
+        function articleGetSelectedTagIds() {
+            return articleSelectedTags;
         }
 
         document.addEventListener('click', function(e) {
-            const dropdown = document.getElementById('tagDropdown');
-            if (dropdown && !e.target.closest('.tag-selector__input-wrap')) {
-                dropdown.classList.remove('show');
+            const dd = document.getElementById('articleTagDropdown');
+            if (dd && !e.target.closest('.tag-selector__input-wrap')) {
+                dd.classList.remove('show');
             }
         });
 
-        loadTagOptions();
-
-</script>
+        articleLoadTagOptions();
+    </script>
 </body>
 </html>

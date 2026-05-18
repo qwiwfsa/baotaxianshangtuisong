@@ -46,7 +46,7 @@ if ($article_id > 0) {
             $nextStmt->close();
             // 相关文章（同分类下）
             if (!empty($row['category_id'])) {
-                $relStmt = $db->prepare("SELECT id, title, cover_image, created_at FROM cms_articles WHERE category_id = ? AND id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
+                $relStmt = $db->prepare("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE category_id = ? AND id != ? AND status = 'published' ORDER BY id DESC LIMIT 4");
                 $relStmt->bind_param('ii', $row['category_id'], $article_id);
                 $relStmt->execute();
                 $relResult = $relStmt->get_result();
@@ -65,14 +65,7 @@ if ($article_id > 0) {
 
 
 
-<script>
-<?php if (isset($article_data) && $article_data): ?>
-window.__articleData = <?php echo json_encode($article_data, JSON_UNESCAPED_UNICODE); ?>;
-<?php if (!empty($article_data['related_articles'])): ?>
-window.__relatedArticles = <?php echo json_encode($article_data['related_articles'], JSON_UNESCAPED_UNICODE); ?>;
-<?php endif; ?>
-<?php endif; ?>
-</script>
+
 
 <!DOCTYPE html>
 
@@ -89,6 +82,17 @@ data-share-copied="链接已复制"
 data-share-copy-fail="复制失败">
 
 <head>
+
+<script>
+<?php if (isset($article_data) && $article_data): ?>
+window.__articleData = <?php echo json_encode($article_data, JSON_UNESCAPED_UNICODE); ?>;
+<?php if (!empty($article_data['related_articles'])): ?>
+window.__relatedArticles = <?php echo json_encode($article_data['related_articles'], JSON_UNESCAPED_UNICODE); ?>;
+<?php endif; ?>
+<?php endif; ?>
+</script>
+
+
 
 <title><?php echo htmlspecialchars($seo_title); ?></title>
 <meta name="description" content="<?php echo htmlspecialchars($seo_description); ?>">
@@ -696,9 +700,11 @@ data-share-copy-fail="复制失败">
 
         .related-article-thumb {
 
-            width: 80px;
+            width: auto;
 
             height: 80px;
+
+            aspect-ratio: 4 / 3;
 
             min-width: 80px;
 
@@ -707,6 +713,8 @@ data-share-copy-fail="复制失败">
             border-radius: 8px;
 
             margin: 12px;
+
+            flex-shrink: 0;
 
         }
 
@@ -768,13 +776,23 @@ data-share-copy-fail="复制失败">
 
         
 
-        .related-article-date {
+        .related-article-summary {
 
             font-size: 12px;
 
-            color: #9ca3af;
+            color: #6b7280;
 
-            margin-top: 8px;
+            line-height: 1.4;
+
+            margin-top: 4px;
+
+            display: -webkit-box;
+
+            -webkit-line-clamp: 2;
+
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
 
         }
 
@@ -1988,7 +2006,6 @@ data-share-copy-fail="复制失败">
 
             const date = article.publishDate || article.created_at || new Date().toISOString();
 
-            const formattedDate = new Date(date).toLocaleDateString('zh-CN');
 
             const author = article.author || 'Yao资金网';
 
@@ -2008,7 +2025,6 @@ data-share-copy-fail="复制失败">
 
                 <div class="article-detail-meta">
 
-                    <span><i class="far fa-calendar"></i> ${formattedDate}</span>
 
                     <span><i class="far fa-user"></i> ${author}</span>
 
@@ -2250,9 +2266,7 @@ data-share-copy-fail="复制失败">
 
                 const title = article.title || '无标题';
 
-                const date = article.publishDate || article.created_at || new Date().toISOString();
-
-                const formattedDate = new Date(date).toLocaleDateString('zh-CN');
+                const date = article.publishDate || article.created_at || '';
 
                 const coverImage = getValidCoverImage(article);
 
@@ -2278,7 +2292,8 @@ data-share-copy-fail="复制失败">
 
                             <h3 class="related-article-title">${title}</h3>
 
-                            <span class="related-article-date">${formattedDate}</span>
+                            ${article.summary ? `<p class="related-article-summary">${article.summary}</p>` : ``}
+
 
                         </div>
 
@@ -2391,9 +2406,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // 使用PHP嵌入的数据，不再依赖API fetch
 
-            <?php if (isset($article_data) && $article_data): ?>
-
-            var article = <?php echo json_encode($article_data, JSON_UNESCAPED_UNICODE); ?>;
+            var article = window.__articleData;
 
             if (article) {
 
@@ -2405,7 +2418,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 incrementViews(articleId);
 
-                var related = <?php echo isset($article_data['related_articles']) && !empty($article_data['related_articles']) ? json_encode($article_data['related_articles'], JSON_UNESCAPED_UNICODE) : '[]'; ?>;
+                var related = window.__relatedArticles || [];
 
                 renderRelatedArticles(articleId, related);
 
@@ -2414,12 +2427,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderNotFound();
 
             }
-
-            <?php else: ?>
-
-            renderNotFound();
-
-            <?php endif; ?>
 
         })
 

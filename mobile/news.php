@@ -22,7 +22,7 @@ while ($r = $artRes->fetch_assoc()) { $pageArticles[] = $r; }
 $artRes->close();
 
 // Fetch ALL articles for JS initial data (instant pagination)
-$allRes = $newsDB->query("SELECT id, title, summary, cover_image, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT 2000");
+$allRes = $newsDB->query("SELECT id, title, summary, cover_image, category_id, created_at FROM cms_articles WHERE status='published' ORDER BY created_at DESC LIMIT 2000");
 $allArticles = [];
 while ($r = $allRes->fetch_assoc()) { $allArticles[] = $r; }
 $allRes->close();
@@ -607,6 +607,58 @@ $newsDB->close();
 
 <link rel="icon" href="/favicon-v2.png"><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}
 .news-category{transition:none!important;animation:none!important}
+        .news-categories {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 8px;
+            padding: 0 0 15px 0;
+            margin-top: -25px;
+            margin-bottom: 0 !important;
+        }
+        .news-categories .news-category {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            font-size: 13px;
+            color: #374151;
+            background: #f3f4f6;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .news-categories .news-category.active {
+            color: #fff;
+            background: #1e3a8a;
+        }
+        .news-categories {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 8px;
+            padding: 0 0 15px 0;
+            margin-top: -25px;
+            margin-bottom: 0 !important;
+        }
+        .news-categories .news-category {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            font-size: 13px;
+            color: #374151;
+            background: #f3f4f6;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .news-categories .news-category.active {
+            color: #fff;
+            background: #1e3a8a;
+        }
         .news-pagination {
             display: flex; justify-content: center; align-items: center; gap: 6px;
             margin-top: 20px; padding: 14px 0;
@@ -872,7 +924,7 @@ $newsDB->close();
 
 
 
-                <div class="editable-section" data-section="news-categories">
+                <div class="editable-section" data-section="news-categories" style="margin-bottom:0">
 
 
 
@@ -900,37 +952,7 @@ $newsDB->close();
 
 
 
-                <!-- 精选资讯（大图展示） -->
-
-
-
-
-
-                <div class="editable-section" data-section="news-featured">
-
-
-
-
-
-                    <div class="news-featured-grid">
-
-
-
-
-
-                        <!-- 精选资讯卡片已删除 -->
-
-
-
-
-
-                    </div>
-
-
-
-
-
-                </div>
+                
 
 
 
@@ -948,7 +970,7 @@ $newsDB->close();
 
 
 
-                <div class="editable-section" data-section="news-list">
+                <div class="editable-section" data-section="news-list" style="margin-bottom:0">
 
 
 
@@ -959,16 +981,16 @@ $newsDB->close();
                         <?php foreach ($pageArticles as $article): ?>
                         <div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">
                             <?php $img = $article['cover_image'] ?? ''; if ($img): ?>
-                            <div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="../<?php echo htmlspecialchars($img); ?>" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'"></div>
+                            <div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:15px"><img src="../<?php echo htmlspecialchars($img); ?>" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'"></div>
                             <?php else: ?>
-                            <div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:10px"></div>
+                            <div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:15px"></div>
                             <?php endif; ?>
                             <div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">
-                                <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id=<?php echo $article['id']; ?>" style="color:#1e3a8a;text-decoration:none"><?php echo htmlspecialchars($article['title'] ?? ''); ?></a></h3>
+                                <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><a href="news-detail.html?id=<?php echo $article['id']; ?>" style="color:#1e3a8a;text-decoration:none"><?php echo htmlspecialchars($article['title'] ?? ''); ?></a></h3>
                                 <?php $s = $article['summary'] ?? ''; if ($s): ?>
                                 <p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><?php echo htmlspecialchars($s); ?></p>
                                 <?php endif; ?>
-                                <span style="font-size:12px;color:#999"><?php echo substr($article['created_at'] ?? '', 0, 10); ?></span>
+
                             </div>
                         </div>
                         <?php endforeach; ?>
@@ -1162,26 +1184,34 @@ var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
 
     async function loadNews(){
         if (STATE.loading) return;
-        // Use embedded data for instant render (no API wait)
-        if (STATE.all.length === 0 && window.__INIT_DATA__ && __INIT_DATA__.articles && __INIT_DATA__.articles.length > 0) {
-            STATE.all = __INIT_DATA__.articles;
-            if (__INIT_DATA__.categories && Array.isArray(__INIT_DATA__.categories)) {
+        // Always use embedded data for instant render & local filtering
+        if (window.__INIT_DATA__ && __INIT_DATA__.articles && __INIT_DATA__.articles.length > 0) {
+            // First load: update categories from embedded data
+            if (STATE.all.length === 0 && __INIT_DATA__.categories && Array.isArray(__INIT_DATA__.categories)) {
                 updateCategories(__INIT_DATA__.categories);
             }
+            // Filter by category locally if needed
+            if (STATE.currentCategory > 0) {
+                STATE.all = __INIT_DATA__.articles.filter(function(a) {
+                    return parseInt(a.category_id) === STATE.currentCategory;
+                });
+            } else {
+                STATE.all = __INIT_DATA__.articles;
+            }
+            if (STATE.all.length === 0) {
+                el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>';
+                return;
+            }
             renderPage();
-            STATE.loading = false;
             return;
         }
+        // Fallback: API call (if no embedded data)
         STATE.loading = true;
-        // Show loading bar without clearing content
-        var existBar = document.getElementById('newsLoadingBar');
-        if (!existBar) {
-            var bar = document.createElement('div');
-            bar.id = 'newsLoadingBar';
-            bar.style.cssText = 'text-align:center;padding:8px;background:#f0f4ff;color:#1e3a8a;font-size:13px;position:sticky;top:0;z-index:5;';
-            bar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
-            el.insertBefore(bar, el.firstChild);
-        }
+        var bar = document.createElement('div');
+        bar.id = 'newsLoadingBar';
+        bar.style.cssText = 'text-align:center;padding:8px;background:#f0f4ff;color:#1e3a8a;font-size:13px;position:sticky;top:0;z-index:5;';
+        bar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
+        el.insertBefore(bar, el.firstChild);
         try {
             var url = 'api/news.php?page=1&limit=1000&t='+Date.now();
             if(STATE.currentCategory > 0) url += '&category_id='+STATE.currentCategory;
@@ -1200,8 +1230,7 @@ var STATE = {all:[], page:1, per:10, loading:false, currentCategory:0};
                 el.innerHTML = '<div style="text-align:center;padding:40px;color:#999">暂无新闻</div>'; return;
             }
             STATE.all = d.data.news;
-            // Don't auto-render, wait for user navigation
-            if (STATE.page > 1) renderPage();
+            renderPage();
         } catch(e) {
             STATE.loading = false;
             el.innerHTML = '<div style="text-align:center;padding:40px;color:red;font-size:18px">加载失败: '+e.message+'</div>';
@@ -1268,14 +1297,14 @@ function escapeHtml(str){
             var t = a.title||'', s = a.summary||'', dt = (a.date||a.created_at||'').substring(0,10);
             var img = a.cover_image ? '../'+a.cover_image : '';
             var imgHtml = img
-                ? '<div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:10px"><img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display=\'none\'"></div>'
-                : '<div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:10px"></div>';
+                ? '<div style="flex:0 0 120px;width:120px;height:90px;overflow:hidden;flex-shrink:0;border-radius:8px;margin-top:15px"><img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display=\'none\'"></div>'
+                : '<div style="flex:0 0 120px;width:120px;height:90px;background:#f3f4f6;border-radius:8px;flex-shrink:0;margin-top:15px"></div>';
             html += '<div style="background:#fff;border-radius:10px;margin:10px 0;box-shadow:0 1px 8px rgba(0,0,0,0.06);display:flex;align-items:flex-start;overflow:hidden">';
             html += imgHtml;
             html += '<div style="flex:1;padding:14px 14px 14px 10px;overflow:hidden">';
-            html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4"><a href="news-detail.html?id='+a.id+'\" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
+            html += '<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><a href="news-detail.html?id='+a.id+'\" style="color:#1e3a8a;text-decoration:none">'+t+'</a></h3>';
             if(s) html += '<p style="margin:0 0 6px 0;font-size:13px;color:#666;line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+s+'</p>';
-            if(dt) html += '<span style="font-size:12px;color:#999">'+dt+'</span>';
+
             html += '</div></div>';
         }
         if(items.length===0) html = '<div style="text-align:center;padding:40px;color:#999">暂无内容</div>';

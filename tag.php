@@ -101,11 +101,11 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .empty-state { text-align: center; padding: 60px 20px; color: #9ca3af; }
         .empty-state i { font-size: 48px; margin-bottom: 16px; }
-        .tag-pagination { display: flex; justify-content: center; gap: 6px; margin-top: 24px; }
-        .tag-pagination button { padding: 6px 14px; border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer; font-size: 13px; }
-        .tag-pagination button:hover { background: #f3f4f6; }
-        .tag-pagination button.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
-        .tag-pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+        .tag-pagination { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 30px; padding: 14px 0; }
+        .tag-pagination .pagination-btn { min-width: 80px; height: 40px; white-space: nowrap; padding: 0 20px; font-size: 14px; font-weight: 500; color: #1e3a8a; background: #fff; border: 1px solid #1e3a8a; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .tag-pagination .pagination-btn:hover { background: #eff6ff; }
+        .tag-pagination .pagination-btn.disabled { opacity: 0.5; cursor: not-allowed; border-color: #d1d5db; color: #9ca3af; }
+        .tag-pagination .pagination-current { display: inline-flex; align-items: center; justify-content: center; min-width: 38px; height: 38px; margin: 0 12px; padding: 0 8px; font-size: 14px; font-weight: 500; color: #1e3a8a; }
         @media (max-width: 768px) {
             .tag-detail-header { padding: 50px 0 40px; }
             .tag-detail-title { font-size: 24px; }
@@ -116,6 +116,9 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
         }
     </style>
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>
+html{scroll-behavior:auto;overflow-y:scroll}#tagContentList{min-height:400px}#tagLoading{min-height:200px}
+</style>
 </head>
 <body>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
@@ -177,16 +180,16 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
         });
 
         function loadTagData() {
-            document.getElementById('tagLoading').style.display = 'block';
-            document.getElementById('tagContentList').innerHTML = '';
-            document.getElementById('tagTabs').style.display = 'none';
-            document.getElementById('tagPagination').style.display = 'none';
-            document.getElementById('tagEmpty').style.display = 'none';
+            var loading = document.getElementById('tagLoading');
+            var contentList = document.getElementById('tagContentList');
+            if (loading) loading.style.display = 'block';
+            if (contentList) contentList.style.opacity = '0.5';
 
-            fetch(`/api/tag-frontend-detail.php?slug=${encodeURIComponent(slug)}&type=${currentType}&page=${currentPage}&limit=10`)
-                .then(r => r.json())
-                .then(res => {
-                    document.getElementById('tagLoading').style.display = 'none';
+            fetch('/api/tag-frontend-detail.php?slug=' + encodeURIComponent(slug) + '&type=' + currentType + '&page=' + currentPage + '&limit=10')
+                .then(function(r) { return r.json(); })
+                .then(function(res) {
+                    if (loading) loading.style.display = 'none';
+                    if (contentList) contentList.style.opacity = '1';
                     if (res.success && res.data) {
                         tagData = res.data;
                         renderTagInfo(tagData.tag);
@@ -197,8 +200,8 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
                         document.getElementById('tagCount').textContent = '';
                     }
                 })
-                .catch(err => {
-                    document.getElementById('tagLoading').innerHTML = '加载失败，请刷新重试';
+                .catch(function(err) {
+                    if (loading) loading.innerHTML = '加载失败，请刷新重试';
                 });
         }
 
@@ -270,11 +273,13 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
             if (totalPages > 1) {
                 const pagination = document.getElementById('tagPagination');
                 pagination.style.display = 'flex';
-                let phtml = `<button onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
-                for (let i = 1; i <= totalPages; i++) {
-                    phtml += `<button onclick="changePage(${i})" class="${i === currentPage ? 'active' : ''}">${i}</button>`;
-                }
-                phtml += `<button onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+                var h = '';
+                if (currentPage > 1) h += '<button class="pagination-btn" onclick="changePage(' + (currentPage - 1) + ')">上一页</button>';
+                else h += '<button class="pagination-btn disabled">上一页</button>';
+                h += '<span class="pagination-current">' + currentPage + ' / ' + totalPages + '</span>';
+                if (currentPage < totalPages) h += '<button class="pagination-btn" onclick="changePage(' + (currentPage + 1) + ')">下一页</button>';
+                else h += '<button class="pagination-btn disabled">下一页</button>';
+                var phtml = h;
                 pagination.innerHTML = phtml;
             }
         }

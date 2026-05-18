@@ -462,7 +462,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
         document.addEventListener('error', function(e){
             var t = e.target;
             if(t.tagName==='IMG' && /logo/i.test(t.src)){
-                t.src='/uploads/logo/logo_20260505_122045_69f9c47d515d1.png
+                t.src='/uploads/logo/logo_20260505_122045_69f9c47d515d1.png'
             }
         }, true);
         xhr.send();
@@ -998,6 +998,9 @@ main#main-content {
     <meta property="og:locale" content="zh_CN">
 
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>
+html{scroll-behavior:auto;overflow-y:scroll}
+</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>

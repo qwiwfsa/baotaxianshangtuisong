@@ -53,7 +53,7 @@ header('Content-Type: text/html; charset=utf-8');
         .mobile-tab:hover:not(.active) { color: #374151; }
         .mobile-item { display: flex; gap: 14px; padding: 14px; background: white; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); border: 1px solid #f3f4f6; transition: box-shadow 0.2s; text-decoration: none; }
         .mobile-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .mobile-item-img { width: 100px; min-width: 100px; height: 75px; border-radius: 8px; object-fit: cover; background: #f3f4f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #d1d5db; font-size: 28px; align-self: center; }
+        .mobile-item-img { width: 100px; min-width: 100px; height: 75px; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; background: #f3f4f6; flex-shrink: 0; align-self: center; display: flex; align-items: center; justify-content: center; color: #d1d5db; font-size: 28px; }
         .mobile-item-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
         .mobile-item-title { font-size: 15px; font-weight: 600; color: #1f2937; text-decoration: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; margin-bottom: 6px; }
         .mobile-item-title:hover { color: #3b82f6; }
@@ -67,6 +67,12 @@ header('Content-Type: text/html; charset=utf-8');
         .empty-state p { font-size: 15px; }
         @media (max-width: 640px) {
             .mobile-tag-detail { padding: 16px; }
+        }
+        .mobile-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
     </style>
 <style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
@@ -172,7 +178,7 @@ header('Content-Type: text/html; charset=utf-8');
             }
             items.forEach(function(item) {
                 var imgHtml = item.image
-                    ? '<img class="mobile-item-img" src="' + item.image + '" alt="" onerror="this.style.display=\'none\'">'
+                    ? '<div class="mobile-item-img"><img src="' + item.image + '" alt="" onerror="this.parentElement.style.display=\'none\'" ></div>'
                     : '<div class="mobile-item-img"><i class="fas fa-file-alt"></i></div>';
                 c.innerHTML += '<a href="' + item.link + '" class="mobile-item">' + imgHtml + '<div class="mobile-item-info"><div class="mobile-item-title">' + esc(item.title) + '</div><div class="mobile-item-meta"><span class="tag-badge">' + item.label + '</span><span>' + (item.date || '').substring(0,10) + '</span></div></div></a>';
             });

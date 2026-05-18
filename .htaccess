@@ -1,1 +1,5 @@
 AddType application/x-httpd-php .html .htm
+
+
+# Tag pages
+RewriteRule ^tag/(.+)$ tag.php?slug=$1 [L,QSA]

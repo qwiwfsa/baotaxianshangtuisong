@@ -113,7 +113,9 @@ try {
 
     // 获取插入的ID
     if ($isNew) {
-        $caseId = $stmt->insert_id;
+        if ($caseId == 0) {
+            $caseId = $stmt->insert_id;
+        }
     }
 
     $stmt->close();
@@ -156,6 +158,7 @@ try {
         'process' => $data['process'] ?? [],
         'hasVideo' => $data['hasVideo'] ?? false,
         'video' => $data['video'] ?? '',
+        'tag_ids' => array_values($tagIds),
         'status' => $status ? 'published' : 'draft',
         'createdAt' => $now,
         'lastModified' => $now
@@ -204,6 +207,7 @@ try {
             'process' => $data['process'] ?? [],
             'hasVideo' => $data['hasVideo'] ?? false,
             'video' => $data['video'] ?? '',
+            'tag_ids' => array_values($tagIds),
             'status' => $status ? 'published' : 'draft',
             'lastModified' => $now
         ]
