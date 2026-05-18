@@ -157,7 +157,7 @@ if (!empty($districts)) {
             <div class="districts-grid" class="districts-grid">';
     foreach ($districts as $d) {
         $dName = htmlspecialchars(trim($d), ENT_QUOTES, 'UTF-8');
-        $districtHtml .= '<div style="background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;text-align:center;font-size:14px;color:#374151;">' . $dName . '</div>';
+        $districtHtml .= '<div class="district-item">' . $dName . '</div>';
     }
     $districtHtml .= '
             </div>
@@ -241,7 +241,7 @@ try {
                 <div class="section-label" style="color:#3b82f6;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">PROVINCE SERVICE</div>
                 <h1 style="font-size:40px;font-weight:700;color:#1f2937;margin-bottom:16px;"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务</h1>
                 <p style="font-size:18px;color:#6b7280;max-width:600px;margin:0 auto 40px;">覆盖<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省各市县，专业企业资金服务</p>
-                <div class="province-city-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;max-width:900px;margin:0 auto;">
+                <div class="province-city-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;max-width:900px;margin:0 auto;justify-content:center;">
                     <?php
                     $pcConn = getDbConnection();
                     $pcStmt = $pcConn->prepare("SELECT city_name, slug FROM fenzhan_cities WHERE province = ? AND is_active = 1 ORDER BY sort_order ASC, city_name ASC");
@@ -319,8 +319,10 @@ try {
                 </div>
                 <div class="city-content-wrapper">
                     <div class="city-content-card">
+                        <div class="city-content-body">
                         <?php echo $city_content; ?>
                     </div>
+                        </div>
                 </div>
             </div>
         </section>
@@ -340,7 +342,7 @@ try {
                     <h2 class="section-title">同省城市</h2>
                     <p class="section-subtitle"><?php echo htmlspecialchars($province, ENT_QUOTES, 'UTF-8'); ?>其他城市资金服务</p>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:20px 0;">
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:20px 0;justify-content:center;">
                     <?php while ($sibRow = $sibResult->fetch_assoc()):
                         $sibName = htmlspecialchars($sibRow['city_name'], ENT_QUOTES, 'UTF-8');
                         $sibSlug = htmlspecialchars($sibRow['slug'], ENT_QUOTES, 'UTF-8');
@@ -655,7 +657,7 @@ if (!empty($templateContent)) {
         <title><?php echo $escapedTitle; ?></title>
         <link rel="stylesheet" href="/css/style.min.css?v=20260514">
         <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
-        <link rel="stylesheet" href="/css/fenzhan.css?v=20260519">
+        <link rel="stylesheet" href="/css/fenzhan.css?v=20260520">
         <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <base href="/">
     <link rel="canonical" href="https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html">
@@ -789,8 +791,10 @@ if (!empty($templateContent)) {
                 </div>
                 <div class="city-content-wrapper">
                     <div class="city-content-card">
+                        <div class="city-content-body">
                         <?php echo $city_content; ?>
                     </div>
+                        </div>
                 </div>
             </div>
         </section>
@@ -810,7 +814,7 @@ if (!empty($templateContent)) {
                     <h2 class="section-title">同省城市</h2>
                     <p class="section-subtitle"><?php echo htmlspecialchars($province, ENT_QUOTES, 'UTF-8'); ?>其他城市资金服务</p>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:20px 0;">
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:20px 0;justify-content:center;">
                     <?php while ($sibRow = $sibResult->fetch_assoc()):
                         $sibName = htmlspecialchars($sibRow['city_name'], ENT_QUOTES, 'UTF-8');
                         $sibSlug = htmlspecialchars($sibRow['slug'], ENT_QUOTES, 'UTF-8');

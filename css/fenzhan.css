@@ -1,6 +1,6 @@
 /* fenzhan.css - 城市分站共享样式 2026-05-19 */
 .breadcrumb-nav{background:#f8fafc;border-bottom:1px solid #e5e7eb;padding:12px 0}
-.breadcrumb-list{max-width:1200px;margin:0 auto;padding:0 20px;list-style:none;display:flex;align-items:center;gap:8px;font-size:13px}
+.breadcrumb-list{max-width:1200px;margin:0 auto;padding:0 20px;list-style:none;display:flex;align-items:center;gap:8px;font-size:15px}
 .breadcrumb-item{display:flex;align-items:center;gap:8px}
 .breadcrumb-item+.breadcrumb-item::before{content:"/";color:#d1d5db;font-size:12px}
 .breadcrumb-item a{color:#6b7280;text-decoration:none;transition:color .2s}
@@ -75,6 +75,118 @@
 .city-content-card p:last-child {
     margin-bottom: 0;
 }
+/* 城市深度内容正文排版 - 与主站文章风格统一 */
+.city-content-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #374151;
+}
+
+.city-content-body h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 40px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e5e7eb;
+    line-height: 1.4;
+}
+
+.city-content-body h3:first-child {
+    margin-top: 0;
+}
+
+.city-content-body h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+    margin: 32px 0 16px;
+    line-height: 1.4;
+}
+
+.city-content-body p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 16px;
+}
+
+.city-content-body p:last-child {
+    margin-bottom: 0;
+}
+
+.city-content-body strong {
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+.city-content-body ul,
+.city-content-body ol {
+    padding-left: 24px;
+    margin: 16px 0;
+}
+
+.city-content-body li {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.city-content-body blockquote {
+    margin: 24px 0;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-left: 4px solid #1e3a8a;
+    border-radius: 0 8px 8px 0;
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* 首段强调 */
+.city-content-body h3 + p {
+    font-size: 17px;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .city-content-body {
+        font-size: 14px;
+    }
+    
+    .city-content-body h3 {
+        font-size: 20px;
+        margin: 32px 0 16px;
+    }
+    
+    .city-content-body h4 {
+        font-size: 16px;
+        margin: 24px 0 12px;
+    }
+    
+    .city-content-body p {
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 14px;
+    }
+    
+    .city-content-body li {
+        font-size: 14px;
+    }
+    
+    .city-content-body blockquote {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    .city-content-body h3 + p {
+        font-size: 15px;
+    }
+}
+
 
 /* 响应式 */
 @media (max-width: 768px) {
@@ -102,4 +214,6 @@
     }
 }
 
-.districts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:20px 0}
+.districts-grid{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;justify-content:center}.districts-grid .district-item{display:inline-flex;align-items:center;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:6px;padding:8px 16px;font-size:15px;color:#374151;white-space:nowrap}
+#city-districts .districts-grid{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:8px;padding:12px 0;justify-content:center}
+#city-districts .districts-grid .district-item{display:inline-flex!important;align-items:center;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:6px;padding:8px 16px;font-size:15px;color:#374151;white-space:nowrap}
