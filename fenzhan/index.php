@@ -1164,10 +1164,9 @@ if (!empty($templateContent)) {
 }
 // ---------- 写入缓存 ----------
 if (!empty($cacheFile)) {
-    @file_put_contents($cacheFile, $html);
-}
+    $html = str_replace("100亿", "30亿", $html);
 
-// ---------- 输出 ----------
-$html = str_replace("100亿", "30亿", $html);
+        @file_put_contents($cacheFile, $html);
+    }
 echo $html;
 
