@@ -237,11 +237,13 @@ try {
         </nav>
                 <?php if ($is_province_page): ?>
         <section class="province-hero">
-            <div class="section-container" style="text-align:center;padding:60px 20px;">
-                <div class="section-label" style="color:#3b82f6;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">PROVINCE SERVICE</div>
-                <h1 style="font-size:40px;font-weight:700;color:#1f2937;margin-bottom:16px;"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务</h1>
-                <p style="font-size:18px;color:#6b7280;max-width:600px;margin:0 auto 40px;">覆盖<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省各市县，专业企业资金服务</p>
-                <div class="province-city-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;max-width:900px;margin:0 auto;justify-content:center;">
+            <div class="section-container">
+                <div class="province-hero-header">
+                    <div class="section-label">PROVINCE SERVICE</div>
+                    <h1 class="province-hero-title"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务</h1>
+                    <p class="province-hero-subtitle">覆盖<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省各市县，专业企业资金服务</p>
+                </div>
+                <div class="province-city-list">
                     <?php
                     $pcConn = getDbConnection();
                     $pcStmt = $pcConn->prepare("SELECT city_name, slug FROM fenzhan_cities WHERE province = ? AND is_active = 1 ORDER BY sort_order ASC, city_name ASC");
@@ -252,20 +254,19 @@ try {
                         $pcName = htmlspecialchars($pcRow['city_name'], ENT_QUOTES, 'UTF-8');
                         $pcSlug = htmlspecialchars($pcRow['slug'], ENT_QUOTES, 'UTF-8');
                     ?>
-                    <a href="/fenzhan/<?php echo $pcSlug; ?>.html" class="province-city-item" style="display:block;padding:16px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;text-decoration:none;color:#374151;font-size:15px;font-weight:500;transition:all 0.2s;" onmouseover="this.style.borderColor='#3b82f6';this.style.background='#eff6ff'" onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#f8fafc'">
-                        <?php echo $pcName; ?>
+                    <a href="/fenzhan/<?php echo $pcSlug; ?>.html" class="province-city-item">
+                        <div class="province-city-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <span class="province-city-name"><?php echo $pcName; ?></span>
                     </a>
                     <?php endwhile; $pcConn->close(); ?>
                 </div>
-                <!-- 省份描述 -->
-                <div style="max-width:900px;margin:40px auto 0;padding:32px;background:#f8fafc;border-radius:12px;text-align:left;">
-                    <h2 style="font-size:22px;font-weight:600;color:#1f2937;margin-bottom:16px;"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省资金服务</h2>
-                    <p style="font-size:15px;color:#4b5563;line-height:1.8;margin-bottom:12px;"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务网覆盖全省各市县，专业提供过桥短拆、实资摆账、资金证明、大额亮资等企业资金服务。凭借多年行业经验和雄厚的资金实力，为<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>地区企业提供高效、安全、专业的资金解决方案。</p>
-                    <p style="font-size:15px;color:#4b5563;line-height:1.8;">服务范围涵盖<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省所有区县，最快当天放款，额度灵活，手续简便。专业团队一对一服务，确保资金安全、流程合规。</p>
+                <div class="province-description">
+                    <h2 class="province-description-title"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省资金服务</h2>
+                    <p class="province-description-text"><?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>资金服务网覆盖全省各市县，专业提供过桥短拆、实资摆账、资金证明、大额亮资等企业资金服务。凭借多年行业经验和雄厚的资金实力，为<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>地区企业提供高效、安全、专业的资金解决方案。</p>
+                    <p class="province-description-text">服务范围涵盖<?php echo htmlspecialchars($province_name, ENT_QUOTES, 'UTF-8'); ?>全省所有区县，最快当天放款，额度灵活，手续简便。专业团队一对一服务，确保资金安全、流程合规。</p>
                 </div>
             </div>
-        </section>
-        <?php else: ?>
+        </section><?php else: ?>
         <section class="hero" id="home" aria-labelledby="hero-title">
             <div class="hero-container">
                 <div class="hero-badge">
@@ -354,7 +355,7 @@ try {
                 </div>
             </div>
         </section>
-        <?php endif; endif; $sibConn->close(); ?>
+        <?php endif; endif; if (isset($sibConn)) $sibConn->close(); ?>
         <section class="cases-showcase" id="casesShowcase">
             <div class="section-container">
                 <div class="section-header">
@@ -657,7 +658,7 @@ if (!empty($templateContent)) {
         <title><?php echo $escapedTitle; ?></title>
         <link rel="stylesheet" href="/css/style.min.css?v=20260514">
         <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
-        <link rel="stylesheet" href="/css/fenzhan.css?v=20260520">
+        <link rel="stylesheet" href="/css/fenzhan.css?v=20260521">
         <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <base href="/">
     <link rel="canonical" href="https://www.yaozijin.com/fenzhan/<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>.html">
@@ -826,7 +827,7 @@ if (!empty($templateContent)) {
                 </div>
             </div>
         </section>
-        <?php endif; endif; $sibConn->close(); ?>
+        <?php endif; endif; if (isset($sibConn)) $sibConn->close(); ?>
         <section class="cases-showcase" id="casesShowcase">
             <div class="section-container">
                 <div class="section-header">

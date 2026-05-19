@@ -26,7 +26,8 @@ if (!$pageId && $slug) {
 
 if (!$pageId) {
     header('HTTP/1.0 404 Not Found');
-    echo '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>页面不存在</title></head><body style="text-align:center;padding:60px"><h1>404</h1><p>页面不存在或已被删除</p><a href="/">返回首页</a></body></html>';
+    echo '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>页面不存在</title></head><body style="text-align:center;padding:60px"><h1>404</h1><p>页面不存在或已被删除</p><a href="/">返回首页</a><?php include __DIR__ . "/includes/footer.php"; ?>
+</body></html>';
     exit;
 }
 
@@ -43,7 +44,8 @@ $stmt->close();
 
 if (!$pageInfo && !$isPreview) {
     header('HTTP/1.0 404 Not Found');
-    echo '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>页面不存在</title></head><body style="text-align:center;padding:60px"><h1>404</h1><p>页面已被禁用或不存在</p><a href="/">返回首页</a></body></html>';
+    echo '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>页面不存在</title></head><body style="text-align:center;padding:60px"><h1>404</h1><p>页面已被禁用或不存在</p><a href="/">返回首页</a><?php include __DIR__ . "/includes/footer.php"; ?>
+</body></html>';
     exit;
 }
 
@@ -78,6 +80,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
     <title><?php echo htmlspecialchars($pageTitle); ?> | Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
     <link rel="stylesheet" href="css/style.css?v=20260506a">
     <link rel="icon" href="uploads/logo/logo_20260516_071314_6a07a88a2cd5c.png">
     <!-- SEO动态加载 -->
@@ -180,9 +183,8 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
         </section>
     </main>
 
-    <footer id="footer">
-        <?php if (file_exists('includes/footer.php')) include 'includes/footer.php'; else echo '<div style="text-align:center;padding:40px;background:#1e293b;color:#94a3b8">© ' . date('Y') . ' Yao资金网</div>'; ?>
-    </footer>
+    
+<?php include __DIR__ . "/includes/footer.php"; ?>
 </body>
 </html>
 <?php

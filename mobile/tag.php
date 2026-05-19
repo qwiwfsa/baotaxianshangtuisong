@@ -108,12 +108,11 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </main>
 
-    <!-- 页脚 -->
-    <footer class="footer" id="footer">
+<footer class="footer">
         <div class="footer-container">
             <div class="footer-bottom">
-                <p class="footer-copyright" id="footerCopyright">&copy; 2024 Yao资金网 版权所有</p>
-                <p class="footer-disclaimer" id="footerDisclaimer">投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。</p>
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer">粤ICP备2026052915号</p>
             </div>
         </div>
     </footer>

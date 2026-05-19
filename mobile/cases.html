@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css?v=202605092100">
-    <link rel="stylesheet" href="../css/cases-enhanced.css?v=202605092100">
+    <link rel="stylesheet" href="../css/cases-enhanced.css?v=20260518">
     <!-- Lightbox函数定义 - 放在head确保全局可用 -->
     <script>
         window.openLightbox = function(imageSrc) {
@@ -72,7 +72,7 @@
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    // PHP handles title
+                    // PHP handles title; // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -99,7 +99,7 @@
                 var data = JSON.parse(xhr.responseText);
                 if (data && data.code === 0 && data.data) {
                     var seo = data.data;
-                    // PHP handles title
+                    // PHP handles title; // PHP handles title
                     if (seo.meta_keywords) {
                         var kw = document.querySelector('meta[name="keywords"]');
                         if (kw) kw.content = seo.meta_keywords;
@@ -153,7 +153,8 @@
     font-weight: 500;
 }
 </style>
-<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}<style>.page-header{padding:24px 0 28px!important}@media(max-width:768px){.page-header{padding:20px 0 20px!important}}.page-content{padding-top:6px!important}.cases-filter-section{margin-bottom:5px!important}</style>
+</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -410,14 +411,15 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="footer">
+        <footer class="footer">
         <div class="footer-container">
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2024 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
                 <p class="footer-disclaimer">粤ICP备2026052915号</p>
             </div>
         </div>
     </footer>
+
     <script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
 
     <script src="../js/main.js"></script>
@@ -590,20 +592,18 @@
 
         // 切换页面
         window.changePage = function(dir) {
+            console.log('[Pagination] 切换方向:', dir);
             const totalPages = Math.ceil(filteredCases.length / itemsPerPage);
             const newPage = currentPage + dir;
+            console.log('[Pagination] 总页数:', totalPages, '当前页:', currentPage, '新页:', newPage);
             if (newPage < 1 || newPage > totalPages) {
+                console.log('[Pagination] 页面超出范围');
                 return;
             }
             currentPage = newPage;
-            var grid = document.getElementById('casesGrid');
-            if (grid) { grid.style.opacity = '0.5'; }
-            requestAnimationFrame(function() {
-                renderCasesPage();
-                renderPagination();
-                if (grid) { grid.style.opacity = '1'; grid.style.transition = 'opacity 0.2s'; }
-                window.scrollTo(0, 0);
-            });
+            renderCasesPage();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         // 渲染当前页案例

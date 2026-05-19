@@ -187,7 +187,6 @@
     }
 }
 
-
 /* 响应式 */
 @media (max-width: 768px) {
     .city-content-section {
@@ -217,3 +216,39 @@
 .districts-grid{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;justify-content:center}.districts-grid .district-item{display:inline-flex;align-items:center;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:6px;padding:8px 16px;font-size:15px;color:#374151;white-space:nowrap}
 #city-districts .districts-grid{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:8px;padding:12px 0;justify-content:center}
 #city-districts .districts-grid .district-item{display:inline-flex!important;align-items:center;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:6px;padding:8px 16px;font-size:15px;color:#374151;white-space:nowrap}
+
+/* 页脚覆盖省市 */
+.footer-provinces{border-top:1px solid rgba(255,255,255,0.08);margin-top:0;padding:20px 0}
+.footer-provinces-inner{max-width:var(--container-max);margin:0 auto}
+.footer-provinces-title{font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:12px;text-transform:uppercase;letter-spacing:2px}
+.footer-province-links{display:flex;flex-wrap:wrap;gap:6px}
+.footer-province-item{display:inline-flex;padding:4px 12px;font-size:8px;color:#9ca3af;background:rgba(255,255,255,0.05);border-radius:4px;text-decoration:none;transition:all 0.2s;white-space:nowrap}
+.footer-province-item:hover{color:white;background:rgba(255,255,255,0.12)}
+
+/* 省份页样式 - 主站UI风格 */
+.province-hero{background:linear-gradient(135deg,#f8fafc 0%,#eff6ff 100%);padding:60px 0;border-bottom:1px solid #e5e7eb}
+.province-hero-header{text-align:center;margin-bottom:48px}
+.province-hero-title{font-size:40px;font-weight:700;color:#1f2937;margin-bottom:16px;letter-spacing:-0.02em}
+.province-hero-subtitle{font-size:18px;color:#6b7280;max-width:600px;margin:0 auto}
+.province-city-list{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto 48px}
+.province-city-item{display:flex;align-items:center;gap:12px;padding:16px 20px;background:white;border:1px solid #e5e7eb;border-radius:12px;text-decoration:none;color:#374151;transition:all 0.3s ease;box-shadow:0 1px 3px rgba(0,0,0,0.04);position:relative;overflow:hidden}
+.province-city-item::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#1e3a8a;transform:scaleY(0);transition:transform 0.3s ease;transform-origin:top}
+.province-city-item:hover{box-shadow:0 10px 20px -5px rgba(0,0,0,0.1);border-color:#93c5fd;transform:translateY(-2px)}
+.province-city-item:hover::before{transform:scaleY(1)}
+.province-city-icon{width:36px;height:36px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#2563eb;font-size:14px;flex-shrink:0;transition:all 0.3s ease}
+.province-city-item:hover .province-city-icon{background:#1e3a8a;color:white}
+.province-city-name{font-size:15px;font-weight:600;color:#1f2937;flex:1}
+
+.province-city-item:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,0.1);border-color:#93c5fd}
+.province-city-item:hover::before{opacity:1}
+
+.province-city-name{font-size:15px;font-weight:600;color:#1f2937}
+
+
+.province-description{max-width:900px;margin:0 auto;padding:36px 40px;background:white;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.province-description-title{font-size:22px;font-weight:700;color:#1f2937;margin-bottom:16px}
+.province-description-text{font-size:15px;color:#4b5563;line-height:1.8;margin-bottom:12px}
+.province-description-text:last-child{margin-bottom:0}
+
+@media (max-width:768px){.province-city-list{grid-template-columns:repeat(2,1fr);gap:12px}}
+@media (max-width:480px){.province-city-list{grid-template-columns:1fr}}

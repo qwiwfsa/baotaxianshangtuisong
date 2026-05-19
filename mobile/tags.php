@@ -33,7 +33,14 @@ header('Content-Type: text/html; charset=utf-8');
         <div class="loading" id="loading"><i class="fas fa-spinner"></i> 加载中...</div>
         <div class="mobile-tag-grid" id="tagGrid" style="display:none;"></div>
     </div>
-    <?php include '../inc_footer.php'; ?>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer">粤ICP备2026052915号</p>
+            </div>
+        </div>
+    </footer>
     <script>
         fetch('../api/tag-frontend-list.php')
             .then(r => r.json())

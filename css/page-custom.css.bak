@@ -2303,3 +2303,189 @@ footer {
         gap: 8px;
     }
 }
+
+/* 精简页脚整体 */
+.footer {
+    padding: 18px 0 0 !important;
+}
+
+.footer-main {
+    gap: 20px !important;
+    padding-bottom: 12px !important;
+}
+
+.footer-brand {
+    min-width: 0;
+}
+
+.footer-logo {
+    margin-bottom: 8px !important;
+}
+
+.footer-logo img {
+    height: 36px !important;
+}
+
+.footer-desc {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    max-width: 280px;
+    color: #8a909e !important;
+}
+
+.footer-nav-title {
+    font-size: 13px !important;
+    margin-bottom: 6px !important;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.footer-nav-list {
+    gap: 5px !important;
+}
+
+.footer-nav-list li {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    color: #8a909e !important;
+}
+
+.footer-nav-list a {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    color: #8a909e !important;
+}
+
+.footer-nav-list a:hover {
+    color: #fff !important;
+}
+
+.footer-bottom {
+    padding: 8px 0 !important;
+}
+
+.footer-copyright {
+    font-size: 11px !important;
+    color: #6b7280 !important;
+    padding-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.footer-disclaimer {
+    font-size: 10px !important;
+    color: #6b7280 !important;
+    margin-top: 2px !important;
+}
+{new_css}
+
+
+/* ========================================
+   极简紧凑页脚 - 改版只保留1行内容
+   ======================================== */
+
+/* 页脚整体压缩到最小 */
+.footer {
+    padding: 0 !important;
+    background: #0a1628 !important;
+}
+
+/* 主区块 - 所有内容合并到一行为止 */
+.footer-main {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px 20px !important;
+    padding: 6px 20px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+.footer-brand {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.footer-logo {
+    margin-bottom: 0 !important;
+}
+.footer-logo img {
+    height: 22px !important;
+}
+
+.footer-desc { display: none !important; }
+
+.footer-nav-title { display: none !important; }
+
+.footer-nav {
+    flex: 0 0 auto !important;
+}
+
+.footer-nav-list {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+}
+.footer-nav-list li {
+    font-size: 11px !important;
+    margin-bottom: 0 !important;
+    color: #9ca3af !important;
+}
+.footer-nav-list li i { display: none !important; }
+.footer-nav-list a {
+    font-size: 11px !important;
+    color: #9ca3af !important;
+    white-space: nowrap !important;
+}
+.footer-nav-list a:hover { color: #fff !important; }
+
+/* 覆盖省市 - 单行 */
+.footer-provinces {
+    padding: 3px 20px !important;
+    border-top: none !important;
+}
+.footer-provinces-title { display: none !important; }
+.footer-province-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 2px 6px !important;
+    justify-content: center !important;
+}
+.footer-province-item {
+    font-size: 10px !important;
+    color: rgba(255,255,255,0.3) !important;
+    padding: 1px 0 !important;
+    white-space: nowrap !important;
+}
+.footer-province-item:hover { color: rgba(255,255,255,0.5) !important; }
+
+/* 底部版权 */
+.footer-bottom {
+    padding: 4px 20px 6px !important;
+    text-align: center !important;
+    opacity: 0.7;
+}
+.footer-copyright {
+    font-size: 10px !important;
+    color: #6b7280 !important;
+    display: inline !important;
+}
+.footer-disclaimer {
+    font-size: 10px !important;
+    color: #6b7280 !important;
+    display: inline !important;
+    margin-top: 0 !important;
+    margin-left: 10px !important;
+}
+
+@media (max-width: 768px) {
+    .footer-main {
+        flex-direction: column !important;
+        gap: 2px !important;
+        padding: 6px 12px !important;
+    }
+    .footer-nav-list { gap: 6px !important; justify-content: center !important; }
+    .footer-nav-list li, .footer-nav-list a { font-size: 10px !important; }
+}

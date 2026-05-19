@@ -46,6 +46,7 @@ $favicon_path = '/favicon-v2.png';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="stylesheet" href="../css/style.css?v=202605092200">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250519">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -725,6 +726,7 @@ echo implode('', $rendered);
         </div>
     </footer>
 
+
     <script src="../js/main.js?v=3"></script>
 
     <!-- CMS Data Integration -->
@@ -1079,7 +1081,6 @@ echo implode('', $rendered);
 
 
 
-    <script src="../js/footer-loader.js"></script>
-<script src="../js/nav-loader.js?v=5"></script>
+    <script src="../js/nav-loader.js?v=5"></script>
 <script src="../admin/assets/cms-1778895578.js"></script>
 </body></html>

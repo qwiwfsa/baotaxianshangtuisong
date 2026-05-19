@@ -16,7 +16,19 @@
     /**
      * 从分组数据中获取指定键的值
      */
-    function getValue(grouped, group, key, defaultValue) {
+    function getValue(grouped, group, key, defaultValue, urlKey) {
+            if (grouped && grouped[group]) {
+                for (var i = 0; i < grouped[group].length; i++) {
+                    if (grouped[group][i].item_key === key) {
+                        if (urlKey) return grouped[group][i].item_url || '';
+                        return grouped[group][i].item_value || defaultValue;
+                    }
+                }
+            }
+            return defaultValue;
+        }
+
+        function _getValue_old(grouped, group, key, defaultValue) {
         if (!grouped[group]) return defaultValue;
         for (var i = 0; i < grouped[group].length; i++) {
             if (grouped[group][i].item_key === key) {
@@ -110,14 +122,22 @@
         var copyrightEl = document.querySelector('.footer-copyright');
         if (copyrightEl) {
             var copyright = getValue(grouped, 'bottom', 'copyright_text', '');
-            if (copyright) copyrightEl.innerHTML = copyright;
+            var copyrightUrl = getValue(grouped, 'bottom', 'copyright_text', '', 'item_url');
+            if (copyright) {
+                if (copyrightUrl) copyrightEl.innerHTML = '<a href="' + copyrightUrl + '">' + copyright + '</a>';
+                else copyrightEl.innerHTML = copyright;
+            }
         }
 
         // 6. 更新免责声明
         var disclaimerEl = document.querySelector('.footer-disclaimer');
         if (disclaimerEl) {
             var disclaimer = getValue(grouped, 'bottom', 'disclaimer_text', '');
-            if (disclaimer) disclaimerEl.textContent = disclaimer;
+            var disclaimerUrl = getValue(grouped, 'bottom', 'disclaimer_text', '', 'item_url');
+            if (disclaimer) {
+                if (disclaimerUrl) disclaimerEl.innerHTML = '<a href="' + disclaimerUrl + '">' + disclaimer + '</a>';
+                else disclaimerEl.innerHTML = disclaimer;
+            }
         }
     }
 

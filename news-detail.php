@@ -12,12 +12,14 @@ header("Expires: 0");
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><?php require_once __DIR__ . '/includes/news-seo.php'; ?>
+<head>
+<?php require_once __DIR__ . '/includes/news-seo.php'; ?>
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
     <link rel="stylesheet" href="/css/style.min.css?v=20250514">
     <style>
         /* 文章详情页样式 */
@@ -537,15 +539,6 @@ body {
 main#main-content {
     flex: 1 0 auto;
 }
-.footer {
-    flex-shrink: 0;
-}
-
-.footer-icp {
-    margin-top: 6px;
-    font-size: 13px;
-    color: #9ca3af;
-}
 
 .footer-icp a {
     color: #9ca3af;
@@ -556,7 +549,6 @@ main#main-content {
 .footer-icp a:hover {
     color: #6b7280;
 }
-
 
 /* 表情选择器 */
 .emoji-picker-wrapper {
@@ -1120,7 +1112,8 @@ html{scroll-behavior:auto;overflow-y:scroll}
                 <span id="commentCount">(0)</span>
             </h2>
 
-            <div class="comment-form">                    <div class="form-group">
+            <div class="comment-form">
+                    <div class="form-group">
                     <label for="commentNickname">昵称</label>
                     <div class="nickname-emoji-row">
                         <input type="text" id="commentNickname" placeholder="请输入您的昵称" maxlength="20">
@@ -1220,8 +1213,7 @@ html{scroll-behavior:auto;overflow-y:scroll}
     </div>
 
     <!-- 页脚（动态引用，与后台同步） -->
-    <?php include 'includes/footer.php'; ?>
-
+    
 
     <script src="js/main.js"></script>
     <script>
@@ -1403,7 +1395,6 @@ html{scroll-behavior:auto;overflow-y:scroll}
             xhr.send(formData);
         };
 
-
         // ===== 回复功能 =====
         
         // ===== Reply functionality =====
@@ -1555,6 +1546,8 @@ html{scroll-behavior:auto;overflow-y:scroll}
     }
 })();
 </script>
+
+<?php include __DIR__ . "/includes/footer.php"; ?>
 </body>
 </html>
 

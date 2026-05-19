@@ -2164,7 +2164,15 @@ window.nextImage=window.nextImage||function(){if(window.currentImageIndex<window
 
 <script src="../js/nav-loader.js?v=5"></script>
 
-<footer class="footer"><div class="footer-container"><div class="footer-bottom"><p class="footer-copyright">&copy; 2026 Yao资金网 宏都资本版权所有</p><p class="footer-disclaimer">粤ICP备2026052915号</p></div></div></footer>
+<footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer">粤ICP备2026052915号</p>
+            </div>
+        </div>
+    </footer>
+
 
 </body>
 

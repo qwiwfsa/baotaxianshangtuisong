@@ -414,11 +414,12 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2024 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
                 <p class="footer-disclaimer">粤ICP备2026052915号</p>
             </div>
         </div>
     </footer>
+
     <script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
 
     <script src="../js/main.js"></script>
@@ -1045,7 +1046,5 @@
 
 
 
-    <script src="../js/footer-loader.js"></script>
-
-<script src="../js/nav-loader.js?v=5"></script>
+    <script src="../js/nav-loader.js?v=5"></script>
 </body></html>

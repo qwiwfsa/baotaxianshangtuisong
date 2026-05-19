@@ -64,9 +64,6 @@ if ($article_id > 0) {
 ?>
 
 
-
-
-
 <!DOCTYPE html>
 
 <html lang="zh-CN"
@@ -93,7 +90,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 </script>
 
 
-
 <title><?php echo htmlspecialchars($seo_title); ?></title>
 <meta name="description" content="<?php echo htmlspecialchars($seo_description); ?>">
 <meta name="keywords" content="<?php echo htmlspecialchars($seo_keywords); ?>">
@@ -101,7 +97,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-
 
 
     
@@ -143,7 +138,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
     <style>
 
 
-
         /* 页面布局 - 页脚固定到底部 */
 
         html, body {
@@ -169,13 +163,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
             flex: 1 0 auto;
 
         }
-
-        .footer {
-
-            flex-shrink: 0;
-
-        }
-
 
 
         /* 文章详情页样式 */
@@ -965,7 +952,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
         }
 
 
-
         
 /* 表情选择器 */
 .emoji-picker-wrapper {
@@ -1550,7 +1536,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
         }
 
 
-
     </style>
 
     <!-- Logo动态加载 -->
@@ -1736,7 +1721,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
 
-
     <!-- 导航栏 -->
 
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
@@ -1746,8 +1730,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="..//uploads/logo/logo_20260505_122045_69f9c47d515d1.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
 
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
-
-
 
 
             <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
@@ -1773,7 +1755,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
     </nav>
 
 
-
     <main id="main-content" style="min-height:60vh" style="min-height:60vh" class="main-content">
 
         <!-- 文章头部 -->
@@ -1793,7 +1774,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
         </section>
 
 
-
         <!-- 文章内容 -->
 
         <section class="article-detail-content">
@@ -1811,7 +1791,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
         </section>
 
 
-
         <!-- 用户评论 -->
 
         <section class="comments-section">
@@ -1825,7 +1804,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
                 <span id="commentCount">(0)</span>
 
             </h2>
-
 
 
             <div class="comment-form">
@@ -1889,9 +1867,7 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
             </div>
 
 
-
             <div class="comment-success" id="commentSuccess"></div>
-
 
 
             <ul class="comment-list" id="commentList"></ul>
@@ -1905,7 +1881,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
             </div>
 
         </section>
-
 
 
         <!-- 相关文章 -->
@@ -1939,25 +1914,16 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
     </main>
 
 
-
     <!-- 页脚 -->
 
-    <footer class="footer" id="footer">
-
+    <footer class="footer">
         <div class="footer-container">
-
             <div class="footer-bottom">
-
-                <p class="footer-copyright" id="footerCopyright">&copy; 2024 Yao资金网 版权所有</p>
-
-                <p class="footer-disclaimer" id="footerDisclaimer">投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。</p>
-
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer">粤ICP备2026052915号</p>
             </div>
-
         </div>
-
     </footer>
-
 
 
     <script src="../js/main.js"></script>
@@ -2079,7 +2045,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
         }
 
 
-
         // 获取有效的封面图片
 
         function getValidCoverImage(article) {
@@ -2099,7 +2064,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
         }
 
 
-
         // 渲染文章内容
 
         function renderArticleContent(article) {
@@ -2109,7 +2073,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
             const tags = article.tags || [];
 
             
-
 
 
             let tagsHtml = '';
@@ -2245,7 +2208,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
             
 
             if (relatedArticles.length === 0) {
-
 
 
                 document.getElementById('relatedArticles').innerHTML = `
@@ -2397,7 +2359,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const articleId = urlParams.get('id');
 
 
-
             if (!articleId) {
 
                 renderNotFound();
@@ -2507,10 +2468,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <script>window.__shareBarInjected = true;</script>
 
 
-
-
-
-
         <!-- 文章评论功能 -->
 
         <script>
@@ -2520,7 +2477,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var articleId = new URLSearchParams(window.location.search).get('id');
 
             if (!articleId) return;
-
 
 
             function loadNewsComments() {
@@ -2548,7 +2504,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 xhr.send();
 
             }
-
 
 
             
@@ -2626,7 +2581,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }function esc(t) { if (!t) return ''; var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
 
-
             window.submitComment = function() {
 
                 var nickname = document.getElementById('commentNickname');
@@ -2646,7 +2600,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 var contentVal = content.value.trim();
 
                 if (error) error.classList.remove('show');
-
 
 
                 if (nameVal.length > 20) { if (error) { error.textContent = '昵称不能超过20个字符'; error.classList.add('show'); } return; }
@@ -2706,7 +2659,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 xhr.send(formData);
 
             };
-
 
 
             if (document.readyState === 'loading') {
@@ -2846,9 +2798,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </script>
 
 
-
-
-
     <!-- 移动端链接拦截器：确保点击标签/链接时保持在手机端 -->
 
     <script>
@@ -2858,7 +2807,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var isMobile = window.location.pathname.indexOf('/mobile/') === 0;
 
         if (!isMobile) return;
-
 
 
         function rewriteExistingLinks() {
@@ -2882,7 +2830,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
         }
-
 
 
         document.addEventListener('click', function(e) {
@@ -2910,7 +2857,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
         });
-
 
 
         var observer = new MutationObserver(function(mutations) {
@@ -2964,7 +2910,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(document.body, { childList: true, subtree: true });
 
 
-
         if (document.readyState === 'loading') {
 
             document.addEventListener('DOMContentLoaded', rewriteExistingLinks);
@@ -2978,7 +2923,6 @@ document.addEventListener('DOMContentLoaded', function() {
     })();
 
     </script>
-
 
 
 <script src="../js/nav-loader.js?v=5"></script>
@@ -2996,6 +2940,5 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 
 </html>
-
 
 

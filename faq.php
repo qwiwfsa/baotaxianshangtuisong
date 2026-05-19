@@ -334,43 +334,7 @@ if ('caches' in window) {
     </script>
 
     <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="footer-logo"><img src="/uploads/logo.png?v=20260502041100" alt="Yao资金网" style="height:48px;width:auto;"></div>
 
-                    <p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、云信融资出表等全方位资金服务</p>
-                </div>
-                <div class="footer-nav" data-footer-group="quick_links">                   <h4 class="footer-nav-title">快速链接</h4>
-                    <ul class="footer-nav-list">
-                        <li><a href="/">首页</a></li>
-                        <li><a href="/services.html">业务范围</a></li>
-                        <li><a href="/cases.html">成功案例</a></li>
-                        <li><a href="/advantages.html">服务优势</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav" data-footer-group="service_links">                   <h4 class="footer-nav-title">更多内容</h4>
-                    <ul class="footer-nav-list">
-                        <li><a href="/news.php">行业资讯</a></li>
-                        <li><a href="/faq.html">常见问题</a></li>
-                        <li><a href="/contact.html">联系我们</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav" data-footer-group="contact">                   <h4 class="footer-nav-title">联系方式</h4>
-                    <ul class="footer-nav-list">
-                        <li><i class="fas fa-phone"></i> 13552883008</li>
-                        <li><i class="fas fa-user"></i> 王总</li>
-                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p class="footer-copyright">&copy; 2024 Yao资金网 版权所有</p>
-                <p class="footer-disclaimer">投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。</p>
-            </div>
-        </div>
-    </footer>
     <script src="admin/assets/cms.js"></script>
 <script src="/js/main.js"></script>
     <script>
@@ -455,6 +419,8 @@ if ('caches' in window) {
         })();
     </script>
     <script src="/js/footer-loader.js?v=20260513e"></script>
+
+<?php include __DIR__ . "/includes/footer.php"; ?>
 </body>
 </html>
 

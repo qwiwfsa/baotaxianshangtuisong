@@ -756,6 +756,7 @@ DeviceDetector::redirect();
             });
         })();
     </script>
+<?php include __DIR__ . "/includes/footer.php"; ?>
 </body>
 </html>
 
