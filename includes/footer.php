@@ -1,12 +1,21 @@
 <?php
 /**
- * 页脚 - 服务端直接渲染（无闪烁）
- * 桌面端统一使用
+ * 页脚前台渲染文件
+ * 从数据库读取配置并渲染完整页脚HTML
+ * 
+ * 使用方式：
+ * 在 .php 页面中页脚位置写入： <?php include 'includes/footer.php'; ?>
+ * 
+ * 编码：UTF-8
  */
+
 require_once __DIR__ . '/../config/db.php';
 
 $conn = getDB();
+
+// 获取所有页脚配置，按分组和排序排列
 $result = $conn->query("SELECT * FROM footer_settings ORDER BY FIELD(group_key,'brand','quick_links','service_links','contact','bottom'), sort_order ASC");
+
 $footerData = [];
 while ($row = $result->fetch_assoc()) {
     $gk = $row['group_key'];
@@ -15,12 +24,27 @@ while ($row = $result->fetch_assoc()) {
 }
 $result->close();
 
+// 安全取数辅助
+function fv($data, $group, $key, $default = '') {
+    if (isset($data[$group])) {
+        foreach ($data[$group] as $item) {
+            if ($item['item_key'] === $key) {
+                $val = $item['item_value'] ?? '';
+                if ($val !== '') return $val;
+                return $default;
+            }
+        }
+    }
+    return $default;
+}
+
 function fv_link($data, $group, $key, $default = '') {
     if (isset($data[$group])) {
         foreach ($data[$group] as $item) {
             if ($item['item_key'] === $key) {
-                $val = $item['item_value'] ?? $default;
+                $val = $item['item_value'] ?? '';
                 $url = $item['item_url'] ?? '';
+                if ($val === '') return $url ? '<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($default) . '</a>' : htmlspecialchars($default);
                 if ($url) return '<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($val) . '</a>';
                 return htmlspecialchars($val);
             }
@@ -29,81 +53,60 @@ function fv_link($data, $group, $key, $default = '') {
     return htmlspecialchars($default);
 }
 
-function fv($data, $group, $key, $default = '') {
-    if (isset($data[$group])) {
-        foreach ($data[$group] as $item) {
-            if ($item['item_key'] === $key) return $item['item_value'] ?? $default;
-        }
-    }
-    return $default;
+function fva($data, $group) {
+    return $data[$group] ?? [];
 }
 
-$brandDesc = fv($footerData, 'brand', 'company_desc', '专业资金业务服务商，提供上市公司商票业务、冲量打款、应收账款保理等全方位资金服务');
-$quickLinks = isset($footerData['quick_links']) ? $footerData['quick_links'] : [];
-$copyright = fv($footerData, 'bottom', 'copyright_text', '&copy; 2026 Yao资金居间 成都时资版权所有');
-$copyrightUrl = fv($footerData, 'bottom', 'copyright_text_url', '');
-$disclaimer = fv($footerData, 'bottom', 'disclaimer_text', '蜀ICP备2026052915号');
-$disclaimerUrl = fv($footerData, 'bottom', 'disclaimer_text_url', '');
-
-// Fallback quick links if empty
-if (empty($quickLinks)) {
-    $quickLinks = [
-        ['item_value' => '杭州', 'item_url' => 'https://yaozijin.com/fenzhan/hangzhou.html'],
-        ['item_value' => '重庆', 'item_url' => 'https://yaozijin.com/fenzhan/chongqing.html'],
-        ['item_value' => '成都', 'item_url' => 'https://yaozijin.com/fenzhan/chengdu.html'],
-        ['item_value' => '更多城市', 'item_url' => '#'],
-        ['item_value' => '网站地图', 'item_url' => '/sitemap.xml'],
-    ];
-}
+// ========================================
+// 渲染 HTML
+// ========================================
 ?>
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
+                <!-- 品牌信息 -->
                 <div class="footer-brand">
-                    <div class="footer-logo"><img src="/uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资金居间" style="height:48px;width:auto;"></div>
-                    <p class="footer-desc"><?php echo $brandDesc; ?></p>
+                    <div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <p class="footer-desc"><?php echo htmlspecialchars(fv($footerData, 'brand', 'company_desc', '专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务')); ?></p>
                 </div>
 
-                <div class="footer-nav footer-nav-horizontal" data-footer-group="quick_links">
+                <!-- 快速链接 -->
+                <div class="footer-nav">
                     <h4 class="footer-nav-title">快捷导航</h4>
-                    <ul class="footer-nav-list" style="flex-direction:row;flex-wrap:wrap;gap:20px">
-                        <?php foreach ($quickLinks as $link): ?>
-                        <li><a href="<?php echo htmlspecialchars($link['item_url'] ?? '#'); ?>"><?php echo htmlspecialchars($link['item_value'] ?? $link['item_label'] ?? ''); ?></a></li>
+                    <ul class="footer-nav-list">
+                        <?php foreach (fva($footerData, 'quick_links') as $link): ?>
+                        <li><a href="<?php echo htmlspecialchars($link['item_url'] ?: '#'); ?>"><?php echo htmlspecialchars($link['item_value'] ?: $link['item_label']); ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
-            </div>
 
-            
+                
+                <?php
+                $contacts = fva($footerData, 'contact');
+                $hasContact = false;
+                foreach ($contacts as $item) {
+                    if (trim($item['item_value'] ?? '') !== '') { $hasContact = true; break; }
+                }
+                if ($hasContact):
+                ?>
                 <div class="footer-nav" data-footer-group="contact">
                     <h4 class="footer-nav-title">联系方式</h4>
                     <ul class="footer-nav-list">
-                        <?php
-                        $contacts = isset($footerData['contact']) ? $footerData['contact'] : [];
-                        $hasContact = false;
-                        if (!empty($contacts)):
-                            foreach ($contacts as $item):
-                                $val = $item['item_value'] ?? '';
-                                if ($val !== '') $hasContact = true;
-                            endforeach;
-                        endif;
-                        if ($hasContact):
-                            foreach ($contacts as $item):
-                                $icon = ($item['item_key'] === 'phone') ? 'fa-phone' : 
-                                       (($item['item_key'] === 'email') ? 'fa-envelope' : 'fa-user');
-                                $val = $item['item_value'] ?? '';
-                                if ($val !== ''):
+                        <?php foreach ($contacts as $item):
+                            $val = trim($item['item_value'] ?? '');
+                            if ($val === '') continue;
+                            $icon = ($item['item_key'] === 'phone') ? 'fa-phone' : 
+                                   (($item['item_key'] === 'email') ? 'fa-envelope' : 'fa-user');
                         ?>
                         <li><i class="fas <?php echo $icon; ?>"></i> <?php echo htmlspecialchars($val); ?></li>
-                        <?php endif; endforeach; else: ?>
-                        <li><i class="fas fa-phone"></i> 13552883008</li>
-                        <li><i class="fas fa-user"></i> 王总</li>
-                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
-                        <?php endif; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
+                <?php endif; ?>
+            </div>
 
-<div class="footer-provinces">
+            <!-- 全国省份 -->
+            <div class="footer-provinces">
                 <div class="footer-provinces-inner">
                     <h4 class="footer-provinces-title">全国省份</h4>
                     <div class="footer-province-links">
@@ -143,10 +146,56 @@ if (empty($quickLinks)) {
                 </div>
             </div>
 
-            
-<div class="footer-bottom">
+            <!-- 底部信息 -->
+            <div class="footer-bottom">
                 <p class="footer-copyright"><?php echo fv_link($footerData, 'bottom', 'copyright_text', '© 2026 Yao资金网 宏都资本版权所有'); ?></p>
                 <p class="footer-disclaimer"><?php echo fv_link($footerData, 'bottom', 'disclaimer_text', '粤ICP备2026052915号'); ?></p>
             </div>
         </div>
+    </footer
+
+<?php
+$dir = __DIR__ . '/../pages/';
+$files = glob($dir . '*.html');
+echo '<!-- Files: ' . count($files) . ' -->';
+foreach ($files as $f) {
+    $h = file_get_contents($f);
+    $hasLoader = strpos($h, 'footer-loader.js') !== false;
+    $emptyQL = strpos($h, 'footer-nav-list"></ul>') !== false;
+    echo '<!-- ' . basename($f) . ': loader=' . ($hasLoader?'Y':'N') . ' emptyQL=' . ($emptyQL?'Y':'N') . ' -->';
+}
+?>
     </footer>
+
+<?php
+// Auto-sync: clear fenzhan cache when footer data changes
+$sync_file = __DIR__ . '/../.footer_sync_ts';
+$need_clear = false;
+if (function_exists('getDB')) {
+    $conn = getDB();
+    $r = $conn->query("SELECT MAX(updated_at) as ts FROM footer_settings");
+    if ($r && $row = $r->fetch_assoc()) {
+        $db_ts = strtotime($row['ts']);
+        $file_ts = (int)@file_get_contents($sync_file);
+        if ($db_ts > $file_ts) {
+            $need_clear = true;
+            @file_put_contents($sync_file, $db_ts);
+        }
+    }
+    if ($r) $r->close();
+    $conn->close();
+}
+// Also clear if sync file is older than 30 min (safety net)
+if (!$need_clear && file_exists($sync_file) && (time() - filemtime($sync_file)) > 1800) {
+    $need_clear = true;
+}
+if ($need_clear) {
+    $cache_dir = __DIR__ . '/../fenzhan/cache/';
+    if (is_dir($cache_dir)) {
+        $files = glob($cache_dir . '*.html');
+        $n = 0;
+        foreach ($files as $f) { if (unlink($f)) $n++; }
+        if ($n > 0) echo '<!-- Cache auto-cleared: ' . $n . ' files -->';
+    }
+}
+?>
