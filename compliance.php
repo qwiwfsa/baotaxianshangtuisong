@@ -10,7 +10,8 @@ DeviceDetector::redirect();
     <meta name="description" content="Yao资金网合规声明，说明我们的业务合规性、风险提示和法律声明。">
     <meta name="robots" content="noindex, follow">
     <title>合规声明 - Yao资金网</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=20260519">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
     <style>
         .legal-page {
             padding: 120px 0 80px;

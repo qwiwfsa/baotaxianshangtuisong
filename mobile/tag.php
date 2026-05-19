@@ -13,6 +13,8 @@ header('Content-Type: text/html; charset=utf-8');
     <meta name="description" content="Yao资金网标签相关文章">
     <meta name="keywords" content="标签,文章,行业资讯,资金业务">
     <title>标签 - Yao资金网</title>
+    <link rel="stylesheet" href="../css/style.css?v=20260519">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
         <script>
     // 全局错误防御：抑制外部图片404和document异常
     (function() {
@@ -108,16 +110,8 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </main>
 
-<footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../js/main.js"></script>
+<?php include '../includes/footer-simple.php'; ?>
+<script src="../js/main.js"></script>
     <script>
         var slug = '<?php echo addslashes($slug); ?>';
         var mType = 'all';

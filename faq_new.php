@@ -12,8 +12,8 @@ DeviceDetector::redirect();
     <title>常见问题 - Yao资金网</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/page-custom.css">
+    <link rel="stylesheet" href="/css/style.css?v=20260519">
+    <link rel="stylesheet" href="css/page-custom.css?v=20260519">
 <script>
 (function() {
     var pageName = window.location.pathname.split('/').pop() || 'index.html';
@@ -628,7 +628,6 @@ DeviceDetector::redirect();
     </script>
 
     <!-- 页脚 -->
-<?php include 'includes/footer.php'; ?>
 
 
     <script src="js/main.js"></script>

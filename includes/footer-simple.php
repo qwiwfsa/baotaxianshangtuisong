@@ -24,7 +24,7 @@ function fv_simple($data, $group, $key, $default = '') {
     return $default;
 }
 ?>
-    <footer class="footer">
+    <footer class="footer footer-simple">
         <div class="footer-container">
             <div class="footer-bottom">
                 <p class="footer-copyright"><?php echo fv_simple($footerData, 'bottom', 'copyright_text', '&copy; 2024 Yao资金网 版权所有'); ?></p>

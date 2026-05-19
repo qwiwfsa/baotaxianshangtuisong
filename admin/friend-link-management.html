@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>友情链接 - 耀梓资本CMS</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f3f4f6; }
+.cms-layout { display: flex; min-height: 100vh; }
+.cms-sidebar { width: 260px; background: #1e293b; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.cms-sidebar-header { padding: 20px 24px; border-bottom: 1px solid #334155; }
+.cms-sidebar-header h1 { color: white; font-size: 18px; font-weight: 600; }
+.cms-sidebar-header p { color: #94a3b8; font-size: 12px; margin-top: 4px; }
+.cms-sidebar-nav { padding: 16px 0; }
+.cms-nav-section { margin-bottom: 8px; }
+.cms-nav-title { padding: 12px 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+.cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; }
+.cms-nav-item:hover { background: #334155; color: white; }
+.cms-nav-item.active { background: #3b82f6; color: white; }
+.cms-nav-item i { width: 20px; text-align: center; }
+.cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+.cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.cms-header h2 { font-size: 20px; }
+.cms-content { padding: 24px; }
+.cms-card { background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.cms-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #e5e7eb; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+.btn-primary { background: #3b82f6; color: white; }
+.btn-primary:hover { background: #2563eb; }
+.btn-danger { background: #ef4444; color: white; }
+.btn-danger:hover { background: #dc2626; }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn-outline { background: white; color: #374151; border: 1px solid #d1d5db; }
+.btn-outline:hover { background: #f9fafb; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 20px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+th { background: #f9fafb; color: #6b7280; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+tr:hover td { background: #f9fafb; }
+.status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+.status-active { background: #d1fae5; color: #065f46; }
+.status-inactive { background: #fee2e2; color: #991b1b; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 0; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal { background: white; border-radius: 12px; width: 520px; max-width: 90vw; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modal-header { padding: 20px 24px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; }
+.modal-header h3 { font-size: 18px; }
+.modal-close { width: 32px; height: 32px; border: none; background: #f3f4f6; border-radius: 50%; cursor: pointer; font-size: 16px; }
+.modal-body { padding: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
+.form-group input:focus, .form-group textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.form-row { display: flex; gap: 16px; }
+.form-row .form-group { flex: 1; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 8px; }
+.toast { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 8px; color: white; font-size: 14px; z-index: 999; opacity: 0; transition: opacity 0.3s; }
+.toast.show { opacity: 1; }
+.toast-success { background: #10b981; }
+.toast-error { background: #ef4444; }
+</style>
+</head>
+<body>
+<div class="cms-layout">
+  <aside class="cms-sidebar">
+    <div class="cms-sidebar-header"><h1>耀梓资本CMS</h1><p>内容管理系统</p></div>
+    <nav class="cms-sidebar-nav">
+      <div class="cms-nav-section">
+        <div class="cms-nav-title">主要</div>
+        <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
+        <a href="case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>成功案例</span></a>
+        <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+        <a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+        <a href="footer-manager.html" class="cms-nav-item"><i class="fas fa-shoe-prints"></i><span>页脚管理</span></a>
+        <a href="media-library.html" class="cms-nav-item"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+        <a href="tag-management.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+        <a href="friend-link-management.html" class="cms-nav-item active"><i class="fas fa-link"></i><span>友情链接</span></a>
+        <a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+        <a href="message-management.html" class="cms-nav-item"><i class="fas fa-envelope"></i><span>留言管理</span></a>
+        <a href="seo-settings.html" class="cms-nav-item"><i class="fas fa-search"></i><span>SEO设置</span></a>
+      </div>
+    </nav>
+  </aside>
+  <main class="cms-main">
+    <div class="cms-header">
+      <h2><i class="fas fa-link"></i> 友情链接</h2>
+      <button class="btn btn-primary" onclick="openModal()"><i class="fas fa-plus"></i> 新增链接</button>
+    </div>
+    <div class="cms-content">
+      <div class="cms-card">
+        <div class="cms-toolbar">
+          <span style="font-size:13px;color:#6b7280;" id="totalCount">共 0 个链接</span>
+        </div>
+        <table>
+          <thead><tr><th>ID</th><th>名称</th><th>URL</th><th>排序</th><th>状态</th><th>创建时间</th><th>操作</th></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="linkModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">新增链接</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId">
+      <div class="form-group"><label>网站名称 *</label><input type="text" id="linkName" placeholder="例如：百度"></div>
+      <div class="form-group"><label>网站URL *</label><input type="text" id="linkUrl" placeholder="https://www.example.com"></div>
+      <div class="form-group"><label>LOGO图片URL</label><input type="text" id="linkLogo" placeholder="可选"></div>
+      <div class="form-group"><label>网站描述</label><textarea id="linkDesc" placeholder="可选"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>排序</label><input type="number" id="linkSort" value="0"></div>
+        <div class="form-group"><label>状态</label><select id="linkStatus"><option value="1">显示</option><option value="0">隐藏</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveLink()"><i class="fas fa-save"></i> 保存</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var apiBase = 'api/friend-links';
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast toast-' + type + ' show';
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+function loadList() {
+  fetch(apiBase + '/friend-link-list.php?limit=100')
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (!res.success) return;
+      var data = res.data;
+      document.getElementById('totalCount').textContent = '共 ' + (res.total||0) + ' 个链接';
+      var tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      if (!data || !data.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#9ca3af">暂无友情链接</td></tr>';
+        return;
+      }
+      data.forEach(function(item) {
+        var statusHtml = item.status == 1
+          ? '<span class="status-badge status-active">显示</span>'
+          : '<span class="status-badge status-inactive">隐藏</span>';
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>'+item.id+'</td><td><strong>'+escHtml(item.name)+'</strong></td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="'+escHtml(item.url)+'" target="_blank" style="color:#3b82f6">'+escHtml(item.url)+'</a></td><td>'+item.sort_order+'</td><td>'+statusHtml+'</td><td style="color:#6b7280;font-size:13px">'+item.created_at+'</td><td><button class="btn btn-sm btn-primary" onclick="editLink('+item.id+')"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-danger" onclick="deleteLink('+item.id+',''+escHtml(item.name)+'')"><i class="fas fa-trash"></i></button></td>';
+        tbody.appendChild(tr);
+      });
+    });
+}
+function escHtml(s) { if(!s)return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function openModal() {
+  document.getElementById('modalTitle').textContent = '新增链接';
+  document.getElementById('editId').value = '';
+  document.getElementById('linkName').value = '';
+  document.getElementById('linkUrl').value = '';
+  document.getElementById('linkLogo').value = '';
+  document.getElementById('linkDesc').value = '';
+  document.getElementById('linkSort').value = '0';
+  document.getElementById('linkStatus').value = '1';
+  document.getElementById('linkModal').classList.add('active');
+}
+function closeModal() { document.getElementById('linkModal').classList.remove('active'); }
+function editLink(id) {
+  fetch(apiBase + '/friend-link-get.php?id='+id)
+    .then(function(r){return r.json()})
+    .then(function(res) {
+      if(!res.success) return;
+      var d = res.data;
+      document.getElementById('modalTitle').textContent = '编辑链接';
+      document.getElementById('editId').value = d.id;
+      document.getElementById('linkName').value = d.name;
+      document.getElementById('linkUrl').value = d.url;
+      document.getElementById('linkLogo').value = d.logo||'';
+      document.getElementById('linkDesc').value = d.description||'';
+      document.getElementById('linkSort').value = d.sort_order||0;
+      document.getElementById('linkStatus').value = d.status||1;
+      document.getElementById('linkModal').classList.add('active');
+    });
+}
+function saveLink() {
+  var data = {
+    name: document.getElementById('linkName').value.trim(),
+    url: document.getElementById('linkUrl').value.trim(),
+    logo: document.getElementById('linkLogo').value.trim(),
+    description: document.getElementById('linkDesc').value.trim(),
+    sort_order: parseInt(document.getElementById('linkSort').value)||0,
+    status: parseInt(document.getElementById('linkStatus').value)
+  };
+  var id = document.getElementById('editId').value;
+  if (!data.name || !data.url) { showToast('名称和URL为必填', 'error'); return; }
+  if (id) data.id = parseInt(id);
+  fetch(apiBase + '/friend-link-save.php', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+    .then(function(r){return r.json()})
+    .then(function(res){
+      if(res.success){showToast('保存成功','success');closeModal();loadList();}
+      else{showToast(res.message||'保存失败','error');}
+    });
+}
+function deleteLink(id, name) {
+  if(!confirm('确定删除 "'+name+'" 吗？')) return;
+  fetch(apiBase + '/friend-link-delete.php', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})})
+    .then(function(r){return r.json()})
+    .then(function(res){
+      if(res.success){showToast('删除成功','success');loadList();}
+      else{showToast(res.message||'删除失败','error');}
+    });
+}
+loadList();
+</script>
+</body>
+</html>

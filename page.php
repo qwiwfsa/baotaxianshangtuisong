@@ -81,7 +81,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
-    <link rel="stylesheet" href="css/style.css?v=20260506a">
+    <link rel="stylesheet" href="css/style.css?v=20260519">
     <link rel="icon" href="uploads/logo/logo_20260516_071314_6a07a88a2cd5c.png">
     <!-- SEO动态加载 -->
     <script>

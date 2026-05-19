@@ -9,7 +9,8 @@
     <title><?php echo htmlspecialchars($page_title ?: "资金业务成功案例 | 企业摆账 - 过桥短拆真实案例"); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css?v=202605092100">
+        <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
+<link rel="stylesheet" href="../css/style.css?v=20260519">
     <link rel="stylesheet" href="../css/cases-enhanced.css?v=20260518">
     <!-- Lightbox函数定义 - 放在head确保全局可用 -->
     <script>
@@ -411,16 +412,8 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
+    <?php include '../includes/footer-simple.php'; ?>
+<script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
 
     <script src="../js/main.js"></script>
     <script>

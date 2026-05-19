@@ -12,6 +12,8 @@ header('Content-Type: text/html; charset=utf-8');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>热门标签 - Yao资金网</title>
+    <link rel="stylesheet" href="../css/style.css?v=20260519">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.min.css?v=20250514">
     <style>
@@ -33,15 +35,8 @@ header('Content-Type: text/html; charset=utf-8');
         <div class="loading" id="loading"><i class="fas fa-spinner"></i> 加载中...</div>
         <div class="mobile-tag-grid" id="tagGrid" style="display:none;"></div>
     </div>
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
-    <script>
+    <?php include '../includes/footer-simple.php'; ?>
+<script>
         fetch('../api/tag-frontend-list.php')
             .then(r => r.json())
             .then(res => {

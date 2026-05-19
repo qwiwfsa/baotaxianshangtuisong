@@ -9,6 +9,7 @@ DeviceDetector::redirect();
   <title>Bitnami: Open Source. Simplified</title>
   <link href="bitnami.css" media="all" rel="Stylesheet" type="text/css" /> 
   <link href="/dashboard/stylesheets/all.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
 <script>
 (function() {
     var pageName = window.location.pathname.split('/').pop() || 'index.html';

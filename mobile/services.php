@@ -15,8 +15,8 @@
 
     <link rel="icon" href="<?php echo htmlspecialchars($favicon_path ?? "../uploads/logo/logo_20260516_071314_6a07a88a2cd5c.png?v=2026051701"); ?>">    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/page-custom.css">
+    <link rel="stylesheet" href="../css/style.css?v=20260519">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
     <!-- Logo动态加载 -->
     <script>
     (function(){
@@ -344,15 +344,6 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
-
     <script src="../admin/assets/cms.js"></script>
 
     <script src="../js/main.js"></script>
@@ -396,6 +387,7 @@
         })();
     </script>
     <script src="../js/nav-loader.js?v=5"></script>
+<?php include '../includes/footer-simple.php'; ?>
 </body>
 </html>
 

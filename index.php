@@ -38,6 +38,7 @@ try {
 <head>
     <base href="/">
     <meta charset="UTF-8">
+    <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
@@ -58,8 +59,8 @@ try {
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
-    <link rel="stylesheet" href="/css/page-custom.css?v=20250519">
+    <link rel="stylesheet" href="/css/style.min.css?v=20260519">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
     <style>.nav-menu{display:flex}</style>
     <!-- 动态内容加载脚本 -->
     <script>
@@ -169,6 +170,7 @@ try {
 
 </head>
 <body>
+
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 

@@ -163,6 +163,17 @@
 
         .btn-sm { padding: 6px 12px; font-size: 12px; }
 
+
+        .source-modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;justify-content:center;align-items:center}
+        .source-modal-overlay.active{display:flex}
+        .source-modal{background:white;border-radius:12px;width:90vw;max-width:1100px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+        .source-modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid #e5e7eb}
+        .source-modal-header h3{margin:0;font-size:18px}
+        .source-modal-close{background:none;border:none;font-size:28px;cursor:pointer;color:#6b7280;padding:0;line-height:1}
+        .source-modal-close:hover{color:#111827}
+        .source-modal-body{flex:1;padding:20px 24px;overflow:auto;min-height:0}
+        .source-modal-body textarea{width:100%;height:500px;font-family:Consolas,Monaco,'Courier New',monospace;font-size:13px;padding:12px;border:1px solid #d1d5db;border-radius:8px;resize:vertical;box-sizing:border-box}
+        .source-modal-footer{padding:12px 24px;border-top:1px solid #e5e7eb;display:flex;gap:10px;justify-content:flex-end}
     </style>
 
 </head>
@@ -214,8 +225,11 @@
                     <a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
 
                     <a href="footer-manager.html" class="cms-nav-item active" data-section="footer"><i class="fas fa-list-alt"></i><span>页脚管理</span></a>
-
-                    <a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+                        <a href="media-library.html" class="cms-nav-item"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+                        <a href="tag-management.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+                        <a href="friend-link-management.html" class="cms-nav-item"><i class="fas fa-link"></i><span>友情链接</span></a>
+                        <a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+<a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
 
                     <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
 
@@ -244,6 +258,7 @@
                     <i class="fas fa-save"></i>
 
                     <span>保存所有修改</span>
+                <button class="cms-header-btn" onclick="openSourceModal()" style="background:#8b5cf6;color:white;margin-left:8px"><i class="fas fa-code"></i><span>编辑源代码</span></button>
 
                 </button>
 
@@ -1004,6 +1019,72 @@
         document.addEventListener('DOMContentLoaded', loadFooterData);
 
     </script>
+
+
+        <!-- 源代码编辑器 -->
+        <!-- 源代码编辑弹窗 -->
+<div class="source-modal-overlay" id="sourceModalOverlay">
+<div class="source-modal">
+<div class="source-modal-header">
+<h3><i class="fas fa-code"></i> 页脚源代码编辑</h3>
+<button class="source-modal-close" onclick="closeSourceModal()">&times;</button>
+</div>
+<div class="source-modal-body">
+<div style="padding:12px 16px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;font-size:13px;color:#856404;margin-bottom:12px">
+<i class="fas fa-exclamation-triangle"></i> 直接编辑页脚HTML源代码，保存后将替换所有前台页面的页脚。请谨慎操作！
+</div>
+<textarea id="footerSourceCode" placeholder="点击&quot;加载当前页脚&quot;按钮获取源代码..."></textarea>
+</div>
+<div class="source-modal-footer">
+<button class="cms-header-btn" onclick="loadFooterSource()" style="background:#f3f4f6;color:#374151">
+<i class="fas fa-download"></i> 加载当前页脚
+</button>
+<button class="cms-header-btn" onclick="saveFooterSource()" style="background:#1e3a8a;color:white">
+<i class="fas fa-save"></i> 保存源代码
+</button>
+</div>
+</div>
+</div>
+
+<script>
+function openSourceModal() {
+document.getElementById('sourceModalOverlay').classList.add('active');
+}
+function closeSourceModal() {
+document.getElementById('sourceModalOverlay').classList.remove('active');
+}
+document.getElementById('sourceModalOverlay').addEventListener('click', function(e) {
+if (e.target === this) closeSourceModal();
+});
+async function loadFooterSource() {
+try {
+const resp = await fetch('api/footer-source.php');
+const data = await resp.json();
+if (data.success) {
+document.getElementById('footerSourceCode').value = data.content;
+showToast('已加载当前页脚源代码', 'success');
+}
+} catch(e) { showToast('加载失败', 'error'); }
+}
+async function saveFooterSource() {
+const content = document.getElementById('footerSourceCode').value;
+if (!content.trim()) { showToast('内容不能为空', 'error'); return; }
+if (!confirm('确定要用此源代码替换所有前台页面的页脚吗？')) return;
+try {
+const resp = await fetch('api/footer-source.php', {
+method: 'POST',
+headers: {'Content-Type': 'application/json'},
+body: JSON.stringify({content: content})
+});
+const data = await resp.json();
+if (data.success) {
+showToast('页脚源代码已保存，前台页面已更新', 'success');
+} else {
+showToast('保存失败: ' + (data.message || '未知错误'), 'error');
+}
+} catch(e) { showToast('保存失败', 'error'); }
+}
+</script>
 
 </body>
 

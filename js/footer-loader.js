@@ -48,7 +48,7 @@
     /**
      * 更新页脚内容
      */
-    function updateFooter(grouped) {
+            function updateFooter(grouped) {
         // 1. 更新品牌描述
         var descEl = document.querySelector('.footer-desc');
         if (descEl) {
@@ -56,7 +56,7 @@
             if (desc) descEl.textContent = desc;
         }
 
-        // 2. 更新快速链接 (data-footer-group="quick_links")
+        // 2. 更新快捷导航 (data-footer-group="quick_links")
         var quickLinksNav = document.querySelector('.footer-nav[data-footer-group="quick_links"]');
         if (quickLinksNav) {
             var list = quickLinksNav.querySelector('.footer-nav-list');
@@ -76,49 +76,7 @@
             }
         }
 
-        // 3. 更新业务链接 (data-footer-group="service_links")
-        var serviceLinksNav = document.querySelector('.footer-nav[data-footer-group="service_links"]');
-        if (serviceLinksNav) {
-            var sList = serviceLinksNav.querySelector('.footer-nav-list');
-            if (sList) {
-                var svcLinks = getList(grouped, 'service_links');
-                if (svcLinks.length > 0) {
-                    sList.innerHTML = '';
-                    for (var j = 0; j < svcLinks.length; j++) {
-                        var li2 = document.createElement('li');
-                        var a2 = document.createElement('a');
-                        a2.href = svcLinks[j].item_url || '#';
-                        a2.textContent = svcLinks[j].item_value || svcLinks[j].item_label;
-                        li2.appendChild(a2);
-                        sList.appendChild(li2);
-                    }
-                }
-            }
-        }
-
-        // 4. 更新联系方式 (data-footer-group="contact")
-        var contactNav = document.querySelector('.footer-nav[data-footer-group="contact"]');
-        if (contactNav) {
-            var cList = contactNav.querySelector('.footer-nav-list');
-            if (cList) {
-                var contacts = getList(grouped, 'contact');
-                if (contacts.length > 0) {
-                    cList.innerHTML = '';
-                    for (var k = 0; k < contacts.length; k++) {
-                        var cItem = contacts[k];
-                        var li3 = document.createElement('li');
-                        var icon = '';
-                        if (cItem.item_key === 'phone') icon = '<i class="fas fa-phone"></i> ';
-                        else if (cItem.item_key === 'contact_person') icon = '<i class="fas fa-user"></i> ';
-                        else if (cItem.item_key === 'email') icon = '<i class="fas fa-envelope"></i> ';
-                        li3.innerHTML = icon + (cItem.item_value || cItem.item_label);
-                        cList.appendChild(li3);
-                    }
-                }
-            }
-        }
-
-        // 5. 更新底部版权
+        // 3. 更新底部版权
         var copyrightEl = document.querySelector('.footer-copyright');
         if (copyrightEl) {
             var copyright = getValue(grouped, 'bottom', 'copyright_text', '');
@@ -129,7 +87,7 @@
             }
         }
 
-        // 6. 更新免责声明
+        // 4. 更新免责声明
         var disclaimerEl = document.querySelector('.footer-disclaimer');
         if (disclaimerEl) {
             var disclaimer = getValue(grouped, 'bottom', 'disclaimer_text', '');

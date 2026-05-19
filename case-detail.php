@@ -169,10 +169,10 @@ header("Expires: 0");
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <link rel="stylesheet" href="/css/style.min.css?v=20260519">
 
-    <link rel="stylesheet" href="/css/case-detail.css"
-    <link rel="stylesheet" href="/css/page-custom.css?v=20250519">
+    <link rel="stylesheet" href="/css/case-detail.css">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
 
     <script>
 
@@ -232,181 +232,7 @@ header("Expires: 0");
 
     </script>
 
-    <style>
-
-        /* 页面布局 - 页脚固定到底部 */
-
-        html, body {
-
-            height: 100%;
-
-            margin: 0;
-
-        }
-
-        body {
-
-            display: flex;
-
-            flex-direction: column;
-
-            min-height: 100vh;
-
-        }
-
-        .main-content {
-
-            flex: 1 0 auto;
-
-        }
-
-        /* /* .footer { */ */
-
-            flex-shrink: 0;
-
-        }
-
-        /* 编辑按钮样式 */
-
-        .case-edit-btn {
-
-            position: absolute;
-
-            top: 20px;
-
-            right: 20px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding: 10px 20px;
-
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-
-            color: white;
-
-            border: none;
-
-            border-radius: 8px;
-
-            font-size: 14px;
-
-            font-weight: 500;
-
-            cursor: pointer;
-
-            transition: all 0.3s;
-
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-
-        }
-
-        
-
-        .case-edit-btn:hover {
-
-            transform: translateY(-2px);
-
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-
-        }
-
-        
-
-        .case-detail-header-container {
-
-            position: relative;
-
-        }
-
-        
-
-        @media (max-width: 768px) {
-
-            .case-edit-btn {
-
-                position: static;
-
-                margin-top: 16px;
-
-                width: 100%;
-
-                justify-content: center;
-
-            }
-
-        }
-
-        /* 评论区样式 */
-
-        
-
     
-
-                        .case-tags {
-
-                            display: flex;
-
-                            flex-wrap: wrap;
-
-                            gap: 10px;
-
-                            margin: 16px 0 0 0;
-
-                        }
-
-                        .case-tag {
-
-                            display: inline-block;
-
-                            padding: 4px 14px;
-
-                            background: #eff6ff;
-
-                            color: #1d4ed8;
-
-                            border-radius: 20px;
-
-                            font-size: 13px;
-
-                            font-weight: 500;
-
-                        }
-
-                        .case-tags {
-
-                            display: flex;
-
-                            flex-wrap: wrap;
-
-                            gap: 10px;
-
-                            margin: 16px 0 0 0;
-
-                        }
-
-                        .case-tag {
-
-                            display: inline-block;
-
-                            padding: 4px 14px;
-
-                            background: #eff6ff;
-
-                            color: #1d4ed8;
-
-                            border-radius: 20px;
-
-                            font-size: 13px;
-
-                            font-weight: 500;
-
-                        }
-
-</style>
 
     <!-- Logo动态加载 -->
 
@@ -1782,7 +1608,7 @@ window.nextImage = window.nextImage || function() {
 
 <script src="/js/nav-loader.js?v=4"></script>
 
+<?php include __DIR__ . "/includes/footer.php"; ?>
 </body>
 
 </html>
-

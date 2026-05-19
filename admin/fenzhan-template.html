@@ -1,200 +1,205 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>城市分站公共模板 - 宏都资本CMS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f3f4f6; min-height: 100vh; }
-        .cms-layout { display: flex; min-height: 100vh; }
-        .cms-sidebar { width: 260px; background: #1e293b; display: flex; flex-direction: column; flex-shrink: 0; }
-        .cms-sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
-        .cms-sidebar-brand { color: #fff; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
-        .cms-sidebar-brand i { color: #3b82f6; font-size: 24px; }
-        .cms-sidebar-nav { padding: 10px 0; flex: 1; overflow-y: auto; }
-        .cms-nav-section { padding: 0 10px; }
-        .cms-nav-title { padding: 10px 15px 5px; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-        .cms-nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #cbd5e1; text-decoration: none; border-radius: 8px; transition: all 0.2s; font-size: 14px; }
-        .cms-nav-item:hover, .cms-nav-item.active { background: #334155; color: #fff; }
-        .cms-nav-item i { width: 20px; text-align: center; font-size: 16px; }
-        .cms-main { flex: 1; padding: 30px; overflow-y: auto; }
-        .cms-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .cms-header-title { font-size: 24px; color: #1e293b; }
-        .cms-header-right { display: flex; gap: 10px; }
-        .cms-header-btn { padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; color: #64748b; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; }
-        .cms-header-btn:hover { background: #f8fafc; border-color: #3b82f6; color: #3b82f6; }
-        .editor-container { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
-        .editor-header { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .editor-header h2 { font-size: 16px; color: #1e293b; }
-        .editor-actions { display: flex; gap: 10px; }
-        .btn { padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
-        .btn-primary { background: #3b82f6; color: #fff; }
-        .btn-primary:hover { background: #2563eb; }
-        .btn-secondary { background: #f1f5f9; color: #64748b; }
-        .btn-secondary:hover { background: #e2e8f0; }
-        .btn-success { background: #10b981; color: #fff; }
-        .btn-success:hover { background: #059669; }
-        .editor-body { padding: 24px; }
-        .editor-body textarea { width: 100%; min-height: 600px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.6; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; outline: none; background: #1e293b; color: #e2e8f0; tab-size: 2; }
-        .editor-body textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-        .info-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; color: #0369a1; font-size: 14px; line-height: 1.6; }
-        .info-box code { background: #e0f2fe; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
-        .toast { position: fixed; top: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: #fff; font-size: 14px; z-index: 9999; opacity: 0; transform: translateY(-20px); transition: all 0.3s; }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
-        .loading { text-align: center; padding: 60px; color: #64748b; font-size: 16px; }
-        .loading i { font-size: 32px; display: block; margin-bottom: 16px; animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .variables-ref { margin-top: 20px; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; }
-        .variables-ref h3 { font-size: 14px; color: #1e293b; margin-bottom: 12px; }
-        .variables-ref table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .variables-ref th, .variables-ref td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        .variables-ref th { color: #64748b; font-weight: 600; background: #f1f5f9; }
-        .variables-ref td { color: #475569; }
-        .variables-ref code { background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #3b82f6; }
-    </style>
-</head>
-<body>
-<div class="cms-layout">
-    <aside class="cms-sidebar">
-        <div class="cms-sidebar-header">
-            <div class="cms-sidebar-brand">
-                <i class="fas fa-building"></i>
-                <span>城市分站模板</span>
-            </div>
-        </div>
-        <nav class="cms-sidebar-nav">
-            <div class="cms-nav-section">
-                <div class="cms-nav-title">导航</div>
-                <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
-                <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面设计</span></a>
-                <a href="fenzhan-management.html" class="cms-nav-item"><i class="fas fa-city"></i><span>城市管理</span></a>
-                <a href="fenzhan-template.html" class="cms-nav-item active"><i class="fas fa-pen-ruler"></i><span>公共模板</span></a>
-            </div>
-        </nav>
-    </aside>
-    <main class="cms-main">
-        <header class="cms-header">
-            <h1 class="cms-header-title">城市分站公共模板</h1>
-            <div class="cms-header-right">
-                <a href="fenzhan-management.html" class="cms-header-btn"><i class="fas fa-arrow-left"></i>返回城市管理</a>
-                <a href="https://www.yaozijin.com/fenzhan/beijing.html" target="_blank" class="cms-header-btn"><i class="fas fa-external-link-alt"></i>预览效果</a>
-            </div>
-        </header>
-
-        <div class="info-box">
-            <i class="fas fa-info-circle"></i>
-            此模板用于所有城市分站的公共内容。可用的变量：
-            <code>{{cityName}}</code> - 城市名称，
-            <code>{{cityPinyin}}</code> - 城市拼音，
-            <code>{{cityPhone}}</code> - 联系电话，
-            <code>{{cityContent}}</code> - 城市专属内容（区县列表等）。
-            修改模板后，所有城市分站页面将自动同步更新。
-        </div>
-
-        <div class="editor-container">
-            <div class="editor-header">
-                <h2>HTML 模板</h2>
-                <div class="editor-actions">
-                    <button class="btn btn-secondary" onclick="loadTemplate()"><i class="fas fa-redo"></i>重置</button>
-                    <button class="btn btn-success" onclick="saveTemplate()"><i class="fas fa-save"></i>保存模板</button>
-                </div>
-            </div>
-            <div class="editor-body">
-                <div id="loadingIndicator" class="loading">
-                    <i class="fas fa-spinner"></i>
-                    <p>加载模板中...</p>
-                </div>
-                <textarea id="templateEditor" style="display:none" placeholder="加载模板中..." spellcheck="false"></textarea>
-
-                <div class="variables-ref">
-                    <h3>可用变量说明</h3>
-                    <table>
-                        <tr><th>变量</th><th>说明</th><th>示例值</th></tr>
-                        <tr><td><code>{{cityName}}</code></td><td>当前城市名称</td><td>北京 / 上海 / 广州</td></tr>
-                        <tr><td><code>{{cityPinyin}}</code></td><td>当前城市拼音 slug</td><td>beijing / shanghai / guangzhou</td></tr>
-                        <tr><td><code>{{cityPhone}}</code></td><td>城市专属联系电话</td><td>13552883008</td></tr>
-                        <tr><td><code>{{cityContent}}</code></td><td>城市专属内容（区县列表等）</td><td>来自数据库 content 字段</td></tr>
-                        <tr><td><code>{{year}}</code></td><td>当前年份</td><td>2026</td></tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
-</div>
-<div id="toast" class="toast"></div>
-<script>
-const API = 'api/fenzhan-template.php';
-
-async function loadTemplate() {
-    const indicator = document.getElementById('loadingIndicator');
-    const editor = document.getElementById('templateEditor');
-    indicator.style.display = 'block';
-    editor.style.display = 'none';
-
-    try {
-        const resp = await fetch(API + '?action=get&t=' + Date.now());
-        const result = await resp.json();
-        if (result.success && result.data) {
-            editor.value = result.data;
-        } else {
-            showToast('模板为空，正在加载默认内容', 'info');
-            editor.value = getDefaultTemplate();
-            // Auto-save default template
-            saveTemplateSilent();
-        }
-    } catch(e) {
-        editor.value = getDefaultTemplate();
-    }
-    indicator.style.display = 'none';
-    editor.style.display = 'block';
-}
-
-async function saveTemplate() {
-    const editor = document.getElementById('templateEditor');
-    const content = editor.value;
-    if (!content.trim()) { showToast('模板内容不能为空', 'error'); return; }
-    await doSave(content);
-}
-
-async function saveTemplateSilent() {
-    const editor = document.getElementById('templateEditor');
-    await doSave(editor.value, true);
-}
-
-async function doSave(content, silent) {
-    const formData = new FormData();
-    formData.append('action', 'save');
-    formData.append('content', content);
-
-    try {
-        const resp = await fetch(API, { method: 'POST', body: formData });
-        const result = await resp.json();
-        if (result.success) {
-            if (!silent) showToast('模板保存成功，所有城市分站已同步更新', 'success');
-        } else {
-            if (!silent) showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
-        }
-    } catch(e) {
-        if (!silent) showToast('保存失败: ' + e.message, 'error');
-    }
-}
-
-function showToast(msg, type) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.className = 'toast ' + type + ' show';
-    setTimeout(function() { toast.classList.remove('show'); }, 3000);
-}
-
-function getDefaultTemplate() {
-    return '<!DOCTYPE html>\\n<html lang="zh-CN">\\n<head>\\n    <meta charset="UTF-8">\\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\\n    <title>{{cityName}}资金服务_专业资金业务_宏都资本</title>\\n    <base href="/">\\n    <link rel="stylesheet" href="/css/style.css?v=20260513e">\\n    <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">\\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\\n</head>\\n<body>\\n    {{cityContent}}\\n</body>\\n</html>';
-}
-
-document.addEventListener('DOMContentLoaded', loadTemplate);
-</script>
-</body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市分站公共模板 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f3f4f6; min-height: 100vh; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: #1e293b; display: flex; flex-direction: column; flex-shrink: 0; }
+        .cms-sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { color: #fff; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+        .cms-sidebar-brand i { color: #3b82f6; font-size: 24px; }
+        .cms-sidebar-nav { padding: 10px 0; flex: 1; overflow-y: auto; }
+        .cms-nav-section { padding: 0 10px; }
+        .cms-nav-title { padding: 10px 15px 5px; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .cms-nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #cbd5e1; text-decoration: none; border-radius: 8px; transition: all 0.2s; font-size: 14px; }
+        .cms-nav-item:hover, .cms-nav-item.active { background: #334155; color: #fff; }
+        .cms-nav-item i { width: 20px; text-align: center; font-size: 16px; }
+        .cms-main { flex: 1; padding: 30px; overflow-y: auto; }
+        .cms-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .cms-header-title { font-size: 24px; color: #1e293b; }
+        .cms-header-right { display: flex; gap: 10px; }
+        .cms-header-btn { padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; color: #64748b; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; }
+        .cms-header-btn:hover { background: #f8fafc; border-color: #3b82f6; color: #3b82f6; }
+        .editor-container { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+        .editor-header { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .editor-header h2 { font-size: 16px; color: #1e293b; }
+        .editor-actions { display: flex; gap: 10px; }
+        .btn { padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #3b82f6; color: #fff; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-secondary { background: #f1f5f9; color: #64748b; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-success { background: #10b981; color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .editor-body { padding: 24px; }
+        .editor-body textarea { width: 100%; min-height: 600px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.6; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; outline: none; background: #1e293b; color: #e2e8f0; tab-size: 2; }
+        .editor-body textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .info-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; color: #0369a1; font-size: 14px; line-height: 1.6; }
+        .info-box code { background: #e0f2fe; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+        .toast { position: fixed; top: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: #fff; font-size: 14px; z-index: 9999; opacity: 0; transform: translateY(-20px); transition: all 0.3s; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .loading { text-align: center; padding: 60px; color: #64748b; font-size: 16px; }
+        .loading i { font-size: 32px; display: block; margin-bottom: 16px; animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .variables-ref { margin-top: 20px; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; }
+        .variables-ref h3 { font-size: 14px; color: #1e293b; margin-bottom: 12px; }
+        .variables-ref table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .variables-ref th, .variables-ref td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .variables-ref th { color: #64748b; font-weight: 600; background: #f1f5f9; }
+        .variables-ref td { color: #475569; }
+        .variables-ref code { background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #3b82f6; }
+    </style>
+</head>
+<body>
+<div class="cms-layout">
+    <aside class="cms-sidebar">
+        <div class="cms-sidebar-header">
+            <div class="cms-sidebar-brand">
+                <i class="fas fa-building"></i>
+                <span>城市分站模板</span>
+            </div>
+        </div>
+        <nav class="cms-sidebar-nav">
+            <div class="cms-nav-section">
+                <div class="cms-nav-title">导航</div>
+                <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
+                <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面设计</span></a>
+                <a href="fenzhan-management.html" class="cms-nav-item"><i class="fas fa-city"></i><span>城市管理</span></a>
+                <a href="fenzhan-template.html" class="cms-nav-item active"><i class="fas fa-pen-ruler"></i><span>公共模板</span></a>
+            </div>
+        
+        <a href="media-library.html" class="cms-nav-item"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+        <a href="tag-management.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+        <a href="friend-link-management.html" class="cms-nav-item"><i class="fas fa-link"></i><span>友情链接</span></a>
+        <a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+</nav>
+    </aside>
+    <main class="cms-main">
+        <header class="cms-header">
+            <h1 class="cms-header-title">城市分站公共模板</h1>
+            <div class="cms-header-right">
+                <a href="fenzhan-management.html" class="cms-header-btn"><i class="fas fa-arrow-left"></i>返回城市管理</a>
+                <a href="https://www.yaozijin.com/fenzhan/beijing.html" target="_blank" class="cms-header-btn"><i class="fas fa-external-link-alt"></i>预览效果</a>
+            </div>
+        </header>
+
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            此模板用于所有城市分站的公共内容。可用的变量：
+            <code>{{cityName}}</code> - 城市名称，
+            <code>{{cityPinyin}}</code> - 城市拼音，
+            <code>{{cityPhone}}</code> - 联系电话，
+            <code>{{cityContent}}</code> - 城市专属内容（区县列表等）。
+            修改模板后，所有城市分站页面将自动同步更新。
+        </div>
+
+        <div class="editor-container">
+            <div class="editor-header">
+                <h2>HTML 模板</h2>
+                <div class="editor-actions">
+                    <button class="btn btn-secondary" onclick="loadTemplate()"><i class="fas fa-redo"></i>重置</button>
+                    <button class="btn btn-success" onclick="saveTemplate()"><i class="fas fa-save"></i>保存模板</button>
+                </div>
+            </div>
+            <div class="editor-body">
+                <div id="loadingIndicator" class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>加载模板中...</p>
+                </div>
+                <textarea id="templateEditor" style="display:none" placeholder="加载模板中..." spellcheck="false"></textarea>
+
+                <div class="variables-ref">
+                    <h3>可用变量说明</h3>
+                    <table>
+                        <tr><th>变量</th><th>说明</th><th>示例值</th></tr>
+                        <tr><td><code>{{cityName}}</code></td><td>当前城市名称</td><td>北京 / 上海 / 广州</td></tr>
+                        <tr><td><code>{{cityPinyin}}</code></td><td>当前城市拼音 slug</td><td>beijing / shanghai / guangzhou</td></tr>
+                        <tr><td><code>{{cityPhone}}</code></td><td>城市专属联系电话</td><td>13552883008</td></tr>
+                        <tr><td><code>{{cityContent}}</code></td><td>城市专属内容（区县列表等）</td><td>来自数据库 content 字段</td></tr>
+                        <tr><td><code>{{year}}</code></td><td>当前年份</td><td>2026</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+const API = 'api/fenzhan-template.php';
+
+async function loadTemplate() {
+    const indicator = document.getElementById('loadingIndicator');
+    const editor = document.getElementById('templateEditor');
+    indicator.style.display = 'block';
+    editor.style.display = 'none';
+
+    try {
+        const resp = await fetch(API + '?action=get&t=' + Date.now());
+        const result = await resp.json();
+        if (result.success && result.data) {
+            editor.value = result.data;
+        } else {
+            showToast('模板为空，正在加载默认内容', 'info');
+            editor.value = getDefaultTemplate();
+            // Auto-save default template
+            saveTemplateSilent();
+        }
+    } catch(e) {
+        editor.value = getDefaultTemplate();
+    }
+    indicator.style.display = 'none';
+    editor.style.display = 'block';
+}
+
+async function saveTemplate() {
+    const editor = document.getElementById('templateEditor');
+    const content = editor.value;
+    if (!content.trim()) { showToast('模板内容不能为空', 'error'); return; }
+    await doSave(content);
+}
+
+async function saveTemplateSilent() {
+    const editor = document.getElementById('templateEditor');
+    await doSave(editor.value, true);
+}
+
+async function doSave(content, silent) {
+    const formData = new FormData();
+    formData.append('action', 'save');
+    formData.append('content', content);
+
+    try {
+        const resp = await fetch(API, { method: 'POST', body: formData });
+        const result = await resp.json();
+        if (result.success) {
+            if (!silent) showToast('模板保存成功，所有城市分站已同步更新', 'success');
+        } else {
+            if (!silent) showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
+        }
+    } catch(e) {
+        if (!silent) showToast('保存失败: ' + e.message, 'error');
+    }
+}
+
+function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(function() { toast.classList.remove('show'); }, 3000);
+}
+
+function getDefaultTemplate() {
+    return '<!DOCTYPE html>\\n<html lang="zh-CN">\\n<head>\\n    <meta charset="UTF-8">\\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\\n    <title>{{cityName}}资金服务_专业资金业务_宏都资本</title>\\n    <base href="/">\\n    <link rel="stylesheet" href="/css/style.css?v=20260513e">\\n    <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">\\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\\n</head>\\n<body>\\n    {{cityContent}}\\n</body>\\n</html>';
+}
+
+document.addEventListener('DOMContentLoaded', loadTemplate);
+</script>
+</body>
 </html>

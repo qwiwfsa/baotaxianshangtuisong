@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>热门标签 - Yao资金网</title>
+    <link rel="stylesheet" href="../css/style.css?v=20250520">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.min.css?v=20250514">
+    <style>
+        .mobile-tags { padding: 20px; }
+        .mobile-tags h1 { font-size: 22px; color: #1f2937; margin-bottom: 20px; text-align: center; }
+        .mobile-tag-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .mobile-tag-item { display: flex; flex-direction: column; align-items: center; padding: 20px 16px; background: white; border-radius: 12px; text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #f3f4f6; }
+        .mobile-tag-name { font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 4px; }
+        .mobile-tag-count { font-size: 12px; color: #9ca3af; }
+        .loading { text-align: center; padding: 40px; color: #9ca3af; }
+    </style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+</head>
+<body>
+        <!-- 导航栏 -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+            <a href="/" class="logo" aria-label="Yao资金首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar"><li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
+<li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
+<li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
+<li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
+<li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
+<li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
+<li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
+</ul>
+            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-tags">
+        <h1>热门标签</h1>
+        <div class="loading" id="loading"><i class="fas fa-spinner"></i> 加载中...</div>
+        <div class="mobile-tag-grid" id="tagGrid" style="display:none;"></div>
+    </div>
+        <footer class="footer footer-simple">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer">粤ICP备2026052915号</p>
+            </div>
+        </div>
+    </footer>
+<script>
+        fetch('../api/tag-frontend-list.php')
+            .then(r => r.json())
+            .then(res => {
+                document.getElementById('loading').style.display = 'none';
+                if (res.success && res.data && res.data.length > 0) {
+                    const grid = document.getElementById('tagGrid');
+                    grid.style.display = 'grid';
+                    grid.innerHTML = res.data.map(t => {
+                        const total = (parseInt(t.article_count)||0) + (parseInt(t.case_count)||0);
+                        return `<a href="tag.php?slug=${t.slug}" class="mobile-tag-item"><span class="mobile-tag-name">${t.name}</span><span class="mobile-tag-count">${total} 篇</span></a>`;
+                    }).join('');
+                } else {
+                    document.getElementById('loading').innerHTML = '暂无标签';
+                }
+            });
+    </script>
+</body>
+</html>

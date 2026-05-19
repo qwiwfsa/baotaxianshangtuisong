@@ -10,7 +10,8 @@ DeviceDetector::redirect();
     <meta name="description" content="Yao资金网隐私政策，说明我们如何收集、使用和保护您的个人信息。">
     <meta name="robots" content="noindex, follow">
     <title>隐私政策 - Yao资金网</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=20260519">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
     <style>
         .legal-page {
             padding: 120px 0 80px;

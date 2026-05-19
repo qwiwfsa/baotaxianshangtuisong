@@ -88,13 +88,13 @@ $newsDB->close();
 
 
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css?v=20260519">
 
 
 
 
 
-    <link rel="stylesheet" href="../css/page-custom.css">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
 
 
 
@@ -900,7 +900,7 @@ $newsDB->close();
 
 
 
-        <section class="page-content">
+        <section class="page-content" style="padding-top:40px">
 
 
 
@@ -1062,21 +1062,8 @@ if ($totalPages > 1):
 
 
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
-
-
-
-
-
-
-    <!-- cms.js removed: not needed for news.php -->
+    <?php include '../includes/footer-simple.php'; ?>
+<!-- cms.js removed: not needed for news.php -->
 
 
 

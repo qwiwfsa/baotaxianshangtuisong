@@ -281,7 +281,7 @@ input, textarea, select {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 72px;
+    height: 56px;
 }
 
 .logo {
@@ -488,7 +488,7 @@ input, textarea, select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 120px 24px 80px;
+    padding: 80px 24px 60px;
     background: var(--bg-primary);
     position: relative;
     overflow: hidden;
@@ -2699,7 +2699,7 @@ input, textarea, select {
 
 .chat-widget-btn {
     width: 64px;
-    height: 64px;
+    height: 52px;
     border-radius: 50%;
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     color: white;
@@ -2730,7 +2730,7 @@ input, textarea, select {
     content: '';
     position: absolute;
     width: 64px;
-    height: 64px;
+    height: 52px;
     border-radius: 50%;
     background: rgba(34, 197, 94, 0.4);
     animation: rippleEffect 2s ease-out infinite;
@@ -2810,10 +2810,11 @@ input, textarea, select {
 }
 
 /* Footer */
+
 .footer {
     background: var(--color-gray-900);
     color: var(--text-light);
-    padding: 25px 0 0;
+    padding: 40px 0 0;
 }
 
 .footer-container {
@@ -2822,53 +2823,45 @@ input, textarea, select {
     padding: 0 var(--container-padding);
 }
 
+/* 品牌 + 快捷导航 */
 .footer-main {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 32px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid var(--color-gray-800);
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    padding-bottom: 24px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .footer-logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 22px;
-    font-weight: 700;
-    color: white;
     margin-bottom: 14px;
-}
-
-.footer-logo-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--color-primary);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 16px;
 }
 
 .footer-desc {
     font-size: 13px;
     line-height: 1.8;
     color: #a0a8b4;
+    margin: 0;
+    max-width: 460px;
 }
 
 .footer-nav-title {
     font-size: 14px;
     font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 6px;
+    color: rgba(255,255,255,0.85);
+    margin: 0 0 12px 0;
 }
 
 .footer-nav-list {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .footer-nav-list li {
@@ -2876,44 +2869,136 @@ input, textarea, select {
     align-items: center;
     gap: 8px;
     font-size: 13px;
-    line-height: 1.6;
-    color: #a0a8b4;
-}
-
-.footer-nav-list li i {
-    width: 16px;
-    text-align: center;
     color: #a0a8b4;
 }
 
 .footer-nav-list a {
     font-size: 13px;
-    line-height: 1.4;
     color: #a0a8b4;
-    transition: all var(--transition-fast) ease;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
 .footer-nav-list a:hover {
     color: white;
 }
 
+/* 全国省份 */
+.footer-provinces {
+    padding: 0 0 4px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-provinces-inner {
+    /* wrapper */
+}
+
+.footer-provinces-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    margin: 0 0 14px 0;
+}
+
+.footer-province-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+}
+
+.footer-province-item {
+    font-size: 13px;
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.footer-province-item:hover {
+    color: white;
+}
+
+/* 底部信息 */
 .footer-bottom {
-    text-align: center;
-    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 8px 0 28px;
 }
 
 .footer-copyright {
     font-size: 13px;
     color: #9ca3af;
-    padding-top: 1px;
-    margin-bottom: 1px;
+    margin: 0;
+}
+
+.footer-copyright a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-copyright a:hover {
+    color: white;
 }
 
 .footer-disclaimer {
+    font-size: 11px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.footer-disclaimer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-disclaimer a:hover {
+    color: white;
+}
+
+/* 手机端简洁页脚 */
+.footer-simple {
+    padding: 25px 0 0;
+}
+
+.footer-simple .footer-bottom {
+    display: block;
+    text-align: center;
+    padding: 12px 0;
+}
+
+.footer-simple .footer-copyright {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 6px;
+}
+
+.footer-simple .footer-disclaimer {
     font-size: 10px;
     color: #8a909e;
-    margin-top: 10px;
+    margin-top: 0;
 }
+
+/* 响应式 */
+@media (max-width: 1024px) {
+    .footer-main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .footer:not(.footer-simple) { padding: 36px 0 0; }
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .footer-desc { max-width: 100%; }
+    .footer-province-links { gap: 8px 14px; }
+    .footer-province-item { font-size: 12px; }
+}
+
 
 /* Animations */
 .fade-in {
@@ -3019,7 +3104,7 @@ input, textarea, select {
     }
     
     .navbar-container {
-        height: 64px;
+        height: 52px;
     }
     
     .nav-menu {
@@ -3468,7 +3553,7 @@ input, textarea, select {
 
 .phone-float-btn {
     width: 64px;
-    height: 64px;
+    height: 52px;
     border-radius: 50%;
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     color: white;
@@ -3504,7 +3589,7 @@ input, textarea, select {
 .phone-float-ripple {
     position: absolute;
     width: 64px;
-    height: 64px;
+    height: 52px;
     border-radius: 50%;
     background: rgba(34, 197, 94, 0.4);
     animation: rippleEffect 2s ease-out infinite;

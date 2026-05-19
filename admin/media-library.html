@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>媒体库 - 耀梓资本CMS</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f3f4f6; min-height: 100vh; }
+.cms-layout { display: flex; min-height: 100vh; }
+.cms-sidebar { width: 260px; background: #1e293b; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+.cms-sidebar-header { padding: 20px 24px; border-bottom: 1px solid #334155; }
+.cms-sidebar-header h1 { color: white; font-size: 18px; font-weight: 600; }
+.cms-sidebar-header p { color: #94a3b8; font-size: 12px; margin-top: 4px; }
+.cms-sidebar-nav { padding: 16px 0; }
+.cms-nav-section { margin-bottom: 8px; }
+.cms-nav-title { padding: 12px 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+.cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; }
+.cms-nav-item:hover { background: #334155; color: white; }
+.cms-nav-item.active { background: #3b82f6; color: white; }
+.cms-nav-item i { width: 20px; text-align: center; }
+.cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+.cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.cms-header h2 { font-size: 20px; color: #111827; }
+.cms-content { padding: 24px; }
+.cms-toolbar { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+.btn-primary { background: #3b82f6; color: white; }
+.btn-primary:hover { background: #2563eb; }
+.btn-danger { background: #ef4444; color: white; }
+.btn-danger:hover { background: #dc2626; }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn-outline { background: white; color: #374151; border: 1px solid #d1d5db; }
+.btn-outline:hover { background: #f9fafb; }
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.media-item { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: box-shadow 0.2s; position: relative; }
+.media-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.media-item .thumb { width: 100%; height: 160px; object-fit: cover; display: block; cursor: pointer; background: #f3f4f6; }
+.media-item .info { padding: 10px 12px; }
+.media-item .info .name { font-size: 13px; color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.media-item .info .meta { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.media-item .actions { position: absolute; top: 8px; right: 8px; display: none; gap: 4px; }
+.media-item:hover .actions { display: flex; }
+.media-item .actions button { width: 28px; height: 28px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+.media-item .actions .copy-btn { background: rgba(0,0,0,0.6); color: white; }
+.media-item .actions .copy-btn:hover { background: rgba(0,0,0,0.8); }
+.media-item .actions .del-btn { background: rgba(239,68,68,0.8); color: white; }
+.media-item .actions .del-btn:hover { background: #ef4444; }
+.media-item.non-image .thumb { display: flex; align-items: center; justify-content: center; background: #e5e7eb; font-size: 36px; color: #9ca3af; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; }
+.pagination button { padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 4px; background: white; cursor: pointer; font-size: 13px; }
+.pagination button:hover { background: #f3f4f6; }
+.pagination button:disabled { opacity: 0.5; cursor: default; }
+.pagination .page-info { font-size: 13px; color: #6b7280; }
+.filter-tabs { display: flex; gap: 8px; }
+.filter-tab { padding: 6px 14px; border-radius: 16px; border: 1px solid #d1d5db; background: white; cursor: pointer; font-size: 13px; color: #374151; }
+.filter-tab.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+.toast { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 8px; color: white; font-size: 14px; z-index: 999; opacity: 0; transition: opacity 0.3s; }
+.toast.show { opacity: 1; }
+.toast-success { background: #10b981; }
+.toast-error { background: #ef4444; }
+</style>
+</head>
+<body>
+<div class="cms-layout">
+  <aside class="cms-sidebar">
+    <div class="cms-sidebar-header">
+      <h1>耀梓资本CMS</h1>
+      <p>内容管理系统</p>
+    </div>
+    <nav class="cms-sidebar-nav">
+      <div class="cms-nav-section">
+        <div class="cms-nav-title">主要</div>
+        <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
+        <a href="logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+        <a href="case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>成功案例</span></a>
+        <a href="index.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面内容</span></a>
+        <a href="page-manager.html" class="cms-nav-item"><i class="fas fa-list"></i><span>页面列表</span></a>
+        <a href="visual-page-builder.html" class="cms-nav-item"><i class="fas fa-pen-ruler"></i><span>页面搭建</span></a>
+        <a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+        <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+        <a href="footer-manager.html" class="cms-nav-item"><i class="fas fa-shoe-prints"></i><span>页脚管理</span></a>
+        <a href="media-library.html" class="cms-nav-item active"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+        <a href="tag-management.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+        <a href="friend-link-management.html" class="cms-nav-item"><i class="fas fa-link"></i><span>友情链接</span></a>
+        <a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+        <a href="seo-settings.html" class="cms-nav-item"><i class="fas fa-search"></i><span>SEO设置</span></a>
+        <a href="message-management.html" class="cms-nav-item"><i class="fas fa-envelope"></i><span>留言管理</span></a>
+      </div>
+    </nav>
+  </aside>
+  <main class="cms-main">
+    <div class="cms-header">
+      <h2><i class="fas fa-photo-video"></i> 媒体库</h2>
+      <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()"><i class="fas fa-upload"></i> 上传文件</button>
+      <input type="file" id="fileInput" multiple style="display:none" onchange="uploadFiles(this.files)">
+    </div>
+    <div class="cms-content">
+      <div class="cms-toolbar">
+        <div class="filter-tabs" id="filterTabs">
+          <span class="filter-tab active" data-type="all" onclick="setFilter('all')">全部</span>
+          <span class="filter-tab" data-type="image" onclick="setFilter('image')">图片</span>
+          <span class="filter-tab" data-type="application" onclick="setFilter('application')">文档</span>
+          <span class="filter-tab" data-type="video" onclick="setFilter('video')">视频</span>
+        </div>
+        <span style="font-size:13px;color:#6b7280;" id="totalCount">共 0 个文件</span>
+      </div>
+      <div class="media-grid" id="mediaGrid"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var currentPage = 1;
+var currentFilter = 'all';
+var apiBase = 'api/media';
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast toast-' + type + ' show';
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+function setFilter(type) {
+  currentFilter = type;
+  currentPage = 1;
+  document.querySelectorAll('.filter-tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-type') === type);
+  });
+  loadMedia();
+}
+
+function loadMedia() {
+  var url = apiBase + '/media-list.php?page=' + currentPage + '&limit=30';
+  if (currentFilter !== 'all') url += '&type=' + encodeURIComponent(currentFilter);
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (!res.success) { showToast('加载失败', 'error'); return; }
+      var data = res.data;
+      var grid = document.getElementById('mediaGrid');
+      grid.innerHTML = '';
+      document.getElementById('totalCount').textContent = '共 ' + (res.total || 0) + ' 个文件';
+      if (!data || data.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#9ca3af"><i class="fas fa-photo-video" style="font-size:48px;margin-bottom:16px;display:block"></i><p>暂无文件</p></div>';
+        return;
+      }
+      data.forEach(function(item) {
+        var div = document.createElement('div');
+        div.className = 'media-item';
+        var isImage = item.file_type && item.file_type.startsWith('image');
+        var thumbHtml = isImage
+          ? '<img class="thumb" src="' + item.file_path + '" alt="' + escHtml(item.original_name || item.filename) + '" onclick="preview('' + item.file_path + '')">'
+          : '<div class="thumb non-image"><i class="fas fa-file"></i></div>';
+        var sizeStr = item.file_size ? formatSize(item.file_size) : '';
+        div.innerHTML = thumbHtml +
+          '<div class="info"><div class="name" title="' + escHtml(item.original_name || item.filename) + '">' + escHtml(item.original_name || item.filename) + '</div><div class="meta">' + sizeStr + '</div></div>' +
+          '<div class="actions"><button class="copy-btn" onclick="copyUrl('' + item.file_path + '')" title="复制URL"><i class="fas fa-link"></i></button><button class="del-btn" onclick="deleteMedia(' + item.id + ')" title="删除"><i class="fas fa-trash"></i></button></div>';
+        grid.appendChild(div);
+      });
+      renderPagination(res.total || 0);
+    })
+    .catch(function() { showToast('网络错误', 'error'); });
+}
+
+function renderPagination(total) {
+  var el = document.getElementById('pagination');
+  var totalPages = Math.ceil(total / 30) || 1;
+  if (total <= 30) { el.innerHTML = ''; return; }
+  var html = '<button onclick="goPage(1)"' + (currentPage<=1?' disabled':'') + '><i class="fas fa-angle-double-left"></i></button>';
+  html += '<button onclick="goPage('+(currentPage-1)+')"' + (currentPage<=1?' disabled':'') + '><i class="fas fa-angle-left"></i></button>';
+  html += '<span class="page-info">' + currentPage + ' / ' + totalPages + '</span>';
+  html += '<button onclick="goPage('+(currentPage+1)+')"' + (currentPage>=totalPages?' disabled':'') + '><i class="fas fa-angle-right"></i></button>';
+  html += '<button onclick="goPage('+totalPages+')"' + (currentPage>=totalPages?' disabled':'') + '><i class="fas fa-angle-double-right"></i></button>';
+  el.innerHTML = html;
+}
+
+function goPage(p) { currentPage = p; loadMedia(); }
+
+function escHtml(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function formatSize(bytes) {
+  if (!bytes) return '';
+  if (bytes < 1024) return bytes + 'B';
+  if (bytes < 1048576) return (bytes/1024).toFixed(1) + 'KB';
+  return (bytes/1048576).toFixed(1) + 'MB';
+}
+
+function uploadFiles(files) {
+  if (!files.length) return;
+  var formData = new FormData();
+  for (var i = 0; i < files.length; i++) {
+    formData.append('file', files[i]);
+  }
+  fetch(apiBase + '/media-upload.php', { method: 'POST', body: formData })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (res.success) { showToast('上传成功', 'success'); loadMedia(); }
+      else { showToast(res.message || '上传失败', 'error'); }
+    })
+    .catch(function() { showToast('上传失败', 'error'); });
+  document.getElementById('fileInput').value = '';
+}
+
+function deleteMedia(id) {
+  if (!confirm('确定要删除此文件吗？')) return;
+  fetch(apiBase + '/media-delete.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({id: id})
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(res) {
+    if (res.success) { showToast('删除成功', 'success'); loadMedia(); }
+    else { showToast(res.message || '删除失败', 'error'); }
+  })
+  .catch(function() { showToast('网络错误', 'error'); });
+}
+
+function copyUrl(path) {
+  var el = document.createElement('input');
+  el.value = window.location.protocol + '//' + window.location.host + path;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  showToast('URL已复制', 'success');
+}
+
+function preview(path) {
+  window.open(path, '_blank');
+}
+
+loadMedia();
+</script>
+</body>
+</html>

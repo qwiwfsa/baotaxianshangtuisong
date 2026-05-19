@@ -20,7 +20,7 @@ header("Expires: 0");
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
-    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <link rel="stylesheet" href="/css/style.min.css?v=20260519">
     <style>
         /* 文章详情页样式 */
         .article-detail-header {

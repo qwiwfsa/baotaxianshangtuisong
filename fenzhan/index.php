@@ -652,12 +652,13 @@ if (!empty($templateContent)) {
     <html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
+        <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <meta name="description" content="<?php echo $escapedDesc; ?>">
         <meta name="keywords" content="<?php echo $escapedKeywords; ?>">
         <title><?php echo $escapedTitle; ?></title>
         <link rel="stylesheet" href="/css/style.min.css?v=20260514">
-        <link rel="stylesheet" href="/css/page-custom.css?v=20260513e">
+        <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
         <link rel="stylesheet" href="/css/fenzhan.css?v=20260521">
         <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <base href="/">

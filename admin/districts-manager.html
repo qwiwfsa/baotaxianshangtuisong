@@ -1,292 +1,297 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>区县管理 - 宏都资本CMS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f3f4f6; min-height: 100vh; }
-        .cms-layout { display: flex; min-height: 100vh; }
-        .cms-sidebar { width: 260px; background: #1e293b; display: flex; flex-direction: column; flex-shrink: 0; }
-        .cms-sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
-        .cms-sidebar-brand { color: #fff; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
-        .cms-sidebar-brand i { color: #3b82f6; font-size: 24px; }
-        .cms-sidebar-nav { padding: 10px 0; flex: 1; overflow-y: auto; }
-        .cms-nav-section { padding: 0 10px; }
-        .cms-nav-title { padding: 10px 15px 5px; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-        .cms-nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #cbd5e1; text-decoration: none; border-radius: 8px; transition: all 0.2s; font-size: 14px; }
-        .cms-nav-item:hover, .cms-nav-item.active { background: #334155; color: #fff; }
-        .cms-nav-item i { width: 20px; text-align: center; }
-        .cms-main { flex: 1; padding: 30px; overflow-y: auto; }
-        .cms-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .cms-header-title { font-size: 24px; color: #1e293b; }
-        .cms-header-right { display: flex; gap: 10px; }
-
-        .panel { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
-        .panel-header { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .panel-header h2 { font-size: 16px; color: #1e293b; }
-        .panel-body { padding: 24px; }
-
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 14px; color: #374151; margin-bottom: 6px; font-weight: 600; }
-        select, textarea, input[type="text"] { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
-        select:focus, textarea:focus, input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-        textarea { min-height: 300px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; line-height: 1.6; resize: vertical; }
-
-        .btn { padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-primary { background: #3b82f6; color: #fff; }
-        .btn-primary:hover { background: #2563eb; }
-        .btn-success { background: #10b981; color: #fff; }
-        .btn-success:hover { background: #059669; }
-        .btn-secondary { background: #f1f5f9; color: #64748b; }
-        .btn-secondary:hover { background: #e2e8f0; }
-        .btn-sm { padding: 4px 12px; font-size: 12px; }
-        .btn-danger { background: #ef4444; color: #fff; }
-        .btn-danger:hover { background: #dc2626; }
-
-        .info-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; color: #0369a1; font-size: 14px; line-height: 1.6; }
-        .district-list { min-height: 200px; }
-        .district-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 6px; font-size: 14px; color: #374151; }
-        .district-item:hover { background: #f1f5f9; }
-        .district-actions { display: flex; gap: 6px; }
-        .toast { position: fixed; top: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: #fff; font-size: 14px; z-index: 9999; opacity: 0; transform: translateY(-20px); transition: all 0.3s; }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
-        .loading { text-align: center; padding: 40px; color: #64748b; }
-        .empty-state { text-align: center; padding: 40px; color: #94a3b8; }
-        .empty-state i { font-size: 40px; display: block; margin-bottom: 12px; }
-    </style>
-</head>
-<body>
-<div class="cms-layout">
-    <aside class="cms-sidebar">
-        <div class="cms-sidebar-header">
-            <div class="cms-sidebar-brand"><i class="fas fa-city"></i><span>区县管理</span></div>
-        </div>
-        <nav class="cms-sidebar-nav">
-            <div class="cms-nav-section">
-                <div class="cms-nav-title">导航</div>
-                <a href="index.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
-                <a href="fenzhan-management.html" class="cms-nav-item"><i class="fas fa-city"></i><span>城市管理</span></a>
-                <a href="districts-manager.html" class="cms-nav-item active"><i class="fas fa-map-marked-alt"></i><span>区县管理</span></a>
-            </div>
-        </nav>
-    </aside>
-    <main class="cms-main">
-        <header class="cms-header">
-            <h1 class="cms-header-title">城市区县管理</h1>
-            <div class="cms-header-right">
-                <button class="btn btn-secondary" onclick="loadDistricts()"><i class="fas fa-redo"></i>刷新</button>
-                <button class="btn btn-success" onclick="saveDistricts()"><i class="fas fa-save"></i>保存</button>
-            </div>
-        </header>
-
-        <div class="info-box">
-            <i class="fas fa-info-circle"></i> 管理各城市的服务区域（区县）。修改保存后，对应城市分站的"服务范围"模块将自动更新。
-        </div>
-
-        <div class="panel">
-            <div class="panel-header">
-                <h2>选择城市</h2>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label for="citySelect">城市</label>
-                    <select id="citySelect" onchange="onCityChange()">
-                        <option value="">请选择城市...</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel" style="margin-top: 20px;" id="districtsPanel">
-            <div class="panel-header">
-                <h2 id="districtsTitle">区县列表</h2>
-                <div>
-                    <button class="btn btn-sm btn-primary" onclick="addDistrict()"><i class="fas fa-plus"></i>添加</button>
-                </div>
-            </div>
-            <div class="panel-body">
-                <div id="loadingIndicator" class="loading"><i class="fas fa-spinner fa-spin"></i><p>加载中...</p></div>
-                <div id="districtsList" class="district-list"></div>
-                <p style="margin-top: 12px; font-size: 13px; color: #94a3b8;"><i class="fas fa-info-circle"></i> 每个区县占一行，直接编辑文本。空行会被忽略。</p>
-            </div>
-        </div>
-    </main>
-</div>
-<div id="toast" class="toast"></div>
-
-<script>
-const API = 'api/districts-api.php';
-
-async function loadCities() {
-    try {
-        const resp = await fetch(API + '?action=list&t=' + Date.now());
-        const result = await resp.json();
-        if (result.success && result.data) {
-            const sel = document.getElementById('citySelect');
-            sel.innerHTML = '<option value="">请选择城市...</option>';
-            result.data.forEach(function(c) {
-                const opt = document.createElement('option');
-                opt.value = c;
-                opt.textContent = c;
-                sel.appendChild(opt);
-            });
-        }
-    } catch(e) {
-        console.error('Load cities failed:', e);
-    }
-}
-
-async function onCityChange() {
-    const city = document.getElementById('citySelect').value;
-    const indicator = document.getElementById('loadingIndicator');
-    const list = document.getElementById('districtsList');
-    const title = document.getElementById('districtsTitle');
-
-    if (!city) {
-        indicator.style.display = 'block';
-        list.innerHTML = '';
-        title.textContent = '区县列表';
-        return;
-    }
-
-    title.textContent = city + ' - 区县列表';
-    indicator.style.display = 'block';
-    list.innerHTML = '';
-
-    try {
-        const resp = await fetch(API + '?action=list&city=' + encodeURIComponent(city) + '&t=' + Date.now());
-        const result = await resp.json();
-        if (result.success) {
-            renderDistricts(result.data || []);
-        }
-    } catch(e) {
-        showToast('加载失败: ' + e.message, 'error');
-    }
-    indicator.style.display = 'none';
-}
-
-function renderDistricts(data) {
-    const container = document.getElementById('districtsList');
-    if (!data.length) {
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-map-marked-alt"></i><p>暂无区县数据，点击"添加"按钮添加</p></div>';
-        return;
-    }
-    var html = '';
-    data.forEach(function(item, index) {
-        html += '<div class="district-item">'
-            + '<span class="district-num" style="color:#94a3b8;margin-right:8px;">' + (index+1) + '.</span>'
-            + '<span class="district-name">' + escapeHtml(item.district_name) + '</span>'
-            + '<div class="district-actions">'
-            + '<button class="btn btn-sm btn-secondary" onclick="editDistrict(' + index + ')"><i class="fas fa-edit"></i></button>'
-            + '<button class="btn btn-sm btn-danger" onclick="deleteDistrict(' + index + ')"><i class="fas fa-trash"></i></button>'
-            + '</div></div>';
-    });
-    container.innerHTML = html;
-}
-
-function addDistrict() {
-    const city = document.getElementById('citySelect').value;
-    if (!city) { showToast('请先选择城市', 'error'); return; }
-    const name = prompt('请输入区县名称：');
-    if (name && name.trim()) {
-        const list = document.getElementById('districtsList');
-        if (list.querySelector('.empty-state')) {
-            list.innerHTML = '';
-        }
-        // Add to the visual list
-        const items = list.querySelectorAll('.district-item');
-        const index = items.length;
-        const div = document.createElement('div');
-        div.className = 'district-item';
-        div.innerHTML = '<span class="district-num" style="color:#94a3b8;margin-right:8px;">' + (index+1) + '.</span>'
-            + '<span class="district-name">' + escapeHtml(name.trim()) + '</span>'
-            + '<div class="district-actions">'
-            + '<button class="btn btn-sm btn-secondary" onclick="editDistrict(' + index + ')"><i class="fas fa-edit"></i></button>'
-            + '<button class="btn btn-sm btn-danger" onclick="deleteDistrict(' + index + ')"><i class="fas fa-trash"></i></button>'
-            + '</div>';
-        list.appendChild(div);
-    }
-}
-
-function editDistrict(index) {
-    const items = document.getElementById('districtsList').querySelectorAll('.district-item');
-    if (items[index]) {
-        const nameSpan = items[index].querySelector('.district-name');
-        const currentName = nameSpan.textContent;
-        const newName = prompt('编辑区县名称：', currentName);
-        if (newName && newName.trim() && newName.trim() !== currentName) {
-            nameSpan.textContent = newName.trim();
-        }
-    }
-}
-
-function deleteDistrict(index) {
-    if (!confirm('确定删除这个区县？')) return;
-    const items = document.getElementById('districtsList').querySelectorAll('.district-item');
-    if (items[index]) {
-        items[index].remove();
-        // Renumber
-        const remaining = document.getElementById('districtsList').querySelectorAll('.district-item');
-        remaining.forEach(function(item, i) {
-            item.querySelector('.district-num').textContent = (i+1) + '.';
-        });
-    }
-}
-
-async function saveDistricts() {
-    const city = document.getElementById('citySelect').value;
-    if (!city) { showToast('请先选择城市', 'error'); return; }
-
-    const items = document.getElementById('districtsList').querySelectorAll('.district-item .district-name');
-    var districts = [];
-    items.forEach(function(span) {
-        var name = span.textContent.trim();
-        if (name) districts.push(name);
-    });
-
-    const formData = new FormData();
-    formData.append('action', 'save');
-    formData.append('city', city);
-    formData.append('districts', JSON.stringify(districts));
-
-    try {
-        const resp = await fetch(API, { method: 'POST', body: formData });
-        const result = await resp.json();
-        if (result.success) {
-            showToast('区县数据保存成功，城市分站已同步', 'success');
-        } else {
-            showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
-        }
-    } catch(e) {
-        showToast('保存失败: ' + e.message, 'error');
-    }
-}
-
-function showToast(msg, type) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast ' + type + ' show';
-    setTimeout(function() { t.classList.remove('show'); }, 3000);
-}
-
-function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    loadCities();
-    document.getElementById('districtsPanel').style.display = 'none';
-    document.getElementById('citySelect').addEventListener('change', function() {
-        document.getElementById('districtsPanel').style.display = this.value ? 'block' : 'none';
-    });
-});
-</script>
-</body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区县管理 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f3f4f6; min-height: 100vh; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: #1e293b; display: flex; flex-direction: column; flex-shrink: 0; }
+        .cms-sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { color: #fff; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+        .cms-sidebar-brand i { color: #3b82f6; font-size: 24px; }
+        .cms-sidebar-nav { padding: 10px 0; flex: 1; overflow-y: auto; }
+        .cms-nav-section { padding: 0 10px; }
+        .cms-nav-title { padding: 10px 15px 5px; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .cms-nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #cbd5e1; text-decoration: none; border-radius: 8px; transition: all 0.2s; font-size: 14px; }
+        .cms-nav-item:hover, .cms-nav-item.active { background: #334155; color: #fff; }
+        .cms-nav-item i { width: 20px; text-align: center; }
+        .cms-main { flex: 1; padding: 30px; overflow-y: auto; }
+        .cms-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .cms-header-title { font-size: 24px; color: #1e293b; }
+        .cms-header-right { display: flex; gap: 10px; }
+
+        .panel { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+        .panel-header { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .panel-header h2 { font-size: 16px; color: #1e293b; }
+        .panel-body { padding: 24px; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; color: #374151; margin-bottom: 6px; font-weight: 600; }
+        select, textarea, input[type="text"] { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        select:focus, textarea:focus, input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        textarea { min-height: 300px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; line-height: 1.6; resize: vertical; }
+
+        .btn { padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #3b82f6; color: #fff; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-success { background: #10b981; color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .btn-secondary { background: #f1f5f9; color: #64748b; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-sm { padding: 4px 12px; font-size: 12px; }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-danger:hover { background: #dc2626; }
+
+        .info-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; color: #0369a1; font-size: 14px; line-height: 1.6; }
+        .district-list { min-height: 200px; }
+        .district-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 6px; font-size: 14px; color: #374151; }
+        .district-item:hover { background: #f1f5f9; }
+        .district-actions { display: flex; gap: 6px; }
+        .toast { position: fixed; top: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: #fff; font-size: 14px; z-index: 9999; opacity: 0; transform: translateY(-20px); transition: all 0.3s; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .loading { text-align: center; padding: 40px; color: #64748b; }
+        .empty-state { text-align: center; padding: 40px; color: #94a3b8; }
+        .empty-state i { font-size: 40px; display: block; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+<div class="cms-layout">
+    <aside class="cms-sidebar">
+        <div class="cms-sidebar-header">
+            <div class="cms-sidebar-brand"><i class="fas fa-city"></i><span>区县管理</span></div>
+        </div>
+        <nav class="cms-sidebar-nav">
+            <div class="cms-nav-section">
+                <div class="cms-nav-title">导航</div>
+                <a href="index.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表盘</span></a>
+                <a href="fenzhan-management.html" class="cms-nav-item"><i class="fas fa-city"></i><span>城市管理</span></a>
+                <a href="districts-manager.html" class="cms-nav-item active"><i class="fas fa-map-marked-alt"></i><span>区县管理</span></a>
+            </div>
+        
+        <a href="media-library.html" class="cms-nav-item"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+        <a href="tag-management.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+        <a href="friend-link-management.html" class="cms-nav-item"><i class="fas fa-link"></i><span>友情链接</span></a>
+        <a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+</nav>
+    </aside>
+    <main class="cms-main">
+        <header class="cms-header">
+            <h1 class="cms-header-title">城市区县管理</h1>
+            <div class="cms-header-right">
+                <button class="btn btn-secondary" onclick="loadDistricts()"><i class="fas fa-redo"></i>刷新</button>
+                <button class="btn btn-success" onclick="saveDistricts()"><i class="fas fa-save"></i>保存</button>
+            </div>
+        </header>
+
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i> 管理各城市的服务区域（区县）。修改保存后，对应城市分站的"服务范围"模块将自动更新。
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>选择城市</h2>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="citySelect">城市</label>
+                    <select id="citySelect" onchange="onCityChange()">
+                        <option value="">请选择城市...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-top: 20px;" id="districtsPanel">
+            <div class="panel-header">
+                <h2 id="districtsTitle">区县列表</h2>
+                <div>
+                    <button class="btn btn-sm btn-primary" onclick="addDistrict()"><i class="fas fa-plus"></i>添加</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id="loadingIndicator" class="loading"><i class="fas fa-spinner fa-spin"></i><p>加载中...</p></div>
+                <div id="districtsList" class="district-list"></div>
+                <p style="margin-top: 12px; font-size: 13px; color: #94a3b8;"><i class="fas fa-info-circle"></i> 每个区县占一行，直接编辑文本。空行会被忽略。</p>
+            </div>
+        </div>
+    </main>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+const API = 'api/districts-api.php';
+
+async function loadCities() {
+    try {
+        const resp = await fetch(API + '?action=list&t=' + Date.now());
+        const result = await resp.json();
+        if (result.success && result.data) {
+            const sel = document.getElementById('citySelect');
+            sel.innerHTML = '<option value="">请选择城市...</option>';
+            result.data.forEach(function(c) {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = c;
+                sel.appendChild(opt);
+            });
+        }
+    } catch(e) {
+        console.error('Load cities failed:', e);
+    }
+}
+
+async function onCityChange() {
+    const city = document.getElementById('citySelect').value;
+    const indicator = document.getElementById('loadingIndicator');
+    const list = document.getElementById('districtsList');
+    const title = document.getElementById('districtsTitle');
+
+    if (!city) {
+        indicator.style.display = 'block';
+        list.innerHTML = '';
+        title.textContent = '区县列表';
+        return;
+    }
+
+    title.textContent = city + ' - 区县列表';
+    indicator.style.display = 'block';
+    list.innerHTML = '';
+
+    try {
+        const resp = await fetch(API + '?action=list&city=' + encodeURIComponent(city) + '&t=' + Date.now());
+        const result = await resp.json();
+        if (result.success) {
+            renderDistricts(result.data || []);
+        }
+    } catch(e) {
+        showToast('加载失败: ' + e.message, 'error');
+    }
+    indicator.style.display = 'none';
+}
+
+function renderDistricts(data) {
+    const container = document.getElementById('districtsList');
+    if (!data.length) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-map-marked-alt"></i><p>暂无区县数据，点击"添加"按钮添加</p></div>';
+        return;
+    }
+    var html = '';
+    data.forEach(function(item, index) {
+        html += '<div class="district-item">'
+            + '<span class="district-num" style="color:#94a3b8;margin-right:8px;">' + (index+1) + '.</span>'
+            + '<span class="district-name">' + escapeHtml(item.district_name) + '</span>'
+            + '<div class="district-actions">'
+            + '<button class="btn btn-sm btn-secondary" onclick="editDistrict(' + index + ')"><i class="fas fa-edit"></i></button>'
+            + '<button class="btn btn-sm btn-danger" onclick="deleteDistrict(' + index + ')"><i class="fas fa-trash"></i></button>'
+            + '</div></div>';
+    });
+    container.innerHTML = html;
+}
+
+function addDistrict() {
+    const city = document.getElementById('citySelect').value;
+    if (!city) { showToast('请先选择城市', 'error'); return; }
+    const name = prompt('请输入区县名称：');
+    if (name && name.trim()) {
+        const list = document.getElementById('districtsList');
+        if (list.querySelector('.empty-state')) {
+            list.innerHTML = '';
+        }
+        // Add to the visual list
+        const items = list.querySelectorAll('.district-item');
+        const index = items.length;
+        const div = document.createElement('div');
+        div.className = 'district-item';
+        div.innerHTML = '<span class="district-num" style="color:#94a3b8;margin-right:8px;">' + (index+1) + '.</span>'
+            + '<span class="district-name">' + escapeHtml(name.trim()) + '</span>'
+            + '<div class="district-actions">'
+            + '<button class="btn btn-sm btn-secondary" onclick="editDistrict(' + index + ')"><i class="fas fa-edit"></i></button>'
+            + '<button class="btn btn-sm btn-danger" onclick="deleteDistrict(' + index + ')"><i class="fas fa-trash"></i></button>'
+            + '</div>';
+        list.appendChild(div);
+    }
+}
+
+function editDistrict(index) {
+    const items = document.getElementById('districtsList').querySelectorAll('.district-item');
+    if (items[index]) {
+        const nameSpan = items[index].querySelector('.district-name');
+        const currentName = nameSpan.textContent;
+        const newName = prompt('编辑区县名称：', currentName);
+        if (newName && newName.trim() && newName.trim() !== currentName) {
+            nameSpan.textContent = newName.trim();
+        }
+    }
+}
+
+function deleteDistrict(index) {
+    if (!confirm('确定删除这个区县？')) return;
+    const items = document.getElementById('districtsList').querySelectorAll('.district-item');
+    if (items[index]) {
+        items[index].remove();
+        // Renumber
+        const remaining = document.getElementById('districtsList').querySelectorAll('.district-item');
+        remaining.forEach(function(item, i) {
+            item.querySelector('.district-num').textContent = (i+1) + '.';
+        });
+    }
+}
+
+async function saveDistricts() {
+    const city = document.getElementById('citySelect').value;
+    if (!city) { showToast('请先选择城市', 'error'); return; }
+
+    const items = document.getElementById('districtsList').querySelectorAll('.district-item .district-name');
+    var districts = [];
+    items.forEach(function(span) {
+        var name = span.textContent.trim();
+        if (name) districts.push(name);
+    });
+
+    const formData = new FormData();
+    formData.append('action', 'save');
+    formData.append('city', city);
+    formData.append('districts', JSON.stringify(districts));
+
+    try {
+        const resp = await fetch(API, { method: 'POST', body: formData });
+        const result = await resp.json();
+        if (result.success) {
+            showToast('区县数据保存成功，城市分站已同步', 'success');
+        } else {
+            showToast('保存失败: ' + (result.msg || '未知错误'), 'error');
+        }
+    } catch(e) {
+        showToast('保存失败: ' + e.message, 'error');
+    }
+}
+
+function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type + ' show';
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadCities();
+    document.getElementById('districtsPanel').style.display = 'none';
+    document.getElementById('citySelect').addEventListener('change', function() {
+        document.getElementById('districtsPanel').style.display = this.value ? 'block' : 'none';
+    });
+});
+</script>
+</body>
 </html>

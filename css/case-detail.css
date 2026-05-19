@@ -939,4 +939,21 @@
                             border-radius: 20px;
                             font-size: 13px;
                             font-weight: 500;
-                        }
+                        }
+
+.footer-friend-links {
+    border-top: 1px solid #374151;
+    padding: 20px 0;
+    margin-top: 8px;
+}
+.footer-friend-links-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+.footer-friend-link-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}

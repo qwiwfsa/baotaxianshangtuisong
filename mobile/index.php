@@ -45,8 +45,8 @@ $favicon_path = '/favicon-v2.png';
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="../css/style.css?v=202605092200">
-    <link rel="stylesheet" href="../css/page-custom.css?v=20250519">
+    <link rel="stylesheet" href="../css/style.css?v=20260519">
+    <link rel="stylesheet" href="../css/page-custom.css?v=20250520">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -717,17 +717,8 @@ echo implode('', $rendered);
     </main>
 
     <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
-                <p class="footer-disclaimer">粤ICP备2026052915号</p>
-            </div>
-        </div>
-    </footer>
-
-
-    <script src="../js/main.js?v=3"></script>
+    <?php include '../includes/footer-simple.php'; ?>
+<script src="../js/main.js?v=3"></script>
 
     <!-- CMS Data Integration -->
     
