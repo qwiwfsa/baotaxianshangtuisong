@@ -145,8 +145,8 @@ if (empty($quickLinks)) {
 
             
 <div class="footer-bottom">
-                <p class="footer-copyright"><?php echo $copyrightUrl && $copyright ? '<a href="' . htmlspecialchars($copyrightUrl) . '">' . $copyright . '</a>' : $copyright; ?></p>
-                <p class="footer-disclaimer"><?php echo $disclaimerUrl && $disclaimer ? '<a href="' . htmlspecialchars($disclaimerUrl) . '">' . $disclaimer . '</a>' : $disclaimer; ?></p>
+                <p class="footer-copyright"><?php echo fv_link($footerData, 'bottom', 'copyright_text', '© 2026 Yao资金网 宏都资本版权所有'); ?></p>
+                <p class="footer-disclaimer"><?php echo fv_link($footerData, 'bottom', 'disclaimer_text', '粤ICP备2026052915号'); ?></p>
             </div>
         </div>
     </footer>
