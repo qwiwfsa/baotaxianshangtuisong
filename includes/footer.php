@@ -34,6 +34,21 @@ function fv($data, $group, $key, $default = '') {
     return $default;
 }
 
+function fv_link($data, $group, $key, $default = '') {
+    if (isset($data[$group])) {
+        foreach ($data[$group] as $item) {
+            if ($item['item_key'] === $key) {
+                $val = $item['item_value'] ?? '';
+                $url = $item['item_url'] ?? '';
+                if ($val === '') return $url ? '<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($default) . '</a>' : htmlspecialchars($default);
+                if ($url) return '<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($val) . '</a>';
+                return htmlspecialchars($val);
+            }
+        }
+    }
+    return htmlspecialchars($default);
+}
+
 function fva($data, $group) {
     return $data[$group] ?? [];
 }
@@ -137,8 +152,8 @@ foreach ($provinces as $p):
 
 <!-- 底部信息 -->
             <div class="footer-bottom">
-                <p class="footer-copyright"><?php echo fv($footerData, 'bottom', 'copyright_text', '&copy; 2024 Yao资金网 版权所有'); ?></p>
-                <p class="footer-disclaimer"><?php echo fv($footerData, 'bottom', 'disclaimer_text', '投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。'); ?></p>
+                <p class="footer-copyright"><?php echo fv_link($footerData, 'bottom', 'copyright_text', '&copy; 2024 Yao资金网 版权所有'); ?></p>
+                <p class="footer-disclaimer"><?php echo fv_link($footerData, 'bottom', 'disclaimer_text', '投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。'); ?></p>
             </div>
         </div>
     </footer>
