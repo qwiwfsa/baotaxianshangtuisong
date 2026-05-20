@@ -212,7 +212,7 @@
                                         <option value="listed">上市公司类</option>
                                         <option value="baizhang">企业/个人摆账</option>
                                         <option value="deposit">银行存款类</option>
-                                        <option value="receivable">应收账款融资</option>
+                                        <option value="receivable">云信实摆真实出表</option>
                                         <option value="other">其他业务</option>
                                     </select>
                                 </div>

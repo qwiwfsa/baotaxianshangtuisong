@@ -345,10 +345,10 @@ $favicon_path = '/favicon-v2.png';
                 <article class="service-card" data-service="receivable" style="opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s;">
                     <h3 class="service-title">云信融资出表</h3>
                     <ul class="service-list">
-                        <li>置换云信票据</li>
-                        <li>可拆分流转支付</li>
-                        <li>融资贴现、准入宽松</li>
-                        <li>不看征信、包容执行诉讼主体</li>
+                        <li>应收账款买断对价支付云信票据</li>
+                        <li>应用场景：平应收应付账款，增应收</li>
+                        <li>将负债 替代保证金保函 收购矿产</li>
+                        <li>国央企化债 不看企业征信 诉讼 执行</li>
                     </ul>
 
                 </article>

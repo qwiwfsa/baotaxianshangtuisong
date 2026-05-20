@@ -9,8 +9,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="<?php echo htmlspecialchars(!empty($page_description) ? $page_description : 'Yao资金网业务范围 - 提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务'); ?>">
-    <meta name="keywords" content="<?php echo htmlspecialchars(!empty($page_keywords) ? $page_keywords : '北京亮资业务,上市公司过桥资金,企业摆账服务,资金过桥,股票解质押,应收账款融资,银行存款冲量'); ?>">
+    <meta name="description" content="<?php echo htmlspecialchars(!empty($page_description) ? $page_description : 'Yao资金网业务范围 - 提供上市公司过桥、企业摆账、银行存款、云信实摆真实出表等全方位资金服务'); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars(!empty($page_keywords) ? $page_keywords : '北京亮资业务,上市公司过桥资金,企业摆账服务,资金过桥,股票解质押,云信实摆真实出表,银行存款冲量'); ?>">
     <title><?php echo htmlspecialchars($page_title ?: "业务范围 - Yao资金网"); ?></title>
 
     <link rel="icon" href="<?php echo htmlspecialchars($favicon_path ?? "../uploads/logo/logo_20260516_071314_6a07a88a2cd5c.png?v=2026051701"); ?>">    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -142,7 +142,7 @@
                     <span>OUR SERVICES</span>
                 </div>
                 <h1 class="page-header-title">业务范围</h1>
-                <p class="page-header-subtitle">涵盖上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务</p>
+                <p class="page-header-subtitle">涵盖上市公司、企业摆账、银行存款、云信实摆真实出表等全方位资金服务</p>
             </div>
         </section>
 
@@ -219,7 +219,7 @@
                             </div>
                         </article>
 
-                        <!-- 业务模块 4: 应收账款融资 -->
+                        <!-- 业务模块 4: 云信实摆真实出表 -->
                         <article class="service-v2-card" data-module-id="4">
                             <div class="service-v2-header">
                                 <div class="service-v2-icon-large">
@@ -227,7 +227,7 @@
                                 </div>
                             </div>
                             <div class="service-v2-body">
-                                <h3 class="service-v2-title">应收账款融资</h3>
+                                <h3 class="service-v2-title">云信实摆真实出表</h3>
                                 <p class="service-v2-desc">盘活应收账款，加速资金周转，助力企业发展</p>
                                 <ul class="service-v2-list">
                                     <li><i class="fas fa-check"></i> 置换云信票据</li>

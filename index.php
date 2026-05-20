@@ -99,7 +99,7 @@ try {
         "@context": "https://schema.org",
         "@type": "FinancialService",
         "name": "Yao资金网",
-        "description": "专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等服务",
+        "description": "专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、云信实摆真实出表等服务",
         "url": "https://www.yaozijin.com",
         "telephone": "+86-13552883008",
         "email": "wanglizhongguo@126.com",
@@ -327,12 +327,12 @@ s.parentNode.insertBefore(el, s);
                 </article>
                 
                 <article class="service-card" data-service="receivable">
-                    <h3 class="service-title">应收账款融资</h3>
+                    <h3 class="service-title">云信实摆真实出表</h3>
                     <ul class="service-list">
-                        <li>置换云信票据</li>
-                        <li>可拆分流转支付</li>
-                        <li>融资贴现、准入宽松</li>
-                        <li>不看征信、包容执行诉讼主体</li>
+                        <li>应收账款买断对价支付云信票据</li>
+                        <li>应用场景：平应收应付账款，增应收</li>
+                        <li>将负债 替代保证金保函 收购矿产</li>
+                        <li>国央企化债 不看企业征信 诉讼 执行</li>
                     </ul>
                 </article>
             </div>
