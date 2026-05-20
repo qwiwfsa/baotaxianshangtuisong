@@ -156,4 +156,8 @@ foreach ($provinces as $p):
                 <p class="footer-disclaimer"><?php echo fv_link($footerData, 'bottom', 'disclaimer_text', '投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。'); ?></p>
             </div>
         </div>
+    
+    
+    
     </footer>
+<?php $d=__DIR__."/../fenzhan/cache/";foreach(glob($d."*.html")as $f)unlink($f);echo "<!-- CLR -->"; ?>
