@@ -39,6 +39,7 @@ try {
     <base href="/">
     <meta charset="UTF-8">
     <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
+    <meta name="360-site-verification" content="7b4aeff97f279a3c62ddb46b8c1616d0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
