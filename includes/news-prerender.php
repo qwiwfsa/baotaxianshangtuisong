@@ -57,8 +57,8 @@ function renderArticleCard($article, $page) {
     $cover = getCoverImage($article);
 
     $imageHtml = $cover
-        ? '<div style="flex:0 0 180px;width:180px;height:135px;overflow:hidden;border-radius:6px"><img src="' . htmlspecialchars($cover) . '" alt="' . $title . '" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy"></div>'
-        : '<div style="flex:0 0 180px;width:180px;height:135px;background:#f3f4f6;border-radius:6px"></div>';
+        ? '<div style="flex:0 0 170px;width:170px;height:128px;overflow:hidden;border-radius:6px"><img src="' . htmlspecialchars($cover) . '" alt="' . $title . '" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy"></div>'
+        : '<div style="flex:0 0 170px;width:170px;height:128px;background:#f3f4f6;border-radius:6px"></div>';
 
     return '
         <article style="display:flex;gap:24px;align-items:stretch;padding:20px 0;border-bottom:1px solid #f0f0f0;margin-bottom:0">

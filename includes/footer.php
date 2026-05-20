@@ -28,29 +28,10 @@ $result->close();
 function fv($data, $group, $key, $default = '') {
     if (isset($data[$group])) {
         foreach ($data[$group] as $item) {
-            if ($item['item_key'] === $key) {
-                $val = $item['item_value'] ?? '';
-                if ($val !== '') return $val;
-                return $default;
-            }
+            if ($item['item_key'] === $key) return $item['item_value'] ?? $default;
         }
     }
     return $default;
-}
-
-function fv_link($data, $group, $key, $default = '') {
-    if (isset($data[$group])) {
-        foreach ($data[$group] as $item) {
-            if ($item['item_key'] === $key) {
-                $val = $item['item_value'] ?? '';
-                $url = $item['item_url'] ?? '';
-                if ($val === '') return $url ? '<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($default) . '</a>' : htmlspecialchars($default);
-                if ($url) return '<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($val) . '</a>';
-                return htmlspecialchars($val);
-            }
-        }
-    }
-    return htmlspecialchars($default);
 }
 
 function fva($data, $group) {
@@ -83,55 +64,70 @@ function fva($data, $group) {
                 <!-- 业务链接 -->
                 
 
-                
+                <!-- 联系方式 -->
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">联系方式</h4>
+                    <ul class="footer-nav-list">
+                        <?php
+                        $contacts = fva($footerData, 'contact');
+                        $phone = fv($footerData, 'contact', 'phone', '13552883008');
+                        $person = fv($footerData, 'contact', 'contact_person', '王总');
+                        $email = fv($footerData, 'contact', 'email', 'wanglizhongguo@126.com');
+                        ?>
+                        <li><i class="fas fa-phone"></i> <?php echo htmlspecialchars($phone); ?></li>
+                        <li><i class="fas fa-user"></i> <?php echo htmlspecialchars($person); ?></li>
+                        <li><i class="fas fa-envelope"></i> <?php echo htmlspecialchars($email); ?></li>
+                    </ul>
+                </div>
             </div>
 
+            
             <!-- 全国省份 -->
             <div class="footer-provinces">
                 <div class="footer-provinces-inner">
                     <h4 class="footer-provinces-title">全国省份</h4>
                     <div class="footer-province-links">
 <?php
-$provinces = isset($footerData["provinces"]) ? $footerData["provinces"] : [];
+$provinces = isset($footerData['provinces']) ? $footerData['provinces'] : [];
 if (empty($provinces)) {
     $provinces = [
-        ["item_value"=>"上海资金服务","item_url"=>"/fenzhan/province-shanghai.html"],
-        ["item_value"=>"云南资金服务","item_url"=>"/fenzhan/province-yun-nan.html"],
-        ["item_value"=>"内蒙古资金服务","item_url"=>"/fenzhan/province-nei-meng-gu.html"],
-        ["item_value"=>"北京资金服务","item_url"=>"/fenzhan/province-beijing.html"],
-        ["item_value"=>"吉林资金服务","item_url"=>"/fenzhan/province-ji-lin.html"],
-        ["item_value"=>"四川资金服务","item_url"=>"/fenzhan/province-si-chuan.html"],
-        ["item_value"=>"天津资金服务","item_url"=>"/fenzhan/province-tianjin.html"],
-        ["item_value"=>"宁夏资金服务","item_url"=>"/fenzhan/province-ning-xia.html"],
-        ["item_value"=>"安徽资金服务","item_url"=>"/fenzhan/province-an-hui.html"],
-        ["item_value"=>"山东资金服务","item_url"=>"/fenzhan/province-shan-dong.html"],
-        ["item_value"=>"山西资金服务","item_url"=>"/fenzhan/province-shan-xi.html"],
-        ["item_value"=>"广东资金服务","item_url"=>"/fenzhan/province-guang-dong.html"],
-        ["item_value"=>"广西资金服务","item_url"=>"/fenzhan/province-guang-xi.html"],
-        ["item_value"=>"新疆资金服务","item_url"=>"/fenzhan/province-xin-jiang.html"],
-        ["item_value"=>"江苏资金服务","item_url"=>"/fenzhan/province-jiang-su.html"],
-        ["item_value"=>"江西资金服务","item_url"=>"/fenzhan/province-jiang-xi.html"],
-        ["item_value"=>"河北资金服务","item_url"=>"/fenzhan/province-he-bei.html"],
-        ["item_value"=>"河南资金服务","item_url"=>"/fenzhan/province-he-nan.html"],
-        ["item_value"=>"浙江资金服务","item_url"=>"/fenzhan/province-zhe-jiang.html"],
-        ["item_value"=>"海南资金服务","item_url"=>"/fenzhan/province-hai-nan.html"],
-        ["item_value"=>"港澳台资金服务","item_url"=>"/fenzhan/province-gang-ao-tai.html"],
-        ["item_value"=>"湖北资金服务","item_url"=>"/fenzhan/province-hu-bei.html"],
-        ["item_value"=>"湖南资金服务","item_url"=>"/fenzhan/province-hu-nan.html"],
-        ["item_value"=>"甘肃资金服务","item_url"=>"/fenzhan/province-gan-su.html"],
-        ["item_value"=>"福建资金服务","item_url"=>"/fenzhan/province-fu-jian.html"],
-        ["item_value"=>"西藏资金服务","item_url"=>"/fenzhan/province-xi-zang.html"],
-        ["item_value"=>"贵州资金服务","item_url"=>"/fenzhan/province-gui-zhou.html"],
-        ["item_value"=>"辽宁资金服务","item_url"=>"/fenzhan/province-liao-ning.html"],
-        ["item_value"=>"重庆资金服务","item_url"=>"/fenzhan/province-chongqing.html"],
-        ["item_value"=>"陕西资金服务","item_url"=>"/fenzhan/province-shaan-xi.html"],
-        ["item_value"=>"青海资金服务","item_url"=>"/fenzhan/province-qing-hai.html"],
-        ["item_value"=>"黑龙江资金服务","item_url"=>"/fenzhan/province-hei-long-jiang.html"],
+        ['item_value'=>'上海资金服务','item_url'=>'/fenzhan/province-shanghai.html'],
+        ['item_value'=>'云南资金服务','item_url'=>'/fenzhan/province-yun-nan.html'],
+        ['item_value'=>'内蒙古资金服务','item_url'=>'/fenzhan/province-nei-meng-gu.html'],
+        ['item_value'=>'北京资金服务','item_url'=>'/fenzhan/province-beijing.html'],
+        ['item_value'=>'吉林资金服务','item_url'=>'/fenzhan/province-ji-lin.html'],
+        ['item_value'=>'四川资金服务','item_url'=>'/fenzhan/province-si-chuan.html'],
+        ['item_value'=>'天津资金服务','item_url'=>'/fenzhan/province-tianjin.html'],
+        ['item_value'=>'宁夏资金服务','item_url'=>'/fenzhan/province-ning-xia.html'],
+        ['item_value'=>'安徽资金服务','item_url'=>'/fenzhan/province-an-hui.html'],
+        ['item_value'=>'山东资金服务','item_url'=>'/fenzhan/province-shan-dong.html'],
+        ['item_value'=>'山西资金服务','item_url'=>'/fenzhan/province-shan-xi.html'],
+        ['item_value'=>'广东资金服务','item_url'=>'/fenzhan/province-guang-dong.html'],
+        ['item_value'=>'广西资金服务','item_url'=>'/fenzhan/province-guang-xi.html'],
+        ['item_value'=>'新疆资金服务','item_url'=>'/fenzhan/province-xin-jiang.html'],
+        ['item_value'=>'江苏资金服务','item_url'=>'/fenzhan/province-jiang-su.html'],
+        ['item_value'=>'江西资金服务','item_url'=>'/fenzhan/province-jiang-xi.html'],
+        ['item_value'=>'河北资金服务','item_url'=>'/fenzhan/province-he-bei.html'],
+        ['item_value'=>'河南资金服务','item_url'=>'/fenzhan/province-he-nan.html'],
+        ['item_value'=>'浙江资金服务','item_url'=>'/fenzhan/province-zhe-jiang.html'],
+        ['item_value'=>'海南资金服务','item_url'=>'/fenzhan/province-hai-nan.html'],
+        ['item_value'=>'港澳台资金服务','item_url'=>'/fenzhan/province-gang-ao-tai.html'],
+        ['item_value'=>'湖北资金服务','item_url'=>'/fenzhan/province-hu-bei.html'],
+        ['item_value'=>'湖南资金服务','item_url'=>'/fenzhan/province-hu-nan.html'],
+        ['item_value'=>'甘肃资金服务','item_url'=>'/fenzhan/province-gan-su.html'],
+        ['item_value'=>'福建资金服务','item_url'=>'/fenzhan/province-fu-jian.html'],
+        ['item_value'=>'西藏资金服务','item_url'=>'/fenzhan/province-xi-zang.html'],
+        ['item_value'=>'贵州资金服务','item_url'=>'/fenzhan/province-gui-zhou.html'],
+        ['item_value'=>'辽宁资金服务','item_url'=>'/fenzhan/province-liao-ning.html'],
+        ['item_value'=>'重庆资金服务','item_url'=>'/fenzhan/province-chongqing.html'],
+        ['item_value'=>'陕西资金服务','item_url'=>'/fenzhan/province-shaan-xi.html'],
+        ['item_value'=>'青海资金服务','item_url'=>'/fenzhan/province-qing-hai.html'],
+        ['item_value'=>'黑龙江资金服务','item_url'=>'/fenzhan/province-hei-long-jiang.html'],
     ];
 }
 foreach ($provinces as $p):
-    $pname = $p["item_value"] ?? $p["name"] ?? "";
-    $purl = $p["item_url"] ?? ("/fenzhan/province-" . ($p["slug"] ?? "") . ".html");
+    $pname = $p['item_value'] ?? $p['name'] ?? '';
+    $purl = $p['item_url'] ?? ('/fenzhan/province-' . ($p['slug'] ?? '') . '.html');
 ?>
 <a href="<?php echo htmlspecialchars($purl); ?>" class="footer-province-item"><?php echo htmlspecialchars($pname); ?></a>
 <?php endforeach; ?>
@@ -139,12 +135,10 @@ foreach ($provinces as $p):
                 </div>
             </div>
 
-
+<!-- 底部信息 -->
             <div class="footer-bottom">
-                <p class="footer-copyright"><?php echo fv_link($footerData, 'bottom', 'copyright_text', '&copy; 2024 Yao资金网 版权所有'); ?></p>
-                <p class="footer-disclaimer" style="font-size:11px;color:#9ca3af;margin:0"><?php echo fv_link($footerData, 'bottom', 'disclaimer_text', '投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。'); ?></p>
+                <p class="footer-copyright"><?php echo fv($footerData, 'bottom', 'copyright_text', '&copy; 2024 Yao资金网 版权所有'); ?></p>
+                <p class="footer-disclaimer"><?php echo fv($footerData, 'bottom', 'disclaimer_text', '投资有风险，入市需谨慎。本网站内容仅供参考，不构成投资建议。'); ?></p>
             </div>
         </div>
-    
-    
     </footer>
