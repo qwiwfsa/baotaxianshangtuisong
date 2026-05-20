@@ -924,7 +924,7 @@
                         <span>页脚管理</span>
                     </a>
                         <a href="media-library.html" class="cms-nav-item"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
-                        <a href="tag-management.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+                        
                         <a href="friend-link-management.html" class="cms-nav-item"><i class="fas fa-link"></i><span>友情链接</span></a>
                         <a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
 <a href="fenzhan-management.html" class="cms-nav-item" data-section="fenzhan">
@@ -1158,7 +1158,7 @@
                             </div>
                         </div>
                         <div class="cms-card-body">
-                            <div class="cms-page-list" id="pageList">
+                            <div class="cms-page-list" id="pageList" style="display:block">
                                 <!-- 页面列表将由JS生成 -->
                             </div>
                         </div>
@@ -1245,7 +1245,7 @@
                 <div class="cms-card-header">
                     <h2 class="cms-card-title"><i class="fas fa-envelope" style="color:#3b82f6;"></i> 最新咨询</h2>
                     <div class="cms-card-actions">
-                        <a href="message-management.html" class="cms-header-btn cms-header-btn-primary" style="font-size:13px;padding:6px 14px;">
+                        <a href="comment-management.html" class="cms-header-btn cms-header-btn-primary" style="font-size:13px;padding:6px 14px;">
                             <i class="fas fa-external-link-alt"></i>查看全部
                         </a>
                     </div>
@@ -1319,6 +1319,7 @@
                 // 获取当前页面列表
         function getPages() {
             // 页面列表由API管理
+            setTimeout(function() { renderPageList(); }, 500);
             return getDefaultPages();
         }
         
@@ -1490,6 +1491,24 @@
         // 渲染页面列表
         async function renderPageList() {
             const container = document.getElementById('pageList');
+            if (!container) return;
+            // Use working pages-manage API
+            try {
+                const r = await fetch('api/pages-manage.php');
+                const d = await r.json();
+                if (d.code === 0 && d.data && d.data.pages) {
+                    const pages = d.data.pages.filter(p => p.status === 'active');
+                    container.innerHTML = pages.map(p => {
+                        const url = p.custom_url || 'page.php?page_id=' + p.page_id;
+                        return '<div class="cms-page-item" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f9fafb;border-radius:8px;margin-bottom:8px">' +
+                            '<div><strong>' + (p.page_name || p.title || p.page_id) + '</strong>' +
+                            '<span style="color:#9ca3af;font-size:12px;margin-left:12px">' + (p.page_type || '') + '</span></div>' +
+                            '<a href="/' + url + '" target="_blank" style="color:#3b82f6;font-size:13px">查看</a></div>';
+                    }).join('');
+                    return;
+                }
+            } catch(e) {}
+            // Fallback
             let pagesIndex = [];
             
             try {
@@ -1910,5 +1929,6 @@
         setInterval(loadMessageList, 30000);
     });
 </script>
+<script>setTimeout(function(){if(typeof renderPageList==="function")renderPageList();},300);</script>
 </body>
 </html>
