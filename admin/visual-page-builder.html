@@ -1863,8 +1863,7 @@
                 return;
             }
             if (confirm('确定要发布这个页面吗？发布后将生成静态HTML文件。')) {
-                var pageUrl = '/pages/' + currentPageId + '.html';
-                fetch('api/page-builder/publish.php', {
+                                fetch('api/page-builder/publish.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ page_id: currentPageId })
@@ -1873,7 +1872,7 @@
                 .then(function(data) {
                     if (data.code === 0) {
                         showToast('发布成功', 'success');
-                        setTimeout(function() { window.open(pageUrl, '_blank'); }, 600);
+                        setTimeout(function() { var u = (data.data && data.data.html_path) ? '/' + data.data.html_path.split('/').pop() : '/' + currentPageId + '.html'; window.open(u, '_blank'); }, 600);
                     } else {
                         showToast('发布失败: ' + data.msg, 'error');
                     }
@@ -1890,7 +1889,7 @@
                 showToast('请先选择一个页面', 'error');
                 return;
             }
-            window.open(`/pages/${currentPageId}.html`, '_blank');
+            window.open('page.php?page_id=' + currentPageId + '&preview=1', '_blank');
         }
         // 返回
         function goBack() {

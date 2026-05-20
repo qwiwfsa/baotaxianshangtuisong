@@ -20,7 +20,15 @@ try {
         $html .= renderModule($moduleType, $moduleData);
     }
     $stmt->close();
-    $outputPath = __DIR__ . '/../../../pages/' . $pageId . '.html';
+    // Use custom_url as filename if set
+    $stmt2 = $conn->prepare("SELECT custom_url FROM cms_pages WHERE page_id = ?");
+    $stmt2->bind_param("s", $pageId);
+    $stmt2->execute();
+    $r2 = $stmt2->get_result();
+    $customUrl = ($row2 = $r2->fetch_assoc()) ? ($row2['custom_url'] ?? '') : '';
+    $stmt2->close();
+    $filename = ($customUrl !== '') ? (strpos($customUrl, '.') !== false ? basename($customUrl) : $customUrl . '.html') : $pageId . '.html';
+    $outputPath = __DIR__ . '/../../../' . $filename;
     $fullHtml = generateFullPage($pageId, $html);
 
     // Load favicon from admin settings

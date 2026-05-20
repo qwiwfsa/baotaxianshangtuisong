@@ -166,36 +166,3 @@ foreach ($files as $f) {
 }
 ?>
     </footer>
-
-<?php
-// Auto-sync: clear fenzhan cache when footer data changes
-$sync_file = __DIR__ . '/../.footer_sync_ts';
-$need_clear = false;
-if (function_exists('getDB')) {
-    $conn = getDB();
-    $r = $conn->query("SELECT MAX(updated_at) as ts FROM footer_settings");
-    if ($r && $row = $r->fetch_assoc()) {
-        $db_ts = strtotime($row['ts']);
-        $file_ts = (int)@file_get_contents($sync_file);
-        if ($db_ts > $file_ts) {
-            $need_clear = true;
-            @file_put_contents($sync_file, $db_ts);
-        }
-    }
-    if ($r) $r->close();
-    $conn->close();
-}
-// Also clear if sync file is older than 30 min (safety net)
-if (!$need_clear && file_exists($sync_file) && (time() - filemtime($sync_file)) > 1800) {
-    $need_clear = true;
-}
-if ($need_clear) {
-    $cache_dir = __DIR__ . '/../fenzhan/cache/';
-    if (is_dir($cache_dir)) {
-        $files = glob($cache_dir . '*.html');
-        $n = 0;
-        foreach ($files as $f) { if (unlink($f)) $n++; }
-        if ($n > 0) echo '<!-- Cache auto-cleared: ' . $n . ' files -->';
-    }
-}
-?>
