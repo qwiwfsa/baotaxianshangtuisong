@@ -553,7 +553,6 @@ $favicon_path = '/favicon-v2.png';
             <div class="advantages-header">
                 <h2 class="advantages-title" id="advantages-title">服务优势</h2>
                 <p class="advantages-subtitle">专业、高效、安全</p>
-
             </div>
 
             <div class="advantages-content">
@@ -569,8 +568,7 @@ $favicon_path = '/favicon-v2.png';
                             </div>
                             <div class="advantages-stat">
                                 <span class="advantages-stat-number">99%</span>
-                                <span class="advantages-stat-number">500+</span>
-
+                                <span class="advantages-stat-label">客户满意度</span>
                             </div>
                         </div>
                     </div>
@@ -583,9 +581,7 @@ $favicon_path = '/favicon-v2.png';
                         </div>
                         <div class="advantages-feature-content">
                             <h3 class="advantages-feature-title">丰富的行业经验</h3>
-
-                <p class="advantages-subtitle">专业、高效、安全</p>
-
+                            <p class="advantages-feature-desc">深耕资金业务十余年，积累了丰富的行业经验和资源网络，能够为客户提供最专业的服务。</p>
                         </div>
                     </div>
 
@@ -594,10 +590,8 @@ $favicon_path = '/favicon-v2.png';
                             <i class="fas fa-check" aria-hidden="true"></i>
                         </div>
                         <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">丰富的行业经验</h3>
-
-                <p class="advantages-subtitle">专业、高效、安全</p>
-
+                            <h3 class="advantages-feature-title">强大的资金实力</h3>
+                            <p class="advantages-feature-desc">累计管理资金规模超30亿元，单笔可提供数亿至数十亿资金支持，满足各类大型项目需求。</p>
                         </div>
                     </div>
 
@@ -606,10 +600,8 @@ $favicon_path = '/favicon-v2.png';
                             <i class="fas fa-check" aria-hidden="true"></i>
                         </div>
                         <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">丰富的行业经验</h3>
-
-                <p class="advantages-subtitle">专业、高效、安全</p>
-
+                            <h3 class="advantages-feature-title">专业的服务团队</h3>
+                            <p class="advantages-feature-desc">核心团队成员均来自国内知名金融机构，平均从业经验超过15年，专业能力强。</p>
                         </div>
                     </div>
 
@@ -618,10 +610,8 @@ $favicon_path = '/favicon-v2.png';
                             <i class="fas fa-check" aria-hidden="true"></i>
                         </div>
                         <div class="advantages-feature-content">
-                            <h3 class="advantages-feature-title">丰富的行业经验</h3>
-
-                <p class="advantages-subtitle">专业、高效、安全</p>
-
+                            <h3 class="advantages-feature-title">完善的风控体系</h3>
+                            <p class="advantages-feature-desc">建立了完善的风险控制体系，严格遵循合规要求，确保每笔业务安全可控。</p>
                         </div>
                     </div>
                 </div>

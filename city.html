@@ -16,6 +16,13 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <base href="/">
     <style>
+.search-box { margin:20px auto 30px; max-width:500px; position:relative; }
+.search-box input { width:100%; padding:12px 20px 12px 45px; border:2px solid #d1d5db; border-radius:50px; font-size:15px; outline:none; transition:border-color 0.3s; box-sizing:border-box; }
+.search-box input:focus { border-color:#1e3a8a; }
+.search-box .search-icon { position:absolute; left:16px; top:50%; transform:translateY(-50%); color:#9ca3af; font-size:16px; }
+.search-box .clear-btn { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:#d1d5db; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; display:none; font-size:12px; color:#fff; line-height:20px; text-align:center; }
+.search-box .clear-btn.visible { display:block; }
+.no-result { text-align:center; padding:60px 20px; color:#6b7280; font-size:15px; display:none; }
         .city-nav-header {
             text-align: center;
             padding: 60px 20px 40px;
@@ -64,6 +71,15 @@
             .city-nav-header h1 { font-size: 24px; }
         }
     </style>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </head>
 <body>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
@@ -86,7 +102,12 @@
 
     <div class="city-nav-header">
         <h1><i class="fas fa-map-marker-alt"></i> 全国城市导航</h1>
-        <p>Yao资金网服务覆盖全国各大中城市，为您提供便捷的本地化资金服务</p>
+        <p>Yao资金网服务覆盖全国各大中城市，为您提供便捷的本地化资金服务</p>        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="citySearch" placeholder="输入城市名称快速查找..." oninput="filterCities(this.value)">
+            <button class="clear-btn" id="clearBtn" onclick="clearSearch()">×</button>
+        </div>
+        <div class="no-result" id="noResult">未找到匹配的城市，请尝试其他关键词</div>
     </div>
 
     <div class="city-nav-container">
@@ -655,5 +676,11 @@
 
     <script src="/js/footer-loader.js?v=20260513e"></script>
     <script src="/js/main.js?v=20260513e"></script>
+<script>
+function filterCities(v){var q=v.trim().toLowerCase();var l=document.querySelectorAll('.city-link');var t=document.querySelectorAll('.province-title');var b=document.getElementById('clearBtn');var n=document.getElementById('noResult');if(q.length===0){l.forEach(function(x){x.style.display=''});t.forEach(function(x){x.style.display=''});b.className='clear-btn';n.style.display='none';return;}
+b.className='clear-btn visible';var c=0;l.forEach(function(x){var m=x.textContent.toLowerCase().indexOf(q)!==-1;x.style.display=m?'':'none';if(m)c++});t.forEach(function(x){var n=x.nextElementSibling;var v=false;while(n&&n.tagName!=='H2'){if(n.style.display!=='none'){v=true;break}n=n.nextElementSibling}
+x.style.display=v?'':'none'});n.style.display=c===0?'block':'none'}
+function clearSearch(){document.getElementById('citySearch').value='';filterCities('');document.getElementById('citySearch').focus()}
+</script>
 </body>
 </html>

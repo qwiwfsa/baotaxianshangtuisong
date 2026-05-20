@@ -182,6 +182,15 @@ s.parentNode.insertBefore(el, s);
 })(window)
 </script>
     <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </head>
 <body>
 
@@ -246,7 +255,6 @@ s.parentNode.insertBefore(el, s);
             <div class="hero-buttons">
                 <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
                     <button class="btn btn-primary" id="consultNowBtn" onclick="togglePhoneDisplay()">
-                        <i class="fas fa-phone-alt"></i>
                         立即咨询
                     </button>
                     <span id="phoneDisplay" style="display:none;font-size:18px;font-weight:700;color:#1e3a8a;letter-spacing:2px;white-space:nowrap;background:#fff;border-radius:8px;padding:8px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);">13552883008</span>

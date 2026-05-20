@@ -284,26 +284,28 @@ try {
                 <div class="hero-buttons">
                     <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
                         <button class="btn btn-primary" id="consultNowBtn" onclick="togglePhoneDisplay()" style="display:inline-flex;align-items:center;gap:6px;">
-                            <i class="fas fa-phone-alt"></i> 立即咨询
+                            立即咨询
                         </button>
                         <span id="phoneDisplay" style="display:none;font-size:18px;font-weight:700;color:#1e3a8a;letter-spacing:2px;white-space:nowrap;background:#fff;border-radius:8px;padding:8px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);"><?php echo $escapedPhone; ?></span>
                     </div>
                 </div>
-                <?php
-                $heroStats = [
-                    ['number' => $homepageContent['stat1Number'] ?? '10+', 'label' => $homepageContent['stat1Label'] ?? '行业经验'],
-                    ['number' => $homepageContent['stat2Number'] ?? '500+', 'label' => $homepageContent['stat2Label'] ?? '服务企业'],
-                    ['number' => $homepageContent['stat3Number'] ?? '30亿+', 'label' => $homepageContent['stat3Label'] ?? '资金规模'],
-                    ['number' => $homepageContent['stat4Number'] ?? '99%', 'label' => $homepageContent['stat4Label'] ?? '客户满意度'],
-                ];
-                ?>
                 <div class="stats" role="region" aria-label="公司数据统计">
-                    <?php foreach ($heroStats as $s): ?>
                     <div class="stat-card">
-                        <div class="stat-number"><?php echo htmlspecialchars($s['number']); ?></div>
-                        <div class="stat-label"><?php echo htmlspecialchars($s['label']); ?></div>
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-label">年行业经验</div>
                     </div>
-                    <?php endforeach; ?>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">服务企业</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="30">0</div>
+                        <div class="stat-label">亿资金规模</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="99">0</div>
+                        <div class="stat-label">%客户满意度</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -655,7 +657,27 @@ if (!empty($templateContent)) {
         <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
         <meta name="360-site-verification" content="f310464a017d0090a59ed60edaa367e6" />
     <meta name="sogou_site_verification" content="hZk3RVI5el" />
-    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779254726">
+    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779306988"/>
+    <meta name="bytedance-verification-code" content="ax5xO1GtSFCBiE8fTWSz" />
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?3b035154874e19e664d8240b09e14e83e00fbc766c8f9a62fe69bf1753ce8548bc434964556b7d7129e9b750ed197d397efd7b0c6c715c1701396e1af40cec962b8d7c8c6655c9b00211740aa8a98e2e";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <meta name="description" content="<?php echo $escapedDesc; ?>">
         <meta name="keywords" content="<?php echo $escapedKeywords; ?>">
@@ -714,6 +736,30 @@ s.parentNode.insertBefore(el, s);
 })(window)
 </script>
     <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+        <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
+    <meta name="360-site-verification" content="f310464a017d0090a59ed60edaa367e6" />
+    <meta name="sogou_site_verification" content="hZk3RVI5el" />
+    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779306988"/>
+    <meta name="bytedance-verification-code" content="ax5xO1GtSFCBiE8fTWSz" />
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?3b035154874e19e664d8240b09e14e83e00fbc766c8f9a62fe69bf1753ce8548bc434964556b7d7129e9b750ed197d397efd7b0c6c715c1701396e1af40cec962b8d7c8c6655c9b00211740aa8a98e2e";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </head>
     <body>
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
@@ -772,26 +818,28 @@ s.parentNode.insertBefore(el, s);
                 <div class="hero-buttons">
                     <div class="booking-wrapper" style="display:flex;align-items:center;gap:12px;">
                         <button class="btn btn-primary" id="consultNowBtn" onclick="togglePhoneDisplay()" style="display:inline-flex;align-items:center;gap:6px;">
-                            <i class="fas fa-phone-alt"></i> 立即咨询
+                            立即咨询
                         </button>
                         <span id="phoneDisplay" style="display:none;font-size:18px;font-weight:700;color:#1e3a8a;letter-spacing:2px;white-space:nowrap;background:#fff;border-radius:8px;padding:8px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);"><?php echo $escapedPhone; ?></span>
                     </div>
                 </div>
-                <?php
-                $heroStats = [
-                    ['number' => $homepageContent['stat1Number'] ?? '10+', 'label' => $homepageContent['stat1Label'] ?? '行业经验'],
-                    ['number' => $homepageContent['stat2Number'] ?? '500+', 'label' => $homepageContent['stat2Label'] ?? '服务企业'],
-                    ['number' => $homepageContent['stat3Number'] ?? '30亿+', 'label' => $homepageContent['stat3Label'] ?? '资金规模'],
-                    ['number' => $homepageContent['stat4Number'] ?? '99%', 'label' => $homepageContent['stat4Label'] ?? '客户满意度'],
-                ];
-                ?>
                 <div class="stats" role="region" aria-label="公司数据统计">
-                    <?php foreach ($heroStats as $s): ?>
                     <div class="stat-card">
-                        <div class="stat-number"><?php echo htmlspecialchars($s['number']); ?></div>
-                        <div class="stat-label"><?php echo htmlspecialchars($s['label']); ?></div>
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-label">年行业经验</div>
                     </div>
-                    <?php endforeach; ?>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">服务企业</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="30">0</div>
+                        <div class="stat-label">亿资金规模</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="99">0</div>
+                        <div class="stat-label">%客户满意度</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1109,5 +1157,33 @@ if (!empty($cacheFile)) {
 
         @file_put_contents($cacheFile, $html);
     }
+// <head> tag injection for verification, auto-push, analytics
+$headTags = '    <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
+    <meta name="360-site-verification" content="f310464a017d0090a59ed60edaa367e6" />
+    <meta name="sogou_site_verification" content="hZk3RVI5el" />
+    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779306988"/>
+    <meta name="bytedance-verification-code" content="ax5xO1GtSFCBiE8fTWSz" />
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?3b035154874e19e664d8240b09e14e83e00fbc766c8f9a62fe69bf1753ce8548bc434964556b7d7129e9b750ed197d397efd7b0c6c715c1701396e1af40cec962b8d7c8c6655c9b00211740aa8a98e2e";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>';
+$html = str_replace('</head>', $headTags . "
+    </head>", $html);
+
 echo $html;
 
