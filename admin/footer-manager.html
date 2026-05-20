@@ -382,7 +382,18 @@
 
             },
 
-            {
+                        {
+                key: 'provinces',
+                label: '全国省份',
+                icon: 'fas fa-map-marked-alt',
+                linkType: true,
+                fields: [
+                    { key: 'item_value', label: '省份名称', type: 'text' },
+                    { key: 'item_url', label: '链接URL', type: 'text' }
+                ]
+            },
+
+{
 
                 key: 'bottom',
 
@@ -486,7 +497,7 @@
 
             // 先展开状态
 
-            const isCollapsed = false;
+            const isCollapsed = group.key === "provinces" || group.key === "quick_links";
 
 
 
@@ -494,7 +505,7 @@
 
                 <div class="footer-group" data-group="${group.key}">
 
-                    <div class="footer-group-header" onclick="toggleGroup(this)">
+                    <div class="footer-group-header${isCollapsed ? " collapsed" : ""}" onclick="toggleGroup(this)">
 
                         <h3><i class="${group.icon}"></i> ${group.label} <span style="font-weight:400;font-size:13px;color:#9ca3af;">（${items.length}项）</span></h3>
 
@@ -502,7 +513,7 @@
 
                     </div>
 
-                    <div class="footer-group-body">
+                    <div class="footer-group-body${isCollapsed ? " collapsed" : ""}">
 
                         ${fieldsHtml}
 

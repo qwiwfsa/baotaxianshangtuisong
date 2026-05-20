@@ -713,6 +713,7 @@ var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(el, s);
 })(window)
 </script>
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
 </head>
     <body>
         <a href="#main-content" class="skip-link">跳转到主要内容</a>
