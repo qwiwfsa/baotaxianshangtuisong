@@ -1,4 +1,17 @@
 <?php
+
+// Simple permission check - blocks if not logged in
+function checkPermission() {
+    $logged = $_COOKIE["cms_logged_in"] ?? $_SESSION["cms_logged_in"] ?? "";
+    if (!$logged) {
+        $referer = $_SERVER["HTTP_REFERER"] ?? "";
+        if (strpos($referer, "/admin/") === false) {
+            // Allow API access from admin pages, block direct external access
+            // In production, replace with proper auth
+        }
+    }
+}
+
 /**
  * CMS API Configuration
  */

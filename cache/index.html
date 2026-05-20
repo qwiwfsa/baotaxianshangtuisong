@@ -1,48 +1,3 @@
-<?php
-require_once __DIR__ . '/includes/logo.php';
-require_once __DIR__ . '/device-detect.php';
-
-DeviceDetector::redirect();
-require_once __DIR__ . '/includes/page-seo.php';
-
-// Server-side CMS hero data - read from cms_pages table (visual builder save target)
-$cmsHeroTitle = '';
-$cmsHeroSubtitle = '';
-$cmsHeroButtonText = '';
-try {
-    require_once __DIR__ . '/config/db.php';
-    $cmsDb = getDB();
-    $cmsStmt = $cmsDb->prepare("SELECT title, subtitle, content FROM cms_pages WHERE page_id = 'index' LIMIT 1");
-    $cmsStmt->execute();
-    $cmsRes = $cmsStmt->get_result();
-    if ($cmsRow = $cmsRes->fetch_assoc()) {
-        $cmsHeroTitle = $cmsRow['title'] ?? '';
-        $cmsHeroSubtitle = $cmsRow['subtitle'] ?? '';
-        if (!empty($cmsRow['content'])) {
-            $contentData = json_decode($cmsRow['content'], true);
-            if ($contentData) {
-                // Check nested data structure (visual builder format)
-                $heroData = $contentData['data'] ?? $contentData;
-                $cmsHeroTitle = $cmsHeroTitle ?: ($heroData['heroTitle'] ?? '');
-                $cmsHeroSubtitle = $cmsHeroSubtitle ?: ($heroData['heroSubtitle'] ?? '');
-                $cmsHeroButtonText = $heroData['heroButtonText'] ?? '';
-            }
-        }
-    }
-    $cmsStmt->close();
-    $cmsDb->close();
-} catch (Exception $e) {}
-// ---------- é¦é¡µç¼å­ ----------
-$homeCacheDir = __DIR__ . '/cache/';
-$homeCacheFile = $homeCacheDir . 'index.html';
-$homeCacheTTL = 3600;
-if (!is_dir($homeCacheDir)) { @mkdir($homeCacheDir, 0755, true); }
-if (is_file($homeCacheFile) && time() - filemtime($homeCacheFile) < $homeCacheTTL) {
-    readfile($homeCacheFile);
-    exit;
-}
-ob_start();
-?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -53,8 +8,8 @@ ob_start();
     <meta name="sogou_site_verification" content="hZk3RVI5el" />
     <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779254726">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
-    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
+    <meta name="description" content="专业资金服务平台，主营上市公司短拆、股票解质押过桥、企业个人摆账亮资、实缴验资、资金证明、银行时点日均冲量、工程亮资、定期存款、应收账款融资及云信票据置换，优化财务报表、增资产降负债，诚邀渠道代理合作。">
+    <meta name="keywords" content="上市公司短拆,股票解质押过桥,企业摆账,个人亮资,资金证明,实缴验资,银行冲量,工程亮资,过桥短拆,定期存款,应收账款融资,优化财务报表,降负债">
     <meta name="author" content="Yao资金网">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Yao资金网 - 专业资金业务服务商">
@@ -66,9 +21,9 @@ ob_start();
     <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、资金证明等全方位资金服务">
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <title><?php echo htmlspecialchars(!empty($page_title) ? $page_title : "Yao资金网"); ?></title>
-    <link rel="icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">
-    <link rel="shortcut icon" href="<?php echo htmlspecialchars($favicon_path); ?>" type="image/x-icon">
+    <title>要资金网 - 过桥短拆 | 摆账亮资 | 资金证明 | 实缴验资 | 银行存款冲量</title>
+    <link rel="icon" href="/favicon-v2.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon-v2.png" type="image/x-icon">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -210,7 +165,7 @@ var _hmt = _hmt || [];
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="<?php echo $header_logo; ?>" alt="Yao资金网" style="height:48px;width:auto;"></a>
+<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
             <ul class="nav-menu" role="menubar" id="dynamicNavMenu">
                 <!-- 动态菜单加载 -->
             </ul>
@@ -507,84 +462,14 @@ var _hmt = _hmt || [];
             </div>
 
             <div class="faq-container">
-                <?php
-                try {
-                    require_once __DIR__ . "/config/db.php";
-                    $faqConn = getDB();
-                    $faqCats = [];
-                    $catResult = $faqConn->query("SELECT cat_key, cat_label, sort_order FROM faq_categories ORDER BY sort_order ASC");
-                    if ($catResult) {
-                        while ($row = $catResult->fetch_assoc()) {
-                            $faqCats[$row['cat_key']] = $row;
-                        }
-                    }
-
-                    $faqItems = [];
-                    $faqResult = $faqConn->query("SELECT id, category, question, answer, sort_order FROM faq WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
-                    if ($faqResult) {
-                        while ($row = $faqResult->fetch_assoc()) {
-                            $cat = $row['category'] ?: 'general';
-                            if (!isset($faqItems[$cat])) $faqItems[$cat] = [];
-                            $faqItems[$cat][] = $row;
-                        }
-                    }
-
-                    $categoryConfig = [
-                        'liangzi'   => ['icon' => 'fa-lightbulb'],
-                        'guoqiao'   => ['icon' => 'fa-exchange-alt'],
-                        'baizhang'  => ['icon' => 'fa-university'],
-                        'receivable'=> ['icon' => 'fa-file-invoice-dollar'],
-                        'deposit'   => ['icon' => 'fa-building-columns'],
-                        'general'   => ['icon' => 'fa-circle-question'],
-                    ];
-
-                    $hasContent = false;
-                    foreach ($categoryConfig as $key => $cfg) {
-                        if (empty($faqItems[$key])) continue;
-                        $hasContent = true;
-                        $label = isset($faqCats[$key]) ? htmlspecialchars($faqCats[$key]['cat_label'], ENT_QUOTES, 'UTF-8') : $key;
-                        echo '<div class="faq-category">';
-                        echo '<h3 class="faq-category-title"><i class="fas ' . $cfg['icon'] . '" aria-hidden="true"></i> ' . $label . '</h3>';
-                        echo '<div class="faq-list">';
-                        foreach ($faqItems[$key] as $item) {
-                            $q = htmlspecialchars($item['question'], ENT_QUOTES, 'UTF-8');
-                            echo '<details class="faq-item">';
-                            echo '<summary class="faq-question">' . $q . '</summary>';
-                            echo '<div class="faq-answer">' . $item['answer'] . '</div>';
-                            echo '</details>';
-                        }
-                        echo '</div></div>';
-                    }
-
-                    if (!$hasContent) {
-                        // Fallback to hardcoded defaults if DB has no FAQ data
-                        $fallback = [
-                            'liangzi' => ['icon' => 'fa-lightbulb', 'label' => '亮资业务', 'items' => [
-                                ['q' => '什么是亮资业务？', 'a' => '<p>亮资业务是指企业在参与招投标、项目洽谈、商务合作等场景时，需要向对方展示资金实力的服务。我们提供大额资金在客户账户中展示，证明企业具备相应的资金履约能力。</p>'],
-                                ['q' => '亮资业务需要多长时间？', 'a' => '<p>根据客户需求，亮资业务可分为时点亮资和时期亮资。时点亮资通常在1-3个工作日内完成；时期亮资根据约定期限，从几天到数月不等。</p>'],
-                            ]],
-                            'guoqiao' => ['icon' => 'fa-exchange-alt', 'label' => '过桥资金', 'items' => [
-                                ['q' => '过桥资金适用于哪些场景？', 'a' => '<p>过桥资金主要适用于：银行贷款续贷、股票解质押、募集账户归还、企业并购、项目保证金、资金周转等短期资金需求场景。</p>'],
-                            ]],
-                        ];
-                        foreach ($fallback as $key => $fb) {
-                            echo '<div class="faq-category">';
-                            echo '<h3 class="faq-category-title"><i class="fas ' . $fb['icon'] . '" aria-hidden="true"></i> ' . $fb['label'] . '</h3>';
-                            echo '<div class="faq-list">';
-                            foreach ($fb['items'] as $item) {
-                                echo '<details class="faq-item">';
-                                echo '<summary class="faq-question">' . $item['q'] . '</summary>';
-                                echo '<div class="faq-answer">' . $item['a'] . '</div>';
-                                echo '</details>';
-                            }
-                            echo '</div></div>';
-                        }
-                    }
-                } catch (Exception $e) {
-                    // If DB fails, show nothing (silent fail)
-                }
-                ?>
-            </div>
+                <div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-lightbulb" aria-hidden="true"></i> 显账亮资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">亮资业务定价要素</summary><div class="faq-answer"><p>金额：<br>在谁名下：<br>什么地方：<br>具体是做什么用途：<br>想要资方怎么配合：</p></div></details><details class="faq-item"><summary class="faq-question">什么是亮资服务？</summary><div class="faq-answer">亮资服务是指企业在投标、合作洽谈等场景中，需要向对方展示自身资金实力时，由专业机构提供的资金证明服务。</div></details><details class="faq-item"><summary class="faq-question">亮资需要多长时间？</summary><div class="faq-answer"><p>一般情况下，亮资服务可在1-3个工作日内完成，具体时间根据金额大小和银行要求而定。</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-exchange-alt" aria-hidden="true"></i> 实缴验资</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">多少金额起做？</summary><div class="faq-answer"><p>100万起做 上到10个亿左右</p></div></details><details class="faq-item"><summary class="faq-question">你们实缴验资怎么做？</summary><div class="faq-answer"><p>账户新开激活后进款至企业法人或股东以投资款的名义进入企业完成缴纳然后出款。验资报告可带出</p></div></details><details class="faq-item"><summary class="faq-question">需要的资料有哪些？</summary><div class="faq-answer"><p>预约开户申请资料：<br>电子版营业执照 证开户许可证 法人身份 公司章程</p>
+<p>开户时准备的原件资料：<br>营业执照正副本 &nbsp;开户许可证 公章 法人章 财务章 公司章程 法人身份证&nbsp;</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-university" aria-hidden="true"></i> 企业摆账</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">企业名下实趴 需要了解什么？</summary><div class="faq-answer"><p>什么企业：<br>金额：<br>多长时间：<br>具体做什么用途：<br>自有资金多少：<br>能不能配资：<br>能配资进去的资金有多少：<br>新开户还是老户：</p></div></details><details class="faq-item"><summary class="faq-question">过桥要素表</summary><div class="faq-answer"><p>1、用款公司全称 :&nbsp;<br>2、用款地点 :<br>3、用款金额：<br>4、用款期限：<br>5、用款时间：<br>6、贷款到期时间：<br>7、上家还款机构：<br>8、上家还款额度：<br>9、自有资金：<br>10、上家抵押物：<br>11、下家放款机构：<br>12、下家放款额度：<br>13、下家抵押物是：<br>14、受托支付：<br>15、增信措施：<br>16、预算价格:<br>17、资金路径：<br>进款路径：<br>银行放款路径：<br>还资方路径：</p></div></details><details class="faq-item"><summary class="faq-question">摆账业务的资金安全吗？</summary><div class="faq-answer"><p>我们提供的摆账服务资金来源合法合规，全程由银行监管，确保资金安全。同时会签订正规合同，保障双方权益。</p></div></details><details class="faq-item"><summary class="faq-question">过桥资金最长可以使用多久？</summary><div class="faq-answer"><p>过桥资金通常为短期资金周转，使用期限一般在1-6个月，最长不超过1年。</p></div></details><details class="faq-item"><summary class="faq-question">摆账需要提供什么资料？</summary><div class="faq-answer"><p>预约开户申请资料：<br>电子版营业执照 证开户许可证 法人身份 公司章程</p>
+<p>开户时准备的原件资料：<br>营业执照正副本 &nbsp;开户许可证 公章 法人章 财务章 公司章程 法人身份证&nbsp;</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> 云信融资出表</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">云信与承兑汇票区别</summary><div class="faq-answer"><p>简单通俗来讲它就类似于银行承兑汇票 &nbsp;区别在于一个兑付人是银行，一个兑付人是我们持金融牌照的保理机构也属于国企 到期无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信出表融资操作逻辑</summary><div class="faq-answer"><p>操作逻辑：就是我们保理机构以收购买断企业应收帐款方式（ 不确权 签无追索权保理）等价融资开具云信票据（电子债权凭证）给企业，企业可以流转支付 代替现金使用 到期资方可以无条件刚性兑付。</p></div></details><details class="faq-item"><summary class="faq-question">云信融资成本多少？</summary><div class="faq-answer"><p>帮助企业以极低的年化不超过3.5%融资成本用来流转支付 或真实债务出表，代替现金使用一年以内，解决企业现金流不足支付问题。</p></div></details><details class="faq-item"><summary class="faq-question">操作流程</summary><div class="faq-answer"><p>业务操作流程</p>
+<p>阶段一：准备与申请提交申请 材料（所需资料:营业执照 应收账款清单，合同发票，业 务确认表，近三年财报，法人 身份证）&nbsp;</p>
+<p>阶段二：人工审批1个工作日 内完成</p>
+<p>阶段三：审批通过业务立项收 取履约保证金（财务审核履约 保证金金额及公户私户付款比 例)</p>
+<p>阶段四：法大大网签保理协 议，回寄合同资料原件，企业 承诺函扫描上传申请配置额度 （5-7个工作日），开票企业 注册中企云链账户，绑定uk。</p>
+<p>阶段五：全款支付1.财务确认 全款到账（包含对公对私账 户）2.出票给客户t+0或t+1， 出具对公账户收款金额的保理 服务费发票，业务结束。 目来自华为备忘录</p></div></details><details class="faq-item"><summary class="faq-question">云信属性与功能</summary><div class="faq-answer"><p>它的属性就是 可拆分 可流转 可支付 可融资 可贴现，市场上做票据的有大量收云信贴现的你可以了解下</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-building-columns" aria-hidden="true"></i> 资金证明</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">能做哪个地方？</summary><div class="faq-answer"><p>我们对地区不限制的，全国都可以做</p></div></details><details class="faq-item"><summary class="faq-question">资金证明定价看哪些地方？</summary><div class="faq-answer"><p>什么企业：<br>具体做什么用途：<br>金额：<br>新开户还是老户：<br>在当地还是可以来北京做：</p></div></details><details class="faq-item"><summary class="faq-question">怎么收费？</summary><div class="faq-answer"><p>具体看企业基本面 金额 新户还是老户 综合而定</p></div></details></div></div><div class="faq-category"><h3 class="faq-category-title"><i class="fas fa-circle-question" aria-hidden="true"></i> 一般问题</h3><div class="faq-list"><details class="faq-item"><summary class="faq-question">企业款了解要素</summary><div class="faq-answer"><p>什么地方：<br>银行：<br>金额：<br>多长时间：<br>票面利率多少：<br>外贴能给多少：<br>对企业注册地有没有要求<br>限不限户：<br>限不限金额：</p></div></details><details class="faq-item"><summary class="faq-question">冲量交单要素表</summary><div class="faq-answer"><p>什么地方：<br>银行：<br>金额：<br>几号进几号出：<br>个人款/企业款</p></div></details><details class="faq-item"><summary class="faq-question">过桥资金的利率是多少？</summary><div class="faq-answer"><p>过桥资金利率根据金额、期限、风险等因素综合确定，一般在月息1%-3%之间，具体费率需根据实际情况评估。</p></div></details><details class="faq-item"><summary class="faq-question">如何联系你们？</summary><div class="faq-answer"><p>您可以通过以下方式联系我们：<br>电话：13552883008<br>邮箱：wanglizhongguo@126.com<br>或直接在网站上点击"立即咨询"按钮。</p></div></details></div></div>            </div>
         </div>
     </section>
     </main>
@@ -597,8 +482,99 @@ var _hmt = _hmt || [];
     </div>
 
     <!-- 页脚(由数据库动态渲染) -->
-    <?php include 'includes/footer.php'; ?>
-<script src="/js/main.js?v=20260513b"></script>
+        <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <!-- 品牌信息 -->
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></div>
+                    <p class="footer-desc"></p>
+                </div>
+
+                <!-- 快速链接 -->
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">快速链接</h4>
+                    <ul class="footer-nav-list">
+                                                <li><a href="/sitemap.xml">网站地图</a></li>
+                                                <li><a href="#">友情链接</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/hangzhou.html">杭州过桥短拆</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/chongqing.html">重庆摆账亮资</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/chengdu.html">成都资金证明</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/shanghai.html">上海过桥资金</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/beijing.html">北京资金服务</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/wuhan.html">武汉过桥资金</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/guangzhou.html">广州摆账亮资</a></li>
+                                                <li><a href="https://www.yaozijin.com/fenzhan/shenzhen.html">深圳资金证明</a></li>
+                                            </ul>
+                </div>
+
+                <!-- 业务链接 -->
+                
+
+                <!-- 联系方式 -->
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">联系方式</h4>
+                    <ul class="footer-nav-list">
+                                                <li><i class="fas fa-phone"></i>  </li>
+                        <li><i class="fas fa-user"></i> </li>
+                        <li><i class="fas fa-envelope"></i> </li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <!-- 全国省份 -->
+            <div class="footer-provinces">
+                <div class="footer-provinces-inner">
+                    <h4 class="footer-provinces-title">全国省份</h4>
+                    <div class="footer-province-links">
+<a href="" class="footer-province-item">上海资金服务</a>
+<a href="/fenzhan/province-yun-nan.html" class="footer-province-item">云南资金服务</a>
+<a href="/fenzhan/province-nei-meng-gu.html" class="footer-province-item">内蒙古资金服务</a>
+<a href="/fenzhan/province-beijing.html" class="footer-province-item">北京资金服务</a>
+<a href="/fenzhan/province-ji-lin.html" class="footer-province-item">吉林资金服务</a>
+<a href="/fenzhan/province-si-chuan.html" class="footer-province-item">四川资金服务</a>
+<a href="/fenzhan/province-tianjin.html" class="footer-province-item">天津资金服务</a>
+<a href="/fenzhan/province-ning-xia.html" class="footer-province-item">宁夏资金服务</a>
+<a href="/fenzhan/province-an-hui.html" class="footer-province-item">安徽资金服务</a>
+<a href="/fenzhan/province-shan-dong.html" class="footer-province-item">山东资金服务</a>
+<a href="/fenzhan/province-shan-xi.html" class="footer-province-item">山西资金服务</a>
+<a href="/fenzhan/province-guang-dong.html" class="footer-province-item">广东资金服务</a>
+<a href="/fenzhan/province-guang-xi.html" class="footer-province-item">广西资金服务</a>
+<a href="/fenzhan/province-xin-jiang.html" class="footer-province-item">新疆资金服务</a>
+<a href="/fenzhan/province-jiang-su.html" class="footer-province-item">江苏资金服务</a>
+<a href="/fenzhan/province-jiang-xi.html" class="footer-province-item">江西资金服务</a>
+<a href="/fenzhan/province-he-bei.html" class="footer-province-item">河北资金服务</a>
+<a href="/fenzhan/province-he-nan.html" class="footer-province-item">河南资金服务</a>
+<a href="/fenzhan/province-zhe-jiang.html" class="footer-province-item">浙江资金服务</a>
+<a href="/fenzhan/province-hai-nan.html" class="footer-province-item">海南资金服务</a>
+<a href="/fenzhan/province-gang-ao-tai.html" class="footer-province-item">港澳台资金服务</a>
+<a href="/fenzhan/province-hu-bei.html" class="footer-province-item">湖北资金服务</a>
+<a href="/fenzhan/province-hu-nan.html" class="footer-province-item">湖南资金服务</a>
+<a href="/fenzhan/province-gan-su.html" class="footer-province-item">甘肃资金服务</a>
+<a href="/fenzhan/province-fu-jian.html" class="footer-province-item">福建资金服务</a>
+<a href="/fenzhan/province-xi-zang.html" class="footer-province-item">西藏资金服务</a>
+<a href="/fenzhan/province-gui-zhou.html" class="footer-province-item">贵州资金服务</a>
+<a href="/fenzhan/province-liao-ning.html" class="footer-province-item">辽宁资金服务</a>
+<a href="/fenzhan/province-chongqing.html" class="footer-province-item">重庆资金服务</a>
+<a href="/fenzhan/province-shaan-xi.html" class="footer-province-item">陕西资金服务</a>
+<a href="/fenzhan/province-qing-hai.html" class="footer-province-item">青海资金服务</a>
+<a href="/fenzhan/province-hei-long-jiang.html" class="footer-province-item">黑龙江资金服务</a>
+                    </div>
+                </div>
+            </div>
+
+<!-- 底部信息 -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p>
+                <p class="footer-disclaimer"><a href="https://beian.miit.gov.cn/#/Integrated/index">粤ICP备2026052915号</a></p>
+            </div>
+        </div>
+    
+    
+    
+    </footer>
+<!-- CLR --><script src="/js/main.js?v=20260513b"></script>
     
     <!-- CMS Data Integration -->
 
@@ -991,9 +967,3 @@ var _hmt = _hmt || [];
     </script>
 </body>
 </html>
-<?php
-$cacheHtml = ob_get_contents();
-ob_end_flush();
-@file_put_contents($homeCacheFile, $cacheHtml);
-
-

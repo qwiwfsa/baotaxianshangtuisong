@@ -110,6 +110,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 <div class="modal-overlay" id="modal"><div class="modal" id="modalBox"></div></div>
 <div class="toast" id="toast"></div>
 <script>
+
+function rtCmd(cmd,val){document.execCommand(cmd,false,val||null);G('rtEditor').focus()}
+function rtLink(){var u=prompt('URL:');if(u)document.execCommand('createLink',false,u)}
+function rtClean(){document.execCommand('removeFormat',false,null)}
+function fillEditor(html){G('rtEditor').innerHTML=html||''}
+
 var A='api/announcements/',page=1,sel=[],dt,editingId=0;
 function G(id){return document.getElementById(id)}
 function api(u,o){o=o||{};return fetch(A+u,o).then(function(r){return r.json()})}
@@ -150,10 +156,25 @@ M('<h3>'+(a.id?'编辑公告':'新建公告')+'</h3>'+
 '<div><label>状态</label><select id=afStatus><option value=1'+(a.status==1?' selected':'')+'>发布</option><option value=0'+(a.status==0?' selected':'')+'>草稿</option></select></div></div>'+
 '<div class=row><div><label>置顶优先级</label><input id=afPriority type=number value=\"'+a.priority+'\"></div><div></div></div>'+
 '<div class=row><div><label>定时发布</label><input id=afPubAt type=datetime-local value=\"'+(a.publish_at?a.publish_at.substring(0,16):'')+'\"></div><div><label>过期时间</label><input id=afExpAt type=datetime-local value=\"'+(a.expire_at?a.expire_at.substring(0,16):'')+'\"></div></div>'+
-'<label>内容 <span style=font-weight:400;color:#94a3b8>(支持HTML)</span></label><textarea id=afContent>'+esc(a.content||'')+'</textarea>'+
+'<label>内容 <span style=font-weight:400;color:#94a3b8>(支持HTML)</span></label><div style="border:1px solid #cbd5e1;border-radius:6px;overflow:hidden">
+<div style="padding:6px 8px;background:#f8fafc;border-bottom:1px solid #e2e8f0;display:flex;gap:4px;flex-wrap:wrap" id=rtBar>
+<button type=button onclick="rtCmd('bold')" title=粗体 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px"><b>B</b></button>
+<button type=button onclick="rtCmd('italic')" title=斜体 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px"><i>I</i></button>
+<button type=button onclick="rtCmd('underline')" title=下划线 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px"><u>U</u></button>
+<span style=width:1px;background:#e2e8f0;margin:0 4px></span>
+<button type=button onclick="rtCmd('insertUnorderedList')" title=列表 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px"><i class=fas fa-list></i></button>
+<button type=button onclick="rtCmd('formatBlock','<h3>')" title=标题 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px">H3</button>
+<button type=button onclick="rtCmd('formatBlock','<p>')" title=段落 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px">P</button>
+<span style=width:1px;background:#e2e8f0;margin:0 4px></span>
+<button type=button onclick="rtLink()" title=链接 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px"><i class=fas fa-link></i></button>
+<button type=button onclick="rtClean()" title=清除格式 style="padding:4px 8px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px"><i class=fas fa-remove-format></i></button>
+</div>
+<div id=rtEditor contenteditable=true style="min-height:180px;padding:8px 12px;font-size:13px;outline:none;max-height:400px;overflow-y:auto"></div>
+</div>
+<input type=hidden id=afContent>'+esc(a.content||'')+'</textarea>'+
 '<div class=modal-btns><button class=\"btn btn-outline\" onclick=H()>取消</button><button class=\"btn btn-primary\" onclick=save()>保存</button></div>')}
-function save(){
-var d={id:editingId,title:G('afTitle').value,content:G('afContent').value,category:G('afCat').value,status:parseInt(G('afStatus').value),priority:parseInt(G('afPriority').value)||0,publish_at:G('afPubAt').value||null,expire_at:G('afExpAt').value||null};
+function save(){G("afContent").value=G("rtEditor").innerHTML;
+var d={id:editingId,title:G('afTitle').value,content:G('rtEditor').innerHTML,category:G('afCat').value,status:parseInt(G('afStatus').value),priority:parseInt(G('afPriority').value)||0,publish_at:G('afPubAt').value||null,expire_at:G('afExpAt').value||null};
 api('announcement-save.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(d2){if(d2.success){T('已保存');H();loadList()}})}
 function del(id){if(!confirm('确定删除？'))return;api('announcement-delete.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})}).then(function(r){return r.json()}).then(function(d){if(d.success){T('已删除');loadList()}})}
 
