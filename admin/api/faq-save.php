@@ -35,6 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $stmt->close();
         echo json_encode(['code' => 0, 'msg' => '删除成功']);
+    $cacheFile = __DIR__ . '/../../cache/index.html';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+    // Clear fenzhan city caches
+    $fenzhanCacheDir = __DIR__ . '/../../fenzhan/cache/';
+    if (is_dir($fenzhanCacheDir)) {
+        $cacheFiles = glob($fenzhanCacheDir . '*.html');
+        if ($cacheFiles) {
+            foreach ($cacheFiles as $f) { @unlink($f); }
+        }
+    }
         exit;
     }
 
@@ -66,6 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->close();
             echo json_encode(['code' => 0, 'msg' => '更新成功', 'id' => $id]);
+    $cacheFile = __DIR__ . '/../../cache/index.html';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+    // Clear fenzhan city caches
+    $fenzhanCacheDir = __DIR__ . '/../../fenzhan/cache/';
+    if (is_dir($fenzhanCacheDir)) {
+        $cacheFiles = glob($fenzhanCacheDir . '*.html');
+        if ($cacheFiles) {
+            foreach ($cacheFiles as $f) { @unlink($f); }
+        }
+    }
         } else {
             // 新增FAQ
             $stmt = $conn->prepare("INSERT INTO faq (question, answer, category, seo_title, seo_keywords, seo_description) VALUES (?, ?, ?, ?, ?, ?)");
@@ -74,6 +98,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newId = $conn->insert_id;
             $stmt->close();
             echo json_encode(['code' => 0, 'msg' => '添加成功', 'id' => $newId]);
+    $cacheFile = __DIR__ . '/../../cache/index.html';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+    // Clear fenzhan city caches
+    $fenzhanCacheDir = __DIR__ . '/../../fenzhan/cache/';
+    if (is_dir($fenzhanCacheDir)) {
+        $cacheFiles = glob($fenzhanCacheDir . '*.html');
+        if ($cacheFiles) {
+            foreach ($cacheFiles as $f) { @unlink($f); }
+        }
+    }
         }
         exit;
     }
@@ -110,6 +146,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         
         echo json_encode(['code' => 0, 'msg' => '分类保存成功']);
+    $cacheFile = __DIR__ . '/../../cache/index.html';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+    // Clear fenzhan city caches
+    $fenzhanCacheDir = __DIR__ . '/../../fenzhan/cache/';
+    if (is_dir($fenzhanCacheDir)) {
+        $cacheFiles = glob($fenzhanCacheDir . '*.html');
+        if ($cacheFiles) {
+            foreach ($cacheFiles as $f) { @unlink($f); }
+        }
+    }
         exit;
     }
 
@@ -147,6 +195,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         
         echo json_encode(['code' => 0, 'msg' => '分类添加成功']);
+    $cacheFile = __DIR__ . '/../../cache/index.html';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+    // Clear fenzhan city caches
+    $fenzhanCacheDir = __DIR__ . '/../../fenzhan/cache/';
+    if (is_dir($fenzhanCacheDir)) {
+        $cacheFiles = glob($fenzhanCacheDir . '*.html');
+        if ($cacheFiles) {
+            foreach ($cacheFiles as $f) { @unlink($f); }
+        }
+    }
         exit;
     }
 
@@ -162,6 +222,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $stmt->close();
         echo json_encode(['code' => 0, 'msg' => '分类删除成功']);
+    $cacheFile = __DIR__ . '/../../cache/index.html';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+    // Clear fenzhan city caches
+    $fenzhanCacheDir = __DIR__ . '/../../fenzhan/cache/';
+    if (is_dir($fenzhanCacheDir)) {
+        $cacheFiles = glob($fenzhanCacheDir . '*.html');
+        if ($cacheFiles) {
+            foreach ($cacheFiles as $f) { @unlink($f); }
+        }
+    }
         exit;
     }
 

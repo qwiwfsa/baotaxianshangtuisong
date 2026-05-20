@@ -11,7 +11,7 @@ try {
     $conn = getDbConnection();
 
     // 初始化数据库（确保表存在）
-    initDatabase($conn);
+    if (function_exists("initDatabase")) { initDatabase($conn); }
 
     // 运行迁移确保新列存在
     ensureMigration($conn);
@@ -91,7 +91,10 @@ function handleList($conn) {
 
     $stmt = $conn->prepare($sql);
     if ($types && $params) {
-        $stmt->bind_param($types, ...$params);
+        $refs = [];
+        foreach ($params as $k => $v) $refs[$k] = $v;
+        $refs = array_merge([$types], $refs);
+        call_user_func_array([$stmt, 'bind_param'], $refs);
     }
     $stmt->execute();
     $result = $stmt->get_result();
@@ -233,7 +236,7 @@ function handleUpdate($conn) {
 
     $sql = "UPDATE cms_pages SET " . implode(', ', $fields) . " WHERE page_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param($types, ...$params);
+    $stmt->bind_param($types, ...$refs);
 
     if ($stmt->execute()) {
         $stmt->close();

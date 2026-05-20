@@ -100,7 +100,7 @@ try {
     exit;
 }
 
-initDatabase($conn);
+if (function_exists("initDatabase")) { initDatabase($conn); }
 
 if ($id > 0) {
     // 更新文章

@@ -998,7 +998,7 @@
                 sort_order: parseInt(document.getElementById('sortOrder').value) || 0,
                 seo_title: document.getElementById('seoTitle').value,
                 seo_keywords: document.getElementById('seoKeywords').value,
-                tag_ids: articleGetSelectedTagIds()
+                tag_ids: articleGetSelectedTagIds(),
                 seo_description: document.getElementById('seoDescription').value
             };
 
@@ -1008,7 +1008,7 @@
             });
 
             try {
-                const apiUrl = '../../api/news/save.php';
+                const apiUrl = 'api/news/save.php';
                 console.log('请求API:', apiUrl);
                 console.log('当前页面路径:', window.location.href);
 

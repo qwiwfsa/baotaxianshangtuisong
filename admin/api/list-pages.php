@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $conn = getDbConnection();
 
 // 初始化数据库
-initDatabase($conn);
+if (function_exists("initDatabase")) { initDatabase($conn); }
 
 // 查询所有页面
 $result = $conn->query("SELECT page_id, page_name, title, subtitle, last_modified FROM cms_pages ORDER BY last_modified DESC");

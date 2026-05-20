@@ -35,7 +35,7 @@ if (empty($ids)) {
 }
 
 $conn = getDbConnection();
-initDatabase($conn);
+if (function_exists("initDatabase")) { initDatabase($conn); }
 
 // 构建IN查询
 $placeholders = implode(',', array_fill(0, count($ids), '?'));

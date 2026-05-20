@@ -59,7 +59,7 @@ $subtitle = isset($data['subtitle']) ? $data['subtitle'] : '';
 $conn = getDbConnection();
 
 // 初始化数据库（确保表存在）
-initDatabase($conn);
+if (function_exists("initDatabase")) { initDatabase($conn); }
 
 // 检查页面是否已存在
 $checkStmt = $conn->prepare("SELECT content FROM cms_pages WHERE page_id = ?");

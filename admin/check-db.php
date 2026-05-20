@@ -8,7 +8,7 @@ require_once __DIR__ . '/api/config.php';
 header('Content-Type: text/html; charset=utf-8');
 
 $conn = getDbConnection();
-initDatabase($conn);
+if (function_exists("initDatabase")) { initDatabase($conn); }
 
 $stmt = $conn->prepare("SELECT page_id, page_name, title, subtitle, content, last_modified FROM cms_pages WHERE page_id = 'index'");
 $stmt->execute();

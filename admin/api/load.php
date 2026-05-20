@@ -35,7 +35,7 @@ $pageId = preg_replace('/[^a-zA-Z0-9_-]/', '', $pageId);
 $conn = getDbConnection();
 
 // 初始化数据库（确保表存在）
-initDatabase($conn);
+if (function_exists("initDatabase")) { initDatabase($conn); }
 
 // 查询页面数据
 $stmt = $conn->prepare("SELECT page_id, page_name, title, subtitle, content, last_modified FROM cms_pages WHERE page_id = ?");
