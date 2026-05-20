@@ -177,7 +177,7 @@
             const disclaimerEl = document.querySelector('.footer-disclaimer');
             if (disclaimerEl && g.bottom) {
                 const ds = g.bottom.find(i => i.item_key === 'disclaimer_text');
-                if (ds && ds.item_value) disclaimerEl.textContent = ds.item_value;
+                if (ds && ds.item_value) { var u = ds.item_url || ""; disclaimerEl.innerHTML = u ? "<a href=\"" + u + "\">" + ds.item_value + "</a>" : ds.item_value; }
             }
 
             console.log('[CMS] 页脚数据已同步');
