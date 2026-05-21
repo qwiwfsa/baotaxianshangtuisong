@@ -730,7 +730,7 @@ header("Expires: 0");
 
 <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="..//uploads/logo/logo_20260505_122045_69f9c47d515d1.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/../includes/nav.php"; ?></ul>
 
 
 
@@ -2163,7 +2163,7 @@ window.nextImage=window.nextImage||function(){if(window.currentImageIndex<window
     <!-- 移动端链接拦截器：确保点击标签/链接时保持在手机端 -->
     
 
-<script src="../js/nav-loader.js?v=5"></script>
+
 
 <?php include '../includes/footer-simple.php'; ?>
 </body>

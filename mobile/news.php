@@ -730,7 +730,7 @@ $newsDB->close();
 
 
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/../includes/nav.php"; ?></ul>
 
 
 
@@ -1337,5 +1337,5 @@ function escapeHtml(str){
     };
     xhr.send();
 })();
-</script><script src="../js/nav-loader.js?v=5"></script>
+</script>
 </body></html>

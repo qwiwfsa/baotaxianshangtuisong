@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page_1779208075_833df4</title>
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <link rel="stylesheet" href="/css/page-custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/page-builder.css">
+    <link rel="icon" href="/favicon-v2.png" type="image/x-icon">
+    <style>
+        .page-content { max-width: 1200px; margin: 0 auto; padding: 20px; padding-top: 84px; }
+        .img-placeholder { display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#9ca3af; flex-direction:column; gap:8px; font-size:14px; }
+        .img-placeholder i { font-size:32px; }
+        .img-placeholder-banner { width:100%; height:100%; min-height:300px; }
+        .img-placeholder-image { width:100%; min-height:200px; }
+        .card-image.card-image-placeholder { display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#9ca3af; flex-direction:column; gap:8px; font-size:14px; min-height:180px; }
+        .card-image.card-image-placeholder i { font-size:36px; }
+        .banner-img, .image-module-img, .card-img { max-width:100%; }
+    </style>
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("GET","admin/api/fetch-logo.php?t="+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector(".logo img");
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector(".footer-logo img");
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <main id="main-content"><div class="page-content"><div class="text-module" style="text-align: left;"><h2 class="module-title">标题文本</h2><div class="module-content">这里是内容文本，可以编辑修改。</div></div><div class="banner-slider" style="height: 500px;" data-autoplay="true"><div class="banner-slide"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Banner标题" class="banner-img"><div class="banner-content"><h2>Banner标题</h2><p>Banner副标题</p></div></div></div><div style="padding: 20px; text-align: center;">自定义HTML内容</div></div></main>
+    <div class="chat-widget" id="chatWidget" aria-label="联系电话">
+        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="点击电话"><i class="fas fa-phone-alt"></i></button>
+        <div class="chat-widget-phone-display"><span class="chat-widget-phone-text">13552883008</span></div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务</p></div>
+                <div class="footer-nav footer-nav-horizontal" data-footer-group="quick_links"><h4 class="footer-nav-title">快捷导航</h4><ul class="footer-nav-list"></ul></div>
+                <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>
+            </div>
+            <div class="footer-provinces"><div class="footer-provinces-inner"><h4 class="footer-provinces-title">全国省份</h4><div class="footer-province-links"><a href="/fenzhan/province-shanghai.html" class="footer-province-item">上海资金服务</a><a href="/fenzhan/province-yun-nan.html" class="footer-province-item">云南资金服务</a><a href="/fenzhan/province-nei-meng-gu.html" class="footer-province-item">内蒙古资金服务</a><a href="/fenzhan/province-beijing.html" class="footer-province-item">北京资金服务</a><a href="/fenzhan/province-ji-lin.html" class="footer-province-item">吉林资金服务</a><a href="/fenzhan/province-si-chuan.html" class="footer-province-item">四川资金服务</a><a href="/fenzhan/province-tianjin.html" class="footer-province-item">天津资金服务</a><a href="/fenzhan/province-ning-xia.html" class="footer-province-item">宁夏资金服务</a><a href="/fenzhan/province-an-hui.html" class="footer-province-item">安徽资金服务</a><a href="/fenzhan/province-shan-dong.html" class="footer-province-item">山东资金服务</a><a href="/fenzhan/province-shan-xi.html" class="footer-province-item">山西资金服务</a><a href="/fenzhan/province-guang-dong.html" class="footer-province-item">广东资金服务</a><a href="/fenzhan/province-guang-xi.html" class="footer-province-item">广西资金服务</a><a href="/fenzhan/province-xin-jiang.html" class="footer-province-item">新疆资金服务</a><a href="/fenzhan/province-jiang-su.html" class="footer-province-item">江苏资金服务</a><a href="/fenzhan/province-jiang-xi.html" class="footer-province-item">江西资金服务</a><a href="/fenzhan/province-he-bei.html" class="footer-province-item">河北资金服务</a><a href="/fenzhan/province-he-nan.html" class="footer-province-item">河南资金服务</a><a href="/fenzhan/province-zhe-jiang.html" class="footer-province-item">浙江资金服务</a><a href="/fenzhan/province-hai-nan.html" class="footer-province-item">海南资金服务</a><a href="/fenzhan/province-gang-ao-tai.html" class="footer-province-item">港澳台资金服务</a><a href="/fenzhan/province-hu-bei.html" class="footer-province-item">湖北资金服务</a><a href="/fenzhan/province-hu-nan.html" class="footer-province-item">湖南资金服务</a><a href="/fenzhan/province-gan-su.html" class="footer-province-item">甘肃资金服务</a><a href="/fenzhan/province-fu-jian.html" class="footer-province-item">福建资金服务</a><a href="/fenzhan/province-xi-zang.html" class="footer-province-item">西藏资金服务</a><a href="/fenzhan/province-gui-zhou.html" class="footer-province-item">贵州资金服务</a><a href="/fenzhan/province-liao-ning.html" class="footer-province-item">辽宁资金服务</a><a href="/fenzhan/province-chongqing.html" class="footer-province-item">重庆资金服务</a><a href="/fenzhan/province-shaan-xi.html" class="footer-province-item">陕西资金服务</a><a href="/fenzhan/province-qing-hai.html" class="footer-province-item">青海资金服务</a><a href="/fenzhan/province-hei-long-jiang.html" class="footer-province-item">黑龙江资金服务</a></div></div></div>
+            <div class="footer-bottom"><p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p><p class="footer-disclaimer"><a href="https://beian.miit.gov.cn/#/Integrated/index">粤ICP备2026052915号</a></p></div>
+        </div>
+    </footer>
+    <script>document.addEventListener("error",function(e){if(e.target.tagName==="IMG"){e.target.style.display="none";var p=e.target.parentElement;if(p&&!p.querySelector(".img-placeholder")){var d=document.createElement("div");d.className="img-placeholder";d.innerHTML="<i class='fas fa-image'></i><span>Image Error</span>";p.appendChild(d)}}},true);</script>
+    <script src="/js/footer-loader.js"></script>
+    <script src="/assets/js/page-builder.js"></script>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

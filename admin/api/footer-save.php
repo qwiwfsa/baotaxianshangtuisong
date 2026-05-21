@@ -139,3 +139,8 @@ if ($action === 'delete_link') {
 }
 
 echo json_encode(['code' => 1, 'msg' => '未知操作']);
+
+// Clear homepage cache on POST (footer modified)
+if (['REQUEST_METHOD'] === 'POST') {
+    @unlink(__DIR__ . '/../../../cache/index.html');
+}

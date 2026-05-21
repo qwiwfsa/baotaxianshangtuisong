@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cs</title>
+    <link rel="stylesheet" href="/css/style.min.css?v=20250514">
+    <link rel="stylesheet" href="/css/page-custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/page-builder.css">
+    <link rel="icon" href="/favicon-v2.png" type="image/x-icon">
+    <style>
+        .page-content { max-width: 1200px; margin: 0 auto; padding: 20px; padding-top: 84px; }
+        .img-placeholder { display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#9ca3af; flex-direction:column; gap:8px; font-size:14px; }
+        .img-placeholder i { font-size:32px; }
+        .img-placeholder-banner { width:100%; height:100%; min-height:300px; }
+        .img-placeholder-image { width:100%; min-height:200px; }
+        .card-image.card-image-placeholder { display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#9ca3af; flex-direction:column; gap:8px; font-size:14px; min-height:180px; }
+        .card-image.card-image-placeholder i { font-size:36px; }
+        .banner-img, .image-module-img, .card-img { max-width:100%; }
+    </style>
+    <script>
+    (function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("GET","admin/api/fetch-logo.php?t="+Date.now(),true);
+        xhr.onload=function(){
+            if(xhr.status>=200&&xhr.status<400){
+                try{
+                    var resp=JSON.parse(xhr.responseText);
+                    if(resp.code===0&&resp.data){function fixPath(p){return p;}
+                        if(resp.data.header_logo){
+                            var hl=document.querySelector(".logo img");
+                            if(hl)hl.src=fixPath(resp.data.header_logo);
+                        }
+                        if(resp.data.footer_logo){
+                            var fl=document.querySelector(".footer-logo img");
+                            if(fl)fl.src=fixPath(resp.data.footer_logo);
+                        }
+                    }
+                }catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+        <div class="navbar-container">
+            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <main id="main-content"><div class="page-content"><div class="text-module" style="text-align: left;"><h2 class="module-title">测试</h2><div class="module-content">下是公司的具体业务，请深入学习了解
+🎯 上市公司类
+•    上市公司短拆、股票解质押过桥
+•    募集账户归还过桥、产业基金备案过桥
+•    股票质押、定增、协议转让、代持
+•    优化财务报表、降负债
+💰 企业/个人摆帐类
+•    企业1-6月定存摆账、云信票据实摆
+•    过账实趴、抵押类过桥
+•    实缴验资、资金证明、银行保函
+•    贸易增量、显账或现金亮资  
+🏦 银行存款类
+•    银行时点，日均、过月底银行冲量
+•    银行一年内和三年内定期存款
+🔄应收账款买断融资
+•    应收账款等价置换云信票据，代替现金
+•    可拆分、可流转、可支付、可融资贴现
+•    不挑企业、不看征信、执行诉讼也能做
+•    应用场景：收购矿产、替代保证金/保函、清理三角债、平应收应付、归还股东占款、增资产降负债 展示资金实力。</div></div><div class="container-module" style="width:100%;padding:24px;background-color:#ffffff;border-radius:0;"></div><div class="image-module layout-normal"><img src="/uploads/20260427_69ef64fa2dcd7.png" alt="图片描述" style="width: 100%;" class="image-module-img"></div><div class="text-module" style="text-align: left;"><h2 class="module-title">标题文本</h2><div class="module-content">这里是内容文本，可以编辑修改。</div></div><div class="image-module layout-normal"><img src="/uploads/image.jpg" alt="图片描述" style="width: 100%;" class="image-module-img"></div><div class="card-grid card-style-modern" style="grid-template-columns: repeat(3, 1fr);"><div class="card-item"><div class="card-image"><img src="/uploads/20260427_69ef6997e488a.JPG" alt="卡片标题1" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题1</h3><p class="card-description">卡片描述内容</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/20260427_69ef6997e488a.JPG" alt="卡片标题2" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题2</h3><p class="card-description">卡片描述内容</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/20260427_69ef6997e488a.JPG" alt="卡片标题3" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题3</h3><p class="card-description">卡片描述内容</p></div></div></div><div class="card-grid card-style-modern" style="grid-template-columns: repeat(3, 1fr);"><div class="card-item"><div class="card-image"><img src="/uploads/card1.jpg" alt="卡片标题1" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题1</h3><p class="card-description">卡片描述内容</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/card2.jpg" alt="卡片标题2" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题2</h3><p class="card-description">卡片描述内容</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/card3.jpg" alt="卡片标题3" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题3</h3><p class="card-description">卡片描述内容</p></div></div></div><div class="button-module" style="text-align: center;"><a href="#" class="btn btn-primary btn-medium" >点击按钮</a></div><div class="card-grid card-style-modern" style="grid-template-columns: repeat(4, 1fr);"><div class="card-item"><div class="card-image"><img src="/uploads/card1.jpg" alt="卡片标题1" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题1</h3><p class="card-description">卡片描述内容</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/card2.jpg" alt="卡片标题2" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题2</h3><p class="card-description">卡片描述内容</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/card3.jpg" alt="卡片标题3" class="card-img"></div><div class="card-body"><h3 class="card-title">卡片标题3</h3><p class="card-description">卡片描述内容</p></div></div></div><div class="columns-module" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch;"><div class="column-item" style="min-height:50px;"></div><div class="column-item" style="min-height:50px;"></div></div><div style="max-width: 1100px; margin: 40px auto; padding: 0 20px; font-family: Arial,'Microsoft YaHei',sans-serif; color: #222;">
+<div style="background: linear-gradient(90deg,#0d47a1,#1976d2); color: #fff; border-radius: 16px; padding: 35px; text-align: center; margin-bottom: 30px;">
+<h1 style="margin: 0; font-size: 28px;">{城市}资金服务 &middot; 正规专业平台</h1>
+<p style="margin-top: 10px; font-size: 16px; opacity: 0.9;">企业摆账、过桥短拆、资金证明、银行冲量一站式服务</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 20px; margin-bottom: 30px;">
+<div style="background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 25px;">
+<h3 style="color: #1976d2; margin-top: 0;">主营业务</h3>
+<ul style="padding-left: 20px; line-height: 1.8;">
+<li>{城市}企业摆账</li>
+<li>{城市}过桥资金</li>
+<li>{城市}资金证明</li>
+<li>{城市}银行冲量</li>
+<li>{城市}验资实缴</li>
+</ul>
+</div>
+<div style="background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 25px;">
+<h3 style="color: #1976d2; margin-top: 0;">我们优势</h3>
+<ul style="padding-left: 20px; line-height: 1.8;">
+<li>自有资金，快速到账</li>
+<li>全国业务均可承接</li>
+<li>10年资金行业经验</li>
+<li>安全保密，信誉可靠</li>
+<li>成功案例上千</li>
+</ul>
+</div>
+</div>
+<div style="background: #fff8e1; border-radius: 16px; padding: 30px; text-align: center;">
+<h3 style="color: #f57c00; margin-top: 0;">{城市}资金业务咨询</h3>
+<p style="font-size: 16px; line-height: 1.7; margin: 12px 0;">欢迎来电咨询，免费提供解决方案，快速匹配最优资金方案。</p>
+<p style="font-size: 18px; font-weight: bold; color: #d32f2f;">联系电话：13552883008（王经理）</p>
+</div>
+</div><div class="carousel-module" style="position:relative;height:400px;overflow:hidden;" data-autoplay="true" data-interval="5"><div class="carousel-slide" data-index="0" style="position:absolute;inset:0;transition:opacity 0.5s;"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="轮播标题1" style="width:100%;height:100%;object-fit:cover;"></div><div class="carousel-slide" data-index="1" style="position:absolute;inset:0;transition:opacity 0.5s;opacity:0;pointer-events:none;"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="轮播标题2" style="width:100%;height:100%;object-fit:cover;"></div><div class="carousel-slide" data-index="2" style="position:absolute;inset:0;transition:opacity 0.5s;opacity:0;pointer-events:none;"><img src="/uploads/slide3.jpg" alt="轮播标题3" style="width:100%;height:100%;object-fit:cover;"></div><div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;"><span data-index="0" style="width:10px;height:10px;border-radius:50%;background:#fff;cursor:pointer;"></span><span data-index="1" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;"></span><span data-index="2" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;"></span></div></div><div class="image-text-module" style="display:flex;flex-direction:row;gap:24px;align-items:center;"><div style="flex:0 0 40%;max-width:100%;"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="图文标题" style="width:100%;border-radius:8px;"></div><div style="flex:1;"><h3>图文标题</h3><div>图文描述内容</div></div></div></div></main>
+    <div class="chat-widget" id="chatWidget" aria-label="联系电话">
+        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="点击电话"><i class="fas fa-phone-alt"></i></button>
+        <div class="chat-widget-phone-display"><span class="chat-widget-phone-text">13552883008</span></div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand"><div class="footer-logo"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></div><p class="footer-desc">专业资金业务服务商，提供上市公司过桥、企业摆账、银行存款、应收账款融资等全方位资金服务</p></div>
+                <div class="footer-nav footer-nav-horizontal" data-footer-group="quick_links"><h4 class="footer-nav-title">快捷导航</h4><ul class="footer-nav-list"></ul></div>
+                <div class="footer-nav" data-footer-group="contact"><h4 class="footer-nav-title">联系方式</h4><ul class="footer-nav-list"></ul></div>
+            </div>
+            <div class="footer-provinces"><div class="footer-provinces-inner"><h4 class="footer-provinces-title">全国省份</h4><div class="footer-province-links"><a href="/fenzhan/province-shanghai.html" class="footer-province-item">上海资金服务</a><a href="/fenzhan/province-yun-nan.html" class="footer-province-item">云南资金服务</a><a href="/fenzhan/province-nei-meng-gu.html" class="footer-province-item">内蒙古资金服务</a><a href="/fenzhan/province-beijing.html" class="footer-province-item">北京资金服务</a><a href="/fenzhan/province-ji-lin.html" class="footer-province-item">吉林资金服务</a><a href="/fenzhan/province-si-chuan.html" class="footer-province-item">四川资金服务</a><a href="/fenzhan/province-tianjin.html" class="footer-province-item">天津资金服务</a><a href="/fenzhan/province-ning-xia.html" class="footer-province-item">宁夏资金服务</a><a href="/fenzhan/province-an-hui.html" class="footer-province-item">安徽资金服务</a><a href="/fenzhan/province-shan-dong.html" class="footer-province-item">山东资金服务</a><a href="/fenzhan/province-shan-xi.html" class="footer-province-item">山西资金服务</a><a href="/fenzhan/province-guang-dong.html" class="footer-province-item">广东资金服务</a><a href="/fenzhan/province-guang-xi.html" class="footer-province-item">广西资金服务</a><a href="/fenzhan/province-xin-jiang.html" class="footer-province-item">新疆资金服务</a><a href="/fenzhan/province-jiang-su.html" class="footer-province-item">江苏资金服务</a><a href="/fenzhan/province-jiang-xi.html" class="footer-province-item">江西资金服务</a><a href="/fenzhan/province-he-bei.html" class="footer-province-item">河北资金服务</a><a href="/fenzhan/province-he-nan.html" class="footer-province-item">河南资金服务</a><a href="/fenzhan/province-zhe-jiang.html" class="footer-province-item">浙江资金服务</a><a href="/fenzhan/province-hai-nan.html" class="footer-province-item">海南资金服务</a><a href="/fenzhan/province-gang-ao-tai.html" class="footer-province-item">港澳台资金服务</a><a href="/fenzhan/province-hu-bei.html" class="footer-province-item">湖北资金服务</a><a href="/fenzhan/province-hu-nan.html" class="footer-province-item">湖南资金服务</a><a href="/fenzhan/province-gan-su.html" class="footer-province-item">甘肃资金服务</a><a href="/fenzhan/province-fu-jian.html" class="footer-province-item">福建资金服务</a><a href="/fenzhan/province-xi-zang.html" class="footer-province-item">西藏资金服务</a><a href="/fenzhan/province-gui-zhou.html" class="footer-province-item">贵州资金服务</a><a href="/fenzhan/province-liao-ning.html" class="footer-province-item">辽宁资金服务</a><a href="/fenzhan/province-chongqing.html" class="footer-province-item">重庆资金服务</a><a href="/fenzhan/province-shaan-xi.html" class="footer-province-item">陕西资金服务</a><a href="/fenzhan/province-qing-hai.html" class="footer-province-item">青海资金服务</a><a href="/fenzhan/province-hei-long-jiang.html" class="footer-province-item">黑龙江资金服务</a></div></div></div>
+            <div class="footer-bottom"><p class="footer-copyright">© 2026 Yao资金网 宏都资本版权所有</p><p class="footer-disclaimer"><a href="https://beian.miit.gov.cn/#/Integrated/index">粤ICP备2026052915号</a></p></div>
+        </div>
+    </footer>
+    <script>document.addEventListener("error",function(e){if(e.target.tagName==="IMG"){e.target.style.display="none";var p=e.target.parentElement;if(p&&!p.querySelector(".img-placeholder")){var d=document.createElement("div");d.className="img-placeholder";d.innerHTML="<i class='fas fa-image'></i><span>Image Error</span>";p.appendChild(d)}}},true);</script>
+    <script src="/js/footer-loader.js"></script>
+    <script src="/assets/js/page-builder.js"></script>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

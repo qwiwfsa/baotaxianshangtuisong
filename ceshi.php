@@ -15,7 +15,7 @@
     <meta name="twitter:description" content="提供上市公司过桥、企业摆账、银行存款、资金证明等全方位资金服务">
     <link rel="canonical" href="https://www.yaozijin.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <title> - Yao资金网</title>
+    <title>ceshi - Yao资金网</title>
     <link rel="icon" href="/favicon-v2.png" type="image/x-icon">
     <link rel="shortcut icon" href="/favicon-v2.png" type="image/x-icon">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -130,79 +130,33 @@
 </script>
 
 <style id="pb-modules">
-.page-section{padding:60px 0}.section-container{max-width:1200px;margin:0 auto;padding:0 24px}.section-container h2{font-size:28px;font-weight:700;margin-bottom:16px;color:#1e293b}
-.hero{position:relative;overflow:hidden}.hero-slide{position:absolute;inset:0}.hero-slide img{width:100%;height:100%;object-fit:cover}.hero-container{max-width:1200px;margin:0 auto;padding:60px 24px}.hero-title{font-size:42px;font-weight:800;margin-bottom:12px}.hero-subtitle{font-size:20px;margin-bottom:24px;opacity:0.9}
-.btn{display:inline-block;padding:10px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none}.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#1d4ed8}.btn-secondary{background:#64748b;color:#fff}.btn-outline{background:transparent;color:#2563eb;border:2px solid #2563eb}.btn-small{padding:6px 18px;font-size:13px}.btn-medium{padding:10px 28px;font-size:15px}.btn-large{padding:14px 36px;font-size:17px}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);transition:box-shadow 0.25s,transform 0.25s}.card:hover{box-shadow:0 8px 30px rgba(0,0,0,0.10);transform:translateY(-2px)}.card-img img{width:100%;height:200px;object-fit:cover}.card-body{padding:20px}.card-body h3{font-size:18px;font-weight:600;margin-bottom:8px;color:#1e293b}.card-body p{font-size:14px;color:#64748b;line-height:1.6;margin-bottom:12px}.card-link{color:#2563eb;font-weight:600;font-size:14px;text-decoration:none}.card-link:hover{text-decoration:underline}
-.carousel{position:relative;overflow:hidden}.carousel-slide{position:absolute;inset:0}.carousel-slide img{width:100%;height:100%;object-fit:cover}
-.module-image-text{display:flex;gap:24px;align-items:center}.module-image-text img{width:100%;border-radius:8px}
-.module-container{margin:0 auto}
-.module-video video{width:100%;border-radius:8px}
-.module-button{padding:20px 0}.module-custom{padding:20px 0}.module-custom img{max-width:100%;height:auto}
-@media(max-width:768px){.page-section{padding:40px 0}.section-container{padding:0 16px}.hero-title{font-size:28px}.hero-subtitle{font-size:16px}.card-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}.module-image-text{flex-direction:column}}
+#main-content .page-section{padding:60px 0}#main-content .section-container{max-width:1200px;margin:0 auto;padding:0 24px}#main-content .section-container h2{font-size:28px;font-weight:700;margin-bottom:16px;color:#1e293b}
+#main-content .hero{position:relative;overflow:hidden}#main-content .hero-slide{position:absolute;inset:0}#main-content .hero-slide img{width:100%;height:100%;object-fit:cover}#main-content .hero-container{max-width:1200px;margin:0 auto;padding:60px 24px}#main-content .hero-title{font-size:42px;font-weight:800;margin-bottom:12px}#main-content .hero-subtitle{font-size:20px;margin-bottom:24px;opacity:0.9}
+#main-content .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;font-size:14px;font-weight:600;border-radius:8px;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none}#main-content .btn-primary{background:#1e3a8a;color:#fff;padding:14px 28px}#main-content .btn-primary:hover{background:#1e40af;transform:translateY(-1px)}#main-content .btn-secondary{background:#64748b;color:#fff}#main-content .btn-outline{background:transparent;color:#1e3a8a;border:2px solid #1e3a8a}#main-content .btn-small{padding:8px 16px;font-size:12px}#main-content .btn-medium{padding:12px 24px;font-size:14px}#main-content .btn-large{padding:16px 32px;font-size:16px}
+#main-content .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}#main-content .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);transition:box-shadow 0.25s,transform 0.25s}#main-content .card:hover{box-shadow:0 8px 30px rgba(0,0,0,0.10);transform:translateY(-2px)}#main-content .card-img img{width:100%;height:200px;object-fit:cover}#main-content .card-body{padding:20px}#main-content .card-body h3{font-size:18px;font-weight:600;margin-bottom:8px;color:#1e293b}#main-content .card-body p{font-size:14px;color:#64748b;line-height:1.6;margin-bottom:12px}#main-content .card-link{color:#1e3a8a;font-weight:600;font-size:14px;text-decoration:none}#main-content .card-link:hover{text-decoration:underline}
+#main-content .carousel{position:relative;overflow:hidden}#main-content .carousel-slide{position:absolute;inset:0}#main-content .carousel-slide img{width:100%;height:100%;object-fit:cover}
+#main-content .module-image-text{display:flex;gap:24px;align-items:center}#main-content .module-image-text img{width:100%;border-radius:8px}
+#main-content .module-container{margin:0 auto}#main-content .module-video video{width:100%;border-radius:8px}
+#main-content .module-button{padding:20px 0}#main-content .module-custom{padding:20px 0}#main-content .module-custom img{max-width:100%;height:auto}
+@media(max-width:768px){#main-content .page-section{padding:40px 0}#main-content .section-container{padding:0 16px}#main-content .hero-title{font-size:28px}#main-content .hero-subtitle{font-size:16px}#main-content .card-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}#main-content .module-image-text{flex-direction:column}}
 </style></head>
 <body>
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
     <!-- 导航栏 -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><li role="none"><a href="/" class="nav-link active" role="menuitem">首页</a></li>
-<li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-<li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-<li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-<li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-<li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-<li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-</ul>
-            
-            
+    <?php include __DIR__ . "/includes/nav.php"; ?>
 
-            <!-- 搜索按钮 -->
-            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-
-        <!-- 搜索框 -->
-        <div class="search-overlay" id="searchOverlay" role="search" aria-hidden="true">
-            <div class="search-container">
-                <form class="search-form" id="searchForm" action="#" method="get">
-                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、案例、资讯..." aria-label="搜索内容">
-                    <button type="submit" class="search-submit" aria-label="搜索">
-                        <i class="fas fa-search" aria-hidden="true"></i>
-                    </button>
-                </form>
-                <div class="search-suggestions" id="searchSuggestions" aria-live="polite"></div>
-                <button class="search-close" id="searchClose" aria-label="关闭搜索">
-                    <i class="fas fa-times" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    
-<main id="main-content">
-<section class="page-section"><div class="section-container">这里是内容文本，可以编辑修改。</div></section>
+    <main id="main-content">
+<section class="page-section"><div class="section-container" style="text-align:center"><h2>标题文本</h2><div>这里是内容文本，可以编辑修改。</div></div></section>
 <section class="page-section"><div class="section-container"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="图片描述" style="max-width:100%;width:100%" loading="lazy"></div></section>
-<section class="page-section"><div class="section-container">这里是内容文本，可以编辑修改。</div></section>
-<section class="page-section"><div class="section-container"><div class="card-grid"><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题1" loading="lazy"></div><div class="card-body"><h3>卡片标题1</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题2" loading="lazy"></div><div class="card-body"><h3>卡片标题2</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题3" loading="lazy"></div><div class="card-body"><h3>卡片标题3</h3><p>卡片描述内容</p></div></div></div></div></section>
-<div class="module module-button" style="text-align:center;padding:20px 0"><a href="#" class="btn btn-primary btn-medium">点击按钮</a></div>
-<section class="page-section"><div class="section-container"><div class="card-grid"><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题1" loading="lazy"></div><div class="card-body"><h3>卡片标题1</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题2" loading="lazy"></div><div class="card-body"><h3>卡片标题2</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题3" loading="lazy"></div><div class="card-body"><h3>卡片标题3</h3><p>卡片描述内容</p></div></div></div></div></section>
-<div class="module module-button" style="text-align:center;padding:20px 0"><a href="#" class="btn btn-primary btn-medium">点击按钮</a></div>
-<section class="page-section"><div class="section-container"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="图片描述" style="max-width:100%;width:100%" loading="lazy"></div></section>
-<section class="page-section"><div class="section-container"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="图片描述" style="max-width:100%;width:100%" loading="lazy"></div></section>
+<section class="page-section"><div class="section-container" style="text-align:center"><h2>标题文本</h2><div>这里是内容文本，可以编辑修改。</div></div></section>
+<section class="page-section"><div class="section-container"><div class="card-grid" style="grid-template-columns:repeat(3,1fr)"><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题1" loading="lazy"></div><div class="card-body"><h3>卡片标题1</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题2" loading="lazy"></div><div class="card-body"><h3>卡片标题2</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题3" loading="lazy"></div><div class="card-body"><h3>卡片标题3</h3><p>卡片描述内容</p></div></div></div></div></section>
+<div class="module module-button" style="text-align:center;padding:20px 0"><span class="btn btn-primary btn-medium">点击按钮</span></div>
+<section class="page-section"><div class="section-container"><div class="card-grid" style="grid-template-columns:repeat(3,1fr)"><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题1" loading="lazy"></div><div class="card-body"><h3>卡片标题1</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题2" loading="lazy"></div><div class="card-body"><h3>卡片标题2</h3><p>卡片描述内容</p></div></div><div class="card"><div class="card-img"><img src="/uploads/20260514_6a05a0508afd2.jpg" alt="卡片标题3" loading="lazy"></div><div class="card-body"><h3>卡片标题3</h3><p>卡片描述内容</p></div></div></div></div></section>
+<div class="module module-button" style="text-align:center;padding:20px 0"><span class="btn btn-primary btn-medium">点击按钮</span></div>
 
 </main>
-
 
     <!-- 右侧边浮动电话按钮 -->
     <div class="chat-widget" id="chatWidget" aria-label="联系电话">
@@ -214,69 +168,7 @@
             </div></div>
 
     <!-- 页脚(由数据库动态渲染) -->
-        <footer class="footer">
-    <div class="footer-container">
-        <div class="footer-main">
-            <div class="footer-brand">
-                <div class="footer-logo"><img src="/uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资资金" style="height:48px;width:auto;"></div>
-                <p class="footer-desc">专业资金业务服务商，提供上市公司短拆、企业过桥、银行存款、应收账款保理等全方位资金服务</p>
-            </div>
-            <div class="footer-nav footer-nav-horizontal" data-footer-group="quick_links">
-                <h4 class="footer-nav-title">快捷导航</h4>
-                <ul class="footer-nav-list" style="flex-direction:row;flex-wrap:wrap;gap:20px">
-                    <li><a href="https://yaozijin.com/fenzhan/hangzhou.html">杭州</a></li>
-                    <li><a href="https://yaozijin.com/fenzhan/chongqing.html">重庆</a></li>
-                    <li><a href="https://yaozijin.com/fenzhan/chengdu.html">成都</a></li>
-                    <li><a href="#">更多城市</a></li>
-                    <li><a href="/sitemap.xml">网站地图</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-provinces">
-            <div class="footer-provinces-inner">
-                <h4 class="footer-provinces-title">全国省份</h4>
-                <div class="footer-province-links">
-                    <a href="/fenzhan/province-shanghai.html" class="footer-province-item">上海资金服务</a>
-                    <a href="/fenzhan/province-yun-nan.html" class="footer-province-item">云南资金服务</a>
-                    <a href="/fenzhan/province-nei-meng-gu.html" class="footer-province-item">内蒙古资金服务</a>
-                    <a href="/fenzhan/province-beijing.html" class="footer-province-item">北京资金服务</a>
-                    <a href="/fenzhan/province-ji-lin.html" class="footer-province-item">吉林资金服务</a>
-                    <a href="/fenzhan/province-si-chuan.html" class="footer-province-item">四川资金服务</a>
-                    <a href="/fenzhan/province-tianjin.html" class="footer-province-item">天津资金服务</a>
-                    <a href="/fenzhan/province-ning-xia.html" class="footer-province-item">宁夏资金服务</a>
-                    <a href="/fenzhan/province-an-hui.html" class="footer-province-item">安徽资金服务</a>
-                    <a href="/fenzhan/province-shan-dong.html" class="footer-province-item">山东资金服务</a>
-                    <a href="/fenzhan/province-shan-xi.html" class="footer-province-item">山西资金服务</a>
-                    <a href="/fenzhan/province-guang-dong.html" class="footer-province-item">广东资金服务</a>
-                    <a href="/fenzhan/province-guang-xi.html" class="footer-province-item">广西资金服务</a>
-                    <a href="/fenzhan/province-xin-jiang.html" class="footer-province-item">新疆资金服务</a>
-                    <a href="/fenzhan/province-jiang-su.html" class="footer-province-item">江苏资金服务</a>
-                    <a href="/fenzhan/province-jiang-xi.html" class="footer-province-item">江西资金服务</a>
-                    <a href="/fenzhan/province-he-bei.html" class="footer-province-item">河北资金服务</a>
-                    <a href="/fenzhan/province-he-nan.html" class="footer-province-item">河南资金服务</a>
-                    <a href="/fenzhan/province-zhe-jiang.html" class="footer-province-item">浙江资金服务</a>
-                    <a href="/fenzhan/province-hai-nan.html" class="footer-province-item">海南资金服务</a>
-                    <a href="/fenzhan/province-gang-ao-tai.html" class="footer-province-item">港澳台资金服务</a>
-                    <a href="/fenzhan/province-hu-bei.html" class="footer-province-item">湖北资金服务</a>
-                    <a href="/fenzhan/province-hu-nan.html" class="footer-province-item">湖南资金服务</a>
-                    <a href="/fenzhan/province-gan-su.html" class="footer-province-item">甘肃资金服务</a>
-                    <a href="/fenzhan/province-fu-jian.html" class="footer-province-item">福建资金服务</a>
-                    <a href="/fenzhan/province-xi-zang.html" class="footer-province-item">西藏资金服务</a>
-                    <a href="/fenzhan/province-gui-zhou.html" class="footer-province-item">贵州资金服务</a>
-                    <a href="/fenzhan/province-liao-ning.html" class="footer-province-item">辽宁资金服务</a>
-                    <a href="/fenzhan/province-chongqing.html" class="footer-province-item">重庆资金服务</a>
-                    <a href="/fenzhan/province-shaan-xi.html" class="footer-province-item">陕西资金服务</a>
-                    <a href="/fenzhan/province-qing-hai.html" class="footer-province-item">青海资金服务</a>
-                    <a href="/fenzhan/province-hei-long-jiang.html" class="footer-province-item">黑龙江资金服务</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="footer-copyright">&copy; 2026 Yao资资金 成都资本版权所有</p>
-            <p class="footer-disclaimer">蜀ICP备2026052915号</p>
-        </div>
-    </div>
-</footer>
+        <?php include __DIR__ . "/includes/footer.php"; ?>
 <!-- Analytics -->
 <!-- Baidu Tongji -->
 <script>

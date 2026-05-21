@@ -18,6 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// Clear homepage cache whenever nav data is modified (POST)
+if (['REQUEST_METHOD'] === 'POST') {
+    @unlink(__DIR__ . '/../../../cache/index.html');
+}
+
+
 $conn = getDB();
 
 // 初始化导航配置表

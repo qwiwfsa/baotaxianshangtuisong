@@ -52,3 +52,5 @@ while ($row = $result->fetch_assoc()) {
     echo '<li role="none"><a href="' . $url . '" class="nav-link' . $isActive . '" role="menuitem">' . $iconHTML . $name . '</a></li>' . "\n";
 }
 
+$stmt->close();
+$conn->close();

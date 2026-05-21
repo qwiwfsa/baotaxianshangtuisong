@@ -1606,7 +1606,7 @@ window.nextImage = window.nextImage || function() {
 
     </script>
 
-<script src="/js/nav-loader.js?v=4"></script>
+
 
 <?php include __DIR__ . "/includes/footer.php"; ?>
 </body>

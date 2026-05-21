@@ -206,7 +206,7 @@ $favicon_path = '/favicon-v2.png';
         <div class="navbar-container">
 <a href="index.html" class="logo" aria-label="Yao资金网首页"><img src="../uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金" style="height:48px;width:auto;" class=""></a>
 
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"><li role="none"><a href="index.html" class="nav-link" role="menuitem">首页</a></li><li role="none"><a href="/mobile/services.html" class="nav-link" role="menuitem">业务范围</a></li><li role="none"><a href="/mobile/cases.html" class="nav-link" role="menuitem">成功案例</a></li><li role="none"><a href="/mobile/advantages.html" class="nav-link" role="menuitem">服务优势</a></li><li role="none"><a href="/mobile/news.php" class="nav-link" role="menuitem">行业资讯</a></li><li role="none"><a href="/mobile/faq.html" class="nav-link" role="menuitem">常见问题</a></li><li role="none"><a href="/mobile/pages/page_1778812379_0b9248.html" class="nav-link" role="menuitem">测试问题</a></li><li role="none"><a href="/mobile/contact.html" class="nav-link" role="menuitem">联系我们</a></li></ul>
+            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/../includes/nav.php"; ?></ul>
 
 
             
@@ -1062,6 +1062,6 @@ echo implode('', $rendered);
 
 
 
-    <script src="../js/nav-loader.js?v=5"></script>
+    
 <script src="../admin/assets/cms-1778895578.js"></script>
 </body></html>

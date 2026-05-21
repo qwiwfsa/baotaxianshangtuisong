@@ -1041,3 +1041,11 @@
 [2026-05-13 16:11:07] 解析后的数据: {"id":0,"title":"线上测试二","summary":"","content":"<p>测试<\/p>","category_id":0,"cover_image":"uploads\/20260513_6a04321858383.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","seo_description":"","tag_ids":[]}
 [2026-05-13 16:11:07] 数据库连接成功
 [2026-05-13 16:11:08] 文章保存成功, ID: 93
+[2026-05-21 13:50:56] === 文章保存API被调用 ===
+[2026-05-21 13:50:57] 请求方法: POST
+[2026-05-21 13:50:57] 请求URI: /admin/api/news/save.php
+[2026-05-21 13:50:57] 原始请求数据长度: 231
+[2026-05-21 13:50:57] 原始请求数据: {"id":0,"title":"sfdaf","summary":"","content":"","category_id":0,"cover_image":"uploads/20260521_6a0e9d3f48f5d.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","tag_ids":[],"seo_description":""}
+[2026-05-21 13:50:57] 解析后的数据: {"id":0,"title":"sfdaf","summary":"","content":"","category_id":0,"cover_image":"uploads\/20260521_6a0e9d3f48f5d.jpg","status":"published","is_top":0,"sort_order":0,"seo_title":"","seo_keywords":"","tag_ids":[],"seo_description":""}
+[2026-05-21 13:50:57] 数据库连接成功
+[2026-05-21 13:50:57] 文章保存成功, ID: 1123
