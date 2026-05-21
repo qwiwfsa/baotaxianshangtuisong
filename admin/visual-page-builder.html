@@ -1684,6 +1684,7 @@
         // 删除模块
         function deleteModule(moduleId) {
             if (confirm('确定要删除这个模块吗？')) {
+                const delModule = modules.find(m => m.id === moduleId);
                 modules = modules.filter(m => m.id !== moduleId);
                 const wrapper = document.querySelector(`[data-module-id="${moduleId}"]`);
                 if (wrapper) {
@@ -1694,6 +1695,13 @@
                     canvas.innerHTML = '<div class="canvas-empty"><i class="fas fa-mouse-pointer"></i><p>从左侧拖拽组件到这里开始编辑</p></div>';
                 }
                 showToast('模块已删除', 'success');
+                if (delModule && delModule.dbId) {
+                    fetch('api/page-builder/delete-module.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ module_id: delModule.dbId })
+                    }).catch(function() {});
+                }
             }
         }
         // 更新模块顺序
@@ -1832,11 +1840,11 @@
                         module_id: module.dbId || 0,
                         module_type: module.type,
                         module_data: module.data,
-                        sort_order: index
+                        sort_order: module.sortOrder
                     })
                 }).then(res => res.json());
             });
-            Promise.all(promises)
+            return Promise.all(promises)
                 .then(results => {
                     const allSuccess = results.every(r => r.code === 0);
                     if (allSuccess) {
@@ -1863,6 +1871,7 @@
                 return;
             }
             if (confirm('确定要发布这个页面吗？发布后将生成静态HTML文件。')) {
+                savePage().then(function() {
                                 fetch('api/page-builder/publish.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1881,6 +1890,10 @@
                     console.error(err);
                     showToast('发布失败', 'error');
                 });
+            }).catch(function(err) {
+                console.error(err);
+                showToast('\u4fdd\u5b58\u5931\u8d25', 'error');
+            });
             }
         }
         // 预览页面
