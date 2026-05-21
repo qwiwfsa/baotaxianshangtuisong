@@ -1185,5 +1185,29 @@ var _hmt = _hmt || [];
 $html = str_replace('</head>', $headTags . "
     </head>", $html);
 
+// ---------- 相关服务标签链接 ----------
+try {
+    if (!isset($linkTagDb)) {
+        require_once __DIR__ . '/../config/db.php';
+        $linkTagDb = getDB();
+    }
+    $tagResult = $linkTagDb->query("SELECT name, slug FROM tags ORDER BY sort_order ASC, id ASC LIMIT 30");
+    if ($tagResult && $tagResult->num_rows > 0) {
+        $tagLinks = '<section style="max-width:1000px;margin:0 auto;padding:0 20px 20px;"><div style="background:#fff;border-radius:12px;padding:24px 30px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #f3f4f6;"><h3 style="font-size:16px;font-weight:600;color:#1f2937;margin:0 0 12px;">相关资金服务</h3><div style="display:flex;flex-wrap:wrap;gap:8px;">';
+        while ($tagRow = $tagResult->fetch_assoc()) {
+            $tName = htmlspecialchars($tagRow['name'], ENT_QUOTES, 'UTF-8');
+            $tSlug = htmlspecialchars($tagRow['slug'], ENT_QUOTES, 'UTF-8');
+            $href = '/tag/' . $tSlug;
+            $on1 = "this.style.background='#dbeafe';this.style.color='#1d4ed8'";
+            $on2 = "this.style.background='#f3f4f6';this.style.color='#374151'";
+            $tagLinks .= '<a href="' . $href . '" style="display:inline-block;padding:6px 14px;background:#f3f4f6;border-radius:6px;color:#374151;font-size:13px;text-decoration:none;transition:all 0.2s;" onmouseover="' . $on1 . '" onmouseout="' . $on2 . '">' . $tName . '</a>';
+        }
+        $tagLinks .= '</div></div></section>';
+        $html = str_replace('RELATED CITIES</div>', 'RELATED CITIES</div>' . $tagLinks, $html);
+        $tagResult->free();
+    }
+    if (isset($linkTagDb)) $linkTagDb->close();
+} catch (Exception $e) {}
+
 echo $html;
 

@@ -40,7 +40,13 @@ foreach ($slug_to_province_sitemap as $pslug => $pname) {
     $url = 'https://www.yaozijin.com/fenzhan/province-' . $pslug . '.html';
 ?>
   <url><loc><?=$url?></loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<?php }
+<?php }  <url><loc>$domain/category/shang-shi-gong-si/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>$domain/category/qi-ye-bai-zhang/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>$domain/category/xian-zhang-liang-zi/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>$domain/category/shi-jiao-yan-zi/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>$domain/category/guo-qiao-duan-chai/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>$domain/category/jin-rong-zhi-shi/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+
 try {
 
     $db = getDB();

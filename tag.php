@@ -12,7 +12,7 @@ if ($tag_slug_seo) {
         require_once __DIR__ . '/config/db.php';
 
         $db_tag = getDB();
-        $stmt_tag = $db_tag->prepare("SELECT name, seo_title, seo_keywords, seo_description FROM tags WHERE slug = ? LIMIT 1");
+        $stmt_tag = $db_tag->prepare("SELECT name, seo_title, seo_keywords, seo_description, content FROM tags WHERE slug = ? LIMIT 1");
         $stmt_tag->bind_param('s', $tag_slug_seo);
         $stmt_tag->execute();
         $result_tag = $stmt_tag->get_result();
@@ -21,6 +21,7 @@ if ($tag_slug_seo) {
             $tag_seo_title = !empty($row_tag['seo_title']) ? $row_tag['seo_title'] : ($tag_name_seo . ' - Yao资金网');
             $tag_seo_desc = !empty($row_tag['seo_description']) ? $row_tag['seo_description'] : ('浏览与' . $tag_name_seo . '相关的文章和案例');
             $tag_seo_keywords = !empty($row_tag['seo_keywords']) ? $row_tag['seo_keywords'] : $tag_name_seo;
+            $tag_content = $row_tag['content'] ?? '';
         }
         $stmt_tag->close();
         $db_tag->close();
@@ -40,7 +41,7 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="<?php echo htmlspecialchars($tag_seo_desc, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="keywords" content="亮资,摆账,企业融资,过桥资金">
+    <meta name="keywords" content="<?php echo htmlspecialchars($tag_seo_keywords, ENT_QUOTES, 'UTF-8'); ?>">
     <title><?php echo htmlspecialchars($tag_seo_title, ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -119,6 +120,32 @@ $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 <style>
 html{scroll-behavior:auto;overflow-y:scroll}#tagContentList{min-height:400px}#tagLoading{min-height:200px}
 </style>
+
+    <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
+    <meta name="360-site-verification" content="f310464a017d0090a59ed60edaa367e6" />
+    <meta name="sogou_site_verification" content="hZk3RVI5el" />
+    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779306988"/>
+    <meta name="bytedance-verification-code" content="ax5xO1GtSFCBiE8fTWSz" />
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?3b035154874e19e664d8240b09e14e83e00fbc766c8f9a62fe69bf1753ce8548bc434964556b7d7129e9b750ed197d397efd7b0c6c715c1701396e1af40cec962b8d7c8c6655c9b00211740aa8a98e2e";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 </head>
 <body>
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
@@ -146,6 +173,38 @@ html{scroll-behavior:auto;overflow-y:scroll}#tagContentList{min-height:400px}#ta
             <p class="tag-detail-count" id="tagCount">加载中...</p>
         </div>
     </section>
+
+    <?php if (!empty($tag_content)): ?>
+    <section class="tag-glossary-section" style="max-width:1000px;margin:-30px auto 0;padding:0 20px;">
+        <div style="background:#fff;border-radius:12px;padding:30px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #f3f4f6;font-size:15px;line-height:1.8;color:#374151;">
+            <?php echo $tag_content; ?>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php if (!empty($tag_slug_seo)): 
+        try {
+            $linkDb = getDB();
+            $linkResult = $linkDb->query("SELECT DISTINCT city_name, slug FROM fenzhan_cities WHERE is_active = 1 ORDER BY sort_order ASC, city_name ASC LIMIT 30");
+            if ($linkResult && $linkResult->num_rows > 0): ?>
+    <section style="max-width:1000px;margin:20px auto 0;padding:0 20px;">
+        <div style="background:#fff;border-radius:12px;padding:24px 30px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #f3f4f6;">
+            <h3 style="font-size:16px;font-weight:600;color:#1f2937;margin:0 0 12px;">服务地区</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <?php while ($linkRow = $linkResult->fetch_assoc()): 
+                    $linkCity = htmlspecialchars($linkRow['city_name'], ENT_QUOTES, 'UTF-8');
+                    $linkSlug = htmlspecialchars($linkRow['slug'], ENT_QUOTES, 'UTF-8');
+                ?>
+                <a href="/fenzhan/<?php echo $linkSlug; ?>.html" style="display:inline-block;padding:6px 14px;background:#f3f4f6;border-radius:6px;color:#374151;font-size:13px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#dbeafe';this.style.color='#1d4ed8'" onmouseout="this.style.background='#f3f4f6';this.style.color='#374151'"><?php echo $linkCity; ?>资金服务</a>
+                <?php endwhile; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif;
+            if ($linkResult) $linkResult->free();
+            $linkDb->close();
+        } catch (Exception $e) {}
+    endif; ?>
 
     <div class="tag-content">
         <div class="tag-tabs" id="tagTabs" style="display:none;">

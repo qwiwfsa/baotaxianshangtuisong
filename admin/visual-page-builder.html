@@ -1327,13 +1327,12 @@
                     tinymce.remove('#' + editorId);
                     tinymce.init({
                         selector: '#' + editorId,
-                        plugins: 'lists link image code table fontsize fontfamily',
+                        plugins: 'lists link image code table',
                         toolbar: 'undo redo | formatselect | fontfamily fontsize | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | link image | code',
                         menubar: false,
                         height: 300,
                         branding: false,
                         promotion: false,
-                        language: 'zh_CN',
                         fontsize_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px 48px',
                         font_family_formats: '宋体=simsun;微软雅黑=microsoft yahei;黑体=simhei;楷体=kaiti;Arial=arial;',
                         setup: function(editor) {
@@ -1821,6 +1820,7 @@
                 return;
             }
             // 保存所有模块
+            document.querySelectorAll('.property-input').forEach(el => el.dispatchEvent(new Event('change')));
             const promises = modules.map((module, index) => {
                 return fetch('api/page-builder/save-module.php', {
                     method: 'POST',
