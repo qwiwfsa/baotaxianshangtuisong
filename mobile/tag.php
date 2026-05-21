@@ -205,5 +205,6 @@ header('Content-Type: text/html; charset=utf-8');
         }
     </script>
 
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/includes/footer.php"; ?>
 </body>
 </html>

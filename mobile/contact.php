@@ -232,6 +232,7 @@
 <script src="../admin/assets/cms.js" onerror="console.log('CMS not loaded')"></script>
 
     <script src="../js/main.js"></script>    
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/includes/footer.php"; ?>
 </body>
 </html>
 

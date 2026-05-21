@@ -65,4 +65,5 @@
             <a href="/" class="btn-home"><i class="fas fa-home"></i> 返回首页</a>
         </div>
     </main>
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/includes/footer.php"; ?>
 </body></html>

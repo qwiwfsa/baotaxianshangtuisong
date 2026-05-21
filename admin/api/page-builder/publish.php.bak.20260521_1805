@@ -311,7 +311,9 @@ function generateFullPage($pageId, $content) {
     <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
         <div class="navbar-container">
             <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
+            <ul class="nav-menu" role="menubar">
+                
+            </ul>
             <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
                 <i class="fas fa-search" aria-hidden="true"></i>
             </button>

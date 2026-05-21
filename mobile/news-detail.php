@@ -2929,6 +2929,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 })();
 </script>
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/includes/footer.php"; ?>
 </body>
 
 </html>

@@ -418,7 +418,7 @@ if ('caches' in window) {
             });
         })();
     </script>
-    <script src="/js/footer-loader.js?v=20260519" defer></script>
+    
 
 <?php include __DIR__ . "/includes/footer.php"; ?>
 </body>
