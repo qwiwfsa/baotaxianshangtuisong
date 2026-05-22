@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例分类管理 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f3f4f6; min-height: 100vh; color: #1f2937; }
+
+        /* ===== 左侧导航 ===== */
+        .cms-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .cms-sidebar {
+            width: 220px;
+            background: linear-gradient(180deg, #1e3a5f 0%, #15294a 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 50;
+        }
+        .cms-sidebar-brand {
+            padding: 20px 18px;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cms-sidebar-brand i { font-size: 20px; color: #60a5fa; }
+        .cms-sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            gap: 10px;
+        }
+        .cms-nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
+        .cms-nav-item i { width: 18px; text-align: center; font-size: 15px; }
+        .cms-nav-item.active {
+            background: rgba(255,255,255,0.12);
+            color: white;
+            border-left-color: #60a5fa;
+        }
+
+        /* ===== 右侧内容 ===== */
+        .cms-main {
+            flex: 1;
+            margin-left: 220px;
+            padding: 0;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+        .cms-header {
+            background: white;
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 30;
+        }
+        .cms-header h1 { font-size: 20px; font-weight: 600; color: #1e293b; }
+        .cms-header h1 i { margin-right: 10px; color: #3b82f6; }
+        .cms-header-actions { display: flex; gap: 10px; align-items: center; }
+        .cms-header-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .cms-header-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .cms-header-btn-primary { background: #e5e7eb; color: #374151; }
+        .cms-header-btn-primary:hover { background: #d1d5db; }
+        .cms-header-btn-success { background: #3b82f6; color: white; }
+        .cms-header-btn-success:hover { background: #2563eb; }
+        .cms-header-btn-danger { background: #ef4444; color: white; }
+        .cms-header-btn-danger:hover { background: #dc2626; }
+
+        .cms-content {
+            max-width: 860px;
+            margin: 24px auto;
+            padding: 0 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .card-header h2 { font-size: 18px; font-weight: 600; color: #1e293b; }
+        .card-header h2 i { margin-right: 8px; color: #3b82f6; }
+
+        /* ===== 类型卡片列表（扁平结构） ===== */
+        .type-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .type-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .type-item:hover { border-color: #3b82f6; box-shadow: 0 2px 8px rgba(59,130,246,0.08); }
+
+        .type-sort-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .type-sort-btns button {
+            width: 26px; height: 20px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 11px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            padding: 0;
+            line-height: 1;
+        }
+        .type-sort-btns button:hover { background: #eff6ff; color: #3b82f6; border-color: #3b82f6; }
+        .type-sort-btns button:disabled { opacity: 0.3; cursor: not-allowed; background: #f9fafb; color: #d1d5db; border-color: #e5e7eb; }
+
+        .type-color-dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .type-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            min-width: 80px;
+        }
+        .type-desc {
+            flex: 1;
+            font-size: 13px;
+            color: #6b7280;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .type-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .type-actions button {
+            padding: 5px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .type-actions button:hover { background: #f3f4f6; }
+        .type-actions .btn-edit { color: #3b82f6; border-color: #3b82f6; }
+        .type-actions .btn-edit:hover { background: #eff6ff; }
+        .type-actions .btn-delete { color: #ef4444; border-color: #ef4444; }
+        .type-actions .btn-delete:hover { background: #fef2f2; }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            color: #9ca3af;
+        }
+        .empty-state i { font-size: 48px; margin-bottom: 12px; display: block; }
+
+        /* ===== 表单弹窗 ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 480px;
+            max-width: 92%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            animation: slideUp 0.2s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: #9ca3af; padding: 4px 6px; border-radius: 6px; }
+        .modal-close:hover { background: #f3f4f6; color: #1f2937; }
+        .modal-body { padding: 24px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+        .form-group input[type="color"] {
+            height: 44px;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-secondary { background: #e5e7eb; color: #374151; }
+        .btn-secondary:hover { background: #d1d5db; }
+
+        /* ===== Toast ===== */
+        .cms-toast {
+            position: fixed; top: 20px; right: 20px;
+            padding: 14px 24px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            z-index: 99999;
+            animation: toastIn 0.25s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        @keyframes toastIn { from { transform: translateX(80px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* ===== Loading ===== */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.25);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-overlay.active { display: flex; }
+        .loading-box {
+            background: white;
+            padding: 28px 48px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 15px;
+            color: #374151;
+        }
+        .loading-box i { font-size: 24px; color: #3b82f6; }
+    </style>
+</head>
+<body>
+
+<div class="cms-layout">
+    <!-- ===== 左侧导航 ===== -->
+    <aside class="cms-sidebar">
+        <div class="cms-sidebar-brand">
+            <i class="fas fa-cog"></i>
+            <span>CMS管理后台</span>
+        </div>
+        <nav class="cms-sidebar-nav">
+            <a href="dashboard.html" class="cms-nav-item"><i class="fas fa-chart-pie"></i><span>仪表盘</span></a>
+            <a href="visual-editor-v3.html" class="cms-nav-item"><i class="fas fa-paint-brush"></i><span>可视化编辑</span></a>
+            <a href="case-management.html" class="cms-nav-item active"><i class="fas fa-trophy"></i><span>案例管理</span></a>
+            <a href="page-manager.html" class="cms-nav-item"><i class="fas fa-file-alt"></i><span>页面管理</span></a>
+                    <a href="visual-page-builder.html" class="cms-nav-item" data-section="visual-builder">
+                        <i class="fas fa-pen-ruler"></i>
+                        <span>页面设计</span>
+                    </a>
+
+            <a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+            <a href="article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+            <a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>常见问题</span></a>
+            <a href="footer-manager.html" class="cms-nav-item"><i class="fas fa-list-alt"></i><span>页脚管理</span></a>
+            <a href="media-library.html" class="cms-nav-item" data-section="media"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+            <a href="tag-management.html" class="cms-nav-item" data-section="tags"><i class="fas fa-tags"></i><span>标签管理</span></a>
+            <a href="friend-link-management.html" class="cms-nav-item" data-section="links"><i class="fas fa-link"></i><span>友情链接</span></a>
+            <a href="announcement-management.html" class="cms-nav-item" data-section="announce"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+        </nav>
+    </aside>
+
+    <!-- ===== 右侧主内容 ===== -->
+    <div class="cms-main">
+        <header class="cms-header">
+            <h1><i class="fas fa-tags"></i>案例分类管理</h1>
+            <div class="cms-header-actions">
+                <button class="cms-header-btn cms-header-btn-primary" onclick="window.location.href='case-management.html'">
+                    <i class="fas fa-arrow-left"></i>返回案例管理
+                </button>
+                <button class="cms-header-btn cms-header-btn-success" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i>新建分类
+                </button>
+            </div>
+        </header>
+
+        <div class="cms-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-list"></i>业务类型列表</h2>
+                    <span id="typeCount" style="color:#6b7280;font-size:14px;"></span>
+                </div>
+                <div id="typeList" class="type-list">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>暂无业务类型</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 编辑/新增弹窗 ===== -->
+<div class="modal-overlay" id="typeModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">新增业务类型</h3>
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>类型名称 <span style="color:#ef4444;">*</span></label>
+                <input type="text" id="typeName" placeholder="输入业务类型名称" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label>描述（选填）</label>
+                <textarea id="typeDesc" rows="2" placeholder="简短描述该业务类型" maxlength="100"></textarea>
+            </div>
+            <div class="form-group">
+                <label>颜色标识</label>
+                <input type="color" id="typeColor" value="#3b82f6">
+            </div>
+            <!-- SEO设置 -->
+            <div style="margin-top: 18px; padding-top: 18px; border-top: 1px solid #e5e7eb;">
+                <div style="font-size: 14px; font-weight: 600; color: #3b82f6; margin-bottom: 12px;">
+                    🔍 SEO设置 <span style="font-weight: 400; color: #9ca3af; font-size: 12px;">(选填)</span>
+                </div>
+                <div class="form-group">
+                    <label>SEO标题</label>
+                    <input type="text" id="typeMetaTitle" placeholder="留空则使用类型名称" maxlength="120">
+                </div>
+                <div class="form-group">
+                    <label>SEO关键词</label>
+                    <input type="text" id="typeMetaKeywords" placeholder="逗号分隔多个关键词" maxlength="300">
+                </div>
+                <div class="form-group">
+                    <label>SEO描述</label>
+                    <textarea id="typeMetaDescription" rows="2" placeholder="页面简介，建议120字内" maxlength="300"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+            <button class="btn btn-primary" onclick="saveType()">保存</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Loading ===== -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+        <i class="fas fa-spinner fa-pulse"></i>
+        <span>处理中...</span>
+    </div>
+</div>
+
+<script>
+    const PHP_API_BASE = 'api/case/';
+    let types = [];
+    let editingId = null;
+
+    // ---- 加载 ----
+    async function loadTypes() {
+        try {
+            const res = await fetch(PHP_API_BASE + 'types.php');
+            const result = await res.json();
+            if (result.success && result.data) {
+                types = result.data;
+                renderTypes();
+            } else {
+                showToast('加载失败: ' + (result.message || '未知错误'), 'error');
+            }
+        } catch (e) {
+            console.error('加载失败:', e);
+            showToast('加载失败，请检查网络连接', 'error');
+        }
+    }
+
+    // ---- 渲染（卡片列表 + 上下箭头） ----
+    function renderTypes() {
+        const container = document.getElementById('typeList');
+        const count = document.getElementById('typeCount');
+        count.textContent = '共 ' + types.length + ' 个分类';
+
+        if (types.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>暂无业务类型</p></div>';
+            return;
+        }
+
+        container.innerHTML = types.map((type, index) => `
+            <div class="type-item" data-id="${type.id}" data-index="${index}">
+                <div class="type-sort-btns">
+                    <button onclick="moveType(${type.id}, -1)" ${index === 0 ? 'disabled' : ''} title="上移">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <button onclick="moveType(${type.id}, 1)" ${index === types.length - 1 ? 'disabled' : ''} title="下移">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <span class="type-color-dot" style="background:${type.color || '#3b82f6'}"></span>
+                <span class="type-name">${type.name}</span>
+                <span class="type-desc">${type.description || ''}</span>
+                ${(type.meta_title || type.meta_keywords || type.meta_description) ? '<span style="flex-shrink:0;font-size:11px;color:#10b981;background:#ecfdf5;padding:2px 8px;border-radius:4px;" title="已设置SEO"><i class="fas fa-search"></i> SEO</span>' : ''}
+                <div class="type-actions">
+                    <button class="btn-edit" onclick="editType(${type.id})"><i class="fas fa-edit"></i> 编辑</button>
+                    <button class="btn-delete" onclick="deleteType(${type.id})"><i class="fas fa-trash"></i> 删除</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ---- 上下移动排序 ----
+    async function moveType(id, direction) {
+        const index = types.findIndex(t => t.id === id);
+        if (index < 0) return;
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= types.length) return;
+
+        // 交换 sort_order
+        const temp = types[index].sort_order;
+        types[index].sort_order = types[targetIndex].sort_order;
+        types[targetIndex].sort_order = temp;
+
+        // 交换数组位置
+        [types[index], types[targetIndex]] = [types[targetIndex], types[index]];
+
+        // 本地重绘
+        renderTypes();
+        showToast('排序已更新');
+
+        // 保存到API
+        try {
+            const ids = types.map(t => t.id);
+            const orders = types.map(t => t.sort_order);
+            await fetch(PHP_API_BASE + 'types.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, sort_order: types[index].sort_order })
+            });
+        } catch (e) {
+            console.error('保存排序失败:', e);
+        }
+    }
+
+    // ---- 新增弹窗 ----
+    function openAddModal() {
+        editingId = null;
+        document.getElementById('modalTitle').textContent = '新增业务类型';
+        document.getElementById('typeName').value = '';
+        document.getElementById('typeDesc').value = '';
+        document.getElementById('typeColor').value = '#3b82f6';
+        document.getElementById('typeMetaTitle').value = '';
+        document.getElementById('typeMetaKeywords').value = '';
+        document.getElementById('typeMetaDescription').value = '';
+        document.getElementById('typeModal').classList.add('active');
+        setTimeout(() => document.getElementById('typeName').focus(), 100);
+    }
+
+    // ---- 编辑弹窗 ----
+    function editType(id) {
+        const type = types.find(t => t.id === id);
+        if (!type) return;
+        editingId = id;
+        document.getElementById('modalTitle').textContent = '编辑业务类型';
+        document.getElementById('typeName').value = type.name;
+        document.getElementById('typeDesc').value = type.description || '';
+        document.getElementById('typeColor').value = type.color || '#3b82f6';
+        document.getElementById('typeMetaTitle').value = type.meta_title || '';
+        document.getElementById('typeMetaKeywords').value = type.meta_keywords || '';
+        document.getElementById('typeMetaDescription').value = type.meta_description || '';
+        document.getElementById('typeModal').classList.add('active');
+        setTimeout(() => document.getElementById('typeName').focus(), 100);
+    }
+
+    function closeModal() {
+        document.getElementById('typeModal').classList.remove('active');
+        editingId = null;
+    }
+
+    // ---- 保存 ----
+    async function saveType() {
+        const name = document.getElementById('typeName').value.trim();
+        if (!name) { showToast('请输入类型名称', 'warning'); return; }
+
+        showLoading();
+        try {
+            const method = editingId ? 'PUT' : 'POST';
+            const body = editingId
+                ? { id: editingId, name, description: document.getElementById('typeDesc').value.trim(), color: document.getElementById('typeColor').value, meta_title: document.getElementById('typeMetaTitle').value.trim(), meta_keywords: document.getElementById('typeMetaKeywords').value.trim(), meta_description: document.getElementById('typeMetaDescription').value.trim() }
+                : { name, description: document.getElementById('typeDesc').value.trim(), color: document.getElementById('typeColor').value, meta_title: document.getElementById('typeMetaTitle').value.trim(), meta_keywords: document.getElementById('typeMetaKeywords').value.trim(), meta_description: document.getElementById('typeMetaDescription').value.trim() };
+
+            const res = await fetch(PHP_API_BASE + 'types.php', {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const result = await res.json();
+            if (result.success) {
+                showToast(editingId ? '业务类型更新成功' : '业务类型创建成功');
+                closeModal();
+                await loadTypes();
+            } else {
+                showToast(result.message || '保存失败', 'error');
+            }
+        } catch (e) {
+            console.error('保存失败:', e);
+            showToast('保存失败，请检查网络连接', 'error');
+        } finally {
+            hideLoading();
+        }
+    }
+
+    // ---- 删除 ----
+    async function deleteType(id) {
+        if (!confirm('确定要删除这个业务类型吗？')) return;
+        showLoading();
+        try {
+            const res = await fetch(PHP_API_BASE + 'types.php?id=' + id, { method: 'DELETE' });
+            const result = await res.json();
+            if (result.success) {
+                showToast('业务类型删除成功');
+                await loadTypes();
+            } else {
+                showToast(result.message || '删除失败', 'error');
+            }
+        } catch (e) {
+            console.error('删除失败:', e);
+            showToast('删除失败，请检查网络连接', 'error');
+        } finally {
+            hideLoading();
+        }
+    }
+
+    function showLoading() { document.getElementById('loadingOverlay').classList.add('active'); }
+    function hideLoading() { document.getElementById('loadingOverlay').classList.remove('active'); }
+
+    function showToast(message, type) {
+        const el = document.querySelector('.cms-toast');
+        if (el) el.remove();
+        const t = document.createElement('div');
+        t.className = 'cms-toast';
+        t.style.background = type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#10b981';
+        t.innerHTML = (type === 'error' ? '<i class="fas fa-exclamation-circle"></i> ' : '<i class="fas fa-check-circle"></i> ') + message;
+        document.body.appendChild(t);
+        setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadTypes);
+</script>
+</body>
+</html>

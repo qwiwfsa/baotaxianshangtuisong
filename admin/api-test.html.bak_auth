@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>API测试</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .success { background: #d1fae5; border-color: #10b981; }
+        .error { background: #fee2e2; border-color: #ef4444; }
+        pre { background: #f3f4f6; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>CMS API 测试页面</h1>
+    
+    <div class="test-section">
+        <h2>测试1: 后端案例列表API (list.php)</h2>
+        <button onclick="testListAPI()">测试</button>
+        <div id="listResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>测试2: 前端案例列表API (cases.php)</h2>
+        <button onclick="testFrontendAPI()">测试</button>
+        <div id="frontendResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>测试3: 保存案例API (save.php)</h2>
+        <button onclick="testSaveAPI()">测试保存</button>
+        <div id="saveResult"></div>
+    </div>
+
+    <script>
+        async function testListAPI() {
+            const resultDiv = document.getElementById('listResult');
+            resultDiv.innerHTML = '<p>测试中...</p>';
+            
+            try {
+                const response = await fetch('api/case/list.php');
+                const contentType = response.headers.get('content-type');
+                const text = await response.text();
+                
+                let result;
+                try {
+                    result = JSON.parse(text);
+                    resultDiv.innerHTML = `<div class="success">
+                        <p>✓ API返回JSON格式正确</p>
+                        <p>Content-Type: ${contentType}</p>
+                        <p>案例数量: ${result.cases ? result.cases.length : 0}</p>
+                        <pre>${JSON.stringify(result, null, 2).substring(0, 1000)}</pre>
+                    </div>`;
+                } catch (e) {
+                    resultDiv.innerHTML = `<div class="error">
+                        <p>✗ JSON解析失败</p>
+                        <p>Content-Type: ${contentType}</p>
+                        <p>原始响应:</p>
+                        <pre>${text.substring(0, 500)}</pre>
+                    </div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">
+                    <p>✗ 请求失败: ${error.message}</p>
+                </div>`;
+            }
+        }
+        
+        async function testFrontendAPI() {
+            const resultDiv = document.getElementById('frontendResult');
+            resultDiv.innerHTML = '<p>测试中...</p>';
+            
+            try {
+                const response = await fetch('../api/cases.php');
+                const contentType = response.headers.get('content-type');
+                const text = await response.text();
+                
+                let result;
+                try {
+                    result = JSON.parse(text);
+                    resultDiv.innerHTML = `<div class="success">
+                        <p>✓ API返回JSON格式正确</p>
+                        <p>Content-Type: ${contentType}</p>
+                        <p>已发布案例数量: ${result.cases ? result.cases.length : 0}</p>
+                        <pre>${JSON.stringify(result, null, 2).substring(0, 1000)}</pre>
+                    </div>`;
+                } catch (e) {
+                    resultDiv.innerHTML = `<div class="error">
+                        <p>✗ JSON解析失败</p>
+                        <p>Content-Type: ${contentType}</p>
+                        <p>原始响应:</p>
+                        <pre>${text.substring(0, 500)}</pre>
+                    </div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">
+                    <p>✗ 请求失败: ${error.message}</p>
+                </div>`;
+            }
+        }
+        
+        async function testSaveAPI() {
+            const resultDiv = document.getElementById('saveResult');
+            resultDiv.innerHTML = '<p>测试中...</p>';
+            
+            const testCase = {
+                id: 'test_' + Date.now(),
+                title: '测试案例 ' + new Date().toLocaleString(),
+                type: '过桥',
+                city: '北京',
+                summary: '这是一个测试案例',
+                amount: '1000万',
+                status: 'published'
+            };
+            
+            try {
+                const response = await fetch('api/case/save.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testCase)
+                });
+                
+                const contentType = response.headers.get('content-type');
+                const text = await response.text();
+                
+                let result;
+                try {
+                    result = JSON.parse(text);
+                    if (result.success) {
+                        resultDiv.innerHTML = `<div class="success">
+                            <p>✓ 保存成功</p>
+                            <p>Content-Type: ${contentType}</p>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </div>`;
+                    } else {
+                        resultDiv.innerHTML = `<div class="error">
+                            <p>✗ 保存失败: ${result.message}</p>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </div>`;
+                    }
+                } catch (e) {
+                    resultDiv.innerHTML = `<div class="error">
+                        <p>✗ JSON解析失败</p>
+                        <p>Content-Type: ${contentType}</p>
+                        <p>原始响应:</p>
+                        <pre>${text.substring(0, 1000)}</pre>
+                    </div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">
+                    <p>✗ 请求失败: ${error.message}</p>
+                </div>`;
+            }
+        }
+    </script>
+</body>
+</html>

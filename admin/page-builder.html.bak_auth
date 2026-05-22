@@ -1,0 +1,2994 @@
+﻿﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>可视化页面编辑器 - 宏都资本CMS</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.css">
+
+    <!-- 引入前端网站样式 -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/assets/css/page-builder.css">
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        body {
+
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+
+            background: #f5f5f5;
+
+            overflow: hidden;
+
+        }
+
+
+
+        /* 编辑器布局 */
+
+        .editor-container {
+
+            display: flex;
+
+            height: 100vh;
+
+        }
+
+
+
+        /* 左侧组件库 */
+
+        .components-panel {
+
+            width: 280px;
+
+            background: white;
+
+            border-right: 1px solid #e5e7eb;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .panel-header {
+
+            padding: 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+        }
+
+
+
+        .panel-header h2 {
+
+            font-size: 18px;
+
+            color: #1f2937;
+
+            margin-bottom: 8px;
+
+        }
+
+
+
+        .panel-header p {
+
+            font-size: 13px;
+
+            color: #6b7280;
+
+        }
+
+
+
+        .components-list {
+
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 16px;
+
+        }
+
+
+
+        .component-category {
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .category-title {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .component-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px;
+
+            background: #f9fafb;
+
+            border: 2px dashed #d1d5db;
+
+            border-radius: 8px;
+
+            margin-bottom: 8px;
+
+            cursor: move;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .component-item:hover {
+
+            background: #f3f4f6;
+
+            border-color: #3b82f6;
+
+            transform: translateY(-2px);
+
+        }
+
+
+
+        .component-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 18px;
+
+        }
+
+
+
+        .component-info h4 {
+
+            font-size: 14px;
+
+            color: #1f2937;
+
+            margin-bottom: 2px;
+
+        }
+
+
+
+        .component-info p {
+
+            font-size: 12px;
+
+            color: #6b7280;
+
+        }
+
+
+
+        /* 中间画布区域 */
+
+        .canvas-area {
+
+            flex: 1;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .canvas-toolbar {
+
+            background: white;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            padding: 12px 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+
+
+        .toolbar-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
+        .toolbar-btn {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 8px 16px;
+
+            background: #f3f4f6;
+
+            border: none;
+
+            border-radius: 6px;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .toolbar-btn:hover {
+
+            background: #e5e7eb;
+
+        }
+
+
+
+        .toolbar-btn-primary {
+
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+
+            color: white;
+
+        }
+
+
+
+        .toolbar-btn-primary:hover {
+
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+
+        }
+
+
+
+        .page-selector {
+
+            padding: 8px 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            color: #374151;
+
+        }
+
+
+
+        .canvas-wrapper {
+
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 24px;
+
+            background: #f5f5f5;
+
+        }
+
+
+
+        .canvas {
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            min-height: 600px;
+
+            border-radius: 8px;
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+            padding: 20px;
+
+        }
+
+
+
+        .canvas-empty {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 500px;
+
+            color: #9ca3af;
+
+        }
+
+
+
+        .canvas-empty i {
+
+            font-size: 64px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+
+        .canvas-empty p {
+
+            font-size: 16px;
+
+        }
+
+
+
+        /* 模块容器 */
+
+        .module-wrapper {
+
+            position: relative;
+
+            margin-bottom: 16px;
+
+            padding: 16px;
+
+            border: 2px dashed transparent;
+
+            border-radius: 8px;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .module-wrapper:hover {
+
+            border-color: #3b82f6;
+
+            background: #f9fafb;
+
+        }
+
+
+
+        .module-wrapper.active {
+
+            border-color: #3b82f6;
+
+            background: #eff6ff;
+
+        }
+
+
+
+        .module-controls {
+
+            position: absolute;
+
+            top: 8px;
+
+            right: 8px;
+
+            display: none;
+
+            gap: 4px;
+
+        }
+
+
+
+        .module-wrapper:hover .module-controls,
+
+        .module-wrapper.active .module-controls {
+
+            display: flex;
+
+        }
+
+
+
+        .module-control-btn {
+
+            width: 28px;
+
+            height: 28px;
+
+            background: white;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 4px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .module-control-btn:hover {
+
+            background: #3b82f6;
+
+            color: white;
+
+            border-color: #3b82f6;
+
+        }
+
+
+
+        .module-control-btn.delete:hover {
+
+            background: #ef4444;
+
+            border-color: #ef4444;
+
+        }
+
+
+
+        /* 右侧属性面板 */
+
+        .properties-panel {
+
+            width: 320px;
+
+            background: white;
+
+            border-left: 1px solid #e5e7eb;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .properties-content {
+
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 20px;
+
+        }
+
+
+
+        .properties-empty {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            height: 100%;
+
+            color: #9ca3af;
+
+            text-align: center;
+
+            padding: 20px;
+
+        }
+
+
+
+        .properties-empty i {
+
+            font-size: 48px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .property-group {
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .property-group-title {
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #1f2937;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .property-field {
+
+            margin-bottom: 16px;
+
+        }
+
+
+
+        .property-label {
+
+            display: block;
+
+            font-size: 13px;
+
+            color: #374151;
+
+            margin-bottom: 6px;
+
+        }
+
+
+
+        .property-input {
+
+            width: 100%;
+
+            padding: 8px 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .property-input:focus {
+
+            outline: none;
+
+            border-color: #3b82f6;
+
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+
+        }
+
+
+
+        .property-textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+
+        .property-select {
+
+            width: 100%;
+
+            padding: 8px 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            background: white;
+
+        }
+
+
+
+        .property-checkbox {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+
+        .property-checkbox input {
+
+            width: 18px;
+
+            height: 18px;
+
+        }
+
+
+
+        /* 模块渲染样式 */
+
+        .module-banner {
+
+            background: #f3f4f6;
+
+            padding: 40px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+        }
+
+
+
+        .module-banner img {
+
+            max-width: 100%;
+
+            border-radius: 8px;
+
+        }
+
+
+
+        .module-text {
+
+            padding: 20px;
+
+        }
+
+
+
+        .module-text h2 {
+
+            font-size: 24px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .module-image img {
+
+            max-width: 100%;
+
+            border-radius: 8px;
+
+        }
+
+
+
+        .module-card {
+
+            display: grid;
+
+            gap: 16px;
+
+            padding: 20px;
+
+        }
+
+
+
+        .card-item {
+
+            background: #f9fafb;
+
+            border-radius: 8px;
+
+            padding: 16px;
+
+        }
+
+
+
+        .card-item img {
+
+            width: 100%;
+
+            border-radius: 6px;
+
+            margin-bottom: 12px;
+
+        }
+
+        /* 卡片属性编辑 */
+        .card-item-property {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .card-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+        .card-item-remove {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: #fee2e2;
+            color: #ef4444;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .card-item-remove:hover {
+            background: #ef4444;
+            color: white;
+        }
+        .card-image-preview {
+            width: 100%;
+            height: 80px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+        .card-image-placeholder {
+            color: #9ca3af;
+            font-size: 24px;
+        }
+        .card-image-btn {
+            padding: 0 12px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .card-image-btn:hover {
+            background: #2563eb;
+        }
+        .card-add-btn {
+            width: 100%;
+            padding: 10px;
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 6px;
+            color: #6b7280;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        .card-add-btn:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+
+
+        .module-video video {
+
+            width: 100%;
+
+            border-radius: 8px;
+
+        }
+
+
+
+        /* 响应式 */
+
+        @media (max-width: 1024px) {
+
+            .properties-panel {
+
+                width: 280px;
+
+            }
+
+        }
+
+
+
+        /* 滚动条样式 */
+
+        ::-webkit-scrollbar {
+
+            width: 8px;
+
+            height: 8px;
+
+        }
+
+
+
+        ::-webkit-scrollbar-track {
+
+            background: #f1f1f1;
+
+        }
+
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background: #cbd5e1;
+
+            border-radius: 4px;
+
+        }
+
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: #94a3b8;
+
+        }
+
+
+
+        /* Toast提示 */
+
+        .toast {
+
+            position: fixed;
+
+            top: 20px;
+
+            right: 20px;
+
+            background: white;
+
+            padding: 16px 20px;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+            display: none;
+
+            align-items: center;
+
+            gap: 12px;
+
+            z-index: 9999;
+
+        }
+
+
+
+        .toast.show {
+
+            display: flex;
+
+            animation: slideIn 0.3s ease;
+
+        }
+
+
+
+        @keyframes slideIn {
+
+            from {
+
+                transform: translateX(400px);
+
+                opacity: 0;
+
+            }
+
+            to {
+
+                transform: translateX(0);
+
+                opacity: 1;
+
+            }
+
+        }
+
+
+
+        .toast.success {
+
+            border-left: 4px solid #10b981;
+
+        }
+
+
+
+        .toast.error {
+
+            border-left: 4px solid #ef4444;
+
+        }
+
+
+
+        .toast i {
+
+            font-size: 20px;
+
+        }
+
+
+
+        .toast.success i {
+
+            color: #10b981;
+
+        }
+
+
+
+        .toast.error i {
+
+            color: #ef4444;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="editor-container">
+
+        <!-- 左侧组件库 -->
+
+        <div class="components-panel">
+
+            <div class="panel-header">
+
+                <h2>组件库</h2>
+
+                <p>拖拽组件到画布中</p>
+
+            </div>
+
+            <div class="components-list">
+
+                <div class="component-category">
+
+                    <div class="category-title">基础组件</div>
+
+                    <div class="component-item" draggable="true" data-type="banner">
+
+                        <div class="component-icon">
+
+                            <i class="fas fa-images"></i>
+
+                        </div>
+
+                        <div class="component-info">
+
+                            <h4>Banner轮播</h4>
+
+                            <p>图片轮播展示</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="component-item" draggable="true" data-type="text">
+
+                        <div class="component-icon">
+
+                            <i class="fas fa-align-left"></i>
+
+                        </div>
+
+                        <div class="component-info">
+
+                            <h4>文本模块</h4>
+
+                            <p>标题和内容</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="component-item" draggable="true" data-type="image">
+
+                        <div class="component-icon">
+
+                            <i class="fas fa-image"></i>
+
+                        </div>
+
+                        <div class="component-info">
+
+                            <h4>图片</h4>
+
+                            <p>单张图片展示</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="component-category">
+
+                    <div class="category-title">高级组件</div>
+
+                    <div class="component-item" draggable="true" data-type="card">
+
+                        <div class="component-icon">
+
+                            <i class="fas fa-th-large"></i>
+
+                        </div>
+
+                        <div class="component-info">
+
+                            <h4>卡片网格</h4>
+
+                            <p>多列卡片布局</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="component-item" draggable="true" data-type="video">
+
+                        <div class="component-icon">
+
+                            <i class="fas fa-video"></i>
+
+                        </div>
+
+                        <div class="component-info">
+
+                            <h4>视频</h4>
+
+                            <p>视频播放器</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="component-item" draggable="true" data-type="custom">
+
+                        <div class="component-icon">
+
+                            <i class="fas fa-code"></i>
+
+                        </div>
+
+                        <div class="component-info">
+
+                            <h4>自定义HTML</h4>
+
+                            <p>自定义代码</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 中间画布区域 -->
+
+        <div class="canvas-area">
+
+            <div class="canvas-toolbar">
+
+                <div class="toolbar-left">
+
+                    <button class="toolbar-btn" onclick="goBack()">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        返回
+
+                    </button>
+
+                    <select class="page-selector" id="pageSelector" onchange="loadPage()">
+
+                        <option value="">选择页面</option>
+
+                        <option value="index">首页</option>
+
+                        <option value="services">业务范围</option>
+
+                        <option value="cases">成功案例</option>
+
+                        <option value="advantages">服务优势</option>
+
+                        <option value="news">行业资讯</option>
+
+                        <option value="faq">常见问题</option>
+
+                        <option value="contact">联系我们</option>
+
+                    </select>
+
+                    <button class="toolbar-btn" onclick="importExistingPage()" id="importBtn" style="display:none;">
+
+                        <i class="fas fa-file-import"></i>
+
+                        导入现有内容
+
+                    </button>
+
+                </div>
+
+                <div class="toolbar-right">
+
+                    <button class="toolbar-btn" onclick="clearCanvas()">
+
+                        <i class="fas fa-eraser"></i>
+
+                        清空
+
+                    </button>
+
+                    <button class="toolbar-btn" onclick="previewPage()">
+
+                        <i class="fas fa-eye"></i>
+
+                        预览
+
+                    </button>
+
+                    <button class="toolbar-btn" onclick="savePage()">
+
+                        <i class="fas fa-save"></i>
+
+                        保存
+
+                    </button>
+
+                    <button class="toolbar-btn-primary" onclick="publishPage()">
+
+                        <i class="fas fa-rocket"></i>
+
+                        发布
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="canvas-wrapper">
+
+                <div class="canvas" id="canvas">
+
+                    <div class="canvas-empty">
+
+                        <i class="fas fa-mouse-pointer"></i>
+
+                        <p>从左侧拖拽组件到这里开始编辑</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 右侧属性面板 -->
+
+        <div class="properties-panel">
+
+            <div class="panel-header">
+
+                <h2>属性设置</h2>
+
+                <p>编辑选中模块的属性</p>
+
+            </div>
+
+            <div class="properties-content" id="propertiesContent">
+
+                <div class="properties-empty">
+
+                    <i class="fas fa-hand-pointer"></i>
+
+                    <p>选择一个模块来编辑其属性</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Toast提示 -->
+
+    <div class="toast" id="toast">
+
+        <i class="fas fa-check-circle"></i>
+
+        <span id="toastMessage">操作成功</span>
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <script>
+
+        // 全局变量
+
+        let currentPageId = '';
+
+        let currentModuleId = null;
+
+        let modules = [];
+
+        let moduleIdCounter = 1;
+
+
+
+        // 初始化
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initDragAndDrop();
+            initSortable();
+            loadPageList();
+            // Auto-select page from URL parameter
+            var params = new URLSearchParams(window.location.search);
+            var pageParam = params.get('page');
+            if (pageParam) {
+                var sel = document.getElementById('pageSelector');
+                sel.value = pageParam;
+                if (sel.value === pageParam) {
+                    loadPage();
+                } else {
+                    setTimeout(function() {
+                        sel.value = pageParam;
+                        if (sel.value === pageParam) {
+                            loadPage();
+                        }
+                    }, 600);
+                }
+            }
+        });
+
+
+
+        // 初始化拖拽功能
+
+        function initDragAndDrop() {
+
+            const componentItems = document.querySelectorAll('.component-item');
+
+            const canvas = document.getElementById('canvas');
+
+
+
+            componentItems.forEach(item => {
+
+                item.addEventListener('dragstart', function(e) {
+
+                    e.dataTransfer.setData('componentType', this.dataset.type);
+
+                });
+
+            });
+
+
+
+            canvas.addEventListener('dragover', function(e) {
+
+                e.preventDefault();
+
+            });
+
+
+
+            canvas.addEventListener('drop', function(e) {
+
+                e.preventDefault();
+
+                const componentType = e.dataTransfer.getData('componentType');
+
+                if (componentType) {
+
+                    addModule(componentType);
+
+                }
+
+            });
+
+        }
+
+
+
+        // 初始化排序功能
+
+        function initSortable() {
+
+            const canvas = document.getElementById('canvas');
+
+            Sortable.create(canvas, {
+
+                animation: 150,
+
+                handle: '.module-wrapper',
+
+                ghostClass: 'sortable-ghost',
+
+                onEnd: function() {
+
+                    updateModuleOrder();
+
+                }
+
+            });
+
+        }
+
+
+
+        // 添加模块
+
+        function addModule(type) {
+
+            const emptyState = document.querySelector('.canvas-empty');
+
+            if (emptyState) {
+
+                emptyState.remove();
+
+            }
+
+
+
+            const moduleId = 'module-' + moduleIdCounter++;
+
+            const moduleData = getDefaultModuleData(type);
+
+
+
+            const module = {
+
+                id: moduleId,
+
+                type: type,
+
+                data: moduleData,
+
+                sortOrder: modules.length
+
+            };
+
+
+
+            modules.push(module);
+
+            renderModule(module);
+
+            selectModule(moduleId);
+
+        }
+
+
+
+        // 获取默认模块数据
+
+        function getDefaultModuleData(type) {
+
+            const defaults = {
+
+                banner: {
+
+                    height: 500,
+
+                    autoplay: true,
+
+                    items: [
+
+                        {
+
+                            image: '/uploads/banner1.jpg',
+
+                            title: 'Banner标题',
+
+                            subtitle: 'Banner副标题',
+
+                            link: ''
+
+                        }
+
+                    ]
+
+                },
+
+                text: {
+
+                    title: '标题文本',
+
+                    content: '这里是内容文本，可以编辑修改。',
+
+                    align: 'left'
+
+                },
+
+                image: {
+
+                    src: '/uploads/image.jpg',
+
+                    alt: '图片描述',
+
+                    layout: 'normal',
+
+                    width: '100%'
+
+                },
+
+                card: {
+
+                    columns: 3,
+
+                    style: 'modern',
+
+                    items: [
+
+                        {
+
+                            image: '/uploads/card1.jpg',
+
+                            title: '卡片标题1',
+
+                            description: '卡片描述内容',
+
+                            link: ''
+
+                        },
+
+                        {
+
+                            image: '/uploads/card2.jpg',
+
+                            title: '卡片标题2',
+
+                            description: '卡片描述内容',
+
+                            link: ''
+
+                        },
+
+                        {
+
+                            image: '/uploads/card3.jpg',
+
+                            title: '卡片标题3',
+
+                            description: '卡片描述内容',
+
+                            link: ''
+
+                        }
+
+                    ]
+
+                },
+
+                video: {
+
+                    src: '/uploads/video.mp4',
+
+                    poster: '/uploads/poster.jpg',
+
+                    autoplay: false
+
+                },
+
+                custom: {
+
+                    html: '<div style="padding: 20px; text-align: center;">自定义HTML内容</div>'
+
+                }
+
+            };
+
+
+
+            return defaults[type] || {};
+
+        }
+
+
+
+        // 渲染模块
+
+        function renderModule(module) {
+
+            const canvas = document.getElementById('canvas');
+
+            const wrapper = document.createElement('div');
+
+            wrapper.className = 'module-wrapper';
+
+            wrapper.dataset.moduleId = module.id;
+
+
+
+            const controls = `
+
+                <div class="module-controls">
+
+                    <div class="module-control-btn" onclick="editModule('${module.id}')">
+
+                        <i class="fas fa-edit"></i>
+
+                    </div>
+
+                    <div class="module-control-btn" onclick="duplicateModule('${module.id}')">
+
+                        <i class="fas fa-copy"></i>
+
+                    </div>
+
+                    <div class="module-control-btn delete" onclick="deleteModule('${module.id}')">
+
+                        <i class="fas fa-trash"></i>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+
+            const content = renderModuleContent(module.type, module.data);
+
+            wrapper.innerHTML = controls + content;
+
+
+
+            wrapper.addEventListener('click', function(e) {
+
+                if (!e.target.closest('.module-controls')) {
+
+                    selectModule(module.id);
+
+                }
+
+            });
+
+
+
+            canvas.appendChild(wrapper);
+
+        }
+
+
+
+        // 渲染模块内容
+
+        function renderModuleContent(type, data) {
+
+            switch(type) {
+
+                case 'banner':
+
+                    return renderBannerModule(data);
+
+                case 'text':
+
+                    return renderTextModule(data);
+
+                case 'image':
+
+                    return renderImageModule(data);
+
+                case 'card':
+
+                    return renderCardModule(data);
+
+                case 'video':
+
+                    return renderVideoModule(data);
+
+                case 'custom':
+
+                    return renderCustomModule(data);
+
+                default:
+
+                    return '<div>未知模块类型</div>';
+
+            }
+
+        }
+
+
+
+        // 渲染Banner模块
+
+        function renderBannerModule(data) {
+
+            let html = '<div class="module-banner" style="height: ' + data.height + 'px;">';
+
+            if (data.items && data.items.length > 0) {
+
+                const item = data.items[0];
+
+                if (item.image && item.image.indexOf('{{') === -1) {
+                html += '<img src="' + item.image + '" alt="' + item.title + '">';
+            } else {
+                html += '<div class="img-placeholder img-placeholder-banner"><i class="fas fa-image"></i><span>' + (item.title || 'Banner') + '</span></div>';
+            }
+
+                html += '<h3>' + item.title + '</h3>';
+
+                html += '<p>' + item.subtitle + '</p>';
+
+            }
+
+            html += '</div>';
+
+            return html;
+
+        }
+
+
+
+        // 渲染文本模块
+
+        function renderTextModule(data) {
+
+            return `
+
+                <div class="module-text" style="text-align: ${data.align};">
+
+                    <h2>${data.title}</h2>
+
+                    <div>${data.content}</div>
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 渲染图片模块
+
+        function renderImageModule(data) {
+
+            return `
+
+                <div class="module-image">
+
+                    ${data.src && data.src.indexOf('{{') === -1 ? '<img src="' + data.src + '" alt="' + data.alt + '" style="width: ' + data.width + ';">' : '<div class="img-placeholder img-placeholder-image"><i class="fas fa-image"></i><span>' + (data.alt || '图片') + '</span></div>'}
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 渲染卡片模块
+
+        function renderCardModule(data) {
+
+            let html = '<div class="module-card" style="grid-template-columns: repeat(' + data.columns + ', 1fr);">';
+
+            if (data.items) {
+
+                data.items.forEach(item => {
+
+                    html += `
+
+                        <div class="card-item">
+
+                            ${item.image && item.image.indexOf('{{') === -1 ? '<img src="' + item.image + '" alt="' + item.title + '">' : '<div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>' + (item.title || '图片') + '</span></div>'}
+
+                            <h4>${item.title}</h4>
+
+                            <p>${item.description}</p>
+
+                        </div>
+
+                    `;
+
+                });
+
+            }
+
+            html += '</div>';
+
+            return html;
+
+        }
+
+
+
+        // 渲染视频模块
+
+        function renderVideoModule(data) {
+
+            return `
+
+                <div class="module-video">
+
+                    <video controls ${data.autoplay ? 'autoplay' : ''} ${data.poster ? 'poster="' + data.poster + '"' : ''}>
+
+                        <source src="${data.src}" type="video/mp4">
+
+                    </video>
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 渲染自定义模块
+
+        function renderCustomModule(data) {
+
+            let html = data.html || '<div>自定义HTML内容</div>';
+
+
+
+            // 修复相对路径的图片
+
+            html = html.replace(/src="(?!http|\/\/|\/)/g, 'src="/');
+
+            html = html.replace(/href="(?!http|\/\/|\/|#|javascript)/g, 'href="/');
+
+
+
+            // 包装在一个容器中，保持样式隔离
+
+            return `<div class="custom-html-wrapper">${html}</div>`;
+
+        }
+
+
+
+        // 选中模块
+
+        function selectModule(moduleId) {
+
+            // 移除其他模块的选中状态
+
+            document.querySelectorAll('.module-wrapper').forEach(el => {
+
+                el.classList.remove('active');
+
+            });
+
+
+
+            // 选中当前模块
+
+            const wrapper = document.querySelector(`[data-module-id="${moduleId}"]`);
+
+            if (wrapper) {
+
+                wrapper.classList.add('active');
+
+                currentModuleId = moduleId;
+
+                showProperties(moduleId);
+
+            }
+
+        }
+
+
+
+        // 显示属性面板
+
+        function showProperties(moduleId) {
+
+            const module = modules.find(m => m.id === moduleId);
+
+            if (!module) return;
+
+
+
+            const propertiesContent = document.getElementById('propertiesContent');
+
+            propertiesContent.innerHTML = generatePropertiesForm(module);
+
+        }
+
+
+
+        // 生成属性表单
+
+        function generatePropertiesForm(module) {
+
+            let html = '<div class="property-group">';
+
+            html += '<div class="property-group-title">模块属性</div>';
+
+
+
+            switch(module.type) {
+
+                case 'banner':
+
+                    html += generateBannerProperties(module.data);
+
+                    break;
+
+                case 'text':
+
+                    html += generateTextProperties(module.data);
+
+                    break;
+
+                case 'image':
+
+                    html += generateImageProperties(module.data);
+
+                    break;
+
+                case 'card':
+
+                    html += generateCardProperties(module.data);
+
+                    break;
+
+                case 'video':
+
+                    html += generateVideoProperties(module.data);
+
+                    break;
+
+                case 'custom':
+
+                    html += generateCustomProperties(module.data);
+
+                    break;
+
+            }
+
+
+
+            html += '</div>';
+
+            return html;
+
+        }
+
+
+
+        // Banner属性表单
+
+        function generateBannerProperties(data) {
+
+            return `
+
+                <div class="property-field">
+
+                    <label class="property-label">高度 (px)</label>
+
+                    <input type="number" class="property-input" value="${data.height}" onchange="updateModuleProperty('height', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-checkbox">
+
+                        <input type="checkbox" ${data.autoplay ? 'checked' : ''} onchange="updateModuleProperty('autoplay', this.checked)">
+
+                        <span>自动播放</span>
+
+                    </label>
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">图片地址</label>
+
+                    <input type="text" class="property-input" value="${data.items[0].image}" onchange="updateBannerItem(0, 'image', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">标题</label>
+
+                    <input type="text" class="property-input" value="${data.items[0].title}" onchange="updateBannerItem(0, 'title', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">副标题</label>
+
+                    <input type="text" class="property-input" value="${data.items[0].subtitle}" onchange="updateBannerItem(0, 'subtitle', this.value)">
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 文本属性表单
+
+        function generateTextProperties(data) {
+
+            return `
+
+                <div class="property-field">
+
+                    <label class="property-label">标题</label>
+
+                    <input type="text" class="property-input" value="${data.title}" onchange="updateModuleProperty('title', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">内容</label>
+
+                    <textarea class="property-input property-textarea" onchange="updateModuleProperty('content', this.value)">${data.content}</textarea>
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">对齐方式</label>
+
+                    <select class="property-select" onchange="updateModuleProperty('align', this.value)">
+
+                        <option value="left" ${data.align === 'left' ? 'selected' : ''}>左对齐</option>
+
+                        <option value="center" ${data.align === 'center' ? 'selected' : ''}>居中</option>
+
+                        <option value="right" ${data.align === 'right' ? 'selected' : ''}>右对齐</option>
+
+                    </select>
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 图片属性表单
+
+        function generateImageProperties(data) {
+
+            return `
+
+                <div class="property-field">
+
+                    <label class="property-label">图片地址</label>
+
+                    <input type="text" class="property-input" value="${data.src}" onchange="updateModuleProperty('src', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">图片描述</label>
+
+                    <input type="text" class="property-input" value="${data.alt}" onchange="updateModuleProperty('alt', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">宽度</label>
+
+                    <input type="text" class="property-input" value="${data.width}" onchange="updateModuleProperty('width', this.value)">
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 卡片属性表单
+
+                function generateCardProperties(data) {
+            if (!data.items) data.items = [];
+            if (data.items.length === 0) {
+                data.items.push({ image: '', title: '新卡片', description: '卡片描述' });
+            }
+
+            let html = ``;
+            html += `
+                <div class="property-field">
+                    <label class="property-label">列数</label>
+                    <select class="property-select" onchange="updateModuleProperty('columns', parseInt(this.value))">
+                        <option value="2" ${data.columns === 2 ? 'selected' : ''}>2列</option>
+                        <option value="3" ${data.columns === 3 ? 'selected' : ''}>3列</option>
+                        <option value="4" ${data.columns === 4 ? 'selected' : ''}>4列</option>
+                    </select>
+                </div>
+                <div class="property-field">
+                    <label class="property-label">样式</label>
+                    <select class="property-select" onchange="updateModuleProperty('style', this.value)">
+                        <option value="modern" ${data.style === 'modern' ? 'selected' : ''}>现代</option>
+                        <option value="classic" ${data.style === 'classic' ? 'selected' : ''}>经典</option>
+                    </select>
+                </div>
+                <div class="property-group-title">卡片项目 (<span id="cardCount">${data.items.length}</span>)</div>
+            `;
+
+            data.items.forEach((item, index) => {
+                const imgSrc = item.image || '';
+                html += `
+                    <div class="card-item-property" data-card-index="${index}">
+                        <div class="card-item-header">
+                            <span>卡片 ${index + 1}</span>
+                            ${data.items.length > 1 ? '<button class="card-item-remove" onclick="removeCardItem(' + index + ')" title="删除卡片"><i class="fas fa-times"></i></button>' : ''}
+                        </div>
+                        <div class="card-image-preview">
+                            ${imgSrc ? '<img src="' + imgSrc + '" onerror="this.style.display='none'">' : '<div class="card-image-placeholder"><i class="fas fa-image"></i></div>'}
+                        </div>
+                        <div class="property-field" style="display:flex;gap:8px;">
+                            <input type="text" class="property-input" value="${imgSrc}" placeholder="图片URL" onchange="updateCardItem(${index}, 'image', this.value)" style="flex:1;">
+                            <button class="card-image-btn" onclick="uploadCardImage(${index})" title="选择图片上传"><i class="fas fa-folder-open"></i></button>
+                        </div>
+                        <div class="property-field">
+                            <input type="text" class="property-input" value="${item.title}" placeholder="卡片标题" onchange="updateCardItem(${index}, 'title', this.value)">
+                        </div>
+                        <div class="property-field">
+                            <textarea class="property-input property-textarea" rows="2" placeholder="卡片描述" onchange="updateCardItem(${index}, 'description', this.value)">${item.description || ''}</textarea>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '<button class="card-add-btn" onclick="addCardItem()"><i class="fas fa-plus"></i> 添加卡片</button>';
+            return html;
+        }
+
+
+
+        // 视频属性表单
+
+        function generateVideoProperties(data) {
+
+            return `
+
+                <div class="property-field">
+
+                    <label class="property-label">视频地址</label>
+
+                    <input type="text" class="property-input" value="${data.src}" onchange="updateModuleProperty('src', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-label">封面图</label>
+
+                    <input type="text" class="property-input" value="${data.poster}" onchange="updateModuleProperty('poster', this.value)">
+
+                </div>
+
+                <div class="property-field">
+
+                    <label class="property-checkbox">
+
+                        <input type="checkbox" ${data.autoplay ? 'checked' : ''} onchange="updateModuleProperty('autoplay', this.checked)">
+
+                        <span>自动播放</span>
+
+                    </label>
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 自定义HTML属性表单
+
+        function generateCustomProperties(data) {
+
+            return `
+
+                <div class="property-field">
+
+                    <label class="property-label">HTML代码</label>
+
+                    <textarea class="property-input property-textarea" style="min-height: 200px; font-family: monospace;" onchange="updateModuleProperty('html', this.value)">${data.html}</textarea>
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        // 更新模块属性
+
+        function updateModuleProperty(key, value) {
+
+            const module = modules.find(m => m.id === currentModuleId);
+
+            if (module) {
+
+                module.data[key] = value;
+
+                refreshModule(currentModuleId);
+
+            }
+
+        }
+
+
+
+        // 更新Banner项目
+
+        function updateBannerItem(index, key, value) {
+            const module = modules.find(m => m.id === currentModuleId);
+            if (module && module.data.items && module.data.items[index]) {
+                module.data.items[index][key] = value;
+                refreshModule(currentModuleId);
+            }
+        }
+
+        // 更新卡片项目属性
+        function updateCardItem(index, key, value) {
+            const module = modules.find(m => m.id === currentModuleId);
+            if (module && module.data.items && module.data.items[index]) {
+                module.data.items[index][key] = value;
+                refreshModule(currentModuleId);
+                showProperties(currentModuleId);
+            }
+        }
+
+        // 添加卡片项目
+        function addCardItem() {
+            const module = modules.find(m => m.id === currentModuleId);
+            if (module) {
+                if (!module.data.items) module.data.items = [];
+                module.data.items.push({ image: '', title: '新卡片', description: '卡片描述' });
+                showProperties(currentModuleId);
+                refreshModule(currentModuleId);
+            }
+        }
+
+        // 删除卡片项目
+        function removeCardItem(index) {
+            const module = modules.find(m => m.id === currentModuleId);
+            if (module && module.data.items && module.data.items.length > 1) {
+                module.data.items.splice(index, 1);
+                showProperties(currentModuleId);
+                refreshModule(currentModuleId);
+            }
+        }
+
+        // 上传卡片图片
+        function uploadCardImage(index) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const formData = new FormData();
+                formData.append('image', file);
+                fetch('api/upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        updateCardItem(index, 'image', data.data.url);
+                    } else {
+                        showToast('上传失败: ' + (data.message || '未知错误'), 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast('上传失败', 'error');
+                });
+            };
+            input.click();
+        }
+
+
+
+        // 刷新模块显示
+
+        function refreshModule(moduleId) {
+
+            const module = modules.find(m => m.id === moduleId);
+
+            if (!module) return;
+
+
+
+            const wrapper = document.querySelector(`[data-module-id="${moduleId}"]`);
+
+            if (wrapper) {
+
+                const controls = wrapper.querySelector('.module-controls');
+
+                const content = renderModuleContent(module.type, module.data);
+
+                wrapper.innerHTML = controls.outerHTML + content;
+
+            }
+
+        }
+
+
+
+        // 编辑模块
+
+        function editModule(moduleId) {
+
+            selectModule(moduleId);
+
+        }
+
+
+
+        // 复制模块
+
+        function duplicateModule(moduleId) {
+
+            const module = modules.find(m => m.id === moduleId);
+
+            if (module) {
+
+                const newModule = {
+
+                    id: 'module-' + moduleIdCounter++,
+
+                    type: module.type,
+
+                    data: JSON.parse(JSON.stringify(module.data)),
+
+                    sortOrder: modules.length
+
+                };
+
+                modules.push(newModule);
+
+                renderModule(newModule);
+
+                showToast('模块已复制', 'success');
+
+            }
+
+        }
+
+
+
+        // 删除模块
+
+        function deleteModule(moduleId) {
+
+            if (confirm('确定要删除这个模块吗？')) {
+
+                modules = modules.filter(m => m.id !== moduleId);
+
+                const wrapper = document.querySelector(`[data-module-id="${moduleId}"]`);
+
+                if (wrapper) {
+
+                    wrapper.remove();
+
+                }
+
+
+
+                if (modules.length === 0) {
+
+                    const canvas = document.getElementById('canvas');
+
+                    canvas.innerHTML = '<div class="canvas-empty"><i class="fas fa-mouse-pointer"></i><p>从左侧拖拽组件到这里开始编辑</p></div>';
+
+                }
+
+
+
+                showToast('模块已删除', 'success');
+
+            }
+
+        }
+
+
+
+        // 更新模块顺序
+
+        function updateModuleOrder() {
+
+            const wrappers = document.querySelectorAll('.module-wrapper');
+
+            wrappers.forEach((wrapper, index) => {
+
+                const moduleId = wrapper.dataset.moduleId;
+
+                const module = modules.find(m => m.id === moduleId);
+
+                if (module) {
+
+                    module.sortOrder = index;
+
+                }
+
+            });
+
+        }
+
+
+
+        // 加载页面列表
+
+        function loadPageList() {
+
+            // 这里可以从API加载页面列表
+
+        }
+
+
+
+        // 加载页面
+
+        function loadPage() {
+
+            const pageId = document.getElementById('pageSelector').value;
+
+            if (!pageId) {
+
+                // 隐藏导入按钮
+
+                document.getElementById('importBtn').style.display = 'none';
+
+                return;
+
+            }
+
+
+
+            currentPageId = pageId;
+
+
+
+            // 显示导入按钮
+
+            document.getElementById('importBtn').style.display = 'flex';
+
+
+
+            // 先尝试从数据库加载模块
+
+            fetch(`api/page-builder/get-modules.php?page_id=${pageId}`)
+
+                .then(res => res.json())
+
+                .then(data => {
+
+                    if (data.code === 0 && data.data.modules.length > 0) {
+
+                        // 有保存的模块数据，直接加载
+
+                        modules = data.data.modules.map(m => ({
+
+                            id: 'module-' + m.id,
+
+                            dbId: m.id,
+
+                            type: m.module_type,
+
+                            data: m.module_data,
+
+                            sortOrder: m.sort_order
+
+                        }));
+
+
+
+                        // 清空画布
+
+                        const canvas = document.getElementById('canvas');
+
+                        canvas.innerHTML = '';
+
+
+
+                        // 渲染所有模块
+
+                        modules.forEach(module => renderModule(module));
+
+                        showToast('页面加载成功（已保存的编辑器内容）', 'success');
+
+                    } else {
+
+                        // 没有模块数据，自动尝试加载现有HTML页面
+
+                        loadExistingPageHTML(pageId);
+
+                    }
+
+                })
+
+                .catch(err => {
+
+                    console.error(err);
+
+                    // 出错时也尝试加载HTML
+
+                    loadExistingPageHTML(pageId);
+
+                });
+
+        }
+
+
+
+        // 加载现有页面HTML内容
+
+        function loadExistingPageHTML(pageId) {
+
+            fetch(`api/page-builder/parse-page.php?page_id=${pageId}`)
+
+                .then(res => res.json())
+
+                .then(data => {
+
+                    if (data.code === 0 && data.data.modules && data.data.modules.length > 0) {
+
+                        const canvas = document.getElementById('canvas');
+
+                        canvas.innerHTML = '';
+
+
+
+                        // 将解析的模块转换为编辑器格式
+
+                        modules = data.data.modules.map((m, index) => ({
+
+                            id: 'module-' + moduleIdCounter++,
+
+                            type: m.module_type,
+
+                            data: m.module_data,
+
+                            sortOrder: index
+
+                        }));
+
+
+
+                        // 渲染所有模块
+
+                        modules.forEach(module => renderModule(module));
+
+
+
+                        showToast('已加载现有页面内容，可以开始编辑', 'success');
+
+                    } else if (data.code === 0 && data.data.preview_html) {
+
+                        // 如果解析失败，显示原始HTML
+
+                        const canvas = document.getElementById('canvas');
+
+                        canvas.innerHTML = '';
+
+
+
+                        const previewModule = {
+
+                            id: 'module-' + moduleIdCounter++,
+
+                            type: 'custom',
+
+                            data: {
+
+                                html: data.data.preview_html
+
+                            },
+
+                            sortOrder: 0
+
+                        };
+
+
+
+                        modules = [previewModule];
+
+                        renderModule(previewModule);
+
+
+
+                        showToast('已加载页面内容（原始HTML），可以编辑或添加新组件', 'success');
+
+                    } else {
+
+                        // 页面不存在，显示空画布
+
+                        const canvas = document.getElementById('canvas');
+
+                        canvas.innerHTML = '<div class="canvas-empty"><i class="fas fa-mouse-pointer"></i><p>从左侧拖拽组件到这里开始编辑</p></div>';
+
+                        showToast('这是新页面，从左侧拖拽组件开始编辑', 'success');
+
+                    }
+
+                })
+
+                .catch(err => {
+
+                    console.error(err);
+
+                    const canvas = document.getElementById('canvas');
+
+                    canvas.innerHTML = '<div class="canvas-empty"><i class="fas fa-mouse-pointer"></i><p>从左侧拖拽组件到这里开始编辑</p></div>';
+
+                    showToast('从左侧拖拽组件开始编辑', 'success');
+
+                });
+
+        }
+
+
+
+        // 保存页面
+
+        function savePage() {
+
+            if (!currentPageId) {
+
+                showToast('请先选择一个页面', 'error');
+
+                return;
+
+            }
+
+
+
+            // 保存所有模块
+
+            const promises = modules.map((module, index) => {
+
+                return fetch('api/page-builder/save-module.php', {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'Content-Type': 'application/json'
+
+                    },
+
+                    body: JSON.stringify({
+
+                        page_id: currentPageId,
+
+                        module_id: module.dbId || 0,
+
+                        module_type: module.type,
+
+                        module_data: module.data,
+
+                        sort_order: index
+
+                    })
+
+                }).then(res => res.json());
+
+            });
+
+
+
+            Promise.all(promises)
+
+                .then(results => {
+
+                    const allSuccess = results.every(r => r.code === 0);
+
+                    if (allSuccess) {
+
+                        showToast('保存成功', 'success');
+
+                        // 更新dbId
+
+                        results.forEach((result, index) => {
+
+                            if (result.data && result.data.module_id) {
+
+                                modules[index].dbId = result.data.module_id;
+
+                            }
+
+                        });
+
+                    } else {
+
+                        showToast('部分模块保存失败', 'error');
+
+                    }
+
+                })
+
+                .catch(err => {
+
+                    console.error(err);
+
+                    showToast('保存失败', 'error');
+
+                });
+
+        }
+
+
+
+        // 发布页面
+
+        function publishPage() {
+
+            if (!currentPageId) {
+
+                showToast('请先选择一个页面', 'error');
+
+                return;
+
+            }
+
+
+
+            if (confirm('确定要发布这个页面吗？发布后将生成静态HTML文件。')) {
+
+                fetch('api/page-builder/publish.php', {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'Content-Type': 'application/json'
+
+                    },
+
+                    body: JSON.stringify({
+
+                        page_id: currentPageId
+
+                    })
+
+                })
+
+                .then(res => res.json())
+
+                .then(data => {
+
+                    if (data.code === 0) {
+
+                        showToast('发布成功', 'success');
+
+                    } else {
+
+                        showToast('发布失败: ' + data.msg, 'error');
+
+                    }
+
+                })
+
+                .catch(err => {
+
+                    console.error(err);
+
+                    showToast('发布失败', 'error');
+
+                });
+
+            }
+
+        }
+
+
+
+        // 预览页面
+
+        function previewPage() {
+
+            if (!currentPageId) {
+
+                showToast('请先选择一个页面', 'error');
+
+                return;
+
+            }
+
+            window.open(`/pages/${currentPageId}.html`, '_blank');
+
+        }
+
+
+
+        // 返回
+
+        function goBack() {
+
+            window.location.href = 'index.html';
+
+        }
+
+
+
+        // 清空画布
+
+        function clearCanvas() {
+
+            if (confirm('确定要清空画布吗？所有未保存的内容将丢失。')) {
+
+                modules = [];
+
+                const canvas = document.getElementById('canvas');
+
+                canvas.innerHTML = '<div class="canvas-empty"><i class="fas fa-mouse-pointer"></i><p>从左侧拖拽组件到这里开始编辑</p></div>';
+
+
+
+                // 清空属性面板
+
+                const propertiesContent = document.getElementById('propertiesContent');
+
+                propertiesContent.innerHTML = '<div class="properties-empty"><i class="fas fa-hand-pointer"></i><p>选择一个模块来编辑其属性</p></div>';
+
+
+
+                currentModuleId = null;
+
+                showToast('画布已清空', 'success');
+
+            }
+
+        }
+
+
+
+        // 导入现有页面内容
+
+        function importExistingPage() {
+
+            if (!currentPageId) {
+
+                showToast('请先选择一个页面', 'error');
+
+                return;
+
+            }
+
+
+
+            if (modules.length > 0) {
+
+                if (!confirm('当前画布有内容，导入会覆盖现有内容，确定继续吗？')) {
+
+                    return;
+
+                }
+
+            }
+
+
+
+            loadExistingPageHTML(currentPageId);
+
+        }
+
+
+
+        // 显示提示
+
+        function showToast(message, type = 'success') {
+
+            const toast = document.getElementById('toast');
+
+            const toastMessage = document.getElementById('toastMessage');
+
+
+
+            toast.className = `toast ${type}`;
+
+            toastMessage.textContent = message;
+
+
+
+            const icon = toast.querySelector('i');
+
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+
+
+            toast.classList.add('show');
+
+
+
+            setTimeout(() => {
+
+                toast.classList.remove('show');
+
+            }, 3000);
+
+        }
+
+    </script>
+
+    <!-- 引入前端JS以支持轮播等功能 -->
+
+    <script src="/js/main.js"></script>
+
+    <script src="/assets/js/page-builder.js"></script>
+
+</body>
+
+</html>
+
+
+
+

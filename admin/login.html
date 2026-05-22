@@ -306,6 +306,11 @@
     </div>
 
     <script>
+// Sync localStorage auth to cookie for PHP backend
+if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf('cms_logged_in') === -1) {
+    document.cookie = 'cms_logged_in=true;path=/;max-age=' + (60*60*24*30) + ';SameSite=Lax';
+}
+
         // 密码显示/隐藏切换
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
@@ -345,7 +350,9 @@
                     // 登录成功
                     localStorage.setItem('cms_logged_in', 'true');
                     localStorage.setItem('cms_username', username);
-                    localStorage.setItem('cms_login_time', new Date().toISOString());
+                    localStorage.setItem('cms_login_time', new Date().toISOString());                    // Also set cookie for PHP backend auth
+                    document.cookie = 'cms_logged_in=true;path=/;max-age=' + (60*60*24*30) + ';SameSite=Lax';
+
                     
                     // 跳转到页面管理
                     window.location.href = 'index.html';

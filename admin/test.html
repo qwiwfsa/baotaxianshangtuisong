@@ -136,6 +136,11 @@
     </div>
 
     <script>
+// Sync localStorage auth to cookie for PHP backend
+if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf('cms_logged_in') === -1) {
+    document.cookie = 'cms_logged_in=true;path=/;max-age=' + (60*60*24*30) + ';SameSite=Lax';
+}
+
         // 测试文件是否存在
         async function testFile(url, elementId) {
             const element = document.getElementById(elementId);

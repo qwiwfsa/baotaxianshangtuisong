@@ -1,583 +1,1163 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ管理 - 宏都资本CMS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- TinyMCE 富文本编辑器 -->
-    <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: #f3f4f6;
-            min-height: 100vh;
-        }
-
-        /* 布局 */
-        .cms-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* 侧边栏 */
-        .cms-sidebar {
-            width: 260px;
-            background: #1e293b;
-            color: white;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .cms-sidebar-header {
-            padding: 24px;
-            border-bottom: 1px solid #334155;
-        }
-
-        .cms-sidebar-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cms-sidebar-brand i {
-            font-size: 28px;
-            color: #3b82f6;
-        }
-
-        .cms-sidebar-brand span {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .cms-sidebar-nav {
-            padding: 16px 0;
-        }
-
-        .cms-nav-section {
-            margin-bottom: 8px;
-        }
-
-        .cms-nav-title {
-            padding: 12px 24px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #94a3b8;
-        }
-
-        .cms-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .cms-nav-item:hover {
-            background: #334155;
-            color: white;
-        }
-
-        .cms-nav-item.active {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .cms-nav-item i {
-            width: 20px;
-            text-align: center;
-        }
-
-        /* 主内容区 */
-        .cms-main {
-            flex: 1;
-            margin-left: 260px;
-            min-height: 100vh;
-        }
-
-        /* 顶部栏 */
-        .cms-header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .cms-header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .cms-header-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .cms-breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .cms-breadcrumb a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-
-        .cms-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        .cms-header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cms-header-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: #f3f4f6;
-            border: none;
-            border-radius: 8px;
-            color: #374151;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .cms-header-btn:hover {
-            background: #e5e7eb;
-        }
-
-        .cms-header-btn-primary {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            color: white;
-        }
-
-        .cms-header-btn-primary:hover {
-            background: linear-gradient(135deg, #1e40af, #2563eb);
-        }
-
-        /* 内容区域 */
-        .cms-content {
-            padding: 24px;
-        }
-
-        /* 工具栏 */
-        .toolbar {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 24px;
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 14px 10px 40px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-        }
-
-        .filter-select {
-            padding: 10px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            min-width: 120px;
-        }
-
-        /* FAQ列表 */
-        .faq-list {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid #e5e7eb;
-            transition: all 0.2s;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-
-        .faq-item:hover {
-            background: #f9fafb;
-        }
-
-        .faq-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            cursor: pointer;
-        }
-
-        .faq-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex: 1;
-        }
-
-        .faq-number {
-            width: 32px;
-            height: 32px;
-            background: #3b82f6;
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .faq-title {
-            font-size: 15px;
-            font-weight: 500;
-            color: #1f2937;
-        }
-
-        .faq-category {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #eff6ff;
-            color: #3b82f6;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-left: 12px;
-        }
-
-        .faq-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .faq-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .faq-btn.edit {
-            background: #eff6ff;
-            color: #3b82f6;
-        }
-
-        .faq-btn.edit:hover {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .faq-btn.delete {
-            background: #fef2f2;
-            color: #ef4444;
-        }
-
-        .faq-btn.delete:hover {
-            background: #ef4444;
-            color: white;
-        }
-
-        .faq-btn.move {
-            background: #f3f4f6;
-            color: #6b7280;
-            cursor: move;
-        }
-
-        .faq-content {
-            padding: 0 24px 16px 72px;
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.6;
-            display: none;
-        }
-
-        .faq-item.expanded .faq-content {
-            display: block;
-        }
-
-        .faq-item.expanded .faq-toggle i {
-            transform: rotate(180deg);
-        }
-
-        .faq-toggle {
-            background: none;
-            border: none;
-            color: #9ca3af;
-            cursor: pointer;
-            padding: 4px;
-            margin-right: 8px;
-        }
-
-        .faq-toggle i {
-            transition: transform 0.2s;
-        }
-
-        /* 空状态 */
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-        }
-
-        .empty-state i {
-            font-size: 64px;
-            color: #d1d5db;
-            margin-bottom: 16px;
-        }
-
-        .empty-state h3 {
-            font-size: 18px;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .empty-state p {
-            color: #6b7280;
-            margin-bottom: 24px;
-        }
-
-        /* 模态框 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
-        .modal {
-            background: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #6b7280;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .modal-body {
-            padding: 24px;
-            overflow-y: auto;
-            max-height: calc(90vh - 140px);
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        /* 表单样式 */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-label .required {
-            color: #ef4444;
-            margin-left: 4px;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .tox-tinymce { border-radius: 8px !important; }
-        .tox .tox-dialog { z-index: 100000 !important; }
-
-        .form-hint {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 6px;
-        }
-
-        /* 提示消息 */
-        .toast {
-            position: fixed;
-            top: 80px;
-            right: 24px;
-            padding: 16px 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 300;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-
-        .toast.error {
-            border-left: 4px solid #ef4444;
-        }
-
-        .toast i {
-            font-size: 20px;
-        }
-
-        /* 响应式 */
-        @media (max-width: 768px) {
-            .cms-sidebar {
-                transform: translateX(-100%);
-            }
-
-            .cms-main {
-                margin-left: 0;
-            }
-
-            .faq-header {
-                flex-wrap: wrap;
-            }
-
-            .faq-actions {
-                width: 100%;
-                justify-content: flex-end;
-                margin-top: 12px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="cms-layout">
-        <!-- 侧边栏 -->
-        <aside class="cms-sidebar">
-            <div class="cms-sidebar-header">
-                <div class="cms-sidebar-brand">
-                    <i class="fas fa-cog"></i>
-                    <span>CMS管理后台</span>
-                </div>
-            </div>
-            
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FAQ管理 - 宏都资本CMS</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- TinyMCE 富文本编辑器 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js"></script>
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        body {
+
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+            background: #f3f4f6;
+
+            min-height: 100vh;
+
+        }
+
+
+
+        /* 布局 */
+
+        .cms-layout {
+
+            display: flex;
+
+            min-height: 100vh;
+
+        }
+
+
+
+        /* 侧边栏 */
+
+        .cms-sidebar {
+
+            width: 260px;
+
+            background: #1e293b;
+
+            color: white;
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            bottom: 0;
+
+            overflow-y: auto;
+
+            z-index: 100;
+
+        }
+
+
+
+        .cms-sidebar-header {
+
+            padding: 24px;
+
+            border-bottom: 1px solid #334155;
+
+        }
+
+
+
+        .cms-sidebar-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
+        .cms-sidebar-brand i {
+
+            font-size: 28px;
+
+            color: #3b82f6;
+
+        }
+
+
+
+        .cms-sidebar-brand span {
+
+            font-size: 20px;
+
+            font-weight: 600;
+
+        }
+
+
+
+        .cms-sidebar-nav {
+
+            padding: 16px 0;
+
+        }
+
+
+
+        .cms-nav-section {
+
+            margin-bottom: 8px;
+
+        }
+
+
+
+        .cms-nav-title {
+
+            padding: 12px 24px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            color: #94a3b8;
+
+        }
+
+
+
+        .cms-nav-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 24px;
+
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: all 0.2s;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .cms-nav-item:hover {
+
+            background: #334155;
+
+            color: white;
+
+        }
+
+
+
+        .cms-nav-item.active {
+
+            background: #3b82f6;
+
+            color: white;
+
+        }
+
+
+
+        .cms-nav-item i {
+
+            width: 20px;
+
+            text-align: center;
+
+        }
+
+
+
+        /* 主内容区 */
+
+        .cms-main {
+
+            flex: 1;
+
+            margin-left: 260px;
+
+            min-height: 100vh;
+
+        }
+
+
+
+        /* 顶部栏 */
+
+        .cms-header {
+
+            background: white;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            padding: 16px 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 50;
+
+        }
+
+
+
+        .cms-header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+        }
+
+
+
+        .cms-header-title {
+
+            font-size: 20px;
+
+            font-weight: 600;
+
+            color: #1f2937;
+
+        }
+
+
+
+        .cms-breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 14px;
+
+            color: #6b7280;
+
+        }
+
+
+
+        .cms-breadcrumb a {
+
+            color: #3b82f6;
+
+            text-decoration: none;
+
+        }
+
+
+
+        .cms-breadcrumb a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+
+        .cms-header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
+        .cms-header-btn {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 16px;
+
+            background: #f3f4f6;
+
+            border: none;
+
+            border-radius: 8px;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+            text-decoration: none;
+
+        }
+
+
+
+        .cms-header-btn:hover {
+
+            background: #e5e7eb;
+
+        }
+
+
+
+        .cms-header-btn-primary {
+
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+
+            color: white;
+
+        }
+
+
+
+        .cms-header-btn-primary:hover {
+
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+
+        }
+
+
+
+        /* 内容区域 */
+
+        .cms-content {
+
+            padding: 24px;
+
+        }
+
+
+
+        /* 工具栏 */
+
+        .toolbar {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            margin-bottom: 24px;
+
+            display: flex;
+
+            gap: 16px;
+
+            flex-wrap: wrap;
+
+            align-items: center;
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+
+        }
+
+
+
+        .search-box {
+
+            flex: 1;
+
+            min-width: 200px;
+
+            position: relative;
+
+        }
+
+
+
+        .search-box input {
+
+            width: 100%;
+
+            padding: 10px 14px 10px 40px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+        }
+
+
+
+        .search-box i {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #9ca3af;
+
+        }
+
+
+
+        .filter-select {
+
+            padding: 10px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            min-width: 120px;
+
+        }
+
+
+
+        /* FAQ列表 */
+
+        .faq-list {
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+
+            overflow: hidden;
+
+        }
+
+
+
+        .faq-item {
+
+            border-bottom: 1px solid #e5e7eb;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .faq-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+
+        .faq-item:hover {
+
+            background: #f9fafb;
+
+        }
+
+
+
+        .faq-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 16px 24px;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .faq-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            flex: 1;
+
+        }
+
+
+
+        .faq-number {
+
+            width: 32px;
+
+            height: 32px;
+
+            background: #3b82f6;
+
+            color: white;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+
+        .faq-title {
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            color: #1f2937;
+
+        }
+
+
+
+        .faq-category {
+
+            display: inline-block;
+
+            padding: 4px 10px;
+
+            background: #eff6ff;
+
+            color: #3b82f6;
+
+            border-radius: 4px;
+
+            font-size: 12px;
+
+            margin-left: 12px;
+
+        }
+
+
+
+        .faq-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+
+
+        .faq-btn {
+
+            width: 32px;
+
+            height: 32px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .faq-btn.edit {
+
+            background: #eff6ff;
+
+            color: #3b82f6;
+
+        }
+
+
+
+        .faq-btn.edit:hover {
+
+            background: #3b82f6;
+
+            color: white;
+
+        }
+
+
+
+        .faq-btn.delete {
+
+            background: #fef2f2;
+
+            color: #ef4444;
+
+        }
+
+
+
+        .faq-btn.delete:hover {
+
+            background: #ef4444;
+
+            color: white;
+
+        }
+
+
+
+        .faq-btn.move {
+
+            background: #f3f4f6;
+
+            color: #6b7280;
+
+            cursor: move;
+
+        }
+
+
+
+        .faq-content {
+
+            padding: 0 24px 16px 72px;
+
+            font-size: 14px;
+
+            color: #6b7280;
+
+            line-height: 1.6;
+
+            display: none;
+
+        }
+
+
+
+        .faq-item.expanded .faq-content {
+
+            display: block;
+
+        }
+
+
+
+        .faq-item.expanded .faq-toggle i {
+
+            transform: rotate(180deg);
+
+        }
+
+
+
+        .faq-toggle {
+
+            background: none;
+
+            border: none;
+
+            color: #9ca3af;
+
+            cursor: pointer;
+
+            padding: 4px;
+
+            margin-right: 8px;
+
+        }
+
+
+
+        .faq-toggle i {
+
+            transition: transform 0.2s;
+
+        }
+
+
+
+        /* 空状态 */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 80px 20px;
+
+        }
+
+
+
+        .empty-state i {
+
+            font-size: 64px;
+
+            color: #d1d5db;
+
+            margin-bottom: 16px;
+
+        }
+
+
+
+        .empty-state h3 {
+
+            font-size: 18px;
+
+            color: #374151;
+
+            margin-bottom: 8px;
+
+        }
+
+
+
+        .empty-state p {
+
+            color: #6b7280;
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        /* 模态框 */
+
+        .modal-overlay {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            background: rgba(0,0,0,0.5);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 200;
+
+        }
+
+
+
+        .modal-overlay.show {
+
+            display: flex;
+
+        }
+
+
+
+        .modal {
+
+            background: white;
+
+            border-radius: 12px;
+
+            width: 90%;
+
+            max-width: 700px;
+
+            max-height: 90vh;
+
+            overflow: hidden;
+
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+
+        }
+
+
+
+        .modal-header {
+
+            padding: 20px 24px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+
+
+        .modal-title {
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+            color: #1f2937;
+
+        }
+
+
+
+        .modal-close {
+
+            background: none;
+
+            border: none;
+
+            font-size: 20px;
+
+            color: #6b7280;
+
+            cursor: pointer;
+
+            padding: 4px;
+
+        }
+
+
+
+        .modal-body {
+
+            padding: 24px;
+
+            overflow-y: auto;
+
+            max-height: calc(90vh - 140px);
+
+        }
+
+
+
+        .modal-footer {
+
+            padding: 16px 24px;
+
+            border-top: 1px solid #e5e7eb;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+        }
+
+
+
+        /* 表单样式 */
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+
+        .form-label {
+
+            display: block;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            color: #374151;
+
+            margin-bottom: 8px;
+
+        }
+
+
+
+        .form-label .required {
+
+            color: #ef4444;
+
+            margin-left: 4px;
+
+        }
+
+
+
+        .form-input,
+
+        .form-textarea,
+
+        .form-select {
+
+            width: 100%;
+
+            padding: 10px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            transition: all 0.2s;
+
+            font-family: inherit;
+
+        }
+
+
+
+        .form-input:focus,
+
+        .form-textarea:focus,
+
+        .form-select:focus {
+
+            outline: none;
+
+            border-color: #3b82f6;
+
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+
+        }
+
+
+
+        .form-textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+
+        }
+
+
+
+        .tox-tinymce { border-radius: 8px !important; }
+
+        .tox .tox-dialog { z-index: 100000 !important; }
+
+
+
+        .form-hint {
+
+            font-size: 12px;
+
+            color: #6b7280;
+
+            margin-top: 6px;
+
+        }
+
+
+
+        /* 提示消息 */
+
+        .toast {
+
+            position: fixed;
+
+            top: 80px;
+
+            right: 24px;
+
+            padding: 16px 20px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            z-index: 300;
+
+            transform: translateX(150%);
+
+            transition: transform 0.3s ease;
+
+        }
+
+
+
+        .toast.show {
+
+            transform: translateX(0);
+
+        }
+
+
+
+        .toast.success {
+
+            border-left: 4px solid #10b981;
+
+        }
+
+
+
+        .toast.error {
+
+            border-left: 4px solid #ef4444;
+
+        }
+
+
+
+        .toast i {
+
+            font-size: 20px;
+
+        }
+
+
+
+        /* 响应式 */
+
+        @media (max-width: 768px) {
+
+            .cms-sidebar {
+
+                transform: translateX(-100%);
+
+            }
+
+
+
+            .cms-main {
+
+                margin-left: 0;
+
+            }
+
+
+
+            .faq-header {
+
+                flex-wrap: wrap;
+
+            }
+
+
+
+            .faq-actions {
+
+                width: 100%;
+
+                justify-content: flex-end;
+
+                margin-top: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="cms-layout">
+
+        <!-- 侧边栏 -->
+
+        <aside class="cms-sidebar">
+
+            <div class="cms-sidebar-header">
+
+                <div class="cms-sidebar-brand">
+
+                    <i class="fas fa-cog"></i>
+
+                    <span>CMS管理后台</span>
+
+                </div>
+
+            </div>
+
+            
+
             <nav class="cms-sidebar-nav">
                 <div class="cms-nav-section">
                     <div class="cms-nav-title">主要</div>
@@ -654,936 +1234,1873 @@
                     </a>
                     
                 </div>
-            </nav>
-        </aside>
-
-        <!-- 主内容区 -->
-        <main class="cms-main">
-            <!-- 顶部栏 -->
-            <header class="cms-header">
-                <div class="cms-header-left">
-                    <div class="cms-breadcrumb">
-                        <a href="dashboard.html">首页</a>
-                        <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
-                        <span>FAQ管理</span>
-                    </div>
-                </div>
-                <div class="cms-header-right">
-                    <button class="cms-header-btn" onclick="openCategoryModal()" style="margin-right: 12px; background: #f3f4f6; color: #374151;">
-                        <i class="fas fa-folder"></i>
-                        <span>管理分类</span>
-                    </button>
-                    <button class="cms-header-btn cms-header-btn-primary" onclick="openAddModal()">
-                        <i class="fas fa-plus"></i>
-                        <span>添加FAQ</span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- 内容区域 -->
-            <div class="cms-content">
-                <!-- 工具栏 -->
-                <div class="toolbar">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="搜索问题..." onkeyup="searchFAQ()">
-                    </div>
-                    <select class="filter-select" id="categoryFilter" onchange="filterByCategory()">
-                        <option value="all">全部分类</option>
-                        <option value="general">一般问题</option>
-                        <option value="service">服务相关</option>
-                        <option value="process">业务流程</option>
-                        <option value="fee">费用相关</option>
-                    </select>
-                </div>
-
-                <!-- FAQ列表 -->
-                <div class="faq-list" id="faqList">
-                    <!-- FAQ项目将由JS生成 -->
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- 添加/编辑FAQ模态框 -->
-    <div class="modal-overlay" id="faqModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">
-                    <i class="fas fa-plus-circle" style="color: #3b82f6; margin-right: 8px;"></i>
-                    添加FAQ
-                </h3>
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="faqId">
-                <div class="form-group">
-                    <label class="form-label">问题 <span class="required">*</span></label>
-                    <input type="text" class="form-input" id="faqQuestion" placeholder="请输入问题">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">分类</label>
-                    <select class="form-select" id="faqCategory">
-                        <!-- 动态生成分类选项 -->
-                    </select>
-                </div>
-                <details class="form-group" style="margin-bottom: 12px;">
-                    <summary class="form-label" style="cursor: pointer; display: inline; font-weight: 500; color: #6b7280;">
-                        <i class="fas fa-search" style="margin-right: 4px;"></i>SEO设置（可选）
-                    </summary>
-                    <div style="margin-top: 8px; padding: 10px; background: #f9fafb; border-radius: 6px;">
-                        <div class="form-group">
-                            <label class="form-label" style="font-size: 12px;">SEO标题</label>
-                            <input type="text" class="form-input" id="faqSeoTitle" placeholder="留空则使用问题作为标题">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" style="font-size: 12px;">SEO关键词</label>
-                            <input type="text" class="form-input" id="faqSeoKeywords" placeholder="多个关键词用逗号分隔">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" style="font-size: 12px;">SEO描述</label>
-                            <textarea class="form-textarea" id="faqSeoDescription" rows="2" placeholder="搜索引擎显示的描述文字"></textarea>
-                        </div>
-                    </div>
-                </details>
-                <div class="form-group">
-                    <label class="form-label">回答 <span class="required">*</span></label>
-                    <textarea class="form-textarea" id="faqAnswer" rows="6" placeholder="请输入回答内容"></textarea>
-                    <p class="form-hint">支持富文本编辑（粗体、表格、颜色等）</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="cms-header-btn" onclick="closeModal()">取消</button>
-                <button class="cms-header-btn cms-header-btn-primary" onclick="saveFAQ()">
-                    <i class="fas fa-save"></i>
-                    保存
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 删除确认模态框 -->
-    <div class="modal-overlay" id="deleteModal">
-        <div class="modal" style="max-width: 400px;">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-exclamation-triangle" style="color: #ef4444; margin-right: 8px;"></i>
-                    确认删除
-                </h3>
-                <button class="modal-close" onclick="closeDeleteModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>确定要删除这个FAQ吗？此操作不可恢复。</p>
-            </div>
-            <div class="modal-footer">
-                <button class="cms-header-btn" onclick="closeDeleteModal()">取消</button>
-                <button class="cms-header-btn" style="background: #ef4444; color: white;" onclick="confirmDelete()">
-                    <i class="fas fa-trash"></i>
-                    删除
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 分类管理模态框 -->
-    <div class="modal-overlay" id="categoryModal">
-        <div class="modal" style="max-width: 500px;">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-folder" style="color: #3b82f6; margin-right: 8px;"></i>
-                    管理分类
-                </h3>
-                <button class="modal-close" onclick="closeCategoryModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="categoryList" style="margin-bottom: 20px;">
-                    <!-- 分类列表 -->
-                </div>
-                <div class="form-group" style="display: flex; gap: 10px;">
-                    <input type="text" class="form-input" id="newCategoryName" placeholder="输入分类名称（如：亮资业务）" style="flex: 1;">
-                    <button class="cms-header-btn cms-header-btn-primary" onclick="addCategory()">
-                        <i class="fas fa-plus"></i>
-                        添加
-                    </button>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="cms-header-btn" onclick="closeCategoryModal()">关闭</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 提示消息 -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">操作成功</span>
-    </div>
-
-    <script>
-        // 默认FAQ数据
-        const defaultFAQs = [
-            {
-                id: 'faq_1',
-                question: '什么是过桥资金？',
-                answer: '过桥资金是一种短期融资方式，主要用于企业在银行贷款到期续贷期间的临时资金周转。我们可以提供1-6个月的短期资金支持，帮助企业顺利完成银行续贷流程。',
-                category: 'general'
-            },
-            {
-                id: 'faq_2',
-                question: '申请资金需要提供哪些材料？',
-                answer: '一般需要提供：企业营业执照、法人身份证、银行流水、财务报表、贷款合同或授信批复等基本材料。具体材料会根据业务类型有所不同，我们的客户经理会详细指导您准备。',
-                category: 'process'
-            },
-            {
-                id: 'faq_3',
-                question: '资金最快多久可以到账？',
-                answer: '在材料齐全、审核通过的情况下，过桥资金最快当天可以到账，一般情况下1-3个工作日完成放款。具体时间取决于业务复杂程度和资金规模。',
-                category: 'service'
-            },
-            {
-                id: 'faq_4',
-                question: '费用是如何计算的？',
-                answer: '费用根据资金规模、使用期限、业务类型等因素综合确定。我们采用透明化收费，在业务开始前会明确告知所有费用，不存在任何隐性收费。具体费用请咨询我们的客户经理。',
-                category: 'fee'
-            }
-        ];
-
-        let faqs = [];
-        let deleteId = null;
-        let faqEditor = null;
-
-        // 分类数据（从localStorage加载）
-        let categoryLabels = {};
-        let categorySeoData = {}; // { key: { seo_title, seo_keywords, seo_description } }
-        
-        // 默认分类（与前端业务分类一致）
-        const defaultCategories = {
-            'liangzi': '亮资业务',
-            'bridge': '过桥资金',
-            'baizhang': '摆账业务',
-            'receivable': '应收账款',
-            'deposit': '银行存款',
-            'general': '一般问题'
-        };
-        
-        // 加载分类（优先从服务器，fallback到本地）
-        async function loadCategories() {
-            let loadedFromServer = false;
-            try {
-                const response = await fetch('../admin/api/faq-data.php?t=' + Date.now());
-                const result = await response.json();
-                // 优先使用 categories_order 数组（保持服务端排序顺序）
-                if (result.categories_order && result.categories_order.length > 0) {
-                    // 按服务器返回的排序顺序重建对象
-                    const orderedLabels = {};
-                    const orderedSeo = {};
-                    result.categories_order.forEach(cat => {
-                        orderedLabels[cat.key] = cat.label || result.categories[cat.key] || cat.key;
-                        orderedSeo[cat.key] = {
-                            seo_title: cat.seo_title || '',
-                            seo_keywords: cat.seo_keywords || '',
-                            seo_description: cat.seo_description || ''
-                        };
-                    });
-                    categoryLabels = orderedLabels;
-                    categorySeoData = orderedSeo;
-                    localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
-                    localStorage.setItem('cms_faq_categories_seo', JSON.stringify(categorySeoData));
-                    loadedFromServer = true;
-                } else if (result.categories && Object.keys(result.categories).length > 0) {
-                    categoryLabels = result.categories;
-                    localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
-                    loadedFromServer = true;
-                }
-            } catch (e) {
-                console.log('从服务器加载分类失败，尝试本地缓存');
-            }
-            
-            if (!loadedFromServer) {
-                const saved = localStorage.getItem('cms_faq_categories');
-                const savedSeo = localStorage.getItem('cms_faq_categories_seo');
-                const categoryVersion = localStorage.getItem('cms_faq_categories_version');
-                const currentVersion = '3.1';
-                
-                if (saved && categoryVersion === currentVersion) {
-                    categoryLabels = JSON.parse(saved);
-                } else {
-                    categoryLabels = {...defaultCategories};
-                    localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
-                    localStorage.setItem('cms_faq_categories_version', currentVersion);
-                }
-                if (savedSeo) {
-                    try { categorySeoData = JSON.parse(savedSeo); } catch (e) { categorySeoData = {}; }
-                } else {
-                    categorySeoData = {};
-                }
-            }
-        }
-        
-        // 保存分类（同时保存到服务器和本地）
-        async function saveCategories() {
-            localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
-            localStorage.setItem('cms_faq_categories_seo', JSON.stringify(categorySeoData));
-            
-            // 同步到服务器
-            try {
-                const catArray = Object.keys(categoryLabels).map(key => {
-                    const seo = categorySeoData[key] || { seo_title: '', seo_keywords: '', seo_description: '' };
-                    return {
-                        key: key,
-                        label: categoryLabels[key],
-                        seo_title: seo.seo_title || '',
-                        seo_keywords: seo.seo_keywords || '',
-                        seo_description: seo.seo_description || ''
-                    };
-                });
-                
-                const formData = new URLSearchParams();
-                formData.append('action', 'save_categories');
-                formData.append('categories', JSON.stringify(catArray));
-                
-                await fetch('../admin/api/faq-save.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: formData.toString()
-                });
-            } catch (e) {
-                console.log('分类保存到服务器失败，已保存到本地');
-            }
-        }
-
-        // 初始化
-        document.addEventListener('DOMContentLoaded', async function() {
-            await loadCategories();
-            await loadFAQs();
-            renderCategoryFilter();
-        });
-        
-        // 渲染分类筛选下拉框
-        function renderCategoryFilter() {
-            const select = document.getElementById('categoryFilter');
-            select.innerHTML = '<option value="all">全部分类</option>';
-            
-            Object.keys(categoryLabels).forEach(key => {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = categoryLabels[key];
-                select.appendChild(option);
-            });
-        }
-
-        // 加载FAQ数据
-        async function loadFAQs() {
-            try {
-                const response = await fetch('../admin/api/faq-data.php?t=' + Date.now());
-                const result = await response.json();
-
-                if (result.code === 0 && result.data) {
-                    faqs = result.data;
-                } else {
-                    faqs = [];
-                }
-                renderFAQList();
-            } catch (error) {
-                console.error('加载FAQ失败:', error);
-                showToast('加载FAQ数据失败', 'error');
-                faqs = [];
-            }
-        }
-
-        // 保存FAQ数据（已废弃，改用API）
-        function saveFAQs() {
-            // 不再使用localStorage，数据通过API保存到数据库
-        }
-
-        // 渲染FAQ列表
-        function renderFAQList(data = null) {
-            const list = data || faqs;
-            const container = document.getElementById('faqList');
-            
-            if (list.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-question-circle"></i>
-                        <h3>暂无FAQ</h3>
-                        <p>点击"添加FAQ"按钮创建第一个常见问题</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = list.map((faq, index) => `
-                <div class="faq-item" data-id="${faq.id}">
-                    <div class="faq-header" onclick="toggleFAQ('${faq.id}')">
-                        <div class="faq-info">
-                            <button class="faq-toggle" onclick="event.stopPropagation(); toggleFAQ('${faq.id}')">
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="faq-number">${index + 1}</div>
-                            <div>
-                                <span class="faq-title">${escapeHtml(faq.question)}</span>
-                                <span class="faq-category">${categoryLabels[faq.category] || '一般问题'}</span>
-                            </div>
-                        </div>
-                        <div class="faq-actions">
-                            <button class="faq-btn move" title="拖动排序">
-                                <i class="fas fa-grip-vertical"></i>
-                            </button>
-                            <button class="faq-btn edit" onclick="event.stopPropagation(); editFAQ('${faq.id}')" title="编辑">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="faq-btn delete" onclick="event.stopPropagation(); deleteFAQ('${faq.id}')" title="删除">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        ${faq.answer}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // 展开/收起FAQ（手风琴效果）
-        function toggleFAQ(id) {
-            const item = document.querySelector(`.faq-item[data-id="${id}"]`);
-            
-            // 如果当前项已展开，则仅收起它
-            if (item.classList.contains('expanded')) {
-                item.classList.remove('expanded');
-                return;
-            }
-            
-            // 先收起所有已展开的项
-            const expandedItems = document.querySelectorAll('.faq-item.expanded');
-            expandedItems.forEach(el => {
-                el.classList.remove('expanded');
-            });
-            
-            // 再展开当前点击的项
-            item.classList.add('expanded');
-        }
-
-        // 搜索FAQ
-        function searchFAQ() {
-            const keyword = document.getElementById('searchInput').value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
-            
-            let filtered = faqs.filter(faq => {
-                const matchKeyword = faq.question.toLowerCase().includes(keyword) || 
-                                    faq.answer.toLowerCase().includes(keyword);
-                const matchCategory = category === 'all' || faq.category === category;
-                return matchKeyword && matchCategory;
-            });
-            
-            renderFAQList(filtered);
-        }
-
-        // 按分类筛选
-        function filterByCategory() {
-            searchFAQ();
-        }
-
-        // 打开添加模态框
-        // 更新FAQ模态框中的分类下拉
-        function updateFAQCategorySelect(selectedValue) {
-            const select = document.getElementById('faqCategory');
-            select.innerHTML = '';
-            
-            Object.keys(categoryLabels).forEach(key => {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = categoryLabels[key];
-                if (key === selectedValue) {
-                    option.selected = true;
-                }
-                select.appendChild(option);
-            });
-        }
-
-        // 初始化TinyMCE编辑器
-        function initEditor(content) {
-            return new Promise((resolve) => {
-                if (faqEditor) {
-                    if (content !== undefined) {
-                        faqEditor.setContent(content || '');
-                    }
-                    resolve(faqEditor);
-                    return;
-                }
-                tinymce.init({
-                    selector: '#faqAnswer',
-                    language: 'zh_CN',
-                    language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@23.7.1/langs/zh_CN.js',
-                    plugins: 'lists link table code image media charmap emoticons anchor searchreplace wordcount visualblocks visualchars fullscreen insertdatetime advlist autolink codesample',
-                    toolbar: 'undo redo | blocks fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table codesample | charmap emoticons | code fullscreen | removeformat',
-                    menubar: 'edit view insert format tools table',
-                    height: 400,
-                    branding: false,
-                    promotion: false,
-                    font_size_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px',
-                    block_formats: '段落=p; 标题1=h1; 标题2=h2; 标题3=h3; 标题4=h4; 标题5=h5; 标题6=h6; 预格式化=pre',
-                    style_formats: [
-                        { title: '标题', items: [
-                            { title: '标题 1', format: 'h1' },
-                            { title: '标题 2', format: 'h2' },
-                            { title: '标题 3', format: 'h3' },
-                            { title: '标题 4', format: 'h4' }
-                        ]},
-                        { title: '内联', items: [
-                            { title: '粗体', format: 'bold' },
-                            { title: '斜体', format: 'italic' },
-                            { title: '下划线', format: 'underline' },
-                            { title: '删除线', format: 'strikethrough' },
-                            { title: '上标', format: 'superscript' },
-                            { title: '下标', format: 'subscript' },
-                            { title: '代码', format: 'code' }
-                        ]},
-                        { title: '块', items: [
-                            { title: '段落', format: 'p' },
-                            { title: '引用', format: 'blockquote' },
-                            { title: '代码块', format: 'pre' }
-                        ]}
-                    ],
-                    content_style: 'body { font-family: Microsoft YaHei, Arial, sans-serif; font-size: 14px; line-height: 1.6; } table { border-collapse: collapse; width: 100%; } table td, table th { border: 1px solid #ddd; padding: 8px; }',
-                    image_advtab: true,
-                    image_caption: true,
-                    paste_data_images: true,
-                    automatic_uploads: true,
-                    file_picker_types: 'image',
-                    setup: function(editor) {
-                        faqEditor = editor;
-                        editor.on('init', function() {
-                            console.log('TinyMCE编辑器初始化成功');
-                            if (content !== undefined) {
-                                editor.setContent(content || '');
-                            }
-                            resolve(editor);
-                        });
-                    }
-                });
-            });
-        }
-
-        // 销毁TinyMCE编辑器
-        function destroyEditor() {
-            if (faqEditor) {
-                tinymce.remove('#faqAnswer');
-                faqEditor = null;
-            }
-        }
-        
-        // 获取编辑器内容
-        function getEditorContent() {
-            if (faqEditor && faqEditor.getContent) {
-                return faqEditor.getContent();
-            }
-            return document.getElementById('faqAnswer').value;
-        }
-
-        function openAddModal() {
-            document.getElementById('faqId').value = '';
-            document.getElementById('faqQuestion').value = '';
-            document.getElementById('faqAnswer').value = '';
-            document.getElementById('faqSeoTitle').value = '';
-            document.getElementById('faqSeoKeywords').value = '';
-            document.getElementById('faqSeoDescription').value = '';
-            updateFAQCategorySelect('general');
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle" style="color: #3b82f6; margin-right: 8px;"></i>添加FAQ';
-            document.getElementById('faqModal').classList.add('show');
-            // 打开弹窗后初始化TinyMCE
-            setTimeout(() => {
-                initEditor();
-            }, 100);
-        }
-
-        // 编辑FAQ
-        function editFAQ(id) {
-            const faq = faqs.find(f => f.id == id); // 使用 == 而不是 === 以支持字符串和数字比较
-            if (!faq) return;
-
-            document.getElementById('faqId').value = faq.id;
-            document.getElementById('faqQuestion').value = faq.question;
-            document.getElementById('faqAnswer').value = faq.answer;
-            document.getElementById('faqSeoTitle').value = faq.seo_title || '';
-            document.getElementById('faqSeoKeywords').value = faq.seo_keywords || '';
-            document.getElementById('faqSeoDescription').value = faq.seo_description || '';
-            updateFAQCategorySelect(faq.category || 'general');
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit" style="color: #3b82f6; margin-right: 8px;"></i>编辑FAQ';
-            document.getElementById('faqModal').classList.add('show');
-            // 打开弹窗后初始化TinyMCE并加载内容
-            setTimeout(() => {
-                initEditor(faq.answer);
-            }, 100);
-        }
-
-        // 关闭模态框
-        function closeModal() {
-            document.getElementById('faqModal').classList.remove('show');
-            // 关闭弹窗时销毁TinyMCE
-            setTimeout(() => {
-                destroyEditor();
-            }, 200);
-        }
-
-        // 保存FAQ
-        async function saveFAQ() {
-            const id = document.getElementById('faqId').value;
-            const question = document.getElementById('faqQuestion').value.trim();
-            const answer = getEditorContent().trim();
-            const category = document.getElementById('faqCategory').value;
-
-            if (!question) {
-                showToast('请输入问题', 'error');
-                return;
-            }
-
-            if (!answer) {
-                showToast('请输入回答', 'error');
-                return;
-            }
-
-            try {
-                const formData = new FormData();
-                formData.append('action', 'save');
-                formData.append('id', id || '0');
-                formData.append('question', question);
-                formData.append('answer', answer);
-                formData.append('category', category);
-                formData.append('seo_title', document.getElementById('faqSeoTitle').value.trim());
-                formData.append('seo_keywords', document.getElementById('faqSeoKeywords').value.trim());
-                formData.append('seo_description', document.getElementById('faqSeoDescription').value.trim());
-
-                const response = await fetch('../admin/api/faq-save.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.code === 0) {
-                    showToast(id ? 'FAQ更新成功' : 'FAQ添加成功', 'success');
-                    closeModal();
-                    await loadFAQs(); // 重新加载数据
-                } else {
-                    showToast(result.msg || '保存失败', 'error');
-                }
-            } catch (error) {
-                console.error('保存FAQ失败:', error);
-                showToast('保存失败，请重试', 'error');
-            }
-        }
-
-        // 删除FAQ
-        function deleteFAQ(id) {
-            deleteId = id;
-            document.getElementById('deleteModal').classList.add('show');
-        }
-
-        // 关闭删除模态框
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('show');
-            deleteId = null;
-        }
-
-        // 确认删除
-        async function confirmDelete() {
-            if (!deleteId) return;
-
-            try {
-                const formData = new FormData();
-                formData.append('action', 'delete');
-                formData.append('id', deleteId);
-
-                const response = await fetch('../admin/api/faq-save.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.code === 0) {
-                    showToast('FAQ已删除', 'success');
-                    closeDeleteModal();
-                    await loadFAQs(); // 重新加载数据
-                } else {
-                    showToast(result.msg || '删除失败', 'error');
-                }
-            } catch (error) {
-                console.error('删除FAQ失败:', error);
-                showToast('删除失败，请重试', 'error');
-            }
-        }
-
-        // HTML转义
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // 打开分类管理模态框
-        function openCategoryModal() {
-            renderCategoryList();
-            document.getElementById('categoryModal').classList.add('show');
-        }
-        
-        // 关闭分类管理模态框
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').classList.remove('show');
-        }
-        
-        // 渲染分类列表
-        function renderCategoryList() {
-            const container = document.getElementById('categoryList');
-            const keys = Object.keys(categoryLabels);
-            
-            container.innerHTML = keys.map((key, index) => {
-                const seo = categorySeoData[key] || { seo_title: '', seo_keywords: '', seo_description: '' };
-                return `
-                <div style="background: #f9fafb; border-radius: 6px; margin-bottom: 8px; overflow: hidden;" data-cat-key="${key}">
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
-                        <div style="flex: 1; display: flex; align-items: center; gap: 8px;">
-                            <div style="display: flex; flex-direction: column; gap: 2px;">
-                                <button class="cms-header-btn" style="background: #e5e7eb; color: #6b7280; padding: 2px 6px; font-size: 10px; ${index === 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}" onclick="${index === 0 ? '' : `moveCategory('${key}', -1)`}" title="上移">
-                                    <i class="fas fa-chevron-up"></i>
-                                </button>
-                                <button class="cms-header-btn" style="background: #e5e7eb; color: #6b7280; padding: 2px 6px; font-size: 10px; ${index === keys.length - 1 ? 'opacity: 0.3; cursor: not-allowed;' : ''}" onclick="${index === keys.length - 1 ? '' : `moveCategory('${key}', 1)`}" title="下移">
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
-                            </div>
-                            <div>
-                                <span class="cat-name-display" style="font-weight: 500; color: #374151;">${categoryLabels[key]}</span>
-                                <input type="text" class="cat-name-edit form-input" style="display: none; width: 150px;" value="${categoryLabels[key]}">
-                                <span style="color: #9ca3af; font-size: 12px; margin-left: 8px;">(${key})</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 4px;">
-                            <button class="cms-header-btn btn-seo-cat" style="background: #f0fdf4; color: #059669; padding: 4px 8px; font-size: 11px;" onclick="toggleCatSeo('${key}')" title="SEO设置">
-                                <i class="fas fa-search"></i> SEO
-                            </button>
-                            <button class="cms-header-btn btn-edit-cat" style="background: #eff6ff; color: #3b82f6; padding: 6px 12px;" onclick="editCategory('${key}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="cms-header-btn btn-save-cat" style="display: none; background: #10b981; color: white; padding: 6px 12px;" onclick="saveCategoryEdit('${key}')">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="cms-header-btn" style="background: #fef2f2; color: #ef4444; padding: 6px 12px;" onclick="deleteCategory('${key}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="cat-seo-panel" id="catSeo_${key}" style="display: none; padding: 0 10px 10px 10px; border-top: 1px solid #e5e7eb;">
-                        <div style="font-size: 12px; color: #6b7280; margin: 8px 0 4px;">SEO标题</div>
-                        <input type="text" class="form-input cat-seo-title" id="catSeoTitle_${key}" value="${seo.seo_title}" placeholder="分类页SEO标题" style="font-size: 12px; padding: 4px 8px;" onchange="saveCatSeoField('${key}')">
-                        <div style="font-size: 12px; color: #6b7280; margin: 8px 0 4px;">SEO关键词</div>
-                        <input type="text" class="form-input cat-seo-keywords" id="catSeoKeywords_${key}" value="${seo.seo_keywords}" placeholder="多个关键词用逗号分隔" style="font-size: 12px; padding: 4px 8px;" onchange="saveCatSeoField('${key}')">
-                        <div style="font-size: 12px; color: #6b7280; margin: 8px 0 4px;">SEO描述</div>
-                        <textarea class="form-textarea cat-seo-description" id="catSeoDescription_${key}" rows="2" placeholder="搜索引擎显示的描述文字" style="font-size: 12px; padding: 4px 8px; resize: vertical;" onchange="saveCatSeoField('${key}')">${seo.seo_description}</textarea>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function toggleCatSeo(key) {
-            const panel = document.getElementById('catSeo_' + key);
-            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        }
-
-        async function saveCatSeoField(key) {
-            const titleEl = document.getElementById('catSeoTitle_' + key);
-            const keywordsEl = document.getElementById('catSeoKeywords_' + key);
-            const descEl = document.getElementById('catSeoDescription_' + key);
-            if (!categorySeoData[key]) categorySeoData[key] = { seo_title: '', seo_keywords: '', seo_description: '' };
-            categorySeoData[key].seo_title = titleEl ? titleEl.value.trim() : '';
-            categorySeoData[key].seo_keywords = keywordsEl ? keywordsEl.value.trim() : '';
-            categorySeoData[key].seo_description = descEl ? descEl.value.trim() : '';
-            await saveCategories();
-            showToast('分类SEO已保存', 'success');
-        }
-        
-        // 移动分类排序（异步，等待服务器同步后刷新）
-        async function moveCategory(key, direction) {
-            const keys = Object.keys(categoryLabels);
-            const index = keys.indexOf(key);
-            
-            if (index === -1) return;
-            if (direction === -1 && index === 0) return;
-            if (direction === 1 && index === keys.length - 1) return;
-            
-            // 交换位置
-            const newIndex = index + direction;
-            const tempKey = keys[newIndex];
-            keys[newIndex] = keys[index];
-            keys[index] = tempKey;
-            
-            // 重新构建categoryLabels对象（保持新顺序）
-            const newCategoryLabels = {};
-            keys.forEach(k => {
-                newCategoryLabels[k] = categoryLabels[k];
-            });
-            categoryLabels = newCategoryLabels;
-            
-            // 等待服务器同步完成
-            await saveCategories();
-            renderCategoryList();
-            renderCategoryFilter();
-            showToast('排序已更新', 'success');
-        }
-        
-        // 编辑分类
-        function editCategory(key) {
-            const row = document.querySelector(`[data-cat-key="${key}"]`);
-            row.querySelector('.cat-name-display').style.display = 'none';
-            row.querySelector('.cat-name-edit').style.display = 'inline-block';
-            row.querySelector('.btn-edit-cat').style.display = 'none';
-            row.querySelector('.btn-save-cat').style.display = 'inline-block';
-            row.querySelector('.cat-name-edit').focus();
-        }
-        
-        // 保存分类编辑
-        async function saveCategoryEdit(key) {
-            const row = document.querySelector(`[data-cat-key="${key}"]`);
-            const newName = row.querySelector('.cat-name-edit').value.trim();
-            
-            if (!newName) {
-                showToast('分类名称不能为空', 'error');
-                return;
-            }
-            
-            categoryLabels[key] = newName;
-            await saveCategories();
-            renderCategoryList();
-            renderCategoryFilter();
-            updateCategorySelects();
-            showToast('分类更新成功', 'success');
-        }
-        
-        // 添加分类
-        async function addCategory() {
-            const nameInput = document.getElementById('newCategoryName');
-            const name = nameInput.value.trim();
-            
-            if (!name) {
-                showToast('请输入分类名称', 'error');
-                return;
-            }
-            
-            // 自动生成标识（拼音或英文）
-            let key = generateKey(name);
-            
-            // 如果标识已存在，添加数字后缀
-            let originalKey = key;
-            let counter = 1;
-            while (categoryLabels[key]) {
-                key = originalKey + counter;
-                counter++;
-            }
-            
-            categoryLabels[key] = name;
-            await saveCategories();
-            renderCategoryList();
-            renderCategoryFilter();
-            updateCategorySelects();
-            
-            nameInput.value = '';
-            showToast('分类添加成功', 'success');
-        }
-        
-        // 生成分类标识
-        function generateKey(name) {
-            // 简单的拼音映射表
-            const pinyinMap = {
-                '亮': 'liang', '资': 'zi', '业': 'ye', '务': 'wu',
-                '过': 'guo', '桥': 'qiao', '资': 'zi', '金': 'jin',
-                '摆': 'bai', '账': 'zhang', '应': 'ying', '收': 'shou',
-                '账': 'zhang', '款': 'kuan', '银': 'yin', '行': 'hang',
-                '存': 'cun', '款': 'kuan', '一': 'yi', '般': 'ban',
-                '问': 'wen', '题': 'ti', '操': 'cao', '作': 'zuo',
-                '时': 'shi', '间': 'jian'
-            };
-            
-            // 尝试生成拼音标识
-            let pinyin = '';
-            for (let char of name) {
-                if (pinyinMap[char]) {
-                    pinyin += pinyinMap[char];
-                } else if (/[a-zA-Z0-9]/.test(char)) {
-                    pinyin += char.toLowerCase();
-                }
-            }
-            
-            // 如果拼音生成成功，取前10个字符
-            if (pinyin.length >= 2) {
-                return pinyin.substring(0, 10);
-            }
-            
-            // 否则使用时间戳
-            return 'cat' + Date.now().toString().slice(-6);
-        }
-        
-        // 删除分类
-        async function deleteCategory(key) {
-            if (!confirm(`确定要删除分类"${categoryLabels[key]}"吗？该分类下的FAQ将变为未分类。`)) {
-                return;
-            }
-            
-            delete categoryLabels[key];
-            await saveCategories();
-            renderCategoryList();
-            renderCategoryFilter();
-            updateCategorySelects();
-            showToast('分类已删除', 'success');
-        }
-        
-        // 更新所有分类下拉框
-        function updateCategorySelects() {
-            // 更新添加/编辑FAQ模态框中的分类选择
-            const selects = document.querySelectorAll('#faqCategory');
-            selects.forEach(select => {
-                const currentValue = select.value;
-                select.innerHTML = Object.keys(categoryLabels).map(key => 
-                    `<option value="${key}">${categoryLabels[key]}</option>`
-                ).join('');
-                if (categoryLabels[currentValue]) {
-                    select.value = currentValue;
-                }
-            });
-        }
-        
-        // 显示提示
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toast.className = `toast ${type}`;
-            toastMessage.textContent = message;
-            
-            const icon = toast.querySelector('i');
-            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // 键盘事件
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-                closeDeleteModal();
-            }
-        });
-    </script>
-</body>
+            </nav>
+
+        </aside>
+
+
+
+        <!-- 主内容区 -->
+
+        <main class="cms-main">
+
+            <!-- 顶部栏 -->
+
+            <header class="cms-header">
+
+                <div class="cms-header-left">
+
+                    <div class="cms-breadcrumb">
+
+                        <a href="dashboard.html">首页</a>
+
+                        <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
+
+                        <span>FAQ管理</span>
+
+                    </div>
+
+                </div>
+
+                <div class="cms-header-right">
+
+                    <button class="cms-header-btn" onclick="openCategoryModal()" style="margin-right: 12px; background: #f3f4f6; color: #374151;">
+
+                        <i class="fas fa-folder"></i>
+
+                        <span>管理分类</span>
+
+                    </button>
+
+                    <button class="cms-header-btn cms-header-btn-primary" onclick="openAddModal()">
+
+                        <i class="fas fa-plus"></i>
+
+                        <span>添加FAQ</span>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- 内容区域 -->
+
+            <div class="cms-content">
+
+                <!-- 工具栏 -->
+
+                <div class="toolbar">
+
+                    <div class="search-box">
+
+                        <i class="fas fa-search"></i>
+
+                        <input type="text" id="searchInput" placeholder="搜索问题..." onkeyup="searchFAQ()">
+
+                    </div>
+
+                    <select class="filter-select" id="categoryFilter" onchange="filterByCategory()">
+
+                        <option value="all">全部分类</option>
+
+                        <option value="general">一般问题</option>
+
+                        <option value="service">服务相关</option>
+
+                        <option value="process">业务流程</option>
+
+                        <option value="fee">费用相关</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- FAQ列表 -->
+
+                <div class="faq-list" id="faqList">
+
+                    <!-- FAQ项目将由JS生成 -->
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- 添加/编辑FAQ模态框 -->
+
+    <div class="modal-overlay" id="faqModal">
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <h3 class="modal-title" id="modalTitle">
+
+                    <i class="fas fa-plus-circle" style="color: #3b82f6; margin-right: 8px;"></i>
+
+                    添加FAQ
+
+                </h3>
+
+                <button class="modal-close" onclick="closeModal()">
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" id="faqId">
+
+                <div class="form-group">
+
+                    <label class="form-label">问题 <span class="required">*</span></label>
+
+                    <input type="text" class="form-input" id="faqQuestion" placeholder="请输入问题">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="form-label">分类</label>
+
+                    <select class="form-select" id="faqCategory">
+
+                        <!-- 动态生成分类选项 -->
+
+                    </select>
+
+                </div>
+
+                <details class="form-group" style="margin-bottom: 12px;">
+
+                    <summary class="form-label" style="cursor: pointer; display: inline; font-weight: 500; color: #6b7280;">
+
+                        <i class="fas fa-search" style="margin-right: 4px;"></i>SEO设置（可选）
+
+                    </summary>
+
+                    <div style="margin-top: 8px; padding: 10px; background: #f9fafb; border-radius: 6px;">
+
+                        <div class="form-group">
+
+                            <label class="form-label" style="font-size: 12px;">SEO标题</label>
+
+                            <input type="text" class="form-input" id="faqSeoTitle" placeholder="留空则使用问题作为标题">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="form-label" style="font-size: 12px;">SEO关键词</label>
+
+                            <input type="text" class="form-input" id="faqSeoKeywords" placeholder="多个关键词用逗号分隔">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="form-label" style="font-size: 12px;">SEO描述</label>
+
+                            <textarea class="form-textarea" id="faqSeoDescription" rows="2" placeholder="搜索引擎显示的描述文字"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+                <div class="form-group">
+
+                    <label class="form-label">回答 <span class="required">*</span></label>
+
+                    <textarea class="form-textarea" id="faqAnswer" rows="6" placeholder="请输入回答内容"></textarea>
+
+                    <p class="form-hint">支持富文本编辑（粗体、表格、颜色等）</p>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="cms-header-btn" onclick="closeModal()">取消</button>
+
+                <button class="cms-header-btn cms-header-btn-primary" onclick="saveFAQ()">
+
+                    <i class="fas fa-save"></i>
+
+                    保存
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- 删除确认模态框 -->
+
+    <div class="modal-overlay" id="deleteModal">
+
+        <div class="modal" style="max-width: 400px;">
+
+            <div class="modal-header">
+
+                <h3 class="modal-title">
+
+                    <i class="fas fa-exclamation-triangle" style="color: #ef4444; margin-right: 8px;"></i>
+
+                    确认删除
+
+                </h3>
+
+                <button class="modal-close" onclick="closeDeleteModal()">
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p>确定要删除这个FAQ吗？此操作不可恢复。</p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="cms-header-btn" onclick="closeDeleteModal()">取消</button>
+
+                <button class="cms-header-btn" style="background: #ef4444; color: white;" onclick="confirmDelete()">
+
+                    <i class="fas fa-trash"></i>
+
+                    删除
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- 分类管理模态框 -->
+
+    <div class="modal-overlay" id="categoryModal">
+
+        <div class="modal" style="max-width: 500px;">
+
+            <div class="modal-header">
+
+                <h3 class="modal-title">
+
+                    <i class="fas fa-folder" style="color: #3b82f6; margin-right: 8px;"></i>
+
+                    管理分类
+
+                </h3>
+
+                <button class="modal-close" onclick="closeCategoryModal()">
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div id="categoryList" style="margin-bottom: 20px;">
+
+                    <!-- 分类列表 -->
+
+                </div>
+
+                <div class="form-group" style="display: flex; gap: 10px;">
+
+                    <input type="text" class="form-input" id="newCategoryName" placeholder="输入分类名称（如：亮资业务）" style="flex: 1;">
+
+                    <button class="cms-header-btn cms-header-btn-primary" onclick="addCategory()">
+
+                        <i class="fas fa-plus"></i>
+
+                        添加
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="cms-header-btn" onclick="closeCategoryModal()">关闭</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- 提示消息 -->
+
+    <div class="toast" id="toast">
+
+        <i class="fas fa-check-circle"></i>
+
+        <span id="toastMessage">操作成功</span>
+
+    </div>
+
+
+
+    <script>
+// Sync localStorage auth to cookie for PHP backend
+if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf('cms_logged_in') === -1) {
+    document.cookie = 'cms_logged_in=true;path=/;max-age=' + (60*60*24*30) + ';SameSite=Lax';
+}
+
+
+        // 默认FAQ数据
+
+        const defaultFAQs = [
+
+            {
+
+                id: 'faq_1',
+
+                question: '什么是过桥资金？',
+
+                answer: '过桥资金是一种短期融资方式，主要用于企业在银行贷款到期续贷期间的临时资金周转。我们可以提供1-6个月的短期资金支持，帮助企业顺利完成银行续贷流程。',
+
+                category: 'general'
+
+            },
+
+            {
+
+                id: 'faq_2',
+
+                question: '申请资金需要提供哪些材料？',
+
+                answer: '一般需要提供：企业营业执照、法人身份证、银行流水、财务报表、贷款合同或授信批复等基本材料。具体材料会根据业务类型有所不同，我们的客户经理会详细指导您准备。',
+
+                category: 'process'
+
+            },
+
+            {
+
+                id: 'faq_3',
+
+                question: '资金最快多久可以到账？',
+
+                answer: '在材料齐全、审核通过的情况下，过桥资金最快当天可以到账，一般情况下1-3个工作日完成放款。具体时间取决于业务复杂程度和资金规模。',
+
+                category: 'service'
+
+            },
+
+            {
+
+                id: 'faq_4',
+
+                question: '费用是如何计算的？',
+
+                answer: '费用根据资金规模、使用期限、业务类型等因素综合确定。我们采用透明化收费，在业务开始前会明确告知所有费用，不存在任何隐性收费。具体费用请咨询我们的客户经理。',
+
+                category: 'fee'
+
+            }
+
+        ];
+
+
+
+        let faqs = [];
+
+        let deleteId = null;
+
+        let faqEditor = null;
+
+
+
+        // 分类数据（从localStorage加载）
+
+        let categoryLabels = {};
+
+        let categorySeoData = {}; // { key: { seo_title, seo_keywords, seo_description } }
+
+        
+
+        // 默认分类（与前端业务分类一致）
+
+        const defaultCategories = {
+
+            'liangzi': '亮资业务',
+
+            'bridge': '过桥资金',
+
+            'baizhang': '摆账业务',
+
+            'receivable': '应收账款',
+
+            'deposit': '银行存款',
+
+            'general': '一般问题'
+
+        };
+
+        
+
+        // 加载分类（优先从服务器，fallback到本地）
+
+        async function loadCategories() {
+
+            let loadedFromServer = false;
+
+            try {
+
+                const response = await fetch('../admin/api/faq-data.php?t=' + Date.now());
+
+                const result = await response.json();
+
+                // 优先使用 categories_order 数组（保持服务端排序顺序）
+
+                if (result.categories_order && result.categories_order.length > 0) {
+
+                    // 按服务器返回的排序顺序重建对象
+
+                    const orderedLabels = {};
+
+                    const orderedSeo = {};
+
+                    result.categories_order.forEach(cat => {
+
+                        orderedLabels[cat.key] = cat.label || result.categories[cat.key] || cat.key;
+
+                        orderedSeo[cat.key] = {
+
+                            seo_title: cat.seo_title || '',
+
+                            seo_keywords: cat.seo_keywords || '',
+
+                            seo_description: cat.seo_description || ''
+
+                        };
+
+                    });
+
+                    categoryLabels = orderedLabels;
+
+                    categorySeoData = orderedSeo;
+
+                    localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
+
+                    localStorage.setItem('cms_faq_categories_seo', JSON.stringify(categorySeoData));
+
+                    loadedFromServer = true;
+
+                } else if (result.categories && Object.keys(result.categories).length > 0) {
+
+                    categoryLabels = result.categories;
+
+                    localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
+
+                    loadedFromServer = true;
+
+                }
+
+            } catch (e) {
+
+                console.log('从服务器加载分类失败，尝试本地缓存');
+
+            }
+
+            
+
+            if (!loadedFromServer) {
+
+                const saved = localStorage.getItem('cms_faq_categories');
+
+                const savedSeo = localStorage.getItem('cms_faq_categories_seo');
+
+                const categoryVersion = localStorage.getItem('cms_faq_categories_version');
+
+                const currentVersion = '3.1';
+
+                
+
+                if (saved && categoryVersion === currentVersion) {
+
+                    categoryLabels = JSON.parse(saved);
+
+                } else {
+
+                    categoryLabels = {...defaultCategories};
+
+                    localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
+
+                    localStorage.setItem('cms_faq_categories_version', currentVersion);
+
+                }
+
+                if (savedSeo) {
+
+                    try { categorySeoData = JSON.parse(savedSeo); } catch (e) { categorySeoData = {}; }
+
+                } else {
+
+                    categorySeoData = {};
+
+                }
+
+            }
+
+        }
+
+        
+
+        // 保存分类（同时保存到服务器和本地）
+
+        async function saveCategories() {
+
+            localStorage.setItem('cms_faq_categories', JSON.stringify(categoryLabels));
+
+            localStorage.setItem('cms_faq_categories_seo', JSON.stringify(categorySeoData));
+
+            
+
+            // 同步到服务器
+
+            try {
+
+                const catArray = Object.keys(categoryLabels).map(key => {
+
+                    const seo = categorySeoData[key] || { seo_title: '', seo_keywords: '', seo_description: '' };
+
+                    return {
+
+                        key: key,
+
+                        label: categoryLabels[key],
+
+                        seo_title: seo.seo_title || '',
+
+                        seo_keywords: seo.seo_keywords || '',
+
+                        seo_description: seo.seo_description || ''
+
+                    };
+
+                });
+
+                
+
+                const formData = new URLSearchParams();
+
+                formData.append('action', 'save_categories');
+
+                formData.append('categories', JSON.stringify(catArray));
+
+                
+
+                await fetch('../admin/api/faq-save.php', {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'Content-Type': 'application/x-www-form-urlencoded'
+
+                    },
+
+                    body: formData.toString()
+
+                });
+
+            } catch (e) {
+
+                console.log('分类保存到服务器失败，已保存到本地');
+
+            }
+
+        }
+
+
+
+        // 初始化
+
+        document.addEventListener('DOMContentLoaded', async function() {
+
+            await loadCategories();
+
+            await loadFAQs();
+
+            renderCategoryFilter();
+
+        });
+
+        
+
+        // 渲染分类筛选下拉框
+
+        function renderCategoryFilter() {
+
+            const select = document.getElementById('categoryFilter');
+
+            select.innerHTML = '<option value="all">全部分类</option>';
+
+            
+
+            Object.keys(categoryLabels).forEach(key => {
+
+                const option = document.createElement('option');
+
+                option.value = key;
+
+                option.textContent = categoryLabels[key];
+
+                select.appendChild(option);
+
+            });
+
+        }
+
+
+
+        // 加载FAQ数据
+
+        async function loadFAQs() {
+
+            try {
+
+                const response = await fetch('../admin/api/faq-data.php?t=' + Date.now());
+
+                const result = await response.json();
+
+
+
+                if (result.code === 0 && result.data) {
+
+                    faqs = result.data;
+
+                } else {
+
+                    faqs = [];
+
+                }
+
+                renderFAQList();
+
+            } catch (error) {
+
+                console.error('加载FAQ失败:', error);
+
+                showToast('加载FAQ数据失败', 'error');
+
+                faqs = [];
+
+            }
+
+        }
+
+
+
+        // 保存FAQ数据（已废弃，改用API）
+
+        function saveFAQs() {
+
+            // 不再使用localStorage，数据通过API保存到数据库
+
+        }
+
+
+
+        // 渲染FAQ列表
+
+        function renderFAQList(data = null) {
+
+            const list = data || faqs;
+
+            const container = document.getElementById('faqList');
+
+            
+
+            if (list.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <i class="fas fa-question-circle"></i>
+
+                        <h3>暂无FAQ</h3>
+
+                        <p>点击"添加FAQ"按钮创建第一个常见问题</p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            container.innerHTML = list.map((faq, index) => `
+
+                <div class="faq-item" data-id="${faq.id}">
+
+                    <div class="faq-header" onclick="toggleFAQ('${faq.id}')">
+
+                        <div class="faq-info">
+
+                            <button class="faq-toggle" onclick="event.stopPropagation(); toggleFAQ('${faq.id}')">
+
+                                <i class="fas fa-chevron-down"></i>
+
+                            </button>
+
+                            <div class="faq-number">${index + 1}</div>
+
+                            <div>
+
+                                <span class="faq-title">${escapeHtml(faq.question)}</span>
+
+                                <span class="faq-category">${categoryLabels[faq.category] || '一般问题'}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="faq-actions">
+
+                            <button class="faq-btn move" title="拖动排序">
+
+                                <i class="fas fa-grip-vertical"></i>
+
+                            </button>
+
+                            <button class="faq-btn edit" onclick="event.stopPropagation(); editFAQ('${faq.id}')" title="编辑">
+
+                                <i class="fas fa-edit"></i>
+
+                            </button>
+
+                            <button class="faq-btn delete" onclick="event.stopPropagation(); deleteFAQ('${faq.id}')" title="删除">
+
+                                <i class="fas fa-trash"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="faq-content">
+
+                        ${faq.answer}
+
+                    </div>
+
+                </div>
+
+            `).join('');
+
+        }
+
+
+
+        // 展开/收起FAQ（手风琴效果）
+
+        function toggleFAQ(id) {
+
+            const item = document.querySelector(`.faq-item[data-id="${id}"]`);
+
+            
+
+            // 如果当前项已展开，则仅收起它
+
+            if (item.classList.contains('expanded')) {
+
+                item.classList.remove('expanded');
+
+                return;
+
+            }
+
+            
+
+            // 先收起所有已展开的项
+
+            const expandedItems = document.querySelectorAll('.faq-item.expanded');
+
+            expandedItems.forEach(el => {
+
+                el.classList.remove('expanded');
+
+            });
+
+            
+
+            // 再展开当前点击的项
+
+            item.classList.add('expanded');
+
+        }
+
+
+
+        // 搜索FAQ
+
+        function searchFAQ() {
+
+            const keyword = document.getElementById('searchInput').value.toLowerCase();
+
+            const category = document.getElementById('categoryFilter').value;
+
+            
+
+            let filtered = faqs.filter(faq => {
+
+                const matchKeyword = faq.question.toLowerCase().includes(keyword) || 
+
+                                    faq.answer.toLowerCase().includes(keyword);
+
+                const matchCategory = category === 'all' || faq.category === category;
+
+                return matchKeyword && matchCategory;
+
+            });
+
+            
+
+            renderFAQList(filtered);
+
+        }
+
+
+
+        // 按分类筛选
+
+        function filterByCategory() {
+
+            searchFAQ();
+
+        }
+
+
+
+        // 打开添加模态框
+
+        // 更新FAQ模态框中的分类下拉
+
+        function updateFAQCategorySelect(selectedValue) {
+
+            const select = document.getElementById('faqCategory');
+
+            select.innerHTML = '';
+
+            
+
+            Object.keys(categoryLabels).forEach(key => {
+
+                const option = document.createElement('option');
+
+                option.value = key;
+
+                option.textContent = categoryLabels[key];
+
+                if (key === selectedValue) {
+
+                    option.selected = true;
+
+                }
+
+                select.appendChild(option);
+
+            });
+
+        }
+
+
+
+        // 初始化TinyMCE编辑器
+
+        function initEditor(content) {
+
+            return new Promise((resolve) => {
+
+                if (faqEditor) {
+
+                    if (content !== undefined) {
+
+                        faqEditor.setContent(content || '');
+
+                    }
+
+                    resolve(faqEditor);
+
+                    return;
+
+                }
+
+                tinymce.init({
+
+                    selector: '#faqAnswer',
+
+                    language: 'zh_CN',
+
+                    language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@23.7.1/langs/zh_CN.js',
+
+                    plugins: 'lists link table code image media charmap emoticons anchor searchreplace wordcount visualblocks visualchars fullscreen insertdatetime advlist autolink codesample',
+
+                    toolbar: 'undo redo | blocks fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table codesample | charmap emoticons | code fullscreen | removeformat',
+
+                    menubar: 'edit view insert format tools table',
+
+                    height: 400,
+
+                    branding: false,
+
+                    promotion: false,
+
+                    font_size_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px',
+
+                    block_formats: '段落=p; 标题1=h1; 标题2=h2; 标题3=h3; 标题4=h4; 标题5=h5; 标题6=h6; 预格式化=pre',
+
+                    style_formats: [
+
+                        { title: '标题', items: [
+
+                            { title: '标题 1', format: 'h1' },
+
+                            { title: '标题 2', format: 'h2' },
+
+                            { title: '标题 3', format: 'h3' },
+
+                            { title: '标题 4', format: 'h4' }
+
+                        ]},
+
+                        { title: '内联', items: [
+
+                            { title: '粗体', format: 'bold' },
+
+                            { title: '斜体', format: 'italic' },
+
+                            { title: '下划线', format: 'underline' },
+
+                            { title: '删除线', format: 'strikethrough' },
+
+                            { title: '上标', format: 'superscript' },
+
+                            { title: '下标', format: 'subscript' },
+
+                            { title: '代码', format: 'code' }
+
+                        ]},
+
+                        { title: '块', items: [
+
+                            { title: '段落', format: 'p' },
+
+                            { title: '引用', format: 'blockquote' },
+
+                            { title: '代码块', format: 'pre' }
+
+                        ]}
+
+                    ],
+
+                    content_style: 'body { font-family: Microsoft YaHei, Arial, sans-serif; font-size: 14px; line-height: 1.6; } table { border-collapse: collapse; width: 100%; } table td, table th { border: 1px solid #ddd; padding: 8px; }',
+
+                    image_advtab: true,
+
+                    image_caption: true,
+
+                    paste_data_images: true,
+
+                    automatic_uploads: true,
+
+                    file_picker_types: 'image',
+
+                    setup: function(editor) {
+
+                        faqEditor = editor;
+
+                        editor.on('init', function() {
+
+                            console.log('TinyMCE编辑器初始化成功');
+
+                            if (content !== undefined) {
+
+                                editor.setContent(content || '');
+
+                            }
+
+                            resolve(editor);
+
+                        });
+
+                    }
+
+                });
+
+            });
+
+        }
+
+
+
+        // 销毁TinyMCE编辑器
+
+        function destroyEditor() {
+
+            if (faqEditor) {
+
+                tinymce.remove('#faqAnswer');
+
+                faqEditor = null;
+
+            }
+
+        }
+
+        
+
+        // 获取编辑器内容
+
+        function getEditorContent() {
+
+            if (faqEditor && faqEditor.getContent) {
+
+                return faqEditor.getContent();
+
+            }
+
+            return document.getElementById('faqAnswer').value;
+
+        }
+
+
+
+        function openAddModal() {
+
+            document.getElementById('faqId').value = '';
+
+            document.getElementById('faqQuestion').value = '';
+
+            document.getElementById('faqAnswer').value = '';
+
+            document.getElementById('faqSeoTitle').value = '';
+
+            document.getElementById('faqSeoKeywords').value = '';
+
+            document.getElementById('faqSeoDescription').value = '';
+
+            updateFAQCategorySelect('general');
+
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle" style="color: #3b82f6; margin-right: 8px;"></i>添加FAQ';
+
+            document.getElementById('faqModal').classList.add('show');
+
+            // 打开弹窗后初始化TinyMCE
+
+            setTimeout(() => {
+
+                initEditor();
+
+            }, 100);
+
+        }
+
+
+
+        // 编辑FAQ
+
+        function editFAQ(id) {
+
+            const faq = faqs.find(f => f.id == id); // 使用 == 而不是 === 以支持字符串和数字比较
+
+            if (!faq) return;
+
+
+
+            document.getElementById('faqId').value = faq.id;
+
+            document.getElementById('faqQuestion').value = faq.question;
+
+            document.getElementById('faqAnswer').value = faq.answer;
+
+            document.getElementById('faqSeoTitle').value = faq.seo_title || '';
+
+            document.getElementById('faqSeoKeywords').value = faq.seo_keywords || '';
+
+            document.getElementById('faqSeoDescription').value = faq.seo_description || '';
+
+            updateFAQCategorySelect(faq.category || 'general');
+
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit" style="color: #3b82f6; margin-right: 8px;"></i>编辑FAQ';
+
+            document.getElementById('faqModal').classList.add('show');
+
+            // 打开弹窗后初始化TinyMCE并加载内容
+
+            setTimeout(() => {
+
+                initEditor(faq.answer);
+
+            }, 100);
+
+        }
+
+
+
+        // 关闭模态框
+
+        function closeModal() {
+
+            document.getElementById('faqModal').classList.remove('show');
+
+            // 关闭弹窗时销毁TinyMCE
+
+            setTimeout(() => {
+
+                destroyEditor();
+
+            }, 200);
+
+        }
+
+
+
+        // 保存FAQ
+
+        async function saveFAQ() {
+
+            const id = document.getElementById('faqId').value;
+
+            const question = document.getElementById('faqQuestion').value.trim();
+
+            const answer = getEditorContent().trim();
+
+            const category = document.getElementById('faqCategory').value;
+
+
+
+            if (!question) {
+
+                showToast('请输入问题', 'error');
+
+                return;
+
+            }
+
+
+
+            if (!answer) {
+
+                showToast('请输入回答', 'error');
+
+                return;
+
+            }
+
+
+
+            try {
+
+                const formData = new FormData();
+
+                formData.append('action', 'save');
+
+                formData.append('id', id || '0');
+
+                formData.append('question', question);
+
+                formData.append('answer', answer);
+
+                formData.append('category', category);
+
+                formData.append('seo_title', document.getElementById('faqSeoTitle').value.trim());
+
+                formData.append('seo_keywords', document.getElementById('faqSeoKeywords').value.trim());
+
+                formData.append('seo_description', document.getElementById('faqSeoDescription').value.trim());
+
+
+
+                const response = await fetch('../admin/api/faq-save.php', {
+
+                    method: 'POST',
+
+                    body: formData
+
+                });
+
+
+
+                const result = await response.json();
+
+
+
+                if (result.code === 0) {
+
+                    showToast(id ? 'FAQ更新成功' : 'FAQ添加成功', 'success');
+
+                    closeModal();
+
+                    await loadFAQs(); // 重新加载数据
+
+                } else {
+
+                    showToast(result.msg || '保存失败', 'error');
+
+                }
+
+            } catch (error) {
+
+                console.error('保存FAQ失败:', error);
+
+                showToast('保存失败，请重试', 'error');
+
+            }
+
+        }
+
+
+
+        // 删除FAQ
+
+        function deleteFAQ(id) {
+
+            deleteId = id;
+
+            document.getElementById('deleteModal').classList.add('show');
+
+        }
+
+
+
+        // 关闭删除模态框
+
+        function closeDeleteModal() {
+
+            document.getElementById('deleteModal').classList.remove('show');
+
+            deleteId = null;
+
+        }
+
+
+
+        // 确认删除
+
+        async function confirmDelete() {
+
+            if (!deleteId) return;
+
+
+
+            try {
+
+                const formData = new FormData();
+
+                formData.append('action', 'delete');
+
+                formData.append('id', deleteId);
+
+
+
+                const response = await fetch('../admin/api/faq-save.php', {
+
+                    method: 'POST',
+
+                    body: formData
+
+                });
+
+
+
+                const result = await response.json();
+
+
+
+                if (result.code === 0) {
+
+                    showToast('FAQ已删除', 'success');
+
+                    closeDeleteModal();
+
+                    await loadFAQs(); // 重新加载数据
+
+                } else {
+
+                    showToast(result.msg || '删除失败', 'error');
+
+                }
+
+            } catch (error) {
+
+                console.error('删除FAQ失败:', error);
+
+                showToast('删除失败，请重试', 'error');
+
+            }
+
+        }
+
+
+
+        // HTML转义
+
+        function escapeHtml(text) {
+
+            const div = document.createElement('div');
+
+            div.textContent = text;
+
+            return div.innerHTML;
+
+        }
+
+
+
+        // 打开分类管理模态框
+
+        function openCategoryModal() {
+
+            renderCategoryList();
+
+            document.getElementById('categoryModal').classList.add('show');
+
+        }
+
+        
+
+        // 关闭分类管理模态框
+
+        function closeCategoryModal() {
+
+            document.getElementById('categoryModal').classList.remove('show');
+
+        }
+
+        
+
+        // 渲染分类列表
+
+        function renderCategoryList() {
+
+            const container = document.getElementById('categoryList');
+
+            const keys = Object.keys(categoryLabels);
+
+            
+
+            container.innerHTML = keys.map((key, index) => {
+
+                const seo = categorySeoData[key] || { seo_title: '', seo_keywords: '', seo_description: '' };
+
+                return `
+
+                <div style="background: #f9fafb; border-radius: 6px; margin-bottom: 8px; overflow: hidden;" data-cat-key="${key}">
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
+
+                        <div style="flex: 1; display: flex; align-items: center; gap: 8px;">
+
+                            <div style="display: flex; flex-direction: column; gap: 2px;">
+
+                                <button class="cms-header-btn" style="background: #e5e7eb; color: #6b7280; padding: 2px 6px; font-size: 10px; ${index === 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}" onclick="${index === 0 ? '' : `moveCategory('${key}', -1)`}" title="上移">
+
+                                    <i class="fas fa-chevron-up"></i>
+
+                                </button>
+
+                                <button class="cms-header-btn" style="background: #e5e7eb; color: #6b7280; padding: 2px 6px; font-size: 10px; ${index === keys.length - 1 ? 'opacity: 0.3; cursor: not-allowed;' : ''}" onclick="${index === keys.length - 1 ? '' : `moveCategory('${key}', 1)`}" title="下移">
+
+                                    <i class="fas fa-chevron-down"></i>
+
+                                </button>
+
+                            </div>
+
+                            <div>
+
+                                <span class="cat-name-display" style="font-weight: 500; color: #374151;">${categoryLabels[key]}</span>
+
+                                <input type="text" class="cat-name-edit form-input" style="display: none; width: 150px;" value="${categoryLabels[key]}">
+
+                                <span style="color: #9ca3af; font-size: 12px; margin-left: 8px;">(${key})</span>
+
+                            </div>
+
+                        </div>
+
+                        <div style="display: flex; gap: 4px;">
+
+                            <button class="cms-header-btn btn-seo-cat" style="background: #f0fdf4; color: #059669; padding: 4px 8px; font-size: 11px;" onclick="toggleCatSeo('${key}')" title="SEO设置">
+
+                                <i class="fas fa-search"></i> SEO
+
+                            </button>
+
+                            <button class="cms-header-btn btn-edit-cat" style="background: #eff6ff; color: #3b82f6; padding: 6px 12px;" onclick="editCategory('${key}')">
+
+                                <i class="fas fa-edit"></i>
+
+                            </button>
+
+                            <button class="cms-header-btn btn-save-cat" style="display: none; background: #10b981; color: white; padding: 6px 12px;" onclick="saveCategoryEdit('${key}')">
+
+                                <i class="fas fa-check"></i>
+
+                            </button>
+
+                            <button class="cms-header-btn" style="background: #fef2f2; color: #ef4444; padding: 6px 12px;" onclick="deleteCategory('${key}')">
+
+                                <i class="fas fa-trash"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="cat-seo-panel" id="catSeo_${key}" style="display: none; padding: 0 10px 10px 10px; border-top: 1px solid #e5e7eb;">
+
+                        <div style="font-size: 12px; color: #6b7280; margin: 8px 0 4px;">SEO标题</div>
+
+                        <input type="text" class="form-input cat-seo-title" id="catSeoTitle_${key}" value="${seo.seo_title}" placeholder="分类页SEO标题" style="font-size: 12px; padding: 4px 8px;" onchange="saveCatSeoField('${key}')">
+
+                        <div style="font-size: 12px; color: #6b7280; margin: 8px 0 4px;">SEO关键词</div>
+
+                        <input type="text" class="form-input cat-seo-keywords" id="catSeoKeywords_${key}" value="${seo.seo_keywords}" placeholder="多个关键词用逗号分隔" style="font-size: 12px; padding: 4px 8px;" onchange="saveCatSeoField('${key}')">
+
+                        <div style="font-size: 12px; color: #6b7280; margin: 8px 0 4px;">SEO描述</div>
+
+                        <textarea class="form-textarea cat-seo-description" id="catSeoDescription_${key}" rows="2" placeholder="搜索引擎显示的描述文字" style="font-size: 12px; padding: 4px 8px; resize: vertical;" onchange="saveCatSeoField('${key}')">${seo.seo_description}</textarea>
+
+                    </div>
+
+                </div>`;
+
+            }).join('');
+
+        }
+
+
+
+        function toggleCatSeo(key) {
+
+            const panel = document.getElementById('catSeo_' + key);
+
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+
+        }
+
+
+
+        async function saveCatSeoField(key) {
+
+            const titleEl = document.getElementById('catSeoTitle_' + key);
+
+            const keywordsEl = document.getElementById('catSeoKeywords_' + key);
+
+            const descEl = document.getElementById('catSeoDescription_' + key);
+
+            if (!categorySeoData[key]) categorySeoData[key] = { seo_title: '', seo_keywords: '', seo_description: '' };
+
+            categorySeoData[key].seo_title = titleEl ? titleEl.value.trim() : '';
+
+            categorySeoData[key].seo_keywords = keywordsEl ? keywordsEl.value.trim() : '';
+
+            categorySeoData[key].seo_description = descEl ? descEl.value.trim() : '';
+
+            await saveCategories();
+
+            showToast('分类SEO已保存', 'success');
+
+        }
+
+        
+
+        // 移动分类排序（异步，等待服务器同步后刷新）
+
+        async function moveCategory(key, direction) {
+
+            const keys = Object.keys(categoryLabels);
+
+            const index = keys.indexOf(key);
+
+            
+
+            if (index === -1) return;
+
+            if (direction === -1 && index === 0) return;
+
+            if (direction === 1 && index === keys.length - 1) return;
+
+            
+
+            // 交换位置
+
+            const newIndex = index + direction;
+
+            const tempKey = keys[newIndex];
+
+            keys[newIndex] = keys[index];
+
+            keys[index] = tempKey;
+
+            
+
+            // 重新构建categoryLabels对象（保持新顺序）
+
+            const newCategoryLabels = {};
+
+            keys.forEach(k => {
+
+                newCategoryLabels[k] = categoryLabels[k];
+
+            });
+
+            categoryLabels = newCategoryLabels;
+
+            
+
+            // 等待服务器同步完成
+
+            await saveCategories();
+
+            renderCategoryList();
+
+            renderCategoryFilter();
+
+            showToast('排序已更新', 'success');
+
+        }
+
+        
+
+        // 编辑分类
+
+        function editCategory(key) {
+
+            const row = document.querySelector(`[data-cat-key="${key}"]`);
+
+            row.querySelector('.cat-name-display').style.display = 'none';
+
+            row.querySelector('.cat-name-edit').style.display = 'inline-block';
+
+            row.querySelector('.btn-edit-cat').style.display = 'none';
+
+            row.querySelector('.btn-save-cat').style.display = 'inline-block';
+
+            row.querySelector('.cat-name-edit').focus();
+
+        }
+
+        
+
+        // 保存分类编辑
+
+        async function saveCategoryEdit(key) {
+
+            const row = document.querySelector(`[data-cat-key="${key}"]`);
+
+            const newName = row.querySelector('.cat-name-edit').value.trim();
+
+            
+
+            if (!newName) {
+
+                showToast('分类名称不能为空', 'error');
+
+                return;
+
+            }
+
+            
+
+            categoryLabels[key] = newName;
+
+            await saveCategories();
+
+            renderCategoryList();
+
+            renderCategoryFilter();
+
+            updateCategorySelects();
+
+            showToast('分类更新成功', 'success');
+
+        }
+
+        
+
+        // 添加分类
+
+        async function addCategory() {
+
+            const nameInput = document.getElementById('newCategoryName');
+
+            const name = nameInput.value.trim();
+
+            
+
+            if (!name) {
+
+                showToast('请输入分类名称', 'error');
+
+                return;
+
+            }
+
+            
+
+            // 自动生成标识（拼音或英文）
+
+            let key = generateKey(name);
+
+            
+
+            // 如果标识已存在，添加数字后缀
+
+            let originalKey = key;
+
+            let counter = 1;
+
+            while (categoryLabels[key]) {
+
+                key = originalKey + counter;
+
+                counter++;
+
+            }
+
+            
+
+            categoryLabels[key] = name;
+
+            await saveCategories();
+
+            renderCategoryList();
+
+            renderCategoryFilter();
+
+            updateCategorySelects();
+
+            
+
+            nameInput.value = '';
+
+            showToast('分类添加成功', 'success');
+
+        }
+
+        
+
+        // 生成分类标识
+
+        function generateKey(name) {
+
+            // 简单的拼音映射表
+
+            const pinyinMap = {
+
+                '亮': 'liang', '资': 'zi', '业': 'ye', '务': 'wu',
+
+                '过': 'guo', '桥': 'qiao', '资': 'zi', '金': 'jin',
+
+                '摆': 'bai', '账': 'zhang', '应': 'ying', '收': 'shou',
+
+                '账': 'zhang', '款': 'kuan', '银': 'yin', '行': 'hang',
+
+                '存': 'cun', '款': 'kuan', '一': 'yi', '般': 'ban',
+
+                '问': 'wen', '题': 'ti', '操': 'cao', '作': 'zuo',
+
+                '时': 'shi', '间': 'jian'
+
+            };
+
+            
+
+            // 尝试生成拼音标识
+
+            let pinyin = '';
+
+            for (let char of name) {
+
+                if (pinyinMap[char]) {
+
+                    pinyin += pinyinMap[char];
+
+                } else if (/[a-zA-Z0-9]/.test(char)) {
+
+                    pinyin += char.toLowerCase();
+
+                }
+
+            }
+
+            
+
+            // 如果拼音生成成功，取前10个字符
+
+            if (pinyin.length >= 2) {
+
+                return pinyin.substring(0, 10);
+
+            }
+
+            
+
+            // 否则使用时间戳
+
+            return 'cat' + Date.now().toString().slice(-6);
+
+        }
+
+        
+
+        // 删除分类
+
+        async function deleteCategory(key) {
+
+            if (!confirm(`确定要删除分类"${categoryLabels[key]}"吗？该分类下的FAQ将变为未分类。`)) {
+
+                return;
+
+            }
+
+            
+
+            delete categoryLabels[key];
+
+            await saveCategories();
+
+            renderCategoryList();
+
+            renderCategoryFilter();
+
+            updateCategorySelects();
+
+            showToast('分类已删除', 'success');
+
+        }
+
+        
+
+        // 更新所有分类下拉框
+
+        function updateCategorySelects() {
+
+            // 更新添加/编辑FAQ模态框中的分类选择
+
+            const selects = document.querySelectorAll('#faqCategory');
+
+            selects.forEach(select => {
+
+                const currentValue = select.value;
+
+                select.innerHTML = Object.keys(categoryLabels).map(key => 
+
+                    `<option value="${key}">${categoryLabels[key]}</option>`
+
+                ).join('');
+
+                if (categoryLabels[currentValue]) {
+
+                    select.value = currentValue;
+
+                }
+
+            });
+
+        }
+
+        
+
+        // 显示提示
+
+        function showToast(message, type = 'success') {
+
+            const toast = document.getElementById('toast');
+
+            const toastMessage = document.getElementById('toastMessage');
+
+            
+
+            toast.className = `toast ${type}`;
+
+            toastMessage.textContent = message;
+
+            
+
+            const icon = toast.querySelector('i');
+
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+
+
+            toast.classList.add('show');
+
+            
+
+            setTimeout(() => {
+
+                toast.classList.remove('show');
+
+            }, 3000);
+
+        }
+
+
+
+        // 键盘事件
+
+        document.addEventListener('keydown', function(e) {
+
+            if (e.key === 'Escape') {
+
+                closeModal();
+
+                closeDeleteModal();
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
 </html>

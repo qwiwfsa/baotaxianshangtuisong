@@ -206,6 +206,11 @@
 
     <script src="js/main.js"></script>
     <script>
+// Sync localStorage auth to cookie for PHP backend
+if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf('cms_logged_in') === -1) {
+    document.cookie = 'cms_logged_in=true;path=/;max-age=' + (60*60*24*30) + ';SameSite=Lax';
+}
+
         //  - ʵزͼƬ
         const casesData = [
             {

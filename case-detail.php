@@ -102,6 +102,12 @@ header("Expires: 0");
 
 ?>
 
+<?php
+// Override with case-specific SEO when available
+if (!empty($case_seo_title)) { $page_title = $case_seo_title; }
+if (!empty($case_seo_desc)) { $page_description = $case_seo_desc; }
+if (!empty($case_seo_keywords)) { $page_keywords = $case_seo_keywords; }
+?>
 <!DOCTYPE html>
 
 <html lang="zh-CN">
@@ -442,7 +448,15 @@ window.changeImage = window.changeImage || function(e, t, n) {
 
     if (t) t.classList.add('active');
 
-    if (typeof n !== 'undefined') window.currentImageIndex = n;
+    if (typeof n !== 'undefined') {
+        window.currentImageIndex = n;
+    } else {
+        // Find index from DOM thumbnails
+        var thumbs = document.querySelectorAll('.case-media-thumb');
+        for (var idx = 0; idx < thumbs.length; idx++) {
+            if (thumbs[idx] === t) { window.currentImageIndex = idx; break; }
+        }
+    }
 
 };
 
@@ -513,6 +527,15 @@ window.nextImage = window.nextImage || function() {
 };
 
 </script>
+
+    <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
+    <meta name="360-site-verification" content="f310464a017d0090a59ed60edaa367e6" />
+    <meta name="sogou_site_verification" content="hZk3RVI5el" />
+    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779306988"/>
+    <meta name="bytedance-verification-code" content="ax5xO1GtSFCBiE8fTWSz" />
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+<script>(function(){var el = document.createElement("script");el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?3b035154874e19e664d8240b09e14e83e00fbc766c8f9a62fe69bf1753ce8548bc434964556b7d7129e9b750ed197d397efd7b0c6c715c1701396e1af40cec962b8d7c8c6655c9b00211740aa8a98e2e";el.id = "ttzz";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(el, s);})(window)</script>
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();</script>
 
 </head>
 
@@ -588,7 +611,7 @@ window.nextImage = window.nextImage || function() {
 
                             <?php if ($first_img): ?>
 
-                            <img src="<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;" id="mainImage" onclick="openImageViewer(0)">
+                            <img src="<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;height:400px;object-fit:contain;border-radius:8px;background:#f3f4f6;" id="mainImage" onclick="openImageViewer(0)">
 
                             <?php endif; ?>
 
@@ -598,7 +621,7 @@ window.nextImage = window.nextImage || function() {
 
                                 <?php foreach ($images as $idx => $img): ?>
 
-                                <div class="case-media-thumb <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="changeImage('<?php echo htmlspecialchars($img); ?>', this)">
+                                <div class="case-media-thumb <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="changeImage('<?php echo htmlspecialchars($img); ?>', this, <?php echo $idx; ?>)">
 
                                     <img src="<?php echo htmlspecialchars($img); ?>" alt="">
 
@@ -1030,9 +1053,9 @@ window.nextImage = window.nextImage || function() {
 
             var vurl = caseData.video ? getVideoUrl(caseData.video) : "";
 
-            var m = "<div class="case-media-main" id="mainMedia" onclick="openImageViewer(currentImageIndex)">" + (vurl ? "<div class="case-video-play" onclick="event.stopPropagation(); playVideo('" + vurl + "')"><i class="fas fa-play"></i></div>" : "") + "<img src="" + (imgs.length > 0 ? imgs[0] : basePath + "images/cases/default.jpg") + "" alt="" + caseData.title + "" id="mainImage"></div>";
+            var m = "<div class="case-media-main" id="mainMedia" onclick="openImageViewer(currentImageIndex)">" + (vurl ? "<div class="case-video-play" onclick="event.stopPropagation(); playVideo('" + vurl + "')"><i class="fas fa-play"></i></div>" : "") + "<img src="" + (imgs.length > 0 ? imgs[0] : basePath + "images/cases/default.jpg") + "" alt="" + caseData.title + "" id="mainImage" style="width:100%;height:400px;object-fit:contain;background:#f3f4f6;"></div>";
 
-            if (imgs.length > 1) { m += "<div class="case-media-thumbs">"; imgs.forEach(function(i, idx) { m += "<div class="case-media-thumb " + (idx === 0 ? "active" : "") + "" onclick="changeImage('" + i + "', this)"><img src="" + i + "" alt="" + caseData.title + " - " + (idx + 1) + ""></div>"; }); m += "</div>"; }
+            if (imgs.length > 1) { m += "<div class="case-media-thumbs">"; imgs.forEach(function(i, idx) { m += "<div class="case-media-thumb " + (idx === 0 ? "active" : "") + "" onclick="changeImage('" + i + "', this, " + idx + ")"><img src="" + i + "" alt="" + caseData.title + " - " + (idx + 1) + ""></div>"; }); m += "</div>"; }
 
             document.getElementById("caseMedia").innerHTML = m;
 
@@ -1124,7 +1147,7 @@ window.nextImage = window.nextImage || function() {
 
                     ` : ''}
 
-                    <img src="${caseItem.images[0]}" alt="${caseItem.title}" id="mainImage">
+                    <img src="${caseItem.images[0]}" alt="${caseItem.title}" id="mainImage" style="width:100%;height:400px;object-fit:contain;background:#f3f4f6;">
 
                 </div>
 
@@ -1138,7 +1161,7 @@ window.nextImage = window.nextImage || function() {
 
                         ${caseItem.images.map((img, idx) => `
 
-                            <div class="case-media-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
+                            <div class="case-media-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this, ${idx})">
 
                                 <img src="${img}" alt="${caseItem.title} - ${idx + 1}">
 

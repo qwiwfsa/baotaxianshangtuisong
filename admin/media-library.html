@@ -155,6 +155,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 <div class="modal-overlay" id="modal"><div class="modal" id="modalBox"></div></div>
 <div class="toast" id="toast"></div>
 <script>
+// Sync localStorage auth to cookie for PHP backend
+if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf('cms_logged_in') === -1) {
+    document.cookie = 'cms_logged_in=true;path=/;max-age=' + (60*60*24*30) + ';SameSite=Lax';
+}
+
 var A='api/media/',page=1,fid=0,tab='files',sel=new Set,sm=false;
 function G(id){return document.getElementById(id)}
 function api(u,o){o=o||{};return fetch(A+u,o).then(function(r){return r.json()})}
@@ -180,7 +185,7 @@ t=img?'<img class=thumb src='+(f.thumb||f.url)+'>':'<div class=\"thumb icon\"><i
 return '<div class=media-card'+(sm?' selecting':'')+(sel.has(f.id)?' selected':'')+' onclick=cardClick('+f.id+',event) data-id='+f.id+'>'+
 '<div class=check><i class=\"fas fa-check\"></i></div>'+
 '<div class=actions><button onclick=\"event.stopPropagation();editMeta('+f.id+')\"><i class=fas fa-pen></i></button>'+
-'<button onclick=\"event.stopPropagation();batchAction(\\'delete\\',['+f.id+'])\"><i class=fas fa-trash></i></button></div>'+
+'<button onclick=\"event.stopPropagation();batchAction(\'delete\',['+f.id+'])\"><i class=fas fa-trash></i></button></div>'+
 t+'<div class=info><div class=name title='+esc(f.original_name)+'>'+esc(f.original_name)+'</div><div class=meta><span>'+FS(f.file_size)+'</span></div></div></div>'}).join('');
 var p=G('pagination');if(d.pages>1){p.innerHTML='<button onclick=page=1;loadFiles()'+(d.page<=1?' disabled':'')+'><i class=fas fa-angle-double-left></i></button>'+
 '<button onclick=page='+(d.page-1)+';loadFiles()'+(d.page<=1?' disabled':'')+'><i class=fas fa-angle-left></i></button>'+
@@ -212,7 +217,7 @@ api('media-list.php',{method:'POST',headers:{'Content-Type':'application/json'},
 
 function loadRecycle(){api('media-list.php?recycle=1&limit=100').then(function(d){if(!d.success)return;var g=G('recycleGrid');
 g.innerHTML=d.data.map(function(f){return'<div class=media-card><div class=\"thumb icon\"><i class=\"fas fa-file\"></i></div><div class=info><div class=name>'+esc(f.original_name)+'</div><div class=meta>'+FS(f.file_size)+'</div></div><div class=actions style=display:flex>'+
-'<button onclick=batchAction(\\'restore\\',['+f.id+'])><i class=fas fa-undo></i></button><button onclick=batchAction(\\'permanent_delete\\',['+f.id+'])><i class=fas fa-times></i></button></div></div>'}).join('')})}
+'<button onclick=batchAction(\'restore\',['+f.id+'])><i class=fas fa-undo></i></button><button onclick=batchAction(\'permanent_delete\',['+f.id+'])><i class=fas fa-times></i></button></div></div>'}).join('')})}
 
 function loadLogs(){api('logs.php?page=1&limit=50').then(function(d){if(!d.success)return;G('logBody').innerHTML=d.data.map(function(l){return'<tr><td>'+l.id+'</td><td>'+l.media_id+'</td><td>'+l.action+'</td><td>'+esc(l.detail)+'</td><td>'+l.ip+'</td><td>'+l.created_at+'</td></tr>'}).join('')})}
 

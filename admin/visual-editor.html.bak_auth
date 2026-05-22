@@ -1,0 +1,1194 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可视化页面编辑器 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #1e293b; min-height: 100vh; overflow: hidden; }
+        
+        /* 顶部栏 */
+        .editor-header { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .editor-header-left { display: flex; align-items: center; gap: 16px; }
+        .editor-back { display: flex; align-items: center; gap: 8px; color: white; text-decoration: none; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: background 0.2s; }
+        .editor-back:hover { background: rgba(255,255,255,0.1); }
+        .editor-title { font-size: 18px; font-weight: 600; }
+        .editor-header-center { display: flex; align-items: center; gap: 12px; }
+        .editor-header-right { display: flex; align-items: center; gap: 12px; }
+        .device-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.1); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .device-btn:hover, .device-btn.active { background: rgba(255,255,255,0.25); }
+        .editor-btn { padding: 8px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+        .editor-btn-secondary { background: rgba(255,255,255,0.2); color: white; }
+        .editor-btn-secondary:hover { background: rgba(255,255,255,0.3); }
+        .editor-btn-primary { background: white; color: #3b82f6; }
+        .editor-btn-primary:hover { background: #f3f4f6; }
+        
+        /* 主布局 */
+        .editor-layout { display: flex; height: calc(100vh - 56px); }
+        
+        /* 左侧组件库 */
+        .component-panel { width: 280px; background: white; border-right: 1px solid #e5e7eb; overflow-y: auto; }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid #e5e7eb; }
+        .panel-title { font-size: 16px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px; }
+        .panel-title i { color: #3b82f6; }
+        .component-category { border-bottom: 1px solid #e5e7eb; }
+        .category-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.2s; }
+        .category-header:hover { background: #f9fafb; }
+        .category-title { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; color: #374151; }
+        .category-title i { color: #6b7280; width: 20px; text-align: center; }
+        .category-arrow { color: #9ca3af; transition: transform 0.2s; }
+        .category-arrow.expanded { transform: rotate(90deg); }
+        .category-content { display: none; padding: 0 20px 16px; }
+        .category-content.show { display: block; }
+        .component-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; cursor: grab; transition: all 0.2s; position: relative; }
+        .component-item:hover { background: #eff6ff; border-color: #3b82f6; }
+        .component-item:active { cursor: grabbing; }
+        .component-item.dragging { opacity: 0.5; }
+        
+        /* 拖拽放置区域 */
+        .drop-zone { border: 3px dashed #3b82f6 !important; background: rgba(59,130,246,0.1) !important; }
+        .drop-indicator { position: absolute; left: 0; right: 0; height: 4px; background: #3b82f6; border-radius: 2px; pointer-events: none; z-index: 100; }
+        .component-item i { color: #3b82f6; font-size: 18px; }
+        .component-name { font-size: 13px; color: #374151; }
+        
+        /* 中间画布区域 */
+        .canvas-area { flex: 1; background: #1e293b; overflow: auto; display: flex; align-items: flex-start; justify-content: center; padding: 40px; position: relative; }
+        .canvas-wrapper { background: white; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: width 0.3s; min-height: 400px; }
+        .canvas-wrapper.desktop { width: 100%; max-width: 1200px; }
+        .canvas-wrapper.tablet { width: 768px; }
+        .canvas-wrapper.mobile { width: 375px; }
+        .page-iframe { width: 100%; min-height: calc(100vh - 136px); border: none; display: block; background: white; }
+        
+        /* 右侧属性面板 */
+        .property-panel { width: 320px; background: white; border-left: 1px solid #e5e7eb; overflow-y: auto; }
+        .panel-tabs { display: flex; border-bottom: 1px solid #e5e7eb; }
+        .panel-tab { flex: 1; padding: 14px; text-align: center; font-size: 13px; font-weight: 500; color: #6b7280; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+        .panel-tab:hover { color: #3b82f6; }
+        .panel-tab.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+        .panel-content { padding: 20px; }
+        .property-group { margin-bottom: 24px; }
+        .property-group-title { font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; margin-bottom: 12px; }
+        .property-field { margin-bottom: 16px; }
+        .property-field:last-child { margin-bottom: 0; }
+        .field-label { display: block; font-size: 13px; color: #374151; margin-bottom: 6px; }
+        .field-input { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; }
+        .field-input:focus { outline: none; border-color: #3b82f6; }
+        .field-textarea { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; min-height: 80px; resize: vertical; }
+        .field-textarea:focus { outline: none; border-color: #3b82f6; }
+        .field-select { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: white; }
+        .field-select:focus { outline: none; border-color: #3b82f6; }
+        .color-picker { display: flex; align-items: center; gap: 8px; }
+        .color-input { width: 40px; height: 32px; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; }
+        .color-value { font-size: 13px; color: #6b7280; }
+        .property-empty { padding: 40px 20px; text-align: center; color: #9ca3af; }
+        .property-empty i { font-size: 48px; margin-bottom: 16px; }
+        
+        /* 空状态 */
+        .empty-state { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #9ca3af; }
+        .empty-state i { font-size: 64px; margin-bottom: 20px; }
+        .empty-state h3 { font-size: 20px; margin-bottom: 12px; }
+        .empty-state p { font-size: 14px; margin-bottom: 24px; }
+        .empty-state .editor-btn { display: inline-flex; }
+        
+        /* 加载遮罩 */
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .loading-overlay.show { display: flex; }
+        .loading-spinner { width: 48px; height: 48px; border: 4px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* 元素高亮 */
+        .element-highlight { outline: 2px solid #3b82f6 !important; outline-offset: 2px !important; }
+        .element-hover { outline: 1px dashed #3b82f6 !important; outline-offset: 1px !important; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 -->
+    <header class="editor-header">
+        <div class="editor-header-left">
+            <a href="nav-management.html" class="editor-back">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回</span>
+            </a>
+            <h1 class="editor-title" id="pageTitle">可视化编辑器</h1>
+            <select id="pageSelector" onchange="onPageSelect(this.value)" style="margin-left: 20px; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.2); color: white; font-size: 14px; cursor: pointer;">
+                <option value="" style="background: #1e3a8a; color: white;">选择页面...</option>
+                <option value="index.html" style="background: #1e3a8a; color: white;">首页</option>
+                <option value="services.html" style="background: #1e3a8a; color: white;">服务</option>
+                <option value="advantages.html" style="background: #1e3a8a; color: white;">优势</option>
+                <option value="applications.html" style="background: #1e3a8a; color: white;">应用</option>
+                <option value="compliance.html" style="background: #1e3a8a; color: white;">合规</option>
+                <option value="faq.html" style="background: #1e3a8a; color: white;">常见问题</option>
+                <option value="contact.html" style="background: #1e3a8a; color: white;">联系我们</option>
+            </select>
+        </div>
+        <div class="editor-header-center">
+            <button class="device-btn active" onclick="setDevice('desktop')" title="桌面端">
+                <i class="fas fa-desktop"></i>
+            </button>
+            <button class="device-btn" onclick="setDevice('tablet')" title="平板">
+                <i class="fas fa-tablet-alt"></i>
+            </button>
+            <button class="device-btn" onclick="setDevice('mobile')" title="手机">
+                <i class="fas fa-mobile-alt"></i>
+            </button>
+        </div>
+        <div class="editor-header-right">
+            <button class="editor-btn editor-btn-secondary" onclick="undo()" id="undoBtn" disabled>
+                <i class="fas fa-undo"></i> 撤回
+            </button>
+            <button class="editor-btn editor-btn-secondary" onclick="redo()" id="redoBtn" disabled>
+                <i class="fas fa-redo"></i> 重做
+            </button>
+            <button class="editor-btn editor-btn-secondary" onclick="resetPage()">
+                <i class="fas fa-rotate-left"></i> 重置
+            </button>
+            <button class="editor-btn editor-btn-secondary" onclick="refreshPage()">
+                <i class="fas fa-sync-alt"></i> 刷新
+            </button>
+            <button class="editor-btn editor-btn-primary" onclick="savePage()">
+                <i class="fas fa-save"></i> 保存修改
+            </button>
+        </div>
+    </header>
+
+    <!-- 主布局 -->
+    <div class="editor-layout">
+        <!-- 左侧组件库 -->
+        <aside class="component-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <i class="fas fa-cubes"></i>
+                    组件库
+                </h2>
+            </div>
+            
+            <!-- 基础组件 -->
+            <div class="component-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-cube"></i>
+                        <span>基础组件</span>
+                    </div>
+                    <i class="fas fa-chevron-right category-arrow expanded"></i>
+                </div>
+                <div class="category-content show">
+                    <div class="component-item" draggable="true" data-type="heading" onclick="insertComponent('heading')">
+                        <i class="fas fa-heading"></i>
+                        <span class="component-name">标题</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="text" onclick="insertComponent('text')">
+                        <i class="fas fa-paragraph"></i>
+                        <span class="component-name">文本段落</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="image" onclick="insertComponent('image')">
+                        <i class="fas fa-image"></i>
+                        <span class="component-name">图片</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="button" onclick="insertComponent('button')">
+                        <i class="fas fa-square"></i>
+                        <span class="component-name">按钮</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="divider" onclick="insertComponent('divider')">
+                        <i class="fas fa-minus"></i>
+                        <span class="component-name">分割线</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 排版组件 -->
+            <div class="component-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-th-large"></i>
+                        <span>排版组件</span>
+                    </div>
+                    <i class="fas fa-chevron-right category-arrow"></i>
+                </div>
+                <div class="category-content">
+                    <div class="component-item" draggable="true" data-type="hero" onclick="insertComponent('hero')">
+                        <i class="fas fa-image"></i>
+                        <span class="component-name">Hero大图</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="features" onclick="insertComponent('features')">
+                        <i class="fas fa-list"></i>
+                        <span class="component-name">特性列表</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="cards" onclick="insertComponent('cards')">
+                        <i class="fas fa-th"></i>
+                        <span class="component-name">卡片网格</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="stats" onclick="insertComponent('stats')">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="component-name">数据统计</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 互动组件 -->
+            <div class="component-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-hand-pointer"></i>
+                        <span>互动组件</span>
+                    </div>
+                    <i class="fas fa-chevron-right category-arrow"></i>
+                </div>
+                <div class="category-content">
+                    <div class="component-item" draggable="true" data-type="form" onclick="insertComponent('form')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="component-name">联系表单</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="map" onclick="insertComponent('map')">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="component-name">地图</span>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="slider" onclick="insertComponent('slider')">
+                        <i class="fas fa-images"></i>
+                        <span class="component-name">轮播图</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 中间画布区域 -->
+        <main class="canvas-area">
+            <div class="canvas-wrapper desktop" id="canvasWrapper">
+                <iframe class="page-iframe" id="pageIframe" src="about:blank"></iframe>
+            </div>
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-file-code"></i>
+                <h3>请选择要编辑的页面</h3>
+                <p>从导航菜单选择一个页面进行可视化编辑</p>
+                <a href="nav-management.html" class="editor-btn editor-btn-primary">
+                    <i class="fas fa-arrow-left"></i> 返回菜单管理
+                </a>
+            </div>
+        </main>
+
+        <!-- 右侧属性面板 -->
+        <aside class="property-panel" id="propertyPanel">
+            <div class="panel-tabs">
+                <div class="panel-tab active" onclick="switchTab('content')">内容</div>
+                <div class="panel-tab" onclick="switchTab('style')">样式</div>
+                <div class="panel-tab" onclick="switchTab('advanced')">高级</div>
+            </div>
+            <div class="panel-content" id="panelContent">
+                <div class="property-empty">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <p>在左侧页面中点击元素进行编辑</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        let currentPage = '';
+        let selectedElement = null;
+        let iframeDoc = null;
+        
+        // 操作历史栈（用于撤回/重做功能）
+        let undoStack = [];
+        let redoStack = [];
+        const MAX_HISTORY_SIZE = 50;
+        let originalPageContent = null; // 保存原始页面内容用于重置
+        
+        // 保存当前页面状态到历史栈
+        function saveStateToHistory() {
+            if (!iframeDoc || !iframeDoc.body) return;
+            
+            const state = iframeDoc.body.innerHTML;
+            
+            // 如果栈已满，移除最旧的状态
+            if (undoStack.length >= MAX_HISTORY_SIZE) {
+                undoStack.shift();
+            }
+            
+            undoStack.push(state);
+            
+            // 清空重做栈（新操作后重做栈失效）
+            redoStack = [];
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+        }
+        
+        // 更新撤回/重做按钮状态
+        function updateUndoRedoButtons() {
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            
+            if (undoBtn) {
+                undoBtn.disabled = undoStack.length === 0;
+            }
+            if (redoBtn) {
+                redoBtn.disabled = redoStack.length === 0;
+            }
+        }
+        
+        // 撤回上一步操作
+        function undo() {
+            if (undoStack.length === 0 || !iframeDoc || !iframeDoc.body) return;
+            
+            // 将当前状态保存到重做栈
+            const currentState = iframeDoc.body.innerHTML;
+            redoStack.push(currentState);
+            
+            // 从历史栈弹出上一步状态并恢复
+            const previousState = undoStack.pop();
+            iframeDoc.body.innerHTML = previousState;
+            
+            // 重新初始化编辑器（因为innerHTML会清除事件监听）
+            setTimeout(function() {
+                initEditor();
+                setupIframeDropZone(document.getElementById('pageIframe'));
+            }, 50);
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+            
+            showToast('已撤回上一步操作');
+        }
+        
+        // 重做操作
+        function redo() {
+            if (redoStack.length === 0 || !iframeDoc || !iframeDoc.body) return;
+            
+            // 将当前状态保存到历史栈
+            const currentState = iframeDoc.body.innerHTML;
+            undoStack.push(currentState);
+            
+            // 从重做栈弹出状态并恢复
+            const nextState = redoStack.pop();
+            iframeDoc.body.innerHTML = nextState;
+            
+            // 重新初始化编辑器
+            setTimeout(function() {
+                initEditor();
+                setupIframeDropZone(document.getElementById('pageIframe'));
+            }, 50);
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+            
+            showToast('已重做操作');
+        }
+        
+        // 重置页面
+        function resetPage() {
+            if (!originalPageContent) {
+                showToast('没有可重置的原始内容', 'error');
+                return;
+            }
+            
+            if (!confirm('确定要重置页面吗？这将丢失所有未保存的修改。')) {
+                return;
+            }
+            
+            if (!iframeDoc || !iframeDoc.body) return;
+            
+            // 保存当前状态到历史栈
+            saveStateToHistory();
+            
+            // 恢复原始内容
+            iframeDoc.body.innerHTML = originalPageContent;
+            
+            // 重新初始化编辑器
+            setTimeout(function() {
+                initEditor();
+                setupIframeDropZone(document.getElementById('pageIframe'));
+            }, 50);
+            
+            showToast('页面已重置');
+        }
+
+        // 获取URL参数
+        function getUrlParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // 页面选择器变化事件
+        function onPageSelect(pageUrl) {
+            if (pageUrl) {
+                loadPage(pageUrl);
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            const page = getUrlParam('page');
+            if (page) {
+                document.getElementById('pageSelector').value = page;
+                loadPage(page);
+            } else {
+                document.getElementById('emptyState').style.display = 'block';
+                document.getElementById('canvasWrapper').style.display = 'none';
+            }
+
+            // 初始化拖拽功能
+            initDragAndDrop();
+        });
+        
+        // 初始化拖拽功能
+        function initDragAndDrop() {
+            const componentItems = document.querySelectorAll('.component-item');
+            let draggedType = null;
+            
+            componentItems.forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    draggedType = this.dataset.type;
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'copy';
+                    e.dataTransfer.setData('componentType', draggedType);
+                });
+                
+                item.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedType = null;
+                });
+            });
+            
+            // 设置iframe的拖放区域
+            const iframe = document.getElementById('pageIframe');
+            iframe.addEventListener('load', function() {
+                setupIframeDropZone(iframe);
+            });
+        }
+        
+        // 设置iframe内的拖放区域
+        function setupIframeDropZone(iframe) {
+            try {
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDocument || !iframeDocument.body) {
+                    console.error('无法访问iframe文档');
+                    return;
+                }
+                
+                // 移除之前的事件监听器（通过克隆节点）
+                const oldBody = iframeDocument.body;
+                const newBody = oldBody.cloneNode(true);
+                oldBody.parentNode.replaceChild(newBody, oldBody);
+                
+                // 重新获取body引用
+                const body = iframeDocument.body;
+                
+                body.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.dataTransfer) {
+                        e.dataTransfer.dropEffect = 'copy';
+                    }
+                    this.classList.add('drop-zone');
+                });
+                
+                body.addEventListener('dragleave', function(e) {
+                    e.stopPropagation();
+                    // 检查是否真的离开了body
+                    if (!body.contains(e.relatedTarget)) {
+                        this.classList.remove('drop-zone');
+                    }
+                });
+                
+                body.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.remove('drop-zone');
+                    
+                    const componentType = e.dataTransfer.getData('componentType');
+                    if (componentType) {
+                        // 在鼠标位置插入组件
+                        insertComponentAtPosition(componentType, e.clientX, e.clientY);
+                    }
+                });
+                
+                console.log('拖放区域设置完成');
+            } catch (e) {
+                console.error('设置拖放区域失败:', e);
+            }
+        }
+        
+        // 在指定位置插入组件
+        function insertComponentAtPosition(type, x, y) {
+            if (!iframeDoc) {
+                showToast('请先等待页面加载完成', 'error');
+                return;
+            }
+            
+            saveStateToHistory();
+            
+            // 获取点击位置的元素
+            const element = iframeDoc.elementFromPoint(x, y);
+            if (!element || element === iframeDoc.body) {
+                // 如果没有元素或点击的是body，插入到body末尾
+                insertComponent(type);
+                return;
+            }
+            
+            // 创建组件HTML
+            const html = getComponentHtml(type);
+            const container = iframeDoc.createElement('div');
+            container.innerHTML = html;
+            const newElement = container.firstElementChild;
+            
+            // 在目标元素后插入
+            if (element.nextSibling) {
+                element.parentNode.insertBefore(newElement, element.nextSibling);
+            } else {
+                element.parentNode.appendChild(newElement);
+            }
+            
+            // 为新元素添加事件监听
+            newElement.addEventListener('mouseenter', function(e) {
+                e.stopPropagation();
+                if (!this.classList.contains('cms-edit-selected')) {
+                    this.classList.add('cms-edit-hover');
+                }
+            });
+            
+            newElement.addEventListener('mouseleave', function(e) {
+                this.classList.remove('cms-edit-hover');
+            });
+            
+            newElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const prevSelected = iframeDoc.querySelector('.cms-edit-selected');
+                if (prevSelected) prevSelected.classList.remove('cms-edit-selected');
+                
+                selectedElement = this;
+                selectedElement.classList.add('cms-edit-selected');
+                selectedElement.classList.remove('cms-edit-hover');
+                showProperties(selectedElement);
+            });
+            
+            showToast('组件已插入');
+        }
+        
+        // 获取组件HTML
+        function getComponentHtml(type) {
+            switch(type) {
+                case 'heading':
+                    return '<h2 style="padding: 20px; font-size: 28px; color: #1f2937;">新标题</h2>';
+                case 'text':
+                    return '<p style="padding: 20px; font-size: 16px; line-height: 1.6; color: #4b5563;">这是一段新文本内容，您可以点击编辑修改。</p>';
+                case 'image':
+                    return '<div style="padding: 20px; text-align: center;"><img src="../images/placeholder.jpg" style="max-width: 100%; height: auto; border-radius: 8px;" alt="图片"></div>';
+                case 'button':
+                    return '<div style="padding: 20px; text-align: center;"><a href="#" style="display: inline-block; padding: 12px 32px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; text-decoration: none; border-radius: 8px; font-weight: 500;">点击按钮</a></div>';
+                case 'divider':
+                    return '<hr style="margin: 20px 0; border: none; border-top: 1px solid #e5e7eb;">';
+                case 'hero':
+                    return '<div style="padding: 80px 40px; text-align: center; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white;"><h1 style="font-size: 42px; margin-bottom: 20px;">Hero标题</h1><p style="font-size: 18px; opacity: 0.9;">副标题描述文字</p></div>';
+                case 'features':
+                    return '<div style="padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;"><div style="text-align: center; padding: 24px;"><i class="fas fa-check-circle" style="font-size: 40px; color: #3b82f6; margin-bottom: 16px;"></i><h3 style="margin-bottom: 8px;">特性一</h3><p style="color: #6b7280;">描述文字</p></div></div>';
+                case 'cards':
+                    return '<div style="padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;"><div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"><div style="height: 160px; background: #e5e7eb;"></div><div style="padding: 20px;"><h3 style="margin-bottom: 8px;">卡片标题</h3><p style="color: #6b7280; font-size: 14px;">卡片描述</p></div></div></div>';
+                case 'stats':
+                    return '<div style="padding: 60px 40px; background: #f9fafb; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;"><div><div style="font-size: 48px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">100+</div><div style="color: #6b7280;">项目数量</div></div></div>';
+                case 'form':
+                    return '<div style="padding: 40px; max-width: 600px; margin: 0 auto;"><h2 style="text-align: center; margin-bottom: 24px;">联系我们</h2><form style="display: grid; gap: 16px;"><input type="text" placeholder="您的姓名" style="padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;"><button type="submit" style="padding: 14px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer;">提交</button></form></div>';
+                case 'map':
+                    return '<div style="padding: 40px;"><div style="height: 400px; background: #e5e7eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9ca3af;"><i class="fas fa-map-marked-alt" style="font-size: 48px;"></i></div></div>';
+                case 'slider':
+                    return '<div style="padding: 40px;"><div style="height: 400px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white;"><div style="text-align: center;"><h2 style="font-size: 36px; margin-bottom: 16px;">轮播图标题</h2></div></div></div>';
+                default:
+                    return '<div style="padding: 20px;">新组件</div>';
+            }
+        }
+
+        // 加载页面
+        function loadPage(pageUrl) {
+            currentPage = pageUrl;
+            document.getElementById('pageTitle').textContent = '编辑: ' + pageUrl;
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('canvasWrapper').style.display = 'block';
+            
+            showLoading(true);
+            
+            const iframe = document.getElementById('pageIframe');
+            
+            // 重置iframe
+            iframe.srcdoc = 'about:blank';
+            
+                        // 默认内容
+            let bodyContent = `
+                    <div style="padding: 40px; text-align: center; color: #9ca3af;">
+                        <i class="fas fa-plus-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <p>空白页面 - 点击或拖拽左侧组件开始编辑</p>
+                    </div>
+                `;
+            }
+            
+            const pageHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${pageUrl}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; min-height: 100vh; }
+        .cms-edit-highlight { outline: 2px solid #3b82f6 !important; outline-offset: 2px !important; }
+        .cms-edit-hover { outline: 2px dashed #3b82f6 !important; outline-offset: 2px !important; cursor: pointer !important; }
+        .cms-edit-selected { outline: 3px solid #3b82f6 !important; outline-offset: 3px !important; box-shadow: 0 0 0 6px rgba(59,130,246,0.3) !important; }
+        .drop-zone { background: rgba(59,130,246,0.1) !important; }
+        * { cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    ${bodyContent}
+</body>
+</html>`;
+            
+            iframe.srcdoc = pageHtml;
+            iframe.onload = function() {
+                console.log('iframe onload (createEditablePage)');
+                showLoading(false);
+                iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                // 保存原始页面内容用于重置
+                if (iframeDoc && iframeDoc.body) {
+                    originalPageContent = iframeDoc.body.innerHTML;
+                }
+
+                // 延迟初始化以确保DOM完全加载
+                setTimeout(function() {
+                    console.log('开始初始化编辑器 (createEditablePage)...');
+                    initEditor();
+                    setupIframeDropZone(iframe);
+                }, 500);
+            };
+        }
+
+        // 初始化编辑器
+        function initEditor() {
+            const iframe = document.getElementById('pageIframe');
+            try {
+                iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                if (!iframeDoc || !iframeDoc.body) {
+                    console.error('无法访问iframe内容');
+                    return;
+                }
+
+                console.log('初始化编辑器，文档内容长度:', iframeDoc.body.innerHTML.length);
+
+                // 如果已经初始化过，不要重复添加事件监听器
+                if (iframeDoc._editorInitialized) {
+                    console.log('编辑器已初始化过，跳过重复初始化');
+                    return;
+                }
+
+                // 清除之前可能存在的选中状态
+                const prevSelected = iframeDoc.querySelectorAll('.cms-edit-selected, .cms-edit-hover');
+                prevSelected.forEach(el => {
+                    el.classList.remove('cms-edit-selected', 'cms-edit-hover');
+                });
+
+                console.log('开始添加事件监听器...');
+
+                // 使用事件委托在body上监听
+                iframeDoc.body.addEventListener('mouseover', function(e) {
+                    const target = e.target;
+                    if (target && target !== iframeDoc.body && !target.classList.contains('cms-edit-selected')) {
+                        // 移除其他元素的hover状态
+                        const prevHover = iframeDoc.querySelector('.cms-edit-hover');
+                        if (prevHover) prevHover.classList.remove('cms-edit-hover');
+                        target.classList.add('cms-edit-hover');
+                    }
+                }, true);
+
+                iframeDoc.body.addEventListener('mouseout', function(e) {
+                    const target = e.target;
+                    if (target) {
+                        target.classList.remove('cms-edit-hover');
+                    }
+                }, true);
+
+                // 添加点击事件 - 使用捕获阶段确保优先处理
+                iframeDoc.body.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const target = e.target;
+                    console.log('点击事件触发! 目标元素:', target ? target.tagName : 'null');
+
+                    if (!target || target === iframeDoc.body) {
+                        console.log('目标是body或null，忽略');
+                        return;
+                    }
+
+                    console.log('点击元素详情:', {
+                        tagName: target.tagName,
+                        className: target.className,
+                        id: target.id,
+                        text: target.textContent.substring(0, 30)
+                    });
+
+                    // 移除之前选中的
+                    const prevSelected = iframeDoc.querySelector('.cms-edit-selected');
+                    if (prevSelected) {
+                        prevSelected.classList.remove('cms-edit-selected');
+                        console.log('移除之前选中的元素');
+                    }
+
+                    // 选中新元素
+                    selectedElement = target;
+                    selectedElement.classList.add('cms-edit-selected');
+                    selectedElement.classList.remove('cms-edit-hover');
+                    console.log('已添加选中样式');
+
+                    // 显示属性面板
+                    showProperties(selectedElement);
+                    console.log('已调用showProperties');
+
+                }, true);
+
+                iframeDoc._editorInitialized = true;
+                console.log('✓ 编辑器初始化完成，事件监听器已添加');
+            } catch (error) {
+                console.error('初始化失败:', error);
+            }
+        }
+
+        // 显示属性面板
+        function showProperties(element) {
+            const tagName = element.tagName.toLowerCase();
+            const text = element.textContent.substring(0, 50);
+            
+            let html = `
+                <div class="property-group">
+                    <div class="property-group-title">元素信息</div>
+                    <div class="property-field">
+                        <label class="field-label">标签</label>
+                        <input type="text" class="field-input" value="${tagName}" readonly>
+                    </div>
+                    <div class="property-field">
+                        <label class="field-label">类名</label>
+                        <input type="text" class="field-input" value="${element.className.replace(/cms-edit-\w+/g, '').trim()}" onchange="updateClass(this.value)">
+                    </div>
+                </div>
+            `;
+            
+            // 文本内容
+            if (tagName === 'p' || tagName === 'h1' || tagName === 'h2' || tagName === 'h3' || tagName === 'h4' || tagName === 'span' || tagName === 'a' || tagName === 'button') {
+                const safeText = element.textContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                html += `
+                    <div class="property-group">
+                        <div class="property-group-title">文本内容</div>
+                        <div class="property-field">
+                            <label class="field-label">内容</label>
+                            <textarea class="field-textarea" id="prop-text-content" oninput="updateText(this.value)">${safeText}</textarea>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 链接
+            if (tagName === 'a') {
+                const hrefValue = element.getAttribute('href') || '';
+                html += `
+                    <div class="property-group">
+                        <div class="property-group-title">链接设置</div>
+                        <div class="property-field">
+                            <label class="field-label">链接地址</label>
+                            <input type="text" class="field-input" value="${hrefValue}" onchange="updateHref(this.value)">
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 图片
+            if (tagName === 'img') {
+                const srcValue = element.getAttribute('src') || '';
+                const altValue = element.getAttribute('alt') || '';
+                html += `
+                    <div class="property-group">
+                        <div class="property-group-title">图片设置</div>
+                        <div class="property-field">
+                            <label class="field-label">图片地址</label>
+                            <input type="text" class="field-input" value="${srcValue}" onchange="updateSrc(this.value)">
+                        </div>
+                        <div class="property-field">
+                            <label class="field-label">替代文字</label>
+                            <input type="text" class="field-input" value="${altValue}" onchange="updateAlt(this.value)">
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 样式
+            html += `
+                <div class="property-group">
+                    <div class="property-group-title">样式设置</div>
+                    <div class="property-field">
+                        <label class="field-label">文字颜色</label>
+                        <div class="color-picker">
+                            <input type="color" class="color-input" value="#000000" onchange="updateStyle('color', this.value)">
+                            <span class="color-value">选择颜色</span>
+                        </div>
+                    </div>
+                    <div class="property-field">
+                        <label class="field-label">背景颜色</label>
+                        <div class="color-picker">
+                            <input type="color" class="color-input" value="#ffffff" onchange="updateStyle('backgroundColor', this.value)">
+                            <span class="color-value">选择颜色</span>
+                        </div>
+                    </div>
+                    <div class="property-field">
+                        <label class="field-label">字体大小</label>
+                        <select class="field-select" onchange="updateStyle('fontSize', this.value)">
+                            <option value="12px">小</option>
+                            <option value="14px">正常</option>
+                            <option value="16px">稍大</option>
+                            <option value="20px">大</option>
+                            <option value="24px">特大</option>
+                            <option value="32px">超大</option>
+                        </select>
+                    </div>
+                    <div class="property-field">
+                        <label class="field-label">内边距</label>
+                        <select class="field-select" onchange="updateStyle('padding', this.value)">
+                            <option value="0">无</option>
+                            <option value="8px">小</option>
+                            <option value="16px">中</option>
+                            <option value="24px">大</option>
+                            <option value="40px">特大</option>
+                        </select>
+                    </div>
+                    <div class="property-field">
+                        <label class="field-label">对齐方式</label>
+                        <select class="field-select" onchange="updateStyle('textAlign', this.value)">
+                            <option value="left">左对齐</option>
+                            <option value="center">居中</option>
+                            <option value="right">右对齐</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            
+            // 操作按钮
+            html += `
+                <div class="property-group">
+                    <div class="property-group-title">操作</div>
+                    <button class="editor-btn editor-btn-secondary" style="width: 100%; margin-bottom: 8px;" onclick="deleteElement()">
+                        <i class="fas fa-trash"></i> 删除元素
+                    </button>
+                    <button class="editor-btn editor-btn-primary" style="width: 100%;" onclick="duplicateElement()">
+                        <i class="fas fa-copy"></i> 复制元素
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('panelContent').innerHTML = html;
+        }
+
+        // 更新文本
+        function updateText(value) {
+            if (selectedElement) {
+                saveStateToHistory();
+                selectedElement.textContent = value;
+                console.log('文本已更新:', value);
+            } else {
+                console.warn('没有选中的元素');
+            }
+        }
+
+        // 更新类名
+        function updateClass(value) {
+            if (selectedElement) {
+                saveStateToHistory();
+                selectedElement.className = value + ' cms-edit-selected';
+                console.log('类名已更新:', value);
+            }
+        }
+
+        // 更新链接
+        function updateHref(value) {
+            if (selectedElement) {
+                saveStateToHistory();
+                selectedElement.setAttribute('href', value);
+                console.log('链接已更新:', value);
+            }
+        }
+
+        // 更新图片地址
+        function updateSrc(value) {
+            if (selectedElement) {
+                saveStateToHistory();
+                selectedElement.setAttribute('src', value);
+                console.log('图片地址已更新:', value);
+            }
+        }
+
+        // 更新替代文字
+        function updateAlt(value) {
+            if (selectedElement) {
+                saveStateToHistory();
+                selectedElement.setAttribute('alt', value);
+                console.log('替代文字已更新:', value);
+            }
+        }
+
+        // 更新样式
+        function updateStyle(property, value) {
+            if (selectedElement) {
+                saveStateToHistory();
+                selectedElement.style[property] = value;
+                console.log('样式已更新:', property, '=', value);
+            }
+        }
+
+        // 删除元素
+        function deleteElement() {
+            if (selectedElement && confirm('确定要删除这个元素吗？')) {
+                saveStateToHistory();
+                selectedElement.remove();
+                selectedElement = null;
+                document.getElementById('panelContent').innerHTML = `
+                    <div class="property-empty">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <p>在左侧页面中点击元素进行编辑</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 复制元素
+        function duplicateElement() {
+            if (selectedElement) {
+                saveStateToHistory();
+                const clone = selectedElement.cloneNode(true);
+                clone.classList.remove('cms-edit-selected');
+                selectedElement.parentNode.insertBefore(clone, selectedElement.nextSibling);
+            }
+        }
+
+        // 插入组件
+        function insertComponent(type) {
+            if (!iframeDoc) {
+                alert('请先加载页面');
+                return;
+            }
+            
+            saveStateToHistory();
+            
+            let html = '';
+            switch(type) {
+                case 'heading':
+                    html = '<h2 style="padding: 20px; font-size: 28px; color: #1f2937;">新标题</h2>';
+                    break;
+                case 'text':
+                    html = '<p style="padding: 20px; font-size: 16px; line-height: 1.6; color: #4b5563;">这是一段新文本内容，您可以点击编辑修改。</p>';
+                    break;
+                case 'image':
+                    html = '<div style="padding: 20px; text-align: center;"><img src="../images/placeholder.jpg" style="max-width: 100%; height: auto; border-radius: 8px;" alt="图片"></div>';
+                    break;
+                case 'button':
+                    html = '<div style="padding: 20px; text-align: center;"><a href="#" style="display: inline-block; padding: 12px 32px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; text-decoration: none; border-radius: 8px; font-weight: 500;">点击按钮</a></div>';
+                    break;
+                case 'divider':
+                    html = '<hr style="margin: 20px 0; border: none; border-top: 1px solid #e5e7eb;">';
+                    break;
+                case 'hero':
+                    html = '<div style="padding: 80px 40px; text-align: center; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white;"><h1 style="font-size: 42px; margin-bottom: 20px;">Hero标题</h1><p style="font-size: 18px; opacity: 0.9;">副标题描述文字</p></div>';
+                    break;
+                case 'features':
+                    html = '<div style="padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;"><div style="text-align: center; padding: 24px;"><i class="fas fa-check-circle" style="font-size: 40px; color: #3b82f6; margin-bottom: 16px;"></i><h3 style="margin-bottom: 8px;">特性一</h3><p style="color: #6b7280;">描述文字</p></div><div style="text-align: center; padding: 24px;"><i class="fas fa-check-circle" style="font-size: 40px; color: #3b82f6; margin-bottom: 16px;"></i><h3 style="margin-bottom: 8px;">特性二</h3><p style="color: #6b7280;">描述文字</p></div><div style="text-align: center; padding: 24px;"><i class="fas fa-check-circle" style="font-size: 40px; color: #3b82f6; margin-bottom: 16px;"></i><h3 style="margin-bottom: 8px;">特性三</h3><p style="color: #6b7280;">描述文字</p></div></div>';
+                    break;
+                case 'cards':
+                    html = '<div style="padding: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;"><div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"><div style="height: 160px; background: #e5e7eb;"></div><div style="padding: 20px;"><h3 style="margin-bottom: 8px;">卡片标题</h3><p style="color: #6b7280; font-size: 14px;">卡片描述文字</p></div></div><div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"><div style="height: 160px; background: #e5e7eb;"></div><div style="padding: 20px;"><h3 style="margin-bottom: 8px;">卡片标题</h3><p style="color: #6b7280; font-size: 14px;">卡片描述文字</p></div></div><div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"><div style="height: 160px; background: #e5e7eb;"></div><div style="padding: 20px;"><h3 style="margin-bottom: 8px;">卡片标题</h3><p style="color: #6b7280; font-size: 14px;">卡片描述文字</p></div></div></div>';
+                    break;
+                case 'stats':
+                    html = '<div style="padding: 60px 40px; background: #f9fafb; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;"><div><div style="font-size: 48px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">100+</div><div style="color: #6b7280;">项目数量</div></div><div><div style="font-size: 48px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">50+</div><div style="color: #6b7280;">合作伙伴</div></div><div><div style="font-size: 48px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">99%</div><div style="color: #6b7280;">满意度</div></div><div><div style="font-size: 48px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">24/7</div><div style="color: #6b7280;">服务支持</div></div></div>';
+                    break;
+                case 'form':
+                    html = '<div style="padding: 40px; max-width: 600px; margin: 0 auto;"><h2 style="text-align: center; margin-bottom: 24px;">联系我们</h2><form style="display: grid; gap: 16px;"><input type="text" placeholder="您的姓名" style="padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;"><input type="tel" placeholder="联系电话" style="padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;"><textarea placeholder="留言内容" rows="4" style="padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea><button type="submit" style="padding: 14px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer;">提交</button></form></div>';
+                    break;
+                case 'map':
+                    html = '<div style="padding: 40px;"><div style="height: 400px; background: #e5e7eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9ca3af;"><i class="fas fa-map-marked-alt" style="font-size: 48px; margin-right: 16px;"></i>地图区域</div></div>';
+                    break;
+                case 'slider':
+                    html = '<div style="padding: 40px;"><div style="height: 400px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white;"><div style="text-align: center;"><h2 style="font-size: 36px; margin-bottom: 16px;">轮播图标题</h2><p style="font-size: 18px; opacity: 0.9;">轮播图描述文字</p></div></div></div>';
+                    break;
+            }
+            
+            // 在页面末尾插入
+            const container = iframeDoc.createElement('div');
+            container.innerHTML = html;
+            const newElement = container.firstElementChild || container;
+            iframeDoc.body.appendChild(newElement);
+            
+            // 为新元素添加事件监听
+            newElement.addEventListener('mouseenter', function(e) {
+                e.stopPropagation();
+                if (!this.classList.contains('cms-edit-selected')) {
+                    this.classList.add('cms-edit-hover');
+                }
+            });
+            
+            newElement.addEventListener('mouseleave', function(e) {
+                this.classList.remove('cms-edit-hover');
+            });
+            
+            newElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // 移除之前选中的
+                const prevSelected = iframeDoc.querySelector('.cms-edit-selected');
+                if (prevSelected) prevSelected.classList.remove('cms-edit-selected');
+                
+                // 选中新元素
+                selectedElement = this;
+                selectedElement.classList.add('cms-edit-selected');
+                selectedElement.classList.remove('cms-edit-hover');
+                
+                // 显示属性面板
+                showProperties(selectedElement);
+            });
+            
+            // 自动选中新插入的元素
+            const prevSelected = iframeDoc.querySelector('.cms-edit-selected');
+            if (prevSelected) prevSelected.classList.remove('cms-edit-selected');
+            selectedElement = newElement;
+            selectedElement.classList.add('cms-edit-selected');
+            showProperties(selectedElement);
+        }
+
+        // 切换分类
+        function toggleCategory(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('.category-arrow');
+            content.classList.toggle('show');
+            arrow.classList.toggle('expanded');
+        }
+
+        // 切换设备
+        function setDevice(device) {
+            const wrapper = document.getElementById('canvasWrapper');
+            const buttons = document.querySelectorAll('.device-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.device-btn').classList.add('active');
+            
+            wrapper.className = 'canvas-wrapper ' + device;
+        }
+
+        // 切换标签
+        function switchTab(tab) {
+            document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // 刷新页面
+        function refreshPage() {
+            if (currentPage) {
+                // 清除当前iframe内容
+                const iframe = document.getElementById('pageIframe');
+                iframe.srcdoc = 'about:blank';
+                selectedElement = null;
+                iframeDoc = null;
+                
+                // 重置属性面板
+                document.getElementById('panelContent').innerHTML = `
+                    <div class="property-empty">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <p>在左侧页面中点击元素进行编辑</p>
+                    </div>
+                `;
+                
+                // 重新加载页面
+                setTimeout(function() {
+                    loadPage(currentPage);
+                }, 100);
+            }
+        }
+
+        // 显示提示
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;top:20px;right:20px;padding:12px 20px;background:' + (type === 'error' ? '#ef4444' : '#10b981') + ';color:white;border-radius:8px;z-index:9999;font-size:14px;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // 保存页面
+        function savePage() {
+            if (!iframeDoc || !currentPage) {
+                showToast('没有可保存的内容', 'error');
+                return;
+            }
+
+            showLoading(true);
+
+            // 移除编辑样式
+            const editElements = iframeDoc.querySelectorAll('.cms-edit-hover, .cms-edit-selected');
+            editElements.forEach(el => {
+                el.classList.remove('cms-edit-hover', 'cms-edit-selected');
+            });
+
+            // 获取HTML内容
+            const htmlContent = iframeDoc.documentElement.outerHTML;
+
+            // 保存到服务器
+            fetch('api/page-builder/save-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    page_id: currentPage,
+                    html: htmlContent
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                showLoading(false);
+                if (data.code === 0) {
+                    showToast('页面保存成功！前端页面已更新');
+                                    } else {
+                    showToast(data.msg || '保存失败', 'error');
+                }
+            })
+            .catch(err => {
+                showLoading(false);
+                showToast('保存失败: ' + err.message, 'error');
+            });
+        }
+
+        // 显示/隐藏加载
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('show', show);
+        }
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    savePage();
+                } else if (e.key === 'z' && !e.shiftKey) {
+                    // Ctrl+Z 撤回
+                    e.preventDefault();
+                    undo();
+                } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
+                    // Ctrl+Y 或 Ctrl+Shift+Z 重做
+                    e.preventDefault();
+                    redo();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

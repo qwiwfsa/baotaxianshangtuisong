@@ -1,0 +1,776 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可视化页面编辑器 V3 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #1e293b; overflow: hidden; }
+
+        /* 顶部工具栏 */
+        .toolbar { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .toolbar-left { display: flex; align-items: center; gap: 20px; }
+        .toolbar-center { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 6px; border-radius: 8px; }
+        .toolbar-title { font-size: 18px; font-weight: 600; }
+        .page-selector { padding: 8px 16px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.2); color: white; font-size: 14px; cursor: pointer; min-width: 200px; }
+        .page-selector option { background: #1e3a8a; color: white; }
+        .toolbar-right { display: flex; gap: 12px; }
+
+        /* 设备切换按钮 */
+        .device-btn { background: transparent; border: none; color: white; padding: 10px 16px; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-size: 18px; }
+        .device-btn:hover { background: rgba(255,255,255,0.2); }
+        .device-btn.active { background: white; color: #3b82f6; }
+        .btn { padding: 8px 20px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: white; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.3); }
+        .btn-primary { background: white; color: #3b82f6; font-weight: 500; }
+        .btn-primary:hover { background: #f3f4f6; }
+
+        /* 主容器 */
+        .main-container { display: flex; height: calc(100vh - 60px); }
+
+        /* 左侧属性面板 */
+        .property-panel { width: 320px; background: white; border-right: 1px solid #e5e7eb; overflow-y: auto; }
+        .panel-header { padding: 20px; border-bottom: 1px solid #e5e7eb; }
+        .panel-title { font-size: 16px; font-weight: 600; color: #1f2937; }
+        .panel-content { padding: 20px; }
+        .property-group { margin-bottom: 24px; }
+        .property-label { display: block; font-size: 13px; color: #374151; margin-bottom: 8px; font-weight: 500; }
+        .property-input { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+        .property-input:focus { outline: none; border-color: #3b82f6; }
+        .property-textarea { width: 100%; min-height: 100px; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; resize: vertical; }
+        .property-select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background: white; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #9ca3af; }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; }
+
+        /* 中间画布区域 */
+        .canvas-area { flex: 1; background: #1e293b; overflow: auto; display: flex; align-items: flex-start; justify-content: center; padding: 40px; }
+        .canvas-wrapper { background: white; width: 100%; max-width: 1200px; min-height: calc(100vh - 140px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: all 0.3s; margin: 0 auto; }
+        .canvas-wrapper.tablet-view { max-width: 768px; }
+        .canvas-wrapper.mobile-view { max-width: 375px; border-radius: 20px; position: relative; }
+        .canvas-wrapper.mobile-view::before { content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 60px; height: 5px; background: #333; border-radius: 3px; z-index: 10; }
+        .page-iframe { width: 100%; height: 100%; min-height: calc(100vh - 140px); border: none; display: block; }
+
+        /* 加载动画 */
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        .loading-overlay.show { display: flex; }
+        .loading-spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Toast提示 */
+        .toast { position: fixed; top: 80px; right: 24px; background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; align-items: center; gap: 12px; z-index: 10000; }
+        .toast.show { display: flex; animation: slideIn 0.3s; }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+    <!-- 顶部工具栏 -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回</span>
+            </a>
+            <h1 class="toolbar-title">可视化编辑器</h1>
+            <select id="pageSelector" class="page-selector">
+                <option value="">选择要编辑的页面...</option>
+                <option value="index.html">首页</option>
+                <option value="services.html">业务范围</option>
+                <option value="cases.html">成功案例</option>
+                <option value="advantages.html">服务优势</option>
+                <option value="news.html">行业资讯</option>
+                <option value="faq.html">常见问题</option>
+                <option value="contact.html">联系我们</option>
+            </select>
+        </div>
+        <div class="toolbar-center">
+            <button class="device-btn active" onclick="switchDevice('desktop')" id="desktopBtn" title="电脑端">
+                <i class="fas fa-desktop"></i>
+            </button>
+            <button class="device-btn" onclick="switchDevice('tablet')" id="tabletBtn" title="平板">
+                <i class="fas fa-tablet-alt"></i>
+            </button>
+            <button class="device-btn" onclick="switchDevice('mobile')" id="mobileBtn" title="手机端">
+                <i class="fas fa-mobile-alt"></i>
+            </button>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn btn-secondary" onclick="refreshPage()">
+                <i class="fas fa-sync-alt"></i> 刷新
+            </button>
+            <button class="btn btn-secondary" onclick="previewFrontend()">
+                <i class="fas fa-eye"></i> 预览前端
+            </button>
+            <button class="btn btn-primary" onclick="savePage()">
+                <i class="fas fa-save"></i> 保存修改
+            </button>
+        </div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 左侧属性面板 -->
+        <div class="property-panel">
+            <div class="panel-header">
+                <div class="panel-title">元素属性</div>
+            </div>
+            <div class="panel-content" id="propertyContent">
+                <div class="empty-state">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <p>点击页面中的元素进行编辑</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中间画布区域 -->
+        <div class="canvas-area">
+            <div class="canvas-wrapper">
+                <iframe id="pageIframe" class="page-iframe" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Toast提示 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        let currentPage = '';
+        let selectedElement = null;
+        let iframeDoc = null;
+        let iframeWindow = null;
+        let currentDevice = 'desktop'; // 当前设备视图
+
+        // 页面选择器变化
+        document.getElementById('pageSelector').addEventListener('change', function() {
+            const pageUrl = this.value;
+            if (pageUrl) {
+                loadPage(pageUrl);
+            }
+        });
+
+        // 切换设备视图
+        function switchDevice(device) {
+            currentDevice = device;
+
+            // 更新按钮状态
+            document.querySelectorAll('.device-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(device + 'Btn').classList.add('active');
+
+            // 更新画布样式
+            const wrapper = document.querySelector('.canvas-wrapper');
+            wrapper.classList.remove('tablet-view', 'mobile-view');
+
+            if (device === 'tablet') {
+                wrapper.classList.add('tablet-view');
+                showToast('已切换到平板视图');
+            } else if (device === 'mobile') {
+                wrapper.classList.add('mobile-view');
+                showToast('已切换到手机视图');
+            } else {
+                showToast('已切换到电脑视图');
+            }
+
+            // 如果已经选择了页面，重新加载对应设备的页面
+            if (currentPage) {
+                loadPage(currentPage);
+            }
+        }
+
+        // 加载页面
+        function loadPage(pageUrl) {
+            currentPage = pageUrl;
+            showLoading(true);
+
+            const iframe = document.getElementById('pageIframe');
+
+            // 根据当前设备视图加载不同目录的页面
+            let pagePath = '';
+            if (currentDevice === 'mobile') {
+                pagePath = '/mobile/' + pageUrl;
+            } else if (currentDevice === 'tablet') {
+                pagePath = '/tablet/' + pageUrl;
+            } else {
+                pagePath = '/' + pageUrl;
+            }
+
+            console.log('加载页面:', pagePath, '设备:', currentDevice);
+
+            // 设置超时保护，5秒后强制隐藏加载动画
+            const loadingTimeout = setTimeout(function() {
+                console.warn('页面加载超时，强制隐藏加载动画');
+                showLoading(false);
+            }, 5000);
+
+            // 直接设置iframe的src，使用正确的路径
+            iframe.src = pagePath;
+
+            iframe.onload = function() {
+                clearTimeout(loadingTimeout);
+                try {
+                    iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    iframeWindow = iframe.contentWindow;
+
+                    if (!iframeDoc) {
+                        console.error('无法访问iframe文档');
+                        showToast('无法加载页面', 'error');
+                        showLoading(false);
+                        return;
+                    }
+
+                    console.log('页面加载成功:', pageUrl, 'URL:', iframe.src);
+                    console.log('iframe文档标题:', iframeDoc.title);
+
+                    // 注入编辑样式
+                    injectEditStyles();
+
+                    // 延迟初始化，确保页面完全渲染
+                    setTimeout(function() {
+                        initEditor();
+                        showLoading(false);
+                        showToast('页面加载成功');
+                    }, 300);
+
+                } catch (error) {
+                    console.error('加载失败:', error);
+                    showToast('加载失败: ' + error.message, 'error');
+                    showLoading(false);
+                }
+            };
+
+            iframe.onerror = function() {
+                clearTimeout(loadingTimeout);
+                showToast('页面加载失败', 'error');
+                showLoading(false);
+            };
+        }
+
+        // 注入编辑样式
+        function injectEditStyles() {
+            if (!iframeDoc) return;
+
+            const style = iframeDoc.createElement('style');
+            style.textContent = `
+                .cms-editable-hover {
+                    outline: 2px dashed #3b82f6 !important;
+                    outline-offset: 2px !important;
+                    cursor: pointer !important;
+                }
+                .cms-editable-selected {
+                    outline: 3px solid #3b82f6 !important;
+                    outline-offset: 3px !important;
+                    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2) !important;
+                }
+            `;
+            iframeDoc.head.appendChild(style);
+            console.log('编辑样式已注入');
+        }
+
+        // 初始化编辑器
+        function initEditor() {
+            if (!iframeDoc || !iframeDoc.body) {
+                console.error('iframe文档未就绪');
+                return;
+            }
+
+            console.log('开始初始化编辑器...');
+
+            // 获取所有可编辑元素
+            const editableElements = iframeDoc.body.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, div, button, img, li');
+
+            console.log('找到', editableElements.length, '个可编辑元素');
+
+            editableElements.forEach(function(element) {
+                // 鼠标悬停
+                element.addEventListener('mouseenter', function(e) {
+                    if (!this.classList.contains('cms-editable-selected')) {
+                        this.classList.add('cms-editable-hover');
+                    }
+                });
+
+                element.addEventListener('mouseleave', function(e) {
+                    this.classList.remove('cms-editable-hover');
+                });
+
+                // 点击选中
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    console.log('元素被点击:', this.tagName, this.textContent.substring(0, 30));
+
+                    // 移除之前的选中状态
+                    const prevSelected = iframeDoc.querySelector('.cms-editable-selected');
+                    if (prevSelected) {
+                        prevSelected.classList.remove('cms-editable-selected');
+                    }
+
+                    // 选中当前元素
+                    this.classList.remove('cms-editable-hover');
+                    this.classList.add('cms-editable-selected');
+                    selectedElement = this;
+
+                    // 显示属性面板
+                    showProperties(this);
+                });
+            });
+
+            console.log('✓ 编辑器初始化完成');
+        }
+
+        // 显示属性面板
+        function showProperties(element) {
+            const tagName = element.tagName.toLowerCase();
+            let html = '';
+
+            html += '<div class="property-group">';
+            html += '<label class="property-label">元素类型</label>';
+            html += '<input type="text" class="property-input" value="' + tagName.toUpperCase() + '" readonly>';
+            html += '</div>';
+
+            // 获取元素的直接文本内容（不包括子元素）
+            const directText = Array.from(element.childNodes)
+                .filter(node => node.nodeType === 3) // 文本节点
+                .map(node => node.textContent)
+                .join('');
+
+            // 获取元素的所有文本内容
+            const allText = element.textContent || '';
+
+            // 对于所有元素都显示文本编辑选项（如果有文本内容）
+            if (allText.trim()) {
+                html += '<div class="property-group">';
+                html += '<label class="property-label">文本内容</label>';
+                html += '<textarea class="property-textarea" id="propText">' + allText + '</textarea>';
+                html += '<button class="btn btn-primary" style="margin-top: 8px; width: 100%;" onclick="updateText()">更新文本</button>';
+                html += '</div>';
+            }
+
+            // 链接地址
+            if (tagName === 'a') {
+                html += '<div class="property-group">';
+                html += '<label class="property-label">链接地址</label>';
+                html += '<input type="text" class="property-input" id="propHref" value="' + (element.getAttribute('href') || '') + '">';
+                html += '<button class="btn btn-primary" style="margin-top: 8px; width: 100%;" onclick="updateHref()">更新链接</button>';
+                html += '</div>';
+            }
+
+            // 图片地址
+            if (tagName === 'img') {
+                html += '<div class="property-group">';
+                html += '<label class="property-label">图片地址</label>';
+                html += '<input type="text" class="property-input" id="propSrc" value="' + (element.getAttribute('src') || '') + '">';
+                html += '<button class="btn btn-primary" style="margin-top: 8px; width: 100%;" onclick="updateSrc()">更新图片</button>';
+                html += '</div>';
+
+                html += '<div class="property-group">';
+                html += '<label class="property-label">替代文字</label>';
+                html += '<input type="text" class="property-input" id="propAlt" value="' + (element.getAttribute('alt') || '') + '">';
+                html += '<button class="btn btn-primary" style="margin-top: 8px; width: 100%;" onclick="updateAlt()">更新Alt</button>';
+                html += '</div>';
+            }
+
+            // 样式
+            html += '<div class="property-group">';
+            html += '<label class="property-label">文字颜色</label>';
+            html += '<input type="color" class="property-input" id="propColor" value="' + rgbToHex(window.getComputedStyle(element).color) + '" onchange="updateColor(this.value)">';
+            html += '</div>';
+
+            html += '<div class="property-group">';
+            html += '<label class="property-label">背景颜色</label>';
+            html += '<input type="color" class="property-input" id="propBgColor" value="' + rgbToHex(window.getComputedStyle(element).backgroundColor) + '" onchange="updateBgColor(this.value)">';
+            html += '</div>';
+
+            html += '<div class="property-group">';
+            html += '<label class="property-label">字体大小</label>';
+            html += '<select class="property-select" id="propFontSize" onchange="updateFontSize(this.value)">';
+            const currentSize = window.getComputedStyle(element).fontSize;
+            const sizes = ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px', '60px', '72px'];
+            sizes.forEach(size => {
+                const selected = size === currentSize ? ' selected' : '';
+                html += '<option value="' + size + '"' + selected + '>' + size + '</option>';
+            });
+            html += '</select>';
+            html += '</div>';
+
+            // 显示类名（方便调试）
+            if (element.className) {
+                html += '<div class="property-group">';
+                html += '<label class="property-label">CSS类名</label>';
+                html += '<input type="text" class="property-input" value="' + element.className + '" readonly>';
+                html += '</div>';
+            }
+
+            document.getElementById('propertyContent').innerHTML = html;
+        }
+
+        // RGB转HEX
+        function rgbToHex(rgb) {
+            if (!rgb || rgb === 'rgba(0, 0, 0, 0)') return '#ffffff';
+            const result = rgb.match(/\d+/g);
+            if (!result) return '#ffffff';
+            return '#' + result.slice(0, 3).map(x => {
+                const hex = parseInt(x).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+
+        // 更新文本
+        function updateText() {
+            if (!selectedElement) return;
+            const text = document.getElementById('propText').value;
+
+            // 保存元素的innerHTML结构
+            const hasChildren = selectedElement.children.length > 0;
+
+            if (hasChildren) {
+                // 如果有子元素，只更新文本节点
+                // 先清除所有文本节点
+                Array.from(selectedElement.childNodes).forEach(node => {
+                    if (node.nodeType === 3) { // 文本节点
+                        node.remove();
+                    }
+                });
+                // 在开头插入新文本
+                selectedElement.insertBefore(iframeDoc.createTextNode(text), selectedElement.firstChild);
+            } else {
+                // 如果没有子元素，直接替换textContent
+                selectedElement.textContent = text;
+            }
+
+            console.log('文本已更新为:', text);
+            showToast('文本已更新');
+        }
+
+        // 更新链接
+        function updateHref() {
+            if (!selectedElement) return;
+            const href = document.getElementById('propHref').value;
+            selectedElement.setAttribute('href', href);
+            showToast('链接已更新');
+        }
+
+        // 更新图片
+        function updateSrc() {
+            if (!selectedElement) return;
+            const src = document.getElementById('propSrc').value;
+            selectedElement.setAttribute('src', src);
+            showToast('图片已更新');
+        }
+
+        // 更新Alt
+        function updateAlt() {
+            if (!selectedElement) return;
+            const alt = document.getElementById('propAlt').value;
+            selectedElement.setAttribute('alt', alt);
+            showToast('Alt已更新');
+        }
+
+        // 更新颜色
+        function updateColor(color) {
+            if (!selectedElement) return;
+            selectedElement.style.color = color;
+            showToast('颜色已更新');
+        }
+
+        // 更新背景色
+        function updateBgColor(color) {
+            if (!selectedElement) return;
+            selectedElement.style.backgroundColor = color;
+            showToast('背景色已更新');
+        }
+
+        // 更新字体大小
+        function updateFontSize(size) {
+            if (!selectedElement) return;
+            selectedElement.style.fontSize = size;
+            showToast('字体大小已更新');
+        }
+
+        // 刷新页面
+        function refreshPage() {
+            if (currentPage) {
+                loadPage(currentPage);
+            }
+        }
+
+        // 预览前端
+        function previewFrontend() {
+            if (!currentPage) {
+                showToast('请先选择一个页面', 'error');
+                return;
+            }
+
+            // 根据当前设备打开对应的页面
+            let previewPath = '';
+            if (currentDevice === 'mobile') {
+                previewPath = '/mobile/' + currentPage;
+            } else if (currentDevice === 'tablet') {
+                previewPath = '/tablet/' + currentPage;
+            } else {
+                previewPath = '/' + currentPage;
+            }
+
+            window.open(previewPath, '_blank');
+        }
+
+        // 保存页面
+        function savePage() {
+            if (!iframeDoc || !currentPage) {
+                showToast('没有可保存的内容', 'error');
+                return;
+            }
+
+            showLoading(true);
+
+            // 先从当前iframe文档提取内容用于数据库保存（在克隆之前）
+            const pageDataForDB = extractPageContent(iframeDoc);
+
+            // 克隆文档以避免修改当前显示
+            const clonedDoc = iframeDoc.cloneNode(true);
+
+            // 移除编辑样式类
+            const editElements = clonedDoc.querySelectorAll('.cms-editable-hover, .cms-editable-selected');
+            editElements.forEach(el => {
+                el.classList.remove('cms-editable-hover', 'cms-editable-selected');
+            });
+
+            // 移除注入的编辑样式
+            const injectedStyles = clonedDoc.querySelectorAll('style');
+            injectedStyles.forEach(style => {
+                if (style.textContent.includes('cms-editable')) {
+                    style.remove();
+                }
+            });
+
+            const htmlContent = clonedDoc.documentElement.outerHTML;
+
+            console.log('准备保存页面:', currentPage, '设备:', currentDevice);
+            console.log('HTML长度:', htmlContent.length);
+
+            // 根据当前设备选择不同的保存API
+            let saveApi = '';
+            if (currentDevice === 'mobile') {
+                saveApi = 'api/page-builder/save-mobile-page.php';
+            } else if (currentDevice === 'tablet') {
+                saveApi = 'api/page-builder/save-tablet-page.php';
+            } else {
+                saveApi = 'api/page-builder/save-page.php';
+            }
+
+            // 先保存HTML文件
+            fetch(saveApi, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    page_id: currentPage,
+                    html: htmlContent
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('HTML保存响应:', data);
+                if (data.code === 0) {
+                    // HTML保存成功后，使用之前提取的数据保存到数据库
+                    return saveToDatabase(pageDataForDB);
+                } else {
+                    throw new Error(data.msg || 'HTML保存失败');
+                }
+            })
+            .then(() => {
+                showLoading(false);
+                showToast('页面保存成功！');
+
+                // 强制刷新iframe以显示最新内容
+                setTimeout(() => {
+                    const iframe = document.getElementById('pageIframe');
+                    const currentSrc = iframe.src;
+                    // 添加时间戳参数清除缓存
+                    const separator = currentSrc.includes('?') ? '&' : '?';
+                    iframe.src = currentSrc.split('?')[0] + '?t=' + new Date().getTime();
+                }, 500);
+            })
+            .catch(err => {
+                showLoading(false);
+                console.error('保存错误:', err);
+                showToast('保存失败: ' + err.message, 'error');
+            });
+        }
+
+        // 保存内容到数据库
+        function saveToDatabase(pageData) {
+            return new Promise((resolve, reject) => {
+                try {
+                    if (!pageData) {
+                        console.log('没有需要保存到数据库的内容');
+                        resolve();
+                        return;
+                    }
+
+                    console.log('准备保存到数据库:', pageData);
+                    console.log('保存的JSON:', JSON.stringify(pageData, null, 2));
+
+                    // 调用数据库保存API
+                    fetch('api/save.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(pageData)
+                    })
+                    .then(res => {
+                        console.log('数据库API响应状态:', res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log('数据库保存响应:', data);
+                        if (data.success) {
+                            console.log('✓ 数据库保存成功');
+                            resolve();
+                        } else {
+                            console.warn('✗ 数据库保存失败:', data.message);
+                            resolve(); // 即使数据库保存失败也继续，因为HTML已保存
+                        }
+                    })
+                    .catch(err => {
+                        console.error('✗ 数据库保存错误:', err);
+                        resolve(); // 即使出错也继续
+                    });
+                } catch (err) {
+                    console.error('提取页面内容错误:', err);
+                    resolve();
+                }
+            });
+        }
+
+        // 提取页面内容用于保存到数据库
+        function extractPageContent(doc) {
+            const pageName = currentPage.replace('.html', '');
+            const pageData = {
+                page: pageName
+            };
+
+            // 根据页面类型提取不同的内容
+            if (pageName === 'index') {
+                // 首页内容提取
+
+                // Hero区域
+                const heroTitle = doc.querySelector('.hero-title');
+                if (heroTitle) pageData.heroTitle = heroTitle.textContent.trim();
+
+                const heroSubtitle = doc.querySelector('.hero-subtitle');
+                if (heroSubtitle) pageData.heroSubtitle = heroSubtitle.textContent.trim();
+
+                // 统计数据
+                const statCards = doc.querySelectorAll('.stat-card');
+                statCards.forEach((card, index) => {
+                    const number = card.querySelector('.stat-number');
+                    const label = card.querySelector('.stat-label');
+                    if (number) pageData[`stat${index + 1}Number`] = number.textContent.trim();
+                    if (label) pageData[`stat${index + 1}Label`] = label.textContent.trim();
+                });
+
+                // 服务区域
+                const servicesTitle = doc.querySelector('#services .section-title');
+                if (servicesTitle) pageData.servicesTitle = servicesTitle.textContent.trim();
+
+                const servicesSubtitle = doc.querySelector('#services .section-subtitle');
+                if (servicesSubtitle) pageData.servicesSubtitle = servicesSubtitle.textContent.trim();
+
+                // 服务卡片
+                const serviceCards = doc.querySelectorAll('.service-card');
+                serviceCards.forEach((card, index) => {
+                    const title = card.querySelector('.service-title');
+                    const content = card.querySelector('.service-list');
+                    if (title) pageData[`service${index + 1}Title`] = title.textContent.trim();
+                    if (content) pageData[`service${index + 1}Content`] = content.innerHTML;
+                });
+
+                // 案例区域
+                const casesTitle = doc.querySelector('#cases .section-title');
+                if (casesTitle) pageData.casesTitle = casesTitle.textContent.trim();
+
+                const casesSubtitle = doc.querySelector('#cases .section-subtitle');
+                if (casesSubtitle) pageData.casesSubtitle = casesSubtitle.textContent.trim();
+
+                // 优势区域
+                const advantagesTitle = doc.querySelector('#advantages .advantages-title');
+                if (advantagesTitle) pageData.advantagesTitle = advantagesTitle.textContent.trim();
+
+                const advantagesSubtitle = doc.querySelector('#advantages .advantages-subtitle');
+                if (advantagesSubtitle) pageData.advantagesSubtitle = advantagesSubtitle.textContent.trim();
+
+                // FAQ区域
+                const faqTitle = doc.querySelector('#faq .section-title');
+                if (faqTitle) pageData.faqTitle = faqTitle.textContent.trim();
+
+                const faqSubtitle = doc.querySelector('#faq .section-subtitle');
+                if (faqSubtitle) pageData.faqSubtitle = faqSubtitle.textContent.trim();
+
+            } else {
+                // 其他页面的通用提取
+                const pageTitle = doc.querySelector('.page-header-title, .page-title, h1');
+                if (pageTitle) pageData.title = pageTitle.textContent.trim();
+
+                const pageSubtitle = doc.querySelector('.page-header-subtitle, .page-subtitle');
+                if (pageSubtitle) pageData.subtitle = pageSubtitle.textContent.trim();
+
+                // 提取sections
+                const sections = doc.querySelectorAll('[data-section]');
+                if (sections.length > 0) {
+                    pageData.sections = [];
+                    sections.forEach(section => {
+                        const sectionId = section.getAttribute('data-section');
+                        if (sectionId) {
+                            pageData.sections.push({
+                                id: sectionId,
+                                content: section.innerHTML
+                            });
+                        }
+                    });
+                }
+            }
+
+            // 检查是否提取到任何内容
+            const hasContent = Object.keys(pageData).length > 1; // 除了page字段
+            if (!hasContent) {
+                return null;
+            }
+
+            return pageData;
+        }
+
+        // 显示加载动画
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) {
+                overlay.classList.add('show');
+            } else {
+                overlay.classList.remove('show');
+            }
+        }
+
+        // 显示Toast提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

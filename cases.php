@@ -50,6 +50,12 @@ $caseDB->close();
 
 ?>
 
+<?php
+// Listing page SEO
+$page_title = $page_title ?: '成功案例 - Yao资金网';
+$page_description = $page_description ?: '查看Yao资金网成功案例，了解企业资金服务实际成果';
+$page_keywords = $page_keywords ?: '成功案例,资金服务案例,企业融资案例';
+?>
 <!DOCTYPE html>
 
 <html lang="zh-CN">
@@ -282,6 +288,15 @@ $caseDB->close();
                         }
 
 </style>
+
+    <meta name="baidu-site-verification" content="codeva-XY6IaVM2X4" />
+    <meta name="360-site-verification" content="f310464a017d0090a59ed60edaa367e6" />
+    <meta name="sogou_site_verification" content="hZk3RVI5el" />
+    <meta name="shenma-site-verification" content="2c7c0059f1eb0bc344ff6f62104c6ee9_1779306988"/>
+    <meta name="bytedance-verification-code" content="ax5xO1GtSFCBiE8fTWSz" />
+    <meta name="msvalidate.01" content="A2A0A42C6A6A5562D58FA90EF4B0CCE6" />
+<script>(function(){var el = document.createElement("script");el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?3b035154874e19e664d8240b09e14e83e00fbc766c8f9a62fe69bf1753ce8548bc434964556b7d7129e9b750ed197d397efd7b0c6c715c1701396e1af40cec962b8d7c8c6655c9b00211740aa8a98e2e";el.id = "ttzz";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(el, s);})(window)</script>
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?93b7f42bd69c99e574dac7e18f9ab573";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();</script>
 
 </head>
 

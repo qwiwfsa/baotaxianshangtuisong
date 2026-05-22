@@ -1,7 +1,7 @@
 {
     "id": "14",
     "title": "某上市制造企业 4亿股票解质押过桥融资案例",
-    "type": "企业摆账",
+    "type": "过桥短拆",
     "city": "北京",
     "amount": "4亿元",
     "period": "",
@@ -24,7 +24,8 @@
     ],
     "hasVideo": false,
     "video": "",
+    "tag_ids": [],
     "status": "published",
-    "createdAt": "2026-05-12 21:03:56",
-    "lastModified": "2026-05-12 21:03:56"
+    "createdAt": "2026-05-22 18:21:36",
+    "lastModified": "2026-05-22 18:21:36"
 }

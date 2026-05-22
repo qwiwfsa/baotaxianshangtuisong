@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS系统测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .test-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .test-item.success {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+        .test-item.error {
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+        .test-name {
+            font-weight: 500;
+        }
+        .test-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        .status-icon.success {
+            background: #10b981;
+        }
+        .status-icon.error {
+            background: #ef4444;
+        }
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 CMS系统测试</h1>
+        <p class="subtitle">验证可视化CMS系统各组件是否正常工作</p>
+
+        <div id="testResults">
+            <div class="test-item" id="testLogin">
+                <span class="test-name">登录页面 (login.html)</span>
+                <span class="test-status">检测中...</span>
+            </div>
+            <div class="test-item" id="testDashboard">
+                <span class="test-name">管理仪表板 (dashboard.html)</span>
+                <span class="test-status">检测中...</span>
+            </div>
+            <div class="test-item" id="testEditor">
+                <span class="test-name">编辑器核心 (editor.js)</span>
+                <span class="test-status">检测中...</span>
+            </div>
+            <div class="test-item" id="testEditorCss">
+                <span class="test-name">编辑器样式 (editor.css)</span>
+                <span class="test-status">检测中...</span>
+            </div>
+            <div class="test-item" id="testContent">
+                <span class="test-name">内容数据 (content.json)</span>
+                <span class="test-status">检测中...</span>
+            </div>
+            <div class="test-item" id="testLocalStorage">
+                <span class="test-name">本地存储支持</span>
+                <span class="test-status">检测中...</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="login.html" class="btn btn-primary">前往登录页</a>
+            <a href="dashboard.html" class="btn btn-secondary">前往管理后台</a>
+            <a href="../index.html?edit=true" class="btn btn-secondary">测试编辑模式</a>
+        </div>
+    </div>
+
+    <script>
+        // 测试文件是否存在
+        async function testFile(url, elementId) {
+            const element = document.getElementById(elementId);
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                if (response.ok) {
+                    element.className = 'test-item success';
+                    element.querySelector('.test-status').innerHTML = `
+                        <span class="status-icon success">✓</span>
+                        <span>正常</span>
+                    `;
+                    return true;
+                } else {
+                    throw new Error('File not found');
+                }
+            } catch (error) {
+                element.className = 'test-item error';
+                element.querySelector('.test-status').innerHTML = `
+                    <span class="status-icon error">✗</span>
+                    <span>异常</span>
+                `;
+                return false;
+            }
+        }
+
+        // 测试本地存储
+        function testLocalStorage() {
+            const element = document.getElementById('testLocalStorage');
+            try {
+                localStorage.setItem('cms_test', 'test');
+                localStorage.removeItem('cms_test');
+                element.className = 'test-item success';
+                element.querySelector('.test-status').innerHTML = `
+                    <span class="status-icon success">✓</span>
+                    <span>支持</span>
+                `;
+                return true;
+            } catch (e) {
+                element.className = 'test-item error';
+                element.querySelector('.test-status').innerHTML = `
+                    <span class="status-icon error">✗</span>
+                    <span>不支持</span>
+                `;
+                return false;
+            }
+        }
+
+        // 运行所有测试
+        async function runTests() {
+            await testFile('login.html', 'testLogin');
+            await testFile('dashboard.html', 'testDashboard');
+            await testFile('editor.js', 'testEditor');
+            await testFile('editor.css', 'testEditorCss');
+            await testFile('../cms/content.json', 'testContent');
+            testLocalStorage();
+        }
+
+        // 页面加载完成后运行测试
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>

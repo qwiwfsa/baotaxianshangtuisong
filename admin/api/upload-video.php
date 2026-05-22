@@ -48,13 +48,14 @@ if (!is_writable($uploadDir)) {
 }
 
 // 检查是否有文件上传
-if (!isset($_FILES['video']) || $_FILES['video']['error'] === UPLOAD_ERR_NO_FILE) {
+$fileKey = isset($_FILES['video']) ? 'video' : 'file';
+if (!isset($_FILES[$fileKey]) || $_FILES[$fileKey]['error'] === UPLOAD_ERR_NO_FILE) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => '没有上传文件']);
     exit;
 }
 
-$file = $_FILES['video'];
+$file = $_FILES[$fileKey];
 
 // 检查上传错误
 if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -74,9 +75,10 @@ if ($file['error'] !== UPLOAD_ERR_OK) {
 }
 
 // 检查文件类型
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
-$mimeType = finfo_file($finfo, $file['tmp_name']);
-finfo_close($finfo);
+// Use extension-based MIME detection (no fileinfo dependency)
+$ext_v = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+$extMimeMap = ['mp4'=>'video/mp4','webm'=>'video/webm','ogg'=>'video/ogg','mov'=>'video/quicktime','avi'=>'video/x-msvideo'];
+$mimeType = isset($extMimeMap[$ext_v]) ? $extMimeMap[$ext_v] : 'video/mp4';
 
 if (!in_array($mimeType, $allowedTypes)) {
     http_response_code(400);
@@ -102,7 +104,7 @@ $targetPath = $uploadDir . $filename;
 // 移动上传的文件
 if (move_uploaded_file($file['tmp_name'], $targetPath)) {
     // 生成相对路径URL
-    $url = $webPath . $filename;
+    $url = '/' . $webPath . $filename;
     
     echo json_encode([
         'success' => true,

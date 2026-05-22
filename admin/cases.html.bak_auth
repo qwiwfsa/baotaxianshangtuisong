@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Yooʽɹ - ѳɹټҵۼƹʽģڡ鿴ǵĹʽ𡢰ʡӦ˿ʵȳɹ">
+    <meta name="keywords" content="ɹ,ʽ,ʽ,˰,ʰ,ʰ,Yooʽ">
+    <title>ɹ - Yooʽ | רҵʽҵ</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cases-enhanced.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">תҪ</a>
+
+    <!--  -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="">
+        <div class="navbar-container">
+            <a href="index.html" class="logo" aria-label="Yooʽҳ"><img src="uploads/logo.png?v=20260502040820" alt="Yooʽ" style="width:221px;height:64px;"></a>
+            
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="index.html" class="nav-link" role="menuitem">ҳ</a></li>
+                <li role="none"><a href="services.html" class="nav-link" role="menuitem">ҵΧ</a></li>
+                <li role="none"><a href="cases.html" class="nav-link active" role="menuitem">ɹ</a></li>
+                <li role="none"><a href="advantages.html" class="nav-link" role="menuitem"></a></li>
+                <li role="none"><a href="news.php" class="nav-link" role="menuitem">ҵѶ</a></li>
+                <li role="none"><a href="faq.html" class="nav-link" role="menuitem"></a></li>
+                <li role="none"><a href="contact.html" class="nav-link" role="menuitem">ϵ</a></li>
+            </ul>
+
+            <button class="search-toggle" id="searchToggle" aria-label="" aria-expanded="false">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="򿪲˵" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- ҳ -->
+        <section class="page-header">
+            <div class="page-header-container">
+                <div class="page-header-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>SUCCESS CASES</span>
+                </div>
+                <h1 class="page-header-title">ɹ</h1>
+                <p class="page-header-subtitle">ѳɹټҵۼƹʽģڡÿһרҵļ֤</p>
+            </div>
+        </section>
+
+        <!-- չʾ -->
+        <section class="page-content">
+            <div class="section-container">
+                
+                <!-- ɸѡ -->
+                <div class="cases-filter-section">
+                    <!-- ҵɸѡ -->
+                    <div class="filter-group">
+                        <span class="filter-label">ҵ</span>
+                        <div class="filter-buttons" id="typeFilter">
+                            <button class="filter-btn active" data-filter="all" data-type="type">ȫ</button>
+                            <button class="filter-btn" data-filter="" data-type="type">ʽ</button>
+                            <button class="filter-btn" data-filter="" data-type="type">ҵ</button>
+                            <button class="filter-btn" data-filter="" data-type="type"></button>
+                            <button class="filter-btn" data-filter="" data-type="type"></button>
+                            <button class="filter-btn" data-filter="" data-type="type"></button>
+                            <button class="filter-btn" data-filter="Ӧ˿" data-type="type">Ӧ˿</button>
+                        </div>
+                    </div>
+                    
+
+                </div>
+
+                <!-- Ƭ -->
+                <div class="cases-grid-enhanced" id="casesGrid">
+                    <!-- ƬͨJS̬ -->
+                </div>
+
+                <!-- ҳ -->
+                <div class="cases-pagination" id="paginationContainer" style="text-align: center; margin-top: 40px; padding: 20px;">
+                    <!-- ҳťJS -->
+                </div>
+
+                <!-- ͳ -->
+                <div class="cases-stats-section">
+                    <div class="cases-stats-grid">
+                        <div class="cases-stat-box">
+                            <div class="cases-stat-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="cases-stat-number">500+</div>
+                            <div class="cases-stat-label">ҵ</div>
+                        </div>
+                        <div class="cases-stat-box">
+                            <div class="cases-stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="cases-stat-number">100+</div>
+                            <div class="cases-stat-label">ۼƹģ</div>
+                        </div>
+                        <div class="cases-stat-box">
+                            <div class="cases-stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="cases-stat-number">99%</div>
+                            <div class="cases-stat-label">ҵɹ</div>
+                        </div>
+                        <div class="cases-stat-box">
+                            <div class="cases-stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="cases-stat-number">98%</div>
+                            <div class="cases-stat-label">ͻ</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section-cases" aria-labelledby="cta-title">
+            <div class="cta-container">
+                <h2 class="cta-title" id="cta-title">Ϊǵһɹ</h2>
+                <p class="cta-subtitle">ٺʽǶΪṩרҵ</p>
+                <div class="cta-wrapper cta-center">
+                    <button type="button" class="btn btn-white" style="cursor: default;" onclick="return false;">
+                        <i class="fas fa-phone-alt"></i>
+                        ѯ
+                    </button>
+                    <span class="cta-contact-info-light">135-5288-3008</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Ҳ߸ͷť -->
+    <div class="chat-widget" id="chatWidget" aria-label="߿ͷ">
+        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="ϵͷ" aria-expanded="false">
+            <i class="fas fa-comments" aria-hidden="true"></i>
+            <span class="chat-badge" aria-label="Ϣ">1</span>
+        </button>
+        <div class="chat-widget-popup" id="chatWidgetPopup" role="dialog" aria-label="ͷԻ" aria-hidden="true">
+            <div class="chat-widget-header">
+                <span class="chat-widget-title">ѯ</span>
+                <button class="chat-widget-close" id="chatWidgetClose" aria-label="ر">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="chat-widget-body">
+                <div class="chat-widget-qr">
+                    <img src="uploads/wechat-qr.png" alt="΢Ŷά" loading="lazy">
+                </div>
+                <p class="chat-widget-text"></p>
+                <p class="chat-widget-subtext">ɨ΢ѯ</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ҳ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo"><img src="uploads/logo.png?v=20260502040820" alt="Yooʽ" style="width:221px;height:64px;"></a>
+                    <p class="footer-desc">רҵʽҵ̣ṩй˾šҵˡдӦ˿ʵȫλʽ</p>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title"></h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">ҳ</a></li>
+                        <li><a href="services.html">ҵΧ</a></li>
+                        <li><a href="cases.html">ɹ</a></li>
+                        <li><a href="advantages.html"></a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title"></h4>
+                    <ul class="footer-nav-list">
+                        <li><a href="news.php">ҵѶ</a></li>
+                        <li><a href="faq.html"></a></li>
+                        <li><a href="contact.html">ϵ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav-title">ϵʽ</h4>
+                    <ul class="footer-nav-list">
+                        <li><i class="fas fa-phone"></i> 13552883008</li>
+                        <li><i class="fas fa-user"></i> </li>
+                        <li><i class="fas fa-envelope"></i> wanglizhongguo@126.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 Yooʽ Ȩ</p>
+                <p class="footer-disclaimer">ͶзգվݽοͶʽ顣</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        //  - ʵزͼƬ
+        const casesData = [
+            {
+                id: 1,
+                title: "ĳй˾2ڹʽ",
+                type: "",
+                city: "",
+                summary: "ΪĳAй˾ṩ2Ԫʽļ˻黹ȷҵϹӪ",
+                amount: "2",
+                period: "7",
+                detail: "й˾ļ˻ʽ谴ڹ黹ٶʽȱڡѸӦ3ɾſ2Ԫҵ˳ʽ黹άҵ͹ɼȶ",
+                year: "2024",
+                image: "images/ҵ/mmexport1773302292786.jpg",
+                hasVideo: false
+            },
+            {
+                id: 2,
+                title: "ĳҵƱѺ",
+                type: "",
+                city: "Ϻ",
+                summary: "Ϊй˾ɶṩ5.8ԪƱѺʽ𣬳ɹѺա",
+                amount: "5.8",
+                period: "15",
+                detail: "ĳҵɶɼ۲Ѻַաṩ5.8ԪʽЭɹƱѺǿƽַգҵȨȶ",
+                year: "2024",
+                image: "images/ҵ/mmexport1773302319105.jpg",
+                hasVideo: true,
+                video: "images/ҵ/mmexport1773302309276.mp4"
+            },
+            {
+                id: 3,
+                title: "ĳͼļ˻黹",
+                type: "",
+                city: "",
+                summary: "Эҵ8Ԫļ˻ʽ黹ȷϹӪάҵ",
+                amount: "8",
+                period: "7",
+                detail: "ĳͼŹ˾ڹ涨ʱڹ黹ļ˻ʽǿӦһȫʽţȷҵϹӪάõϵ",
+                year: "2024",
+                image: "images/ҵ/mmexport1773729850497.jpg",
+                hasVideo: false
+            },
+            {
+                id: 4,
+                title: "ĳزҵ",
+                type: "",
+                city: "",
+                summary: "Ϊҵṩ3.2Ԫʷɹб͹Ŀ",
+                amount: "3.2",
+                period: "30",
+                detail: "ĳزҵڲ͹ĿͶʱҪṩʽʵ֤ṩ3.2Ԫʷרҵʽչʾҵھӱɹбꡣ",
+                year: "2024",
+                image: "images/ҵ/mmexport1773838483773.jpg",
+                hasVideo: false
+            },
+            {
+                id: 5,
+                title: "ĳҵӦ˿",
+                type: "Ӧ˿",
+                city: "",
+                summary: "ͨӦ˿ʣҵ̻1.5Ԫʽ֧ҵš",
+                amount: "1.5",
+                period: "ں",
+                detail: "ĳҵҵʽתѹͨӦ˿ʷҵ̻1.5ԪʽЧҵʽ֧ŵżƻ",
+                year: "2023",
+                image: "images/ҵ/mmexport1773897011418.jpg",
+                hasVideo: true,
+                video: "images/ҵ/mmexport1773958730757.mp4"
+            },
+            {
+                id: 6,
+                title: "ĳƼҵƱ",
+                type: "Ӧ˿",
+                city: "ɶ",
+                summary: "ûƱݣṩ5000Ԫʷҵʽת",
+                amount: "5000",
+                period: "1",
+                detail: "ĳƼҵдƱݣֽתṩµƱʷҵûƱݻ5000Ԫʽ𣬴ʳɱ",
+                year: "2023",
+                image: "images/ҵ/mmexport1773986164723.jpg",
+                hasVideo: true,
+                video: "images/ҵ/mmexport1773966987867.mp4"
+            },
+            {
+                id: 7,
+                title: "ĳ¼ҵд",
+                type: "",
+                city: "",
+                summary: "ṩĩĩ2Ԫд񣬰ҵŻ񱨱",
+                amount: "2",
+                period: "",
+                detail: "ĳ¼ҵҪڼĩʱдָꡣṩ2Ԫ񣬶ںȷҵָ꣬Ż񱨱",
+                year: "2023",
+                image: "images/ҵ/mmexport1775114637044.jpg",
+                hasVideo: true,
+                video: "images/ҵ/mmexport1775112927068.mp4"
+            },
+            {
+                id: 8,
+                title: "ĳҵ",
+                type: "",
+                city: "Ϻ",
+                summary: "Ϊҵṩ1.8ԪͶʷ񣬳ɹб͹Ŀ",
+                amount: "1.8",
+                period: "45",
+                detail: "ĳҵ͹ĿͶ꣬Ҫṩʽʵ֤ṩ1.8ԪʷרҵʽȷͶ˳УҵɹбĿ",
+                year: "2023",
+                image: "images/ҵ/mmexport1775192203365_edit_679230358475000.jpg",
+                hasVideo: false
+            },
+            {
+                id: 9,
+                title: "ĳҽҩй˾",
+                type: "",
+                city: "",
+                summary: "Ϊҽҩй˾Ŀṩ12Ԫʽ֧֣ȷƻ˳ʵʩ",
+                amount: "12",
+                period: "30",
+                detail: "ĳҽҩй˾ĿҪʽ֧֡ṩ12Ԫʽרҵʱҵ˳ɶΪҵٷչṩʽϡ",
+                year: "2023",
+                image: "images/ҵ/mmexport1775196945790.jpg",
+                hasVideo: false
+            },
+            {
+                id: 10,
+                title: "ĳڻվҵ",
+                type: "",
+                city: "",
+                summary: "Ϊڻṩ5Ԫվ֧֣Żָꡣ",
+                amount: "5",
+                period: "һ",
+                detail: "ĳڻҪŻָ꣬Ҫṩ5Ԫһվ֧֣ȶʽȷҵϹӪ",
+                year: "2022",
+                image: "images/ҵ/1701838459825.jpg",
+                hasVideo: false
+            },
+            {
+                id: 11,
+                title: "ĳزŰ",
+                type: "",
+                city: "",
+                summary: "Ϊزṩ6Ԫʷ㹤ע",
+                amount: "6",
+                period: "60",
+                detail: "ĳزŽйעʱʵ֤Ҫʽ֤ṩ6ԪʷҵϹҵ",
+                year: "2024",
+                image: "images/ҵ/mmexport1758187271966.jpg",
+                hasVideo: false
+            },
+            {
+                id: 12,
+                title: "ĳԴй˾",
+                type: "",
+                city: "",
+                summary: "ΪԴй˾ṩ4.5Ԫʣڶծת",
+                amount: "4.5",
+                period: "21",
+                detail: "ĳԴй˾ٶծڣҪʽνӡṩ4.5Ԫʣҵ˳ȹʽתڣάõü¼",
+                year: "2024",
+                image: "images/ҵ/mmexport1759986121000.jpg",
+                hasVideo: false
+            }
+        ];
+
+        // ǰɸѡ״̬
+        let currentFilters = {
+            type: 'all'
+        };
+
+        // ȡͱǩʽ
+        function getTypeClass(type) {
+            const typeMap = {
+                '': 'bridge',
+                '': 'display',
+                '': 'proof',
+                '': 'deposit',
+                '': 'placement',
+                'Ӧ˿': 'receivable'
+            };
+            return typeMap[type] || 'bridge';
+        }
+
+        // ȡҵͼ
+        function getTypeIcon(type) {
+            const iconMap = {
+                '': 'fa-exchange-alt',
+                '': 'fa-hand-holding-usd',
+                '': 'fa-eye',
+                '': 'fa-chart-line',
+                '': 'fa-plus-circle',
+                'Ӧ˿': 'fa-file-invoice-dollar'
+            };
+            return iconMap[type] || 'fa-briefcase';
+        }
+
+        // ȾƬ
+        function renderCases(cases) {
+            const grid = document.getElementById('casesGrid');
+            
+            if (cases.length === 0) {
+                grid.innerHTML = `
+                    <div class="cases-empty">
+                        <i class="fas fa-folder-open"></i>
+                        <p class="cases-empty-text">޷İ</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = cases.map(caseItem => {
+                const typeClass = getTypeClass(caseItem.type);
+                // ʹʵͼƬûʹĬͼƬ
+                const imagePath = caseItem.image || `images/ҵ/mmexport1773302286026.jpg`;
+                return `
+                    <article class="case-card-enhanced" data-id="${caseItem.id}" onclick="window.location.href='case-detail.html?id=${caseItem.id}'">
+                        <div class="case-card-image">
+                            <img src="${imagePath}" alt="${caseItem.title}" loading="lazy">
+                            <span class="case-type-tag ${typeClass}">${caseItem.type}</span>
+                        </div>
+                        <div class="case-card-content">
+                            <h3 class="case-card-title">${caseItem.title}</h3>
+                            <p class="case-card-summary">${caseItem.summary}</p>
+                            <div class="case-card-meta">
+                                <div class="case-card-amount">
+                                    <span class="case-card-amount-label">ʽģ</span>
+                                    <span class="case-card-amount-value">${caseItem.amount}</span>
+                                </div>
+                                <span class="case-card-btn">
+                                    鿴 <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // ɸѡ
+        function filterCases() {
+            const filtered = casesData.filter(caseItem => {
+                const typeMatch = currentFilters.type === 'all' || caseItem.type === currentFilters.type;
+                return typeMatch;
+            });
+            renderCases(filtered);
+        }
+
+        // ɸѡ¼
+        function setupFilters() {
+            const typeButtons = document.querySelectorAll('#typeFilter .filter-btn');
+
+            typeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    typeButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilters.type = this.dataset.filter;
+                    filterCases();
+                });
+            });
+        }
+
+        // ҳ
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        let filteredCases = [...casesData];
+
+        // Ⱦҳ
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredCases.length / itemsPerPage);
+            const container = document.getElementById('paginationContainer');
+            if (!container) return;
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div style="display: inline-flex; align-items: center; gap: 15px;">
+                    <button onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''} 
+                        style="padding: 10px 20px; background: ${currentPage <= 1 ? '#ccc' : '#1e3a8a'}; color: white; border: none; border-radius: 4px; cursor: ${currentPage <= 1 ? 'not-allowed' : 'pointer'}; font-size: 14px;">һҳ</button>
+                    <span style="font-size: 16px; color: #333;"> ${currentPage} ҳ /  ${totalPages} ҳ</span>
+                    <button onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''} 
+                        style="padding: 10px 20px; background: ${currentPage >= totalPages ? '#ccc' : '#1e3a8a'}; color: white; border: none; border-radius: 4px; cursor: ${currentPage >= totalPages ? 'not-allowed' : 'pointer'}; font-size: 14px;">һҳ</button>
+                </div>
+            `;
+        }
+
+        // лҳ
+        function changePage(newPage) {
+            const totalPages = Math.ceil(filteredCases.length / itemsPerPage);
+            if (newPage < 1 || newPage > totalPages) return;
+            currentPage = newPage;
+            renderCasesPage();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Ⱦǰҳ
+        function renderCasesPage() {
+            const grid = document.getElementById('casesGrid');
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageCases = filteredCases.slice(start, end);
+            
+            if (pageCases.length === 0) {
+                grid.innerHTML = `
+                    <div class="cases-empty">
+                        <i class="fas fa-folder-open"></i>
+                        <p class="cases-empty-text">޷İ</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = pageCases.map(caseItem => {
+                const typeClass = getTypeClass(caseItem.type);
+                const imagePath = caseItem.image || 'images/cases/default.jpg';
+                return `
+                    <article class="case-card-enhanced" data-id="${caseItem.id}" onclick="window.location.href='case-detail.html?id=${caseItem.id}'">
+                        <div class="case-card-image">
+                            <img src="${imagePath}" alt="${caseItem.title}" loading="lazy">
+                            <span class="case-type-tag ${typeClass}">${caseItem.type}</span>
+                        </div>
+                        <div class="case-card-content">
+                            <h3 class="case-card-title">${caseItem.title}</h3>
+                            <p class="case-card-summary">${caseItem.summary}</p>
+                            <div class="case-card-meta">
+                                <div class="case-card-amount">
+                                    <span class="case-card-amount-label">ʽģ</span>
+                                    <span class="case-card-amount-value">${caseItem.amount}</span>
+                                </div>
+                                <span class="case-card-btn">鿴 <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // ɸѡ
+        function filterCases() {
+            currentPage = 1;
+            filteredCases = casesData.filter(caseItem => {
+                return currentFilters.type === 'all' || caseItem.type === currentFilters.type;
+            });
+            renderCasesPage();
+            renderPagination();
+        }
+
+        // ʼ
+        document.addEventListener('DOMContentLoaded', function() {
+            filteredCases = [...casesData];
+            renderCasesPage();
+            renderPagination();
+            setupFilters();
+        });
+    </script>
+    
+    <!-- CMS Editor -->
+    <script>
+        // ǷҪر༭
+        (function() {
+            console.log('[CMS] ʼ...');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const isEditMode = urlParams.get('edit') === 'true';
+            const isLoggedIn = localStorage.getItem('cms_logged_in') === 'true';
+            
+            console.log('[CMS] ༭ģʽ:', isEditMode);
+            console.log('[CMS] ¼״̬:', isLoggedIn);
+            
+            if (isEditMode && isLoggedIn) {
+                console.log('[CMS] ʼر༭...');
+                
+                // ر༭ʽ
+                const editorCss = document.createElement('link');
+                editorCss.rel = 'stylesheet';
+                editorCss.href = 'admin/editor.css';
+                editorCss.onerror = function() {
+                    console.error('[CMS] ༭ʽʧ');
+                };
+                document.head.appendChild(editorCss);
+                
+                // ر༭ű
+                const editorScript = document.createElement('script');
+                editorScript.src = 'admin/editor.js';
+                editorScript.onload = function() {
+                    console.log('[CMS] ༭űسɹ');
+                };
+                editorScript.onerror = function() {
+                    console.error('[CMS] ༭űʧ');
+                };
+                document.body.appendChild(editorScript);
+            } else if (isEditMode && !isLoggedIn) {
+                console.log('[CMS] δ¼ض򵽵¼ҳ');
+                window.location.href = 'admin/login.html?redirect=' + encodeURIComponent(window.location.href);
+            }
+        })();
+    </script>
+</body>
+</html>

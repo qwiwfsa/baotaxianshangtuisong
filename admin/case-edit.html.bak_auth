@@ -1,0 +1,1343 @@
+﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>编辑案例 - 宏都资本CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- v2.0 - toast relocated below header -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f3f4f6; min-height: 100vh; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar { width: 260px; background: #1e293b; color: white; position: fixed; left: 0; top: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+        .cms-sidebar-header { padding: 24px; border-bottom: 1px solid #334155; }
+        .cms-sidebar-brand { display: flex; align-items: center; gap: 12px; }
+        .cms-sidebar-nav { padding: 16px 0; }
+        .cms-nav-section { margin-bottom: 24px; }
+        .cms-nav-title { padding: 0 24px 8px; font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        .cms-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #cbd5e1; text-decoration: none; transition: all 0.2s; }
+        .cms-nav-item:hover, .cms-nav-item.active { background: #334155; color: white; }
+        .cms-main { flex: 1; margin-left: 260px; min-height: 100vh; }
+        .cms-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .cms-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #6b7280; }
+        .cms-breadcrumb a { color: #3b82f6; text-decoration: none; }
+        .cms-header-right { display: flex; gap: 12px; }
+        .cms-header-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; }
+        .cms-header-btn-primary { background: #3b82f6; color: white; }
+        .cms-header-btn-primary:hover { background: #2563eb; }
+        .cms-header-btn-success { background: #10b981; color: white; }
+        .cms-header-btn-success:hover { background: #059669; }
+        .cms-header-btn-danger { background: #ef4444; color: white; }
+        .cms-header-btn-danger:hover { background: #dc2626; }
+        .cms-content { padding: 24px; max-width: 1200px; margin: 0 auto; }
+        .case-form { display: grid; gap: 24px; }
+        .form-section { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+        .form-section-header { padding: 16px 24px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 10px; }
+        .form-section-header i { color: #3b82f6; }
+        .form-section-title { font-size: 16px; font-weight: 600; color: #1f2937; }
+        .form-section-body { padding: 24px; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-label { font-size: 14px; font-weight: 500; color: #374151; }
+        .form-label .required { color: #ef4444; margin-left: 4px; }
+        .form-input, .form-select, .form-textarea { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937; background: white; transition: all 0.2s; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .form-textarea { min-height: 120px; resize: vertical; }
+        .media-preview { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; }
+        .media-preview-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1; }
+        .media-preview-item img, .media-preview-item video { width: 100%; height: 100%; object-fit: cover; }
+        .media-preview-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0; transition: opacity 0.2s; }
+        .media-preview-item:hover .media-preview-overlay { opacity: 1; }
+        .media-preview-btn { width: 36px; height: 36px; border-radius: 6px; border: none; background: white; color: #374151; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .media-preview-btn:hover { background: #3b82f6; color: white; }
+        .add-image-btn { border: 2px dashed #d1d5db; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; background: #f9fafb; width: 120px; height: 120px; }
+        .add-image-btn:hover { border-color: #3b82f6; background: #eff6ff; }
+        .add-image-btn i { font-size: 24px; color: #9ca3af; margin-bottom: 4px; }
+        .add-image-btn span { font-size: 13px; color: #6b7280; }
+        .highlights-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+        .highlight-item { display: flex; align-items: center; gap: 12px; }
+        .highlight-input { flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+        .highlight-btn { width: 36px; height: 36px; border-radius: 6px; border: none; background: #fef2f2; color: #ef4444; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .add-highlight-row { display: flex; align-items: center; gap: 8px; padding: 12px; border: 2px dashed #d1d5db; border-radius: 8px; cursor: pointer; color: #3b82f6; font-size: 14px; justify-content: center; }
+        .add-highlight-row:hover { border-color: #3b82f6; background: #eff6ff; }
+        .status-options { display: flex; gap: 16px; }
+        .status-option { flex: 1; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .status-option:hover { border-color: #3b82f6; }
+        .status-option.active { border-color: #3b82f6; background: #eff6ff; }
+        .status-option i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .status-option.published.active { border-color: #10b981; background: #d1fae5; color: #059669; }
+        .status-option.draft.active { border-color: #f59e0b; background: #fef3c7; color: #d97706; }
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.9); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
+        .loading-spinner { width: 48px; height: 48px; border: 4px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { margin-top: 16px; color: #6b7280; font-size: 14px; }
+
+        /* 页面内提示 - 位于header下方、内容区上方 */
+        .page-toast-container { 
+            position: relative;
+            z-index: 40;
+            padding: 0 24px;
+            display: flex;
+            justify-content: flex-end;
+            min-height: 0;
+        }
+        .page-toast { 
+            display: none; 
+            align-items: center; 
+            gap: 10px; 
+            padding: 12px 20px; 
+            background: white; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15); 
+            border-left: 4px solid #10b981;
+            font-size: 14px;
+            font-weight: 500;
+            color: #065f46;
+            max-width: 340px;
+            margin-top: 1px;
+            animation: pageToastIn 0.3s ease;
+        }
+        @keyframes pageToastIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-toast.show { display: flex; }
+        .page-toast.error { border-left-color: #ef4444; color: #991b1b; }
+        .page-toast i { font-size: 16px; color: #10b981; flex-shrink: 0; }
+        .page-toast.error i { color: #ef4444; }
+        
+        /* 保存提示 - 放在预览按钮左边 */
+        .save-message {
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .save-message.show { display: flex; }
+        .save-message.success { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .save-message.error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+        .save-message.loading { background: #eff6ff; color: #1e40af; border: 1px solid #3b82f6; }
+        
+        /* 撤回重做按钮样式 */
+        .history-btn-group {
+            display: flex;
+            gap: 8px;
+            margin-right: 12px;
+        }
+        .history-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            color: #374151;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .history-btn:hover:not(:disabled) {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+        .history-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .history-btn i {
+            font-size: 12px;
+        }
+    
+        /* 标签选择器 */
+        .tag-selector { margin-top: 4px; width: 100%; }
+        .tag-selector__selected { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 32px; }
+        .tag-selector__tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #dbeafe; color: #1d4ed8; border-radius: 20px; font-size: 13px; }
+        .tag-selector__tag i { cursor: pointer; font-size: 14px; opacity: 0.6; }
+        .tag-selector__tag i:hover { opacity: 1; }
+        .tag-selector__input-wrap { position: relative; width: 100%; }
+        .tag-selector__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; }
+        .tag-selector__dropdown.show { display: block; }
+        .tag-option { padding: 8px 14px; cursor: pointer; font-size: 14px; color: #374151; }
+        .tag-option:hover { background: #f3f4f6; }
+        .tag-option.disabled { color: #d1d5db; cursor: not-allowed; }
+</style>
+</head>
+<body>
+    <div class="cms-layout">
+        <aside class="cms-sidebar">
+            <div class="cms-sidebar-header">
+                <div class="cms-sidebar-brand">
+                    <i class="fas fa-cog"></i>
+                    <span>CMS管理后台</span>
+                </div>
+            </div>
+            <nav class="cms-sidebar-nav">
+                <div class="cms-nav-section">
+                    <div class="cms-nav-title">主要</div>
+                    <a href="dashboard.html" class="cms-nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>仪表板</span>
+                    </a>
+                    <a href="logo-settings.html" class="cms-nav-item">
+                        <i class="fas fa-image"></i>
+                        <span>Logo设置</span>
+                    </a>
+                    <a href="case-management.html" class="cms-nav-item active">
+                        <i class="fas fa-trophy"></i>
+                        <span>案例管理</span>
+                    </a>
+                    <a href="index.html" class="cms-nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>页面管理</span>
+                    </a>
+                    <a href="page-manager.html" class="cms-nav-item" data-section="page-manager">
+                        <i class="fas fa-list"></i>
+                        <span>页面列表</span>
+                    </a>
+                    <a href="visual-page-builder.html" class="cms-nav-item" data-section="visual-builder">
+                        <i class="fas fa-pen-ruler"></i>
+                        <span>页面设计</span>
+                    </a>
+
+
+                    <a href="nav-management.html" class="cms-nav-item">
+                        <i class="fas fa-bars"></i>
+                        <span>导航菜单</span>
+                    </a>
+                    <a href="components/news/article-list.html" class="cms-nav-item">
+                        <i class="fas fa-newspaper"></i>
+                        <span>文章管理</span>
+                    </a>
+                    <a href="faq-management.html" class="cms-nav-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>常见问题</span>
+                    </a>
+                    <a href="footer-manager.html" class="cms-nav-item" data-section="footer">
+                        <i class="fas fa-list-alt"></i>
+                        <span>页脚管理</span>
+                    </a>
+                    <a href="media-library.html" class="cms-nav-item" data-section="media">
+                        <i class="fas fa-photo-video"></i>
+                        <span>媒体库</span>
+                    </a>
+                    <a href="tag-management.html" class="cms-nav-item" data-section="tags">
+                        <i class="fas fa-tags"></i>
+                        <span>标签管理</span>
+                    </a>
+                    <a href="friend-link-management.html" class="cms-nav-item" data-section="links">
+                        <i class="fas fa-link"></i>
+                        <span>友情链接</span>
+                    </a>
+                    <a href="announcement-management.html" class="cms-nav-item" data-section="announce">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>网站公告</span>
+                    </a>
+                    
+
+                </div>
+            </nav>
+        </aside>
+
+        <main class="cms-main">
+            <header class="cms-header">
+                <div class="cms-breadcrumb">
+                    <a href="dashboard.html">首页</a>
+                    <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
+                    <a href="case-management.html">案例管理</a>
+                    <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
+                    <span id="pageTitle">编辑案例</span>
+                </div>
+                <div class="cms-header-right">
+                    <div class="history-btn-group">
+                        <button class="history-btn" id="undoBtn" onclick="undo()" disabled>
+                            <i class="fas fa-undo"></i> 撤回
+                        </button>
+                        <button class="history-btn" id="redoBtn" onclick="redo()" disabled>
+                            <i class="fas fa-redo"></i> 重做
+                        </button>
+                        <button class="history-btn" onclick="resetCase()">
+                            <i class="fas fa-rotate-left"></i> 重置
+                        </button>
+                    </div>
+                    <div class="save-message" id="saveMessage"></div>
+                    <button class="cms-header-btn" onclick="previewCase()">
+                        <i class="fas fa-eye"></i>
+                        <span>预览</span>
+                    </button>
+                    <button class="cms-header-btn cms-header-btn-danger" onclick="deleteCase()">
+                        <i class="fas fa-trash"></i>
+                        <span>删除</span>
+                    </button>
+                    <button class="cms-header-btn cms-header-btn-success" onclick="saveCase()">
+                        <i class="fas fa-save"></i>
+                        <span>保存</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- 页面内提示区域 - 位于按钮下方 -->
+            <div class="page-toast-container" id="pageToastContainer"></div>
+
+            <div class="cms-content">
+                <form class="case-form" id="caseForm">
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="form-section-title">基本信息</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">案例标题 <span class="required">*</span></label>
+                                    <input type="text" class="form-input" id="caseTitle" placeholder="请输入案例标题">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">业务类型</label>
+                                    <select class="form-select" id="caseType">
+                                        <option value="">加载中...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">出资金额</label>
+                                    <input type="text" class="form-input" id="caseAmount" placeholder="如：2亿、5000万">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">关联标签</label>
+                                    <div class="tag-selector">
+                                        <div id="caseSelectedTags" class="tag-selector__selected"></div>
+                                        <div class="tag-selector__input-wrap">
+                                            <input type="text" class="form-input" id="caseTagSearch" placeholder="搜索标签..." oninput="caseFilterTagOptions()" onfocus="caseFilterTagOptions()">
+                                            <div class="tag-selector__dropdown" id="caseTagDropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">案例摘要</label>
+                                    <textarea class="form-textarea" id="caseSummary" placeholder="简要描述案例内容"></textarea>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">案例详情</label>
+                                    <textarea class="form-textarea" id="caseDetail" placeholder="详细描述案例内容（支持HTML标签）" style="min-height: 200px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-search"></i>
+                            <span class="form-section-title">SEO设置（可选）</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label class="form-label">SEO标题</label>
+                                    <input type="text" class="form-input" id="caseSeoTitle" placeholder="留空则使用案例标题">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">SEO关键词</label>
+                                    <input type="text" class="form-input" id="caseSeoKeywords" placeholder="多个关键词用逗号分隔">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">SEO描述</label>
+                                    <textarea class="form-textarea" id="caseSeoDescription" rows="3" placeholder="搜索引擎显示的描述文字"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-images"></i>
+                            <span class="form-section-title">案例图片</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="media-preview" id="imagePreview"></div>
+                            <div class="add-image-btn" onclick="addImage()" id="addImageBtn">
+                                <i class="fas fa-plus"></i>
+                                <span>添加图片</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-video"></i>
+                            <span class="form-section-title">案例视频</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label class="form-label">
+                                    <input type="checkbox" id="hasVideo" onchange="toggleVideo()">
+                                    包含视频
+                                </label>
+                            </div>
+                            <div id="videoSection" style="display: none;">
+                                <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)">
+                                <button type="button" class="cms-header-btn" onclick="document.getElementById('videoInput').click()">
+                                    <i class="fas fa-upload"></i>
+                                    <span>上传视频</span>
+                                </button>
+                                <div class="media-preview" id="videoPreview" style="margin-top: 16px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <span class="form-section-title">服务亮点</span>
+                            <input type="text" class="form-input" id="highlightTitle" placeholder="自定义服务亮点标题（如：资方能配合哪些）" style="margin-left: auto; max-width: 320px;" onchange="currentCase.highlightTitle = this.value">
+                        </div>
+                        <div class="form-section-body">
+                            <div class="highlights-list" id="highlightsList"></div>
+                            <div class="add-highlight-row" onclick="addHighlight()">
+                                <i class="fas fa-plus"></i>
+                                <span>添加亮点</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-tasks"></i>
+                            <span class="form-section-title">操作流程</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="highlights-list" id="processList"></div>
+                            <div class="add-highlight-row" onclick="addProcess()">
+                                <i class="fas fa-plus"></i>
+                                <span>添加流程步骤</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <i class="fas fa-toggle-on"></i>
+                            <span class="form-section-title">发布状态</span>
+                        </div>
+                        <div class="form-section-body">
+                            <div class="status-options">
+                                <div class="status-option published" onclick="setStatus('published')">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>发布</span>
+                                </div>
+                                <div class="status-option draft active" onclick="setStatus('draft')">
+                                    <i class="fas fa-edit"></i>
+                                    <span>草稿</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在保存...</div>
+    </div>
+
+    <script>
+        let currentCase = {
+            id: '', title: '', type: '企业过桥', summary: '', amount: '', images: [], video: '', highlights: [], process: [], status: 'draft', highlightTitle: '', tag_ids: []
+        };
+        
+        // 操作历史栈（用于撤回/重做功能）
+        let undoStack = [];
+        let redoStack = [];
+        const MAX_HISTORY_SIZE = 50;
+        let originalCase = null; // 保存原始数据用于重置
+        
+        // 保存当前状态到历史栈
+        function saveStateToHistory() {
+            const state = JSON.parse(JSON.stringify(currentCase));
+            
+            // 如果栈已满，移除最旧的状态
+            if (undoStack.length >= MAX_HISTORY_SIZE) {
+                undoStack.shift();
+            }
+            
+            undoStack.push(state);
+            
+            // 清空重做栈（新操作后重做栈失效）
+            redoStack = [];
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+        }
+        
+        // 更新撤回/重做按钮状态
+        function updateUndoRedoButtons() {
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            
+            if (undoBtn) {
+                undoBtn.disabled = undoStack.length === 0;
+            }
+            if (redoBtn) {
+                redoBtn.disabled = redoStack.length === 0;
+            }
+        }
+        
+        // 撤回上一步操作
+        function undo() {
+            if (undoStack.length === 0) return;
+            
+            // 将当前状态保存到重做栈
+            const currentState = JSON.parse(JSON.stringify(currentCase));
+            redoStack.push(currentState);
+            
+            // 从历史栈弹出上一步状态并恢复
+            const previousState = undoStack.pop();
+            currentCase = previousState;
+            
+            // 更新表单
+            updateFormFromCurrentCase();
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+            
+            showToast('已撤回上一步操作', 'success');
+        }
+        
+        // 重做操作
+        function redo() {
+            if (redoStack.length === 0) return;
+            
+            // 将当前状态保存到历史栈
+            const currentState = JSON.parse(JSON.stringify(currentCase));
+            undoStack.push(currentState);
+            
+            // 从重做栈弹出状态并恢复
+            const nextState = redoStack.pop();
+            currentCase = nextState;
+            
+            // 更新表单
+            updateFormFromCurrentCase();
+            
+            // 更新按钮状态
+            updateUndoRedoButtons();
+            
+            showToast('已重做操作', 'success');
+        }
+        
+        // 重置为原始数据
+        function resetCase() {
+            if (!originalCase) {
+                showToast('没有可重置的原始数据', 'error');
+                return;
+            }
+            
+            if (!confirm('确定要重置为原始数据吗？这将丢失所有未保存的修改。')) {
+                return;
+            }
+            
+            // 保存当前状态到历史栈
+            saveStateToHistory();
+            
+            // 恢复原始数据
+            currentCase = JSON.parse(JSON.stringify(originalCase));
+            
+            // 更新表单
+            updateFormFromCurrentCase();
+            
+            showToast('已重置为原始数据', 'success');
+        }
+        
+        // 根据currentCase更新表单
+        function updateFormFromCurrentCase() {
+            document.getElementById('caseTitle').value = currentCase.title || '';
+            document.getElementById('caseType').value = currentCase.type || '企业过桥';
+            document.getElementById('caseAmount').value = currentCase.amount || '';
+            document.getElementById('caseSummary').value = currentCase.summary || '';
+            document.getElementById('caseDetail').value = currentCase.detail || '';
+            document.getElementById('highlightTitle').value = currentCase.highlightTitle || '';
+            document.getElementById('hasVideo').checked = !!currentCase.video;
+            toggleVideo();
+            renderImages();
+            renderVideo();
+            renderHighlights();
+            renderProcess();
+            caseSetSelectedTags(currentCase.tag_ids || []);
+            setStatus(currentCase.status || 'draft');
+        }
+        
+        function bindFormChangeEvents() {
+            const formElements = document.querySelectorAll('#caseForm input, #caseForm textarea, #caseForm select');
+            formElements.forEach(el => {
+                el.addEventListener('focus', function() {
+                    // 在获得焦点时保存状态
+                    saveStateToHistory();
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 先加载业务类型列表
+            showLoading();
+            await loadCaseTypesFromServer();
+            await caseLoadTagOptions();
+            
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const caseId = urlParams.get('id');
+            
+            if (caseId) {
+                currentCase.id = caseId;
+                document.getElementById('pageTitle').textContent = '编辑案例';
+                await loadCase(caseId);
+            } else {
+                currentCase.id = 'case_' + Date.now();
+                document.getElementById('pageTitle').textContent = '新建案例';
+                addHighlight();
+                // 添加默认操作流程步骤
+                addDefaultProcess();
+                // 新建案例默认设置为发布状态
+                setStatus('published');
+            }
+            
+            // 保存原始数据用于重置
+            originalCase = JSON.parse(JSON.stringify(currentCase));
+            
+            // 绑定表单变更事件
+            bindFormChangeEvents();
+            hideLoading();
+        });
+
+        // 从服务器加载业务类型列表
+        async function loadCaseTypesFromServer() {
+            try {
+                const response = await fetch('api/case/types.php?t=' + Date.now(), {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                if (result.success && result.data && Array.isArray(result.data)) {
+                    const select = document.getElementById('caseType');
+                    if (!select) return;
+                    select.innerHTML = '<option value="">请选择业务类型</option>';
+                    result.data.forEach(function(type) {
+                        const opt = document.createElement('option');
+                        opt.value = type.name || type.id;
+                        opt.textContent = type.name || '未命名';
+                        select.appendChild(opt);
+                    });
+                    console.log('业务类型列表加载成功:', result.data.length, '个');
+                }
+            } catch (e) {
+                console.log('加载业务类型列表失败:', e);
+            }
+        }
+
+        async function loadCase(caseId) {
+            showLoading();
+            let caseData = null;
+            
+            // 1. 优先从服务器加载
+            try {
+                const response = await fetchWithTimeout(`api/case/get.php?id=${caseId}`, {
+                    method: 'GET',
+                    credentials: 'include'
+                }, 5000);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success && result.case) {
+                        caseData = result.case;
+                        console.log('从服务器加载案例成功:', caseData);
+                    }
+                }
+            } catch (error) {
+                console.log('从服务器加载失败:', error);
+            }
+            
+            // 2. 如果服务器加载失败，继续走JSON fallback（在API get.php中实现）
+            if (!caseData) {
+                console.log('服务器加载失败，继续尝试...');
+            }
+            
+            // 3. 如果还没有数据，尝试用数字ID再查一次（兼容case_xxx前缀）
+            if (!caseData && caseId.indexOf('_') > 0) {
+                const numericId = parseInt(caseId.replace(/^case_/, ''));
+                if (numericId > 0) {
+                    try {
+                        const response = await fetchWithTimeout(`api/case/get.php?id=${numericId}`, {
+                            method: 'GET',
+                            credentials: 'include'
+                        }, 5000);
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (result.success && result.case) {
+                                caseData = result.case;
+                                console.log('通过数字ID加载成功:', caseData);
+                            }
+                        }
+                    } catch (e) {
+                        console.log('数字ID加载失败:', e);
+                    }
+                }
+            }
+            
+            // 3. 填充表单
+            if (caseData) {
+                currentCase = { ...currentCase, ...caseData };
+                document.getElementById('caseTitle').value = currentCase.title || '';
+                document.getElementById('caseType').value = currentCase.type || '企业过桥';
+                document.getElementById('caseAmount').value = currentCase.amount || '';
+                document.getElementById('caseSummary').value = currentCase.summary || '';
+                document.getElementById('caseDetail').value = currentCase.detail || '';
+                document.getElementById('caseSeoTitle').value = currentCase.seo_title || '';
+                document.getElementById('caseSeoKeywords').value = currentCase.seo_keywords || '';
+                document.getElementById('caseSeoDescription').value = currentCase.seo_description || '';
+                document.getElementById('highlightTitle').value = currentCase.highlightTitle || '';
+                document.getElementById('hasVideo').checked = !!currentCase.video;
+                toggleVideo();
+                renderImages();
+                renderVideo();
+                renderHighlights();
+                
+                // 设置状态（确保有效值）
+                const validStatus = currentCase.status === 'published' ? 'published' : 'draft';
+                setStatus(validStatus);
+                
+                // 渲染操作流程
+                renderProcess();
+                caseSetSelectedTags(currentCase.tag_ids || []);
+                
+
+                // 同步到localStorage（已移除）
+            } else {
+                showToast('案例不存在', 'error');
+                setTimeout(() => window.location.href = 'case-management.html', 1500);
+            }
+            
+            hideLoading();
+        }
+
+        async function addImage() {
+            if (currentCase.images.length >= 3) {
+                showToast('最多只能上传3张图片', 'error');
+                return;
+            }
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('图片大小超过5MB限制', 'error');
+                    return;
+                }
+                
+                showLoading();
+                
+                try {
+                    // 创建FormData并上传
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    
+                    // 尝试通过PHP上传
+                    const phpResponse = await fetchWithTimeout('api/upload-simple.php', {
+                        method: 'POST',
+                        body: formData
+                    }, 30000);
+                    
+                    if (phpResponse.ok) {
+                        const result = await phpResponse.json();
+                        if (result.success && result.data && result.data.url) {
+                            currentCase.images.push(result.data.url);
+                            renderImages();
+                            showToast('图片上传成功');
+                            hideLoading();
+                            return;
+                        }
+                    }
+                    
+                    // PHP上传失败，回退到Node.js本地服务器
+                    const nodeResponse = await fetchWithTimeout('/admin/api/upload.php', {
+                        method: 'POST',
+                        body: formData
+                    }, 30000);
+                    
+                    if (!nodeResponse.ok) {
+                        throw new Error(`HTTP错误: ${nodeResponse.status}`);
+                    }
+                    
+                    const result = await nodeResponse.json();
+                    if (result.success && result.data && result.data.url) {
+                        currentCase.images.push(result.data.url);
+                        renderImages();
+                        showToast('图片上传成功');
+                    } else if (result.data && result.data.path) {
+                        currentCase.images.push(result.data.path);
+                        renderImages();
+                        showToast('图片上传成功');
+                    } else {
+                        throw new Error(result.message || '上传失败');
+                    }
+                } catch (error) {
+                    console.error('图片上传失败:', error);
+                    showToast('图片上传失败: ' + (error.message || '网络错误'), 'error');
+                } finally {
+                    hideLoading();
+                }
+            };
+            input.click();
+        }
+
+        function renderImages() {
+            const container = document.getElementById('imagePreview');
+            container.innerHTML = currentCase.images.map((url, index) => {
+                // 处理图片路径 - 支持多种路径格式
+                let imageUrl = url;
+                if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('data:')) {
+                    // 确保路径以 / 开头
+                    if (!imageUrl.startsWith('/')) {
+                        imageUrl = '/' + imageUrl;
+                    }
+                    // 后台页面在 /admin/ 下，需要 ../ 来回到根目录
+                    imageUrl = '..' + imageUrl;
+                }
+                return `
+                <div class="media-preview-item">
+                    ${index === 0 ? '<span style="position: absolute; top: 8px; left: 8px; background: #3b82f6; color: white; font-size: 11px; padding: 4px 8px; border-radius: 4px;">主图</span>' : ''}
+                    <img src="${imageUrl}" alt="案例图片" onerror="this.src='../images/placeholder.jpg'; this.onerror=null;">
+                    <div class="media-preview-overlay">
+                        ${index > 0 ? `<button class="media-preview-btn" onclick="setMainImage(${index})" title="设为主图"><i class="fas fa-star"></i></button>` : ''}
+                        <button class="media-preview-btn" onclick="deleteImage(${index})" title="删除"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `}).join('');
+            document.getElementById('addImageBtn').style.display = currentCase.images.length >= 3 ? 'none' : 'flex';
+        }
+
+        function setMainImage(index) {
+            [currentCase.images[0], currentCase.images[index]] = [currentCase.images[index], currentCase.images[0]];
+            renderImages();
+        }
+
+        function deleteImage(index) {
+            if (!confirm('确定要删除这张图片吗？')) return;
+            currentCase.images.splice(index, 1);
+            renderImages();
+            showToast('图片已删除');
+        }
+
+        function toggleVideo() {
+            const checked = document.getElementById('hasVideo').checked;
+            document.getElementById('videoSection').style.display = checked ? 'block' : 'none';
+            if (!checked) {
+                currentCase.video = '';
+                renderVideo();
+            }
+        }
+
+        async function handleVideoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.size > 50 * 1024 * 1024) {
+                showToast('视频大小超过50MB限制', 'error');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                // 创建FormData并上传
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                const response = await fetchWithTimeout('admin/api/upload.php', {
+                    method: 'POST',
+                    body: formData
+                }, 60000); // 60秒超时
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                if (result.success && result.data && result.data.url) {
+                    currentCase.video = result.data.url;
+                    renderVideo();
+                    showToast('视频上传成功');
+                } else if (result.data && result.data.path) {
+                    // 兼容不同的返回字段
+                    currentCase.video = result.data.path;
+                    renderVideo();
+                    showToast('视频上传成功');
+                } else {
+                    throw new Error(result.message || '上传失败');
+                }
+            } catch (error) {
+                console.error('视频上传失败:', error);
+                // 如果上传API不存在，降级为Base64（仅本地）
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    currentCase.video = evt.target.result;
+                    renderVideo();
+                    showToast('视频已本地保存（服务器上传失败）', 'error');
+                };
+                reader.readAsDataURL(file);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function renderVideo() {
+            const container = document.getElementById('videoPreview');
+            if (!currentCase.video) {
+                container.innerHTML = '';
+                return;
+            }
+            // 处理视频路径 - 支持多种路径格式
+            let videoUrl = currentCase.video;
+            if (videoUrl && !videoUrl.startsWith('http') && !videoUrl.startsWith('data:') && !videoUrl.startsWith('/')) {
+                // 相对路径，添加前缀
+                videoUrl = '../' + videoUrl;
+            }
+            container.innerHTML = `
+                <div class="media-preview-item video">
+                    <video src="${videoUrl}" controls></video>
+                    <div class="media-preview-overlay">
+                        <button class="media-preview-btn" onclick="deleteVideo()" title="删除"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function deleteVideo() {
+            if (!confirm('确定要删除视频吗？')) return;
+            currentCase.video = '';
+            document.getElementById('hasVideo').checked = false;
+            toggleVideo();
+            showToast('视频已删除');
+        }
+
+        function addHighlight() {
+            if (!currentCase.highlights) currentCase.highlights = [];
+            currentCase.highlights.push('');
+            renderHighlights();
+        }
+
+        function renderHighlights() {
+            const container = document.getElementById('highlightsList');
+            const highlights = currentCase.highlights || [];
+            container.innerHTML = highlights.map((h, i) => `
+                <div class="highlight-item">
+                    <input type="text" class="highlight-input" value="${h}" placeholder="输入服务亮点" onchange="updateHighlight(${i}, this.value)">
+                    <button type="button" class="highlight-btn" onclick="removeHighlight(${i})"><i class="fas fa-times"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function updateHighlight(index, value) {
+            if (!currentCase.highlights) currentCase.highlights = [];
+            currentCase.highlights[index] = value;
+        }
+
+        function removeHighlight(index) {
+            currentCase.highlights.splice(index, 1);
+            renderHighlights();
+        }
+
+        // 操作流程相关函数
+        function addProcess() {
+            if (!currentCase.process) currentCase.process = [];
+            currentCase.process.push('');
+            renderProcess();
+        }
+
+        function addDefaultProcess() {
+            currentCase.process = ['制定方案', '资料过审', '签订协议', '费用结算', '进款出款'];
+            renderProcess();
+        }
+
+        function renderProcess() {
+            const container = document.getElementById('processList');
+            const process = currentCase.process || [];
+            container.innerHTML = process.map((p, i) => `
+                <div class="highlight-item">
+                    <span style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #3b82f6; color: white; border-radius: 50%; font-size: 13px; font-weight: 600; flex-shrink: 0;">${i + 1}</span>
+                    <input type="text" class="highlight-input" value="${p}" placeholder="输入流程步骤" onchange="updateProcess(${i}, this.value)">
+                    <button type="button" class="highlight-btn" onclick="removeProcess(${i})"><i class="fas fa-times"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function updateProcess(index, value) {
+            if (!currentCase.process) currentCase.process = [];
+            currentCase.process[index] = value;
+        }
+
+        function removeProcess(index) {
+            currentCase.process.splice(index, 1);
+            renderProcess();
+        }
+
+        function setStatus(status) {
+            currentCase.status = status;
+            document.querySelectorAll('.status-option').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.status-option.${status}`).classList.add('active');
+        }
+
+        // 带超时的fetch函数
+        async function fetchWithTimeout(url, options, timeout = 10000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                return response;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    throw new Error('请求超时');
+                }
+                throw error;
+            }
+        }
+
+        async function saveCase() {
+            // 确保 currentCase 有有效的ID
+            if (!currentCase.id) {
+                currentCase.id = 'case_' + Date.now();
+            }
+            
+            currentCase.title = document.getElementById('caseTitle').value.trim();
+            currentCase.type = document.getElementById('caseType').value;
+            currentCase.amount = document.getElementById('caseAmount').value.trim();
+            currentCase.summary = document.getElementById('caseSummary').value.trim();
+            currentCase.detail = document.getElementById('caseDetail').value.trim();
+            currentCase.seo_title = document.getElementById('caseSeoTitle').value.trim();
+            currentCase.seo_keywords = document.getElementById('caseSeoKeywords').value.trim();
+            currentCase.seo_description = document.getElementById('caseSeoDescription').value.trim();
+            currentCase.highlightTitle = document.getElementById('highlightTitle').value.trim();
+            
+            // 同步 highlights 数据 - 从DOM重新收集确保最新
+            const highlightInputs = document.querySelectorAll('#highlightsList .highlight-input');
+            currentCase.highlights = Array.from(highlightInputs).map(input => input.value.trim()).filter(v => v);
+            
+            // 同步 process 数据 - 从DOM重新收集确保最新
+            const processInputs = document.querySelectorAll('#processList .highlight-input');
+            currentCase.process = Array.from(processInputs).map(input => input.value.trim()).filter(v => v);
+
+            currentCase.tag_ids = caseGetSelectedTagIds();
+
+            if (!currentCase.title) {
+                showSaveMessage('请输入案例标题', 'error');
+                document.getElementById('caseTitle').focus();
+                return;
+            }
+
+            showSaveMessage('正在保存...', 'loading');
+
+            try {
+                currentCase.updatedAt = new Date().toISOString();
+                if (!currentCase.createdAt) currentCase.createdAt = currentCase.updatedAt;
+                
+                // 确保 image/coverImage 字段与 images 数组同步（兼容性处理）
+                if (currentCase.images && currentCase.images.length > 0) {
+                    currentCase.coverImage = currentCase.images[0];  // 第一张作为主图
+                    currentCase.image = currentCase.images[0];       // 兼容旧代码
+                }
+
+                // 保存到服务器API（主要数据源）
+                const caseToSave = JSON.parse(JSON.stringify(currentCase));
+                let serverSaved = false;
+                let serverError = null;
+                let responseText = '';
+                
+                try {
+                    const response = await fetchWithTimeout('api/case/save.php', {
+                        credentials: 'include',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(caseToSave)
+                    }, 10000); // 10秒超时
+                    
+                    responseText = await response.text();
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP错误: ${response.status}`);
+                    }
+                    
+                    // 尝试解析JSON
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (jsonError) {
+                        console.error('JSON解析错误，原始响应:', responseText.substring(0, 500));
+                        throw new Error('服务器返回格式错误，请联系管理员检查PHP配置');
+                    }
+                    
+                    if (result.success) {
+                        serverSaved = true;
+                        // 用服务器返回的真实ID更新currentCase
+                        if (result.case && result.case.id) {
+                            currentCase.id = String(result.case.id);
+                            caseToSave.id = currentCase.id;
+                        }
+                    } else {
+                        serverError = result.message || '服务器返回失败';
+                    }
+                } catch (error) {
+                    console.error('服务器保存失败:', error);
+                    serverError = error.message || '网络请求失败';
+                    if (responseText && responseText.includes('<br')) {
+                        serverError += ' (PHP错误输出HTML，请检查服务器日志)';
+                    }
+                }
+
+                const statusText = caseToSave.status === 'published' ? '已发布' : '草稿';
+                if (serverSaved) {
+                    showSaveMessage(`✓ 案例保存成功！当前状态：${statusText}`, 'success');
+                    // 不需要清除localStorage，前端直接读API;
+                } else if (serverError) {
+                    showSaveMessage('⚠ 保存失败: ' + serverError, 'error');
+                } else {
+                    showSaveMessage('⚠ 保存失败', 'error');
+                }
+
+                                // 更新URL中的ID（新建时或ID有变更时）
+                const currentUrlId = new URLSearchParams(window.location.search).get('id');
+                if (currentUrlId !== currentCase.id) {
+                    history.replaceState(null, null, `?id=${currentCase.id}`);
+                }
+            } catch (error) {
+                // 捕获所有未处理的错误
+                console.error('保存过程出错:', error);
+                showSaveMessage('✗ 保存失败: ' + (error.message || '未知错误'), 'error');
+                showToast('保存失败: ' + (error.message || '未知错误'), 'error');
+            }
+        }
+
+        // 显示保存按钮下方的提示消息
+        function showSaveMessage(message, type) {
+            const msgEl = document.getElementById('saveMessage');
+            msgEl.textContent = message;
+            msgEl.className = 'save-message ' + type + ' show';
+            
+            // 成功消息3秒后自动隐藏，错误消息保持显示
+            if (type === 'success') {
+                setTimeout(() => {
+                    msgEl.classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // 清除案例缓存（localStorage和sessionStorage）
+                function clearCaseCache(caseId) {
+            // 清除缓存（已移除localStorage操作，保留函数以防调用报错）
+            console.log('清除案例缓存:', caseId);
+        }
+
+        function previewCase() {
+            window.open(`../case-detail.html?id=${currentCase.id}&preview=true`, '_blank');
+        }
+
+        async function deleteCase() {
+            if (!confirm('确定要删除这个案例吗？此操作不可恢复。')) return;
+            
+            showLoading();
+            
+            try {
+                let serverDeleted = false;
+                let localDeleted = false;
+                let serverError = null;
+                
+                // 1. 尝试从服务器删除
+                try {
+                    const response = await fetchWithTimeout('api/case/delete.php', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: currentCase.id })
+                    }, 10000); // 10秒超时
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP错误: ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        serverDeleted = true;
+                    } else {
+                        serverError = result.message || '服务器返回失败';
+                    }
+                } catch (error) {
+                    console.error('服务器删除失败:', error);
+                    serverError = error.message || '网络请求失败';
+                }
+                
+                // 2. 从localStorage删除（已移除）
+                const index = cases.findIndex(c => c.id === currentCase.id);
+                if (index >= 0) {
+                    cases.splice(index, 1);
+                    localDeleted = true;
+                }
+                
+                hideLoading();
+                
+                if (serverDeleted) {
+                    showToast('案例删除成功（已同步到服务器）');
+                    setTimeout(() => window.location.href = 'case-management.html', 1000);
+                } else if (localDeleted) {
+                    showToast(`案例删除成功（仅本地，服务器: ${serverError || '同步失败'}）`);
+                    setTimeout(() => window.location.href = 'case-management.html', 1000);
+                } else {
+                    showToast('删除失败', 'error');
+                }
+            } catch (error) {
+                // 捕获所有未处理的错误，确保loading能关闭
+                console.error('删除过程出错:', error);
+                hideLoading();
+                showToast('删除失败: ' + (error.message || '未知错误'), 'error');
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // 显示页面内提示（位于预览按钮下方，内容区域上方）
+        function showPageToast(message, type = 'success') {
+            const container = document.getElementById('pageToastContainer');
+            // 清空之前的toast（只保留最新的一个）
+            container.innerHTML = '';
+            // 创建新的toast元素
+            const toast = document.createElement('div');
+            toast.className = `page-toast ${type}`;
+            toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            
+            // 显示
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // 3秒后移除
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        function showToast(message, type = 'success') {
+            // 使用页面内提示（位于预览按钮下方）
+            showPageToast(message, type);
+        }
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    saveCase();
+                } else if (e.key === 'z' && !e.shiftKey) {
+                    // Ctrl+Z 撤回
+                    e.preventDefault();
+                    undo();
+                } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
+                    // Ctrl+Y 或 Ctrl+Shift+Z 重做
+                    e.preventDefault();
+                    redo();
+                }
+            }
+        });
+    
+        // ========== 标签选择器 ==========
+        let caseAllTags = [];
+        let caseSelectedTags = [];
+
+        async function caseLoadTagOptions() {
+            try {
+                const resp = await fetch('api/tags/tag-options.php');
+                const result = await resp.json();
+                if (result.success) caseAllTags = result.data || [];
+            } catch(e) { console.log(e); }
+        }
+
+        function caseFilterTagOptions() {
+            const search = document.getElementById('caseTagSearch').value.toLowerCase();
+            const dd = document.getElementById('caseTagDropdown');
+            const filtered = caseAllTags.filter(t =>
+                (t.name.toLowerCase().includes(search) || t.slug.toLowerCase().includes(search)) &&
+                !caseSelectedTags.includes(parseInt(t.id))
+            );
+            if (filtered.length > 0) {
+                dd.innerHTML = filtered.map(t =>
+                    `<div class="tag-option" onclick="caseAddTag(${t.id}, '${t.name.replace(/'/g, "\'")}')">${t.name} <span style="color:#9ca3af;font-size:12px;">(${t.slug})</span></div>`
+                ).join('');
+                dd.classList.add('show');
+            } else {
+                dd.innerHTML = '<div class="tag-option disabled">' + (search ? '无匹配标签' : '输入关键词搜索标签') + '</div>';
+                dd.classList.add('show');
+            }
+        }
+
+        function caseAddTag(id, name) {
+            if (!caseSelectedTags.includes(id)) {
+                caseSelectedTags.push(id);
+                caseRenderSelectedTags();
+            }
+            document.getElementById('caseTagSearch').value = '';
+            document.getElementById('caseTagDropdown').classList.remove('show');
+        }
+
+        function caseRemoveTag(id) {
+            caseSelectedTags = caseSelectedTags.filter(t => t !== id);
+            caseRenderSelectedTags();
+        }
+
+        function caseSetSelectedTags(ids) {
+            caseSelectedTags = ids.map(id => parseInt(id));
+            caseRenderSelectedTags();
+        }
+
+        function caseRenderSelectedTags() {
+            const container = document.getElementById('caseSelectedTags');
+            container.innerHTML = caseSelectedTags.map(id => {
+                const tag = caseAllTags.find(t => parseInt(t.id) === id);
+                const name = tag ? tag.name : '#' + id;
+                return `<span class="tag-selector__tag">${name} <i class="fas fa-times" onclick="caseRemoveTag(${id})"></i></span>`;
+            }).join('');
+        }
+
+        function caseGetSelectedTagIds() {
+            return caseSelectedTags;
+        }
+
+        document.addEventListener('click', function(e) {
+            const dd = document.getElementById('caseTagDropdown');
+            if (dd && !e.target.closest('.tag-selector__input-wrap')) {
+                dd.classList.remove('show');
+            }
+        });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>API测试 - 案例保存</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        pre { background: #f3f4f6; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>API测试 - 案例保存</h1>
+    <div id="results"></div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = message;
+            resultsDiv.appendChild(div);
+        }
+
+        async function testSaveCase() {
+            log('<h2>测试1: 保存案例到服务器</h2>');
+            
+            const testCase = {
+                id: 'test_' + Date.now(),
+                title: '测试案例 ' + new Date().toLocaleString(),
+                type: '过桥',
+                city: '北京',
+                amount: '1000万',
+                summary: '这是一个测试案例',
+                detail: '<p>测试案例详情</p>',
+                status: 'published',
+                images: [],
+                highlights: ['亮点1', '亮点2'],
+                year: '2024'
+            };
+
+            try {
+                log('发送数据: <pre>' + JSON.stringify(testCase, null, 2) + '</pre>');
+                
+                const response = await fetch('api/case/save.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testCase)
+                });
+
+                const responseText = await response.text();
+                log('原始响应: <pre>' + responseText.substring(0, 500) + '</pre>');
+
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (e) {
+                    log('JSON解析失败: ' + e.message, 'error');
+                    return;
+                }
+
+                if (result.success) {
+                    log('✓ 保存成功: ' + result.message, 'success');
+                    
+                    // 测试读取
+                    await testGetCase(testCase.id);
+                    await testListCases();
+                } else {
+                    log('✗ 保存失败: ' + result.message, 'error');
+                }
+            } catch (error) {
+                log('✗ 请求失败: ' + error.message, 'error');
+            }
+        }
+
+        async function testGetCase(caseId) {
+            log('<h2>测试2: 读取单个案例</h2>');
+            
+            try {
+                const response = await fetch(`api/case/get.php?id=${caseId}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    log('✓ 读取成功: ' + result.case.title, 'success');
+                } else {
+                    log('✗ 读取失败: ' + result.message, 'error');
+                }
+            } catch (error) {
+                log('✗ 请求失败: ' + error.message, 'error');
+            }
+        }
+
+        async function testListCases() {
+            log('<h2>测试3: 读取案例列表</h2>');
+            
+            try {
+                const response = await fetch('api/case/list.php');
+                const result = await response.json();
+
+                if (result.success) {
+                    log('✓ 列表读取成功，共 ' + result.total + ' 个案例', 'success');
+                    log('案例列表: <pre>' + JSON.stringify(result.cases.map(c => ({id: c.id, title: c.title, status: c.status})), null, 2) + '</pre>');
+                } else {
+                    log('✗ 列表读取失败: ' + result.message, 'error');
+                }
+            } catch (error) {
+                log('✗ 请求失败: ' + error.message, 'error');
+            }
+        }
+
+        async function testFrontendAPI() {
+            log('<h2>测试4: 前端API - 读取已发布案例</h2>');
+            
+            try {
+                const response = await fetch('../api/cases.php');
+                const result = await response.json();
+
+                if (result.success) {
+                    log('✓ 前端API读取成功，共 ' + result.total + ' 个已发布案例', 'success');
+                } else {
+                    log('✗ 前端API读取失败: ' + result.message, 'error');
+                }
+            } catch (error) {
+                log('✗ 请求失败: ' + error.message, 'error');
+            }
+        }
+
+        // 运行测试
+        testSaveCase().then(() => {
+            testFrontendAPI();
+        });
+    </script>
+</body>
+</html>

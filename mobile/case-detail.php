@@ -2166,7 +2166,6 @@ window.nextImage=window.nextImage||function(){if(window.currentImageIndex<window
 
 
 <?php include '../includes/footer-simple.php'; ?>
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/includes/footer.php"; ?>
 </body>
 
 </html>

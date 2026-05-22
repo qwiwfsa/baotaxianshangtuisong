@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>媒体库 - CMS管理后台</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f3f4f6;min-height:100vh}
+.cms-layout{display:flex;min-height:100vh}
+.cms-sidebar{width:240px;background:#1e293b;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;color:#e2e8f0}
+.cms-sidebar-header{padding:20px 24px;border-bottom:1px solid #334155}
+.cms-sidebar-brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#fff}
+.cms-sidebar-brand i{font-size:18px;color:#3b82f6}
+.cms-sidebar-nav{padding:16px 0}
+.cms-nav-section{margin-bottom:8px}
+.cms-nav-title{padding:12px 24px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8}
+.cms-nav-item{display:flex;align-items:center;gap:12px;padding:12px 24px;color:#cbd5e1;text-decoration:none;font-size:14px;transition:all .2s;cursor:pointer}
+.cms-nav-item:hover{background:#334155;color:white}
+.cms-nav-item.active{background:#334155;color:white;border-left:3px solid #3b82f6}
+.cms-nav-item i{width:18px;text-align:center}
+.cms-main{flex:1;margin-left:240px;padding:24px}
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;background:#fff;padding:16px 20px;border-radius:10px;border:1px solid #e2e8f0}
+.toolbar h2{font-size:18px;font-weight:600;color:#1e293b;margin-right:auto}
+.btn{padding:8px 16px;border:none;border-radius:6px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:500;transition:all .15s}
+.btn-primary{background:#3b82f6;color:#fff}.btn-primary:hover{background:#2563eb}
+.btn-outline{background:#fff;color:#334155;border:1px solid #cbd5e1}.btn-outline:hover{background:#f8fafc}
+.btn-danger{background:#ef4444;color:#fff}.btn-danger:hover{background:#dc2626}
+.btn-sm{padding:5px 10px;font-size:12px}
+.upload-zone{border:2px dashed #cbd5e1;border-radius:10px;padding:32px;text-align:center;background:#fff;margin-bottom:20px;cursor:pointer;transition:all .2s;color:#64748b}
+.upload-zone:hover,.upload-zone.drag-over{border-color:#3b82f6;background:#eff6ff;color:#3b82f6}
+.upload-zone i{font-size:40px;margin-bottom:8px;display:block}
+.folder-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.folder-chip{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;border:1px solid #e2e8f0;color:#475569}
+.folder-chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.media-card{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;cursor:pointer;transition:all .15s;position:relative}
+.media-card:hover{border-color:#3b82f6;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.media-card.selected{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,.3)}
+.media-card .check{position:absolute;top:6px;left:6px;z-index:2;width:20px;height:20px;border-radius:4px;background:rgba(255,255,255,.9);display:none;align-items:center;justify-content:center;font-size:11px;color:#3b82f6}
+.media-card.selecting .check,.media-card.selected .check{display:flex}
+.media-card.selected .check{background:#3b82f6;color:#fff}
+.media-card .thumb{width:100%;height:130px;object-fit:cover;display:block;background:#f1f5f9}
+.media-card .thumb.icon{display:flex;align-items:center;justify-content:center;font-size:40px;color:#94a3b8}
+.media-card .info{padding:6px 8px}
+.media-card .name{font-size:11px;color:#334155;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.media-card .meta{font-size:10px;color:#94a3b8;margin-top:2px;display:flex;justify-content:space-between}
+.media-card .actions{position:absolute;top:4px;right:4px;display:none;gap:2px}
+.media-card:hover .actions{display:flex}
+.media-card .actions button{width:26px;height:26px;border:none;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;cursor:pointer;font-size:11px}
+.batch-bar{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 24px;border-radius:10px;z-index:200;gap:12px;align-items:center}
+.batch-bar.show{display:flex}.batch-bar button{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+.batch-bar .danger{background:#ef4444;border-color:#ef4444}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:300;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:12px;padding:24px;width:480px;max-width:90vw;max-height:80vh;overflow-y:auto}
+.modal h3{font-size:16px;margin-bottom:16px}.modal label{display:block;font-size:12px;font-weight:500;color:#475569;margin-bottom:4px;margin-top:12px}
+.modal input,.modal select,.modal textarea{width:100%;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px}
+.modal-btns{display:flex;gap:8px;margin-top:20px;justify-content:flex-end}
+.tabs{display:flex;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.tab{padding:10px 20px;font-size:13px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab.active{color:#3b82f6;border-bottom-color:#3b82f6;font-weight:600}
+.table-wrap{background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0}
+.table-wrap table{width:100%;border-collapse:collapse}
+.table-wrap td,.table-wrap th{padding:10px 14px;font-size:12px;text-align:left;border-bottom:1px solid #f1f5f9}
+.table-wrap th{background:#f8fafc;font-weight:600;color:#475569}
+.table-wrap tr:hover td{background:#f8fafc}
+.toast{position:fixed;top:20px;right:20px;z-index:400;padding:10px 18px;border-radius:8px;color:#fff;font-size:13px;display:none;animation:slideIn .3s}
+.toast.success{background:#10b981}.toast.error{background:#ef4444}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.pagination{display:flex;justify-content:center;gap:6px;margin-top:16px}
+.pagination button{padding:5px 10px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-size:12px}
+.empty{text-align:center;padding:50px;color:#94a3b8}.empty i{font-size:40px;margin-bottom:10px;display:block}
+@media(max-width:768px){.cms-sidebar{display:none}.cms-main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="cms-layout">
+<aside class="cms-sidebar">
+<div class="cms-sidebar-header"><div class="cms-sidebar-brand"><i class="fas fa-cog"></i><span>CMS管理后台</span></div></div>
+<nav class="cms-sidebar-nav"><div class="cms-nav-section"><div class="cms-nav-title">菜单</div>
+<a href="dashboard.html" class="cms-nav-item"><i class="fas fa-home"></i><span>仪表板</span></a>
+<a href="logo-settings.html" class="cms-nav-item"><i class="fas fa-image"></i><span>Logo设置</span></a>
+<a href="seo-settings.html" class="cms-nav-item"><i class="fas fa-search"></i><span>SEO设置</span></a>
+<a href="case-management.html" class="cms-nav-item"><i class="fas fa-trophy"></i><span>案例管理</span></a>
+<a href="page-manager.html" class="cms-nav-item"><i class="fas fa-list"></i><span>页面列表</span></a>
+<a href="visual-page-builder.html" class="cms-nav-item"><i class="fas fa-pen-ruler"></i><span>页面设计</span></a>
+<a href="visual-editor-v3.html" class="cms-nav-item"><i class="fas fa-paint-brush"></i><span>可视化编辑器</span></a>
+<a href="nav-management.html" class="cms-nav-item"><i class="fas fa-bars"></i><span>导航菜单</span></a>
+<a href="components/news/article-list.html" class="cms-nav-item"><i class="fas fa-newspaper"></i><span>文章管理</span></a>
+<a href="faq-management.html" class="cms-nav-item"><i class="fas fa-question-circle"></i><span>FAQ管理</span></a>
+<a href="components/tags/tag-list.html" class="cms-nav-item"><i class="fas fa-tags"></i><span>标签管理</span></a>
+<a href="footer-manager.html" class="cms-nav-item"><i class="fas fa-list-alt"></i><span>页脚管理</span></a>
+<a href="comment-management.html" class="cms-nav-item"><i class="fas fa-comments"></i><span>评价管理</span></a>
+<a href="media-library.html" class="cms-nav-item active"><i class="fas fa-photo-video"></i><span>媒体库</span></a>
+<a href="friend-link-management.html" class="cms-nav-item"><i class="fas fa-link"></i><span>友情链接</span></a>
+<a href="announcement-management.html" class="cms-nav-item"><i class="fas fa-bullhorn"></i><span>网站公告</span></a>
+<a href="fenzhan-management.html" class="cms-nav-item"><i class="fas fa-building"></i><span>城市分站</span></a>
+<a href="fenzhan-template.html" class="cms-nav-item"><i class="fas fa-pen-ruler"></i><span>公共模板</span></a>
+</div></nav>
+</aside>
+<main class="cms-main">
+<div class="tabs">
+<div class="tab active" onclick="switchTab('files')">文件管理</div>
+<div class="tab" onclick="switchTab('folders')">文件夹</div>
+<div class="tab" onclick="switchTab('recycle')">回收站</div>
+<div class="tab" onclick="switchTab('logs')">操作日志</div>
+<div class="tab" onclick="switchTab('settings')">设置</div>
+</div>
+<div id="tab-files">
+<div class="toolbar">
+<h2>媒体库</h2>
+<button class="btn btn-primary" onclick="document.getElementById('fileInput').click()"><i class="fas fa-upload"></i>上传</button>
+<button class="btn btn-outline" onclick="toggleSelect()"><i class="fas fa-check-square"></i>批量</button>
+<input type="file" id="fileInput" multiple hidden accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.mp4,.zip" onchange="doUpload(this.files)">
+<input id="searchInput" placeholder="搜索..." style="padding:6px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;width:160px" oninput="debounce(loadFiles,300)">
+<select id="typeFilter" onchange="loadFiles()" style="padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px">
+<option value="">全部</option><option value="image">图片</option><option value="document">文档</option><option value="video">视频</option>
+</select>
+</div>
+<div class="folder-bar" id="folderBar"></div>
+<div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+<i class="fas fa-cloud-upload-alt"></i><p>拖拽文件到此处上传</p><p style="font-size:11px;color:#94a3b8">JPG/PNG/WebP/SVG/PDF/DOC/XLS/MP4/ZIP</p>
+</div>
+<div class="media-grid" id="mediaGrid"></div>
+<div class="empty" id="emptyState"><i class="fas fa-inbox"></i><p>暂无文件</p></div>
+<div class="pagination" id="pagination"></div>
+</div>
+<div id="tab-folders" style="display:none">
+<div class="toolbar"><h2>文件夹</h2><button class="btn btn-primary" onclick="createFolder()"><i class="fas fa-plus"></i>新建</button></div>
+<div class="media-grid" id="folderGrid"></div>
+</div>
+<div id="tab-recycle" style="display:none">
+<div class="toolbar"><h2>回收站</h2><button class="btn btn-outline btn-sm" onclick="loadRecycle()"><i class="fas fa-sync-alt"></i></button></div>
+<div class="media-grid" id="recycleGrid"></div>
+</div>
+<div id="tab-logs" style="display:none">
+<div class="toolbar"><h2>操作日志</h2></div>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>文件ID</th><th>操作</th><th>详情</th><th>IP</th><th>时间</th></tr></thead><tbody id="logBody"></tbody></table></div>
+<div class="pagination" id="logPagination"></div>
+</div>
+<div id="tab-settings" style="display:none">
+<div class="toolbar"><h2>设置</h2><button class="btn btn-primary" onclick="saveSettings()">保存</button></div>
+<div id="settingsForm" style="max-width:500px"></div>
+</div>
+</main>
+</div>
+<div class="batch-bar" id="batchBar">
+<span id="batchCount">已选0个</span>
+<button onclick="batchAction('move')">移动</button>
+<button onclick="batchAction('delete')">删除</button>
+<button class="danger" onclick="cancelSelect()">取消</button>
+</div>
+<div class="modal-overlay" id="modal"><div class="modal" id="modalBox"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+var A='api/media/',page=1,fid=0,tab='files',sel=new Set,sm=false;
+function G(id){return document.getElementById(id)}
+function api(u,o){o=o||{};return fetch(A+u,o).then(function(r){return r.json()})}
+function T(m,t){var e=G('toast');e.textContent=m;e.className='toast '+(t||'success');e.style.display='block';setTimeout(function(){e.style.display='none'},2500)}
+function M(h){G('modalBox').innerHTML=h;G('modal').classList.add('show')}
+function H(){G('modal').classList.remove('show')}
+G('modal').addEventListener('click',function(e){if(e.target===this)H()})
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function FS(b){return b<1024?b+'B':b<1048576?(b/1024).toFixed(1)+'KB':(b/1048576).toFixed(1)+'MB'}
+var dt;function debounce(f,t){clearTimeout(dt);dt=setTimeout(f,t||300)}
+
+function switchTab(t){tab=t;['files','folders','recycle','logs','settings'].forEach(function(x,i){
+G('tab-'+x).style.display=x===t?'block':'none';
+document.querySelectorAll('.tab')[i].classList.toggle('active',x===t);
+});if(t==='files')loadFiles();else if(t==='folders')loadFolders();else if(t==='recycle')loadRecycle();else if(t==='logs')loadLogs();else if(t==='settings')loadSettings()}
+
+function loadFiles(){
+api('media-list.php?page='+page+'&limit=30&folder='+fid+'&search='+encodeURIComponent(G('searchInput').value)+'&type='+G('typeFilter').value).then(function(d){
+if(!d.success)return;var g=G('mediaGrid'),e=G('emptyState');
+if(!d.data.length){g.innerHTML='';e.style.display='block'}else{e.style.display='none'}
+g.innerHTML=d.data.map(function(f){var img=f.file_type&&f.file_type.indexOf('image/')===0,
+t=img?'<img class=thumb src='+(f.thumb||f.url)+'>':'<div class=\"thumb icon\"><i class=\"fas '+(f.file_type&&f.file_type.indexOf('video/')===0?'fa-video':'fa-file')+'\"></i></div>';
+return '<div class=media-card'+(sm?' selecting':'')+(sel.has(f.id)?' selected':'')+' onclick=cardClick('+f.id+',event) data-id='+f.id+'>'+
+'<div class=check><i class=\"fas fa-check\"></i></div>'+
+'<div class=actions><button onclick=\"event.stopPropagation();editMeta('+f.id+')\"><i class=fas fa-pen></i></button>'+
+'<button onclick=\"event.stopPropagation();batchAction(\'delete\',['+f.id+'])\"><i class=fas fa-trash></i></button></div>'+
+t+'<div class=info><div class=name title='+esc(f.original_name)+'>'+esc(f.original_name)+'</div><div class=meta><span>'+FS(f.file_size)+'</span></div></div></div>'}).join('');
+var p=G('pagination');if(d.pages>1){p.innerHTML='<button onclick=page=1;loadFiles()'+(d.page<=1?' disabled':'')+'><i class=fas fa-angle-double-left></i></button>'+
+'<button onclick=page='+(d.page-1)+';loadFiles()'+(d.page<=1?' disabled':'')+'><i class=fas fa-angle-left></i></button>'+
+'<span>'+d.page+'/'+d.pages+'</span>'+
+'<button onclick=page='+(d.page+1)+';loadFiles()'+(d.page>=d.pages?' disabled':'')+'><i class=fas fa-angle-right></i></button>'+
+'<button onclick=page='+d.pages+';loadFiles()'+(d.page>=d.pages?' disabled':'')+'><i class=fas fa-angle-double-right></i></button>'}else{p.innerHTML=''}
+});
+api('folders.php').then(function(d){if(d.success){G('folderBar').innerHTML='<span class=\"folder-chip'+(fid===0?' active':'')+'\" onclick=fid=0;loadFiles()>全部</span>'+d.data.map(function(f){return'<span class=\"folder-chip'+(fid===f.id?' active':'')+'\" onclick=fid='+f.id+';loadFiles()>'+esc(f.name)+'</span>'}).join('')}})
+}
+
+function doUpload(files){if(!files||!files.length)return;var fd=new FormData();for(var i=0;i<files.length;i++)fd.append('files[]',files[i]);fd.append('folder_id',fid);T('上传中...');fetch(A+'media-upload.php',{method:'POST',body:fd}).then(function(r){return r.json()}).then(function(d){if(d.success){T(d.data.uploaded.length+'个成功');loadFiles()}else{T(d.message||'失败','error')}})}
+
+function toggleSelect(){sm=!sm;if(!sm){sel.clear();updateSel()}document.querySelectorAll('.media-card').forEach(function(c){c.classList.toggle('selecting',sm)})}
+function cardClick(id,e){if(sm){sel[sel.has(id)?'delete':'add'](id);document.querySelector('[data-id='+id+']').classList.toggle('selected',sel.has(id));updateSel()}}
+function updateSel(){var b=G('batchBar');b.classList.toggle('show',sel.size>0);G('batchCount').textContent='已选'+sel.size+'个'}
+function cancelSelect(){sm=false;sel.clear();updateSel();document.querySelectorAll('.media-card').forEach(function(c){c.classList.remove('selecting','selected')})}
+function batchAction(act,ids){ids=ids||Array.from(sel);if(!ids.length)return;if(act==='delete'&&!confirm('确定删除?'+ids.length+'个文件?'))return;
+var body=JSON.stringify({ids:ids,action:act});if(act==='move'){api('folders.php').then(function(d){if(!d.success)return;
+M('<h3>移动到</h3><select id=mvTarget>'+d.data.map(function(f){return'<option value='+f.id+'>'+esc(f.name)+'</option>'}).join('')+'</select><div class=modal-btns><button class=\"btn btn-outline\" onclick=H()>取消</button><button class=\"btn btn-primary\" onclick=doMove()>确定</button></div>')})}else if(act==='restore'){api('batch.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ids:ids,action:'restore'})}).then(function(d){if(d.success){T('已恢复');cancelSelect();loadRecycle()}})}
+else if(act==='permanent_delete'&&confirm('永久删除不可恢复，确定?')){api('batch.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ids:ids,action:'permanent_delete'})}).then(function(d){if(d.success){T('已删除');cancelSelect();loadRecycle()}})}
+else{api('batch.php',{method:'POST',headers:{'Content-Type':'application/json'},body:body}).then(function(d){if(d.success){T('完成');cancelSelect();loadFiles()}})}}
+function doMove(){var fid=parseInt(G('mvTarget').value);api('batch.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ids:Array.from(sel),action:'move',folder_id:fid})}).then(function(d){if(d.success){T('移动成功');cancelSelect();loadFiles();H()}})}
+
+function editMeta(id){api('media-list.php?page=1&limit=1').then(function(d){var f=d.data.find(function(x){return x.id===id});if(!f)return;
+M('<h3>编辑</h3><label>文件名</label><input value=\"'+esc(f.original_name)+'\" readonly><label>SEO Alt</label><input id=emAlt value=\"'+esc(f.alt_text||'')+'\"><label>标题</label><input id=emTitle value=\"'+esc(f.title||'')+'\"><label>文件夹</label><select id=emFid><option value=0>根目录</option></select><div class=modal-btns><button class=\"btn btn-outline\" onclick=H()>取消</button><button class=\"btn btn-primary\" onclick=saveMeta('+id+')>保存</button></div>');
+api('folders.php').then(function(d2){if(d2.success)d2.data.forEach(function(fd){G('emFid').innerHTML+='<option value='+fd.id+(fd.id===f.folder_id?' selected':'')+'>'+esc(fd.name)+'</option>'})})})}
+function saveMeta(id){var d={id:id,alt_text:G('emAlt').value,title:G('emTitle').value,folder_id:parseInt(G('emFid').value)};
+api('media-list.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(d2){if(d2.success){T('已保存');H();loadFiles()}})}
+
+function loadRecycle(){api('media-list.php?recycle=1&limit=100').then(function(d){if(!d.success)return;var g=G('recycleGrid');
+g.innerHTML=d.data.map(function(f){return'<div class=media-card><div class=\"thumb icon\"><i class=\"fas fa-file\"></i></div><div class=info><div class=name>'+esc(f.original_name)+'</div><div class=meta>'+FS(f.file_size)+'</div></div><div class=actions style=display:flex>'+
+'<button onclick=batchAction(\'restore\',['+f.id+'])><i class=fas fa-undo></i></button><button onclick=batchAction(\'permanent_delete\',['+f.id+'])><i class=fas fa-times></i></button></div></div>'}).join('')})}
+
+function loadLogs(){api('logs.php?page=1&limit=50').then(function(d){if(!d.success)return;G('logBody').innerHTML=d.data.map(function(l){return'<tr><td>'+l.id+'</td><td>'+l.media_id+'</td><td>'+l.action+'</td><td>'+esc(l.detail)+'</td><td>'+l.ip+'</td><td>'+l.created_at+'</td></tr>'}).join('')})}
+
+function loadFolders(){api('folders.php').then(function(d){if(!d.success)return;G('folderGrid').innerHTML=d.data.map(function(f){return'<div class=media-card style=padding:16px;text-align:center><i class=fas fa-folder style=font-size:40px;color:#f59e0b></i><div style=margin-top:8px;font-weight:500>'+esc(f.name)+'</div><div style=font-size:11px;color:#94a3b8>'+f.file_count+'文件</div>'+(f.id>1?'<button class=\"btn btn-sm btn-outline\" style=margin-top:8px onclick=delFolder('+f.id+')><i class=fas fa-trash></i></button>':'')+'</div>'}).join('')})}
+function createFolder(){M('<h3>新建文件夹</h3><label>名称</label><input id=nfName><div class=modal-btns><button class=\"btn btn-outline\" onclick=H()>取消</button><button class=\"btn btn-primary\" onclick=doCreateFolder()>创建</button></div>')}
+function doCreateFolder(){var n=G('nfName').value.trim();if(!n)return;api('folders.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n})}).then(function(d){if(d.success){T('已创建');H();loadFolders();loadFiles()}})}
+function delFolder(id){if(!confirm('删除文件夹？文件移至默认分类。'))return;api('folders.php',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})}).then(function(d){if(d.success){T('已删除');loadFolders();loadFiles()}})}
+
+function loadSettings(){api('settings.php').then(function(d){if(!d.success)return;var s=d.data;var fs=[{k:'compression_quality',l:'压缩质量(1-100)',t:'number'},{k:'max_width',l:'最大宽度(px)',t:'number'},{k:'max_height',l:'最大高度(px)',t:'number'},{k:'webp_enabled',l:'WebP转换',t:'select',o:{0:'关闭',1:'开启'}},{k:'watermark_enabled',l:'水印',t:'select',o:{0:'关闭',1:'开启'}},{k:'watermark_text',l:'水印文字',t:'text'},{k:'exif_remove',l:'清除EXIF',t:'select',o:{0:'关闭',1:'开启'}},{k:'cdn_enabled',l:'CDN',t:'select',o:{0:'关闭',1:'开启'}},{k:'cdn_url',l:'CDN域名',t:'text'}];
+G('settingsForm').innerHTML=fs.map(function(f){var v=s[f.k]||'',i=f.t==='select'?'<select id=s_'+f.k+'>'+Object.entries(f.o||{}).map(function(o){return'<option value='+o[0]+(String(v)===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>':'<input id=s_'+f.k+' type='+f.t+' value='+v+'>';return'<label>'+f.l+'</label>'+i}).join('')})}
+function saveSettings(){var d={};['compression_quality','max_width','max_height','webp_enabled','watermark_enabled','watermark_text','exif_remove','cdn_enabled','cdn_url'].forEach(function(k){var e=G('s_'+k);if(e)d[k]=e.value});api('settings.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(d2){if(d2.success)T('已保存')})}
+
+var dz=G('dropZone');dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over')});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over')});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');doUpload(e.dataTransfer.files)});
+
+loadFiles();
+</script>
+</body>
+</html>

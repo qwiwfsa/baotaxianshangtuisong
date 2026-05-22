@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑页面 - CMS管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TinyMCE 富文本编辑器 (免API Key版本) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* 顶部导航 */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .page-name {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .header-btn.primary {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .header-btn.primary:hover {
+            background: #059669;
+        }
+
+        .header-btn.danger {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .header-btn.danger:hover {
+            background: #dc2626;
+        }
+
+        /* 主内容区 */
+        .main {
+            padding: 88px 24px 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* 编辑布局 */
+        .editor-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            height: calc(100vh - 112px);
+        }
+
+        /* 编辑面板 */
+        .edit-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9fafb;
+        }
+
+        .panel-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-title i {
+            color: #3b82f6;
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        /* 区块样式 */
+        .section-block {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: #3b82f6;
+        }
+
+        .section-toggle {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .section-toggle:hover {
+            color: #3b82f6;
+        }
+
+        .section-content {
+            display: block;
+        }
+
+        .section-content.collapsed {
+            display: none;
+        }
+
+        /* 预览面板 */
+        .preview-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .preview-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+            background: #f5f7fa;
+        }
+
+        .preview-info {
+            padding: 12px 20px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* 按钮组 */
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f3f4f6;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* 底部操作栏 */
+        .editor-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 90;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+        }
+
+        .footer-left {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .footer-left .status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-left .status.saved {
+            color: #10b981;
+        }
+
+        .footer-left .status.unsaved {
+            color: #f59e0b;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* 加载状态 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 300;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .toast i {
+            font-size: 20px;
+        }
+
+        .toast.success i {
+            color: #10b981;
+        }
+
+        .toast.error i {
+            color: #ef4444;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .editor-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .preview-panel {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-right {
+                display: none;
+            }
+
+            .editor-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .footer-right {
+                width: 100%;
+            }
+
+            .footer-right .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        /* TinyMCE 自定义样式 */
+        .tox-tinymce {
+            border-radius: 8px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="logo">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回列表</span>
+            </a>
+            <div class="header-divider"></div>
+            <span class="page-name" id="pageTitle">编辑页面</span>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" onclick="refreshPreview()">
+                <i class="fas fa-sync-alt"></i>
+                <span>刷新预览</span>
+            </button>
+            <a href="#" class="header-btn" id="viewPageBtn" target="_blank">
+                <i class="fas fa-eye"></i>
+                <span>查看页面</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main">
+        <div class="editor-layout">
+            <!-- 编辑面板 -->
+            <div class="edit-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fas fa-edit"></i>
+                        内容编辑
+                    </h3>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="undoBtn" onclick="undo()" disabled>
+                            <i class="fas fa-undo"></i>
+                            撤回
+                        </button>
+                        <button class="btn btn-secondary" id="redoBtn" onclick="redo()" disabled>
+                            <i class="fas fa-redo"></i>
+                            重做
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetData()">
+                            <i class="fas fa-undo-alt"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body" id="editForm">
+                    <!-- 表单内容将由JS生成 -->
+                </div>
+            </div>
+
+            <!-- 预览面板 -->
+            <div class="preview-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fas fa-eye"></i>
+                        实时预览
+                    </h3>
+                </div>
+                <iframe class="preview-frame" id="previewFrame" src=""></iframe>
+                <div class="preview-info">
+                    <span><i class="fas fa-info-circle"></i> 预览仅供参考，实际效果以发布后的页面为准</span>
+                    <span id="previewSize">100%</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部操作栏 -->
+    <div class="editor-footer">
+        <div class="footer-left">
+            <div class="status unsaved" id="saveStatus">
+                <i class="fas fa-circle"></i>
+                <span>有未保存的更改</span>
+            </div>
+        </div>
+        <div class="footer-right">
+            <button class="btn btn-secondary" onclick="cancelEdit()">
+                <i class="fas fa-times"></i>
+                取消
+            </button>
+            <button class="btn btn-primary" onclick="saveData()">
+                <i class="fas fa-save"></i>
+                保存
+            </button>
+            <button class="btn btn-success" onclick="publishPage()">
+                <i class="fas fa-upload"></i>
+                发布
+            </button>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">操作成功</span>
+    </div>
+
+    <script>
+        // 获取URL参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageId = urlParams.get('page');
+
+        // 页面配置
+        const pageConfigs = {
+            index: {
+                name: '首页',
+                file: 'index.html',
+                fields: [
+                    { section: 'hero', title: 'Hero区域', icon: 'fa-home', fields: [
+                        { name: 'heroTitle', label: '主标题', type: 'text', required: true },
+                        { name: 'heroSubtitle', label: '副标题', type: 'textarea' },
+                        { name: 'heroButtonText', label: '按钮文字', type: 'text' },
+                        { name: 'heroButtonLink', label: '按钮链接', type: 'text' }
+                    ]},
+                    { section: 'stats', title: '统计数据', icon: 'fa-chart-bar', fields: [
+                        { name: 'stat1Number', label: '统计1-数字', type: 'text' },
+                        { name: 'stat1Label', label: '统计1-标签', type: 'text' },
+                        { name: 'stat2Number', label: '统计2-数字', type: 'text' },
+                        { name: 'stat2Label', label: '统计2-标签', type: 'text' },
+                        { name: 'stat3Number', label: '统计3-数字', type: 'text' },
+                        { name: 'stat3Label', label: '统计3-标签', type: 'text' },
+                        { name: 'stat4Number', label: '统计4-数字', type: 'text' },
+                        { name: 'stat4Label', label: '统计4-标签', type: 'text' }
+                    ]},
+                    { section: 'services', title: '服务介绍', icon: 'fa-briefcase', fields: [
+                        { name: 'servicesTitle', label: '区域标题', type: 'text' },
+                        { name: 'servicesSubtitle', label: '区域副标题', type: 'textarea' },
+                        { name: 'service1Title', label: '服务1-标题', type: 'text' },
+                        { name: 'service1Content', label: '服务1-内容', type: 'richtext' },
+                        { name: 'service2Title', label: '服务2-标题', type: 'text' },
+                        { name: 'service2Content', label: '服务2-内容', type: 'richtext' },
+                        { name: 'service3Title', label: '服务3-标题', type: 'text' },
+                        { name: 'service3Content', label: '服务3-内容', type: 'richtext' },
+                        { name: 'service4Title', label: '服务4-标题', type: 'text' },
+                        { name: 'service4Content', label: '服务4-内容', type: 'richtext' }
+                    ]},
+                    { section: 'cases', title: '成功案例', icon: 'fa-trophy', fields: [
+                        { name: 'casesTitle', label: '区域标题', type: 'text' },
+                        { name: 'casesSubtitle', label: '区域副标题', type: 'textarea' }
+                    ]},
+                    { section: 'advantages', title: '服务优势', icon: 'fa-star', fields: [
+                        { name: 'advantagesTitle', label: '区域标题', type: 'text' },
+                        { name: 'advantagesSubtitle', label: '区域副标题', type: 'textarea' }
+                    ]},
+                    { section: 'faq', title: '常见问题', icon: 'fa-question-circle', fields: [
+                        { name: 'faqTitle', label: '区域标题', type: 'text' },
+                        { name: 'faqSubtitle', label: '区域副标题', type: 'textarea' }
+                    ]}
+                ]
+            },
+            services: {
+                name: '业务范围',
+                file: 'services.html',
+                fields: [
+                    { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                        { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                        { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+                    ]},
+                    { section: 'listed', title: '上市公司类', icon: 'fa-chart-line', fields: [
+                        { name: 'listedTitle', label: '标题', type: 'text' },
+                        { name: 'listedContent', label: '内容', type: 'richtext' },
+                        { name: 'listedImage', label: '图片URL', type: 'text' }
+                    ]},
+                    { section: 'baizhang', title: '企业/个人摆账', icon: 'fa-hand-holding-usd', fields: [
+                        { name: 'baizhangTitle', label: '标题', type: 'text' },
+                        { name: 'baizhangContent', label: '内容', type: 'richtext' },
+                        { name: 'baizhangImage', label: '图片URL', type: 'text' }
+                    ]},
+                    { section: 'deposit', title: '银行存款类', icon: 'fa-university', fields: [
+                        { name: 'depositTitle', label: '标题', type: 'text' },
+                        { name: 'depositContent', label: '内容', type: 'richtext' },
+                        { name: 'depositImage', label: '图片URL', type: 'text' }
+                    ]},
+                    { section: 'receivable', title: '应收账款融资', icon: 'fa-file-invoice-dollar', fields: [
+                        { name: 'receivableTitle', label: '标题', type: 'text' },
+                        { name: 'receivableContent', label: '内容', type: 'richtext' },
+                        { name: 'receivableImage', label: '图片URL', type: 'text' }
+                    ]}
+                ]
+            },
+            cases: {
+                name: '成功案例',
+                file: 'cases.html',
+                fields: [
+                    { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                        { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                        { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+                    ]},
+                    { section: 'stats', title: '案例统计', icon: 'fa-chart-bar', fields: [
+                        { name: 'statClients', label: '服务企业数', type: 'text' },
+                        { name: 'statAmount', label: '管理资金规模', type: 'text' },
+                        { name: 'statSuccess', label: '成功率', type: 'text' },
+                        { name: 'statSatisfaction', label: '客户满意度', type: 'text' }
+                    ]}
+                ]
+            },
+            contact: {
+                name: '联系我们',
+                file: 'contact.html',
+                fields: [
+                    { section: 'header', title: '页面头部', icon: 'fa-heading', fields: [
+                        { name: 'pageTitle', label: '页面标题', type: 'text', required: true },
+                        { name: 'pageSubtitle', label: '页面副标题', type: 'textarea' }
+                    ]},
+                    { section: 'contact', title: '联系信息', icon: 'fa-phone', fields: [
+                        { name: 'contactPhone', label: '联系电话', type: 'text' },
+                        { name: 'contactName', label: '联系人', type: 'text' },
+                        { name: 'contactEmail', label: '电子邮箱', type: 'text' },
+                        { name: 'contactAddress', label: '公司地址', type: 'textarea' }
+                    ]},
+                    { section: 'hours', title: '工作时间', icon: 'fa-clock', fields: [
+                        { name: 'workHours', label: '工作时间', type: 'textarea' }
+                    ]}
+                ]
+            }
+        };
+
+        // 默认数据
+        const defaultData = {
+            index: {
+                heroTitle: '专业资金解决方案\n助力企业稳健发展',
+                heroSubtitle: '提供上市公司短拆、企业摆账、银行存款、应收账款融资等全方位资金服务，以专业实力和丰富经验，为您的企业发展保驾护航。',
+                heroButtonText: '立即咨询',
+                heroButtonLink: 'contact.html',
+                stat1Number: '10',
+                stat1Label: '年行业经验',
+                stat2Number: '500',
+                stat2Label: '服务企业',
+                stat3Number: '100',
+                stat3Label: '亿资金规模',
+                stat4Number: '99',
+                stat4Label: '%客户满意度',
+                servicesTitle: '核心业务领域',
+                servicesSubtitle: '涵盖上市公司、企业摆账、银行存款、应收账款融资等全方位资金服务',
+                service1Title: '上市公司类',
+                service1Content: '<ul><li>短拆、股票解质押过桥</li><li>募集账户归还过桥、产业基金备案过桥</li><li>股票质押、定增、协议转让、代持</li><li>财务报表优化、降负债</li></ul>',
+                service2Title: '企业/个人摆账',
+                service2Content: '<ul><li>长短期定存摆账、云信票据实摆</li><li>过账实趴、抵押类资金过桥</li><li>实缴验资、资金证明、银行保函</li><li>贸易增量、显账亮资</li></ul>',
+                service3Title: '银行存款类',
+                service3Content: '<ul><li>时点冲量、日均业务</li><li>月末冲量</li><li>一年期定期存款</li><li>三年期定期存款</li></ul>',
+                service4Title: '应收账款融资',
+                service4Content: '<ul><li>置换云信票据</li><li>可拆分流转支付</li><li>融资贴现、准入宽松</li><li>不看征信、包容执行诉讼主体</li></ul>',
+                casesTitle: '成功案例',
+                casesSubtitle: '多年来，我们已成功服务数百家企业，累计管理资金规模超百亿',
+                advantagesTitle: '服务优势',
+                advantagesSubtitle: '专业、高效、安全',
+                faqTitle: '常见问题',
+                faqSubtitle: '解答您关于资金业务的常见疑问'
+            },
+            services: {
+                pageTitle: '业务范围',
+                pageSubtitle: '专业资金服务，助力企业发展',
+                listedTitle: '上市公司类',
+                listedContent: '<p>为上市公司提供全方位的资金解决方案，包括短拆、股票解质押过桥、募集账户归还过桥等服务。</p>',
+                listedImage: 'images/service-listed.jpg',
+                baizhangTitle: '企业/个人摆账',
+                baizhangContent: '<p>提供长短期定存摆账、云信票据实摆、过账实趴等服务，满足企业各类资金展示需求。</p>',
+                baizhangImage: 'images/service-baizhang.jpg',
+                depositTitle: '银行存款类',
+                depositContent: '<p>提供时点冲量、日均业务、月末冲量、定期存款等服务，帮助企业优化财务报表。</p>',
+                depositImage: 'images/service-deposit.jpg',
+                receivableTitle: '应收账款融资',
+                receivableContent: '<p>通过置换云信票据、融资贴现等方式，帮助企业盘活应收账款，解决资金周转问题。</p>',
+                receivableImage: 'images/service-receivable.jpg'
+            },
+            cases: {
+                pageTitle: '成功案例',
+                pageSubtitle: '多年行业经验，服务数百家企业',
+                statClients: '500+',
+                statAmount: '100亿',
+                statSuccess: '98%',
+                statSatisfaction: '99%'
+            },
+            contact: {
+                pageTitle: '联系我们',
+                pageSubtitle: '专业团队，随时为您服务',
+                contactPhone: '13552883008',
+                contactName: '王总',
+                contactEmail: 'wanglizhongguo@126.com',
+                contactAddress: '北京市朝阳区金融街88号',
+                workHours: '周一至周五：9:00 - 18:00\n周六：9:00 - 12:00\n周日及节假日休息'
+            }
+        };
+
+        let currentData = {};
+        let isDirty = false;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!pageId || !pageConfigs[pageId]) {
+                alert('页面参数错误');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // 检查登录
+            if (localStorage.getItem('cms_logged_in') !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 设置页面标题
+            const config = pageConfigs[pageId];
+            document.getElementById('pageTitle').textContent = `编辑${config.name}`;
+            document.getElementById('viewPageBtn').href = `../${config.file}`;
+
+            // 加载数据
+            loadData();
+
+            // 渲染表单
+            renderForm();
+
+            // 初始化预览
+            initPreview();
+        });
+
+        // 加载数据（从API加载，不再使用localStorage）
+        function loadData() {
+            // 尝试从API获取页面数据
+            fetch('api/list-pages.php')
+                .then(r => r.json())
+                .then(result => {
+                    if (result.success && result.data && result.data.pages) {
+                        const pageInfo = result.data.pages.find(p => p.pageId === pageId);
+                        if (pageInfo) {
+                            if (pageInfo.data) {
+                                currentData = { ...defaultData[pageId], ...pageInfo.data };
+                            } else {
+                                currentData = { ...defaultData[pageId] };
+                            }
+                        } else {
+                            currentData = { ...defaultData[pageId] };
+                        }
+                    } else {
+                        currentData = { ...defaultData[pageId] };
+                    }
+                })
+                .catch(() => {
+                    currentData = { ...defaultData[pageId] };
+                });
+        }
+
+        // 渲染表单
+        function renderForm() {
+            const config = pageConfigs[pageId];
+            const container = document.getElementById('editForm');
+            
+            let html = '';
+            config.fields.forEach((section, index) => {
+                html += `
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="fas ${section.icon}"></i>
+                                ${section.title}
+                            </h4>
+                            <button class="section-toggle" onclick="toggleSection(this)">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        <div class="section-content">
+                `;
+
+                section.fields.forEach(field => {
+                    const value = currentData[field.name] || '';
+                    html += renderField(field, value);
+                });
+
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html;
+
+            // 初始化富文本编辑器
+            initRichTextEditors();
+
+            // 绑定输入事件
+            bindInputEvents();
+        }
+
+        // 渲染字段
+        function renderField(field, value) {
+            const required = field.required ? '<span class="required">*</span>' : '';
+            
+            switch(field.type) {
+                case 'textarea':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">${field.label}${required}</label>
+                            <textarea class="form-textarea" name="${field.name}" rows="3">${escapeHtml(value)}</textarea>
+                        </div>
+                    `;
+                case 'richtext':
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">${field.label}${required}</label>
+                            <textarea class="form-richtext" name="${field.name}" rows="6">${value}</textarea>
+                        </div>
+                    `;
+                default:
+                    return `
+                        <div class="form-group">
+                            <label class="form-label">${field.label}${required}</label>
+                            <input type="text" class="form-input" name="${field.name}" value="${escapeHtml(value)}">
+                        </div>
+                    `;
+            }
+        }
+
+        // 初始化富文本编辑器
+        function initRichTextEditors() {
+            tinymce.init({
+                selector: '.form-richtext',
+                plugins: 'lists link image code',
+                toolbar: 'undo redo | formatselect | | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code',
+                menubar: false,
+                height: 200,
+                
+                // 字体大小选项
+                fontsize_formats: '12px 14px 16px 18px 20px 24px 28px 32px 36px 48px',
+                
+                // 字体选项
+                font_family_formats: '宋体=simsun;微软雅黑=microsoft yahei;黑体=simhei;楷体=kaiti;Arial=arial;',
+                
+                setup: function(editor) {
+                    let richEditTimer = null;
+                    editor.on('change', function() {
+                        markDirty();
+                        // 防抖保存历史状态
+                        clearTimeout(richEditTimer);
+                        richEditTimer = setTimeout(function() {
+                            saveStateToHistory();
+                        }, 2000);
+                    });
+                }
+            });
+        }
+
+        // 绑定输入事件
+        function bindInputEvents() {
+            let editTimer = null;
+            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                input.addEventListener('input', markDirty);
+                
+                // 字段值变更时保存历史状态（用于撤回/重做）
+                // 使用防抖避免频繁保存
+                input.addEventListener('input', function() {
+                    clearTimeout(editTimer);
+                    editTimer = setTimeout(function() {
+                        // 只在表单有数据时保存历史
+                        const formData = collectData();
+                        if (Object.values(formData).some(v => v)) {
+                            saveStateToHistory();
+                        }
+                    }, 2000);
+                });
+            });
+        }
+
+        // 标记有未保存更改
+        function markDirty() {
+            isDirty = true;
+            document.getElementById('saveStatus').className = 'status unsaved';
+            document.getElementById('saveStatus').innerHTML = '<i class="fas fa-circle"></i><span>有未保存的更改</span>';
+        }
+
+        // 标记已保存
+        function markSaved() {
+            isDirty = false;
+            document.getElementById('saveStatus').className = 'status saved';
+            document.getElementById('saveStatus').innerHTML = '<i class="fas fa-check-circle"></i><span>所有更改已保存</span>';
+        }
+
+        // 切换区块
+        function toggleSection(btn) {
+            const content = btn.closest('.section-block').querySelector('.section-content');
+            const icon = btn.querySelector('i');
+            content.classList.toggle('collapsed');
+            icon.classList.toggle('fa-chevron-up');
+            icon.classList.toggle('fa-chevron-down');
+        }
+
+        // 收集表单数据
+        function collectData() {
+            const data = { ...currentData };
+            
+            // 收集普通字段
+            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                data[input.name] = input.value;
+            });
+
+            // 收集富文本字段
+            tinymce.get().forEach(editor => {
+                data[editor.id] = editor.getContent();
+            });
+
+            return data;
+        }
+
+        // 保存数据
+        function saveData() {
+            // 保存前保存当前状态到历史（用于撤回保存操作）
+            saveStateToHistory();
+            
+            const data = collectData();
+            data.lastModified = new Date().toISOString();
+            data.published = false;
+
+            const config = pageConfigs[pageId];
+            const payload = {
+                page: pageId,
+                pageName: pageId,
+                title: config ? config.name : pageId,
+                subtitle: '',
+                data: data,
+                published: false
+            };
+            fetch('api/save.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) {
+                    currentData = data;
+                    markSaved();
+                    showToast('保存成功', 'success');
+                } else {
+                    showToast('保存失败: ' + (result.message || '未知错误'), 'error');
+                }
+            })
+            .catch(err => {
+                showToast('保存失败，无法连接服务器', 'error');
+            });
+        }
+
+        // 发布页面
+        function publishPage() {
+            if (!confirm('确定要发布页面吗？这将更新网站上的实际内容。')) {
+                return;
+            }
+
+            const data = collectData();
+            data.published = true;
+            data.publishedAt = new Date().toISOString();
+
+            const config = pageConfigs[pageId];
+            const payload = {
+                page: pageId,
+                pageName: pageId,
+                title: config ? config.name : pageId,
+                subtitle: '',
+                data: data,
+                published: true
+            };
+            fetch('api/publish.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) {
+                    currentData = data;
+                    markSaved();
+                    showToast('页面发布成功！', 'success');
+                    refreshPreview();
+                } else {
+                    showToast('发布失败: ' + (result.message || '未知错误'), 'error');
+                }
+            })
+            .catch(err => {
+                showToast('发布失败，无法连接服务器', 'error');
+            });
+            
+            // 刷新预览
+            refreshPreview();
+        }
+
+        // ========== 撤回/重做/重置功能 ==========
+        // 历史栈
+        let undoStack = [];
+        let redoStack = [];
+        const MAX_HISTORY_SIZE = 50;
+
+        // 保存当前状态到历史栈
+        function saveStateToHistory() {
+            const state = JSON.parse(JSON.stringify(currentData));
+            
+            // 限制历史记录数量
+            if (undoStack.length >= MAX_HISTORY_SIZE) {
+                undoStack.shift();
+            }
+            
+            undoStack.push(state);
+            
+            // 新操作使重做栈失效
+            redoStack = [];
+            
+            updateUndoRedoButtons();
+        }
+
+        // 更新撤回/重做按钮状态
+        function updateUndoRedoButtons() {
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            
+            if (undoBtn) {
+                undoBtn.disabled = undoStack.length === 0;
+            }
+            if (redoBtn) {
+                redoBtn.disabled = redoStack.length === 0;
+            }
+        }
+
+        // 撤回上一步操作
+        function undo() {
+            if (undoStack.length === 0) return;
+            
+            // 保存当前状态到重做栈
+            const currentState = JSON.parse(JSON.stringify(currentData));
+            redoStack.push(currentState);
+            
+            // 从撤回栈取出状态恢复
+            const previousState = undoStack.pop();
+            currentData = previousState;
+            renderForm();
+            
+            updateUndoRedoButtons();
+            markDirty();
+            showToast('已撤回上一步操作', 'success');
+        }
+
+        // 重做撤销的操作
+        function redo() {
+            if (redoStack.length === 0) return;
+            
+            // 保存当前状态到撤回栈
+            const currentState = JSON.parse(JSON.stringify(currentData));
+            undoStack.push(currentState);
+            
+            // 从重做栈取出状态恢复
+            const nextState = redoStack.pop();
+            currentData = nextState;
+            renderForm();
+            
+            updateUndoRedoButtons();
+            markDirty();
+            showToast('已重做操作', 'success');
+        }
+
+        // 重置为默认数据（带历史保存）
+        function resetData() {
+            if (!confirm('确定要重置为默认数据吗？这将丢失所有未保存的修改。')) {
+                return;
+            }
+            
+            // 保存当前状态到历史（用于撤回重置操作）
+            saveStateToHistory();
+            
+            currentData = { ...defaultData[pageId] };
+            renderForm();
+            markDirty();
+            showToast('已重置为默认数据', 'success');
+        }
+
+        // 取消编辑
+        function cancelEdit() {
+            if (isDirty) {
+                if (!confirm('有未保存的更改，确定要离开吗？')) {
+                    return;
+                }
+            }
+            window.location.href = 'index.html';
+        }
+
+        // 初始化预览
+        function initPreview() {
+            const config = pageConfigs[pageId];
+            document.getElementById('previewFrame').src = `../${config.file}`;
+        }
+
+        // 刷新预览
+        function refreshPreview() {
+            const frame = document.getElementById('previewFrame');
+            frame.src = frame.src;
+        }
+
+        // 显示提示
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            
+            const icon = toast.querySelector('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // HTML转义
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 页面离开提示
+        window.addEventListener('beforeunload', function(e) {
+            if (isDirty) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        saveData();
+                        break;
+                    case 'z':
+                        // Ctrl+Z 撤回
+                        if (!e.shiftKey) {
+                            e.preventDefault();
+                            undo();
+                        }
+                        break;
+                    case 'y':
+                        // Ctrl+Y 重做
+                        e.preventDefault();
+                        redo();
+                        break;
+                }
+                
+                // Ctrl+Shift+Z 重做（另一种常见快捷键）
+                if (e.key === 'z' && e.shiftKey) {
+                    e.preventDefault();
+                    redo();
+                }
+            }
+            if (e.key === 'Escape') {
+                // 取消编辑等
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1064,5 +1064,4 @@ echo implode('', $rendered);
 
     
 <script src="../admin/assets/cms-1778895578.js"></script>
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/includes/footer.php"; ?>
 </body></html>

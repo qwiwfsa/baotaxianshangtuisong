@@ -10,7 +10,10 @@
     "image": "uploads\/20260427_69efb19af3aa8.jpg",
     "coverImage": "uploads\/20260427_69efb19af3aa8.jpg",
     "images": [
-        "uploads\/20260427_69efb19af3aa8.jpg"
+        "uploads\/20260427_69efb19af3aa8.jpg",
+        "\/uploads\/20260522_6a1037099b891.jpg",
+        "\/uploads\/20260522_6a1039d72a65e.jpg",
+        "\/uploads\/20260522_6a1039f99e6ec.mp4"
     ],
     "highlights": [
         "资金实力雄厚  大额资金都可安排"
@@ -24,7 +27,13 @@
     ],
     "hasVideo": false,
     "video": "",
+    "tag_ids": [
+        5,
+        6,
+        15,
+        31
+    ],
     "status": "published",
-    "createdAt": "2026-05-12 20:43:12",
-    "lastModified": "2026-05-12 20:43:12"
+    "createdAt": "2026-05-22 19:12:01",
+    "lastModified": "2026-05-22 19:12:01"
 }
