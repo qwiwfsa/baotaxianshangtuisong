@@ -410,7 +410,12 @@ if (!empty($case_seo_keywords)) { $page_keywords = $case_seo_keywords; }
 
 </script>
 
-<style>.case-related-thumb img{width:100%;height:100%;object-fit:cover!important}</style><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
+<style>.case-related-thumb img{width:100%;height:100%;object-fit:cover!important}
+        .case-media-thumb { cursor: pointer; border: 2px solid transparent; border-radius: 6px; overflow: hidden; width: 80px; height: 60px; flex-shrink: 0; }
+        .case-media-thumb.active { border-color: #3b82f6; }
+        .case-media-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .case-media-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+</style><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 
 <style>.case-related-thumb img{width:100%;height:100%;object-fit:cover!important}</style><style>.navbar,.nav-menu,.nav-menu a{transition:none!important}</style>
 
@@ -437,6 +442,24 @@ endif;
 ?>;
 
 var currentImageIndex = 0;
+
+
+window.switchMedia = function(el) {
+    var type = el.getAttribute('data-type');
+    var url = el.getAttribute('data-url');
+    var idx = parseInt(el.getAttribute('data-idx')) || 0;
+    if (!url) return;
+    var main = document.getElementById('mainMedia');
+    if (!main) return;
+    if (url.indexOf('http') !== 0 && url.indexOf('/') !== 0) url = '/' + url;
+    if (type === 'video') {
+        main.innerHTML = '<video src="' + url + '" controls autoplay style="width:100%;height:400px;object-fit:contain;background:#000;border-radius:8px;" id="mainVideo"></video>';
+    } else {
+        main.innerHTML = '<img src="' + url + '" alt="" style="width:100%;height:400px;object-fit:contain;border-radius:8px;background:#f3f4f6;" id="mainImage" onclick="openImageViewer(' + idx + ')">';
+    }
+    document.querySelectorAll('.case-media-thumb').forEach(function(t) { t.classList.remove('active'); });
+    el.classList.add('active');
+};
 
 window.changeImage = window.changeImage || function(e, t, n) {
 
@@ -603,38 +626,55 @@ window.nextImage = window.nextImage || function() {
 
                             <?php if ($case_data): ?>
 
-                            <?php $images = $case_content['images'] ?? []; ?>
+                            <?php
+                            $images = $case_content['images'] ?? [];
+                            $cover = $case_content['coverImage'] ?? $case_data['image'] ?? '';
+                            $video_url2 = $case_content['video'] ?? '';
 
-                            <?php $cover = $case_content['coverImage'] ?? $case_data['image'] ?? ''; ?>
+                            // Build unified media list
+                            $allMedia = [];
+                            foreach ($images as $idx => $img) {
+                                $allMedia[] = ['type' => 'image', 'url' => $img, 'idx' => $idx];
+                            }
+                            if ($video_url2) {
+                                $allMedia[] = ['type' => 'video', 'url' => $video_url2, 'idx' => count($images)];
+                            }
 
-                            <?php $first_img = !empty($images) ? $images[0] : $cover; ?>
-                            <?php $video_url = $case_content['video'] ?? ''; ?>
+                            $hasMedia = !empty($allMedia);
+                            $first = $hasMedia ? $allMedia[0] : null;
+                            $showThumbs = count($allMedia) > 1;
+                            ?>
 
-                            <?php if ($first_img): ?>
-
-                            <img src="<?php echo htmlspecialchars($first_img); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;height:400px;object-fit:contain;border-radius:8px;background:#f3f4f6;" id="mainImage" onclick="openImageViewer(0)">
-
-                            <?php elseif ($video_url): ?>
-
-                            <video src="<?php echo htmlspecialchars($video_url); ?>" controls style="width:100%;height:400px;object-fit:contain;background:#000;border-radius:8px;"></video>
-
-                            <?php endif; ?>
-
-                            <?php if (count($images) > 1): ?>
-
-                            <div class="case-media-thumbs">
-
-                                <?php foreach ($images as $idx => $img): ?>
-
-                                <div class="case-media-thumb <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="changeImage('<?php echo htmlspecialchars($img); ?>', this, <?php echo $idx; ?>)">
-
-                                    <img src="<?php echo htmlspecialchars($img); ?>" alt="">
-
-                                </div>
-
-                                <?php endforeach; ?>
-
+                            <?php if ($hasMedia): ?>
+                            <!-- Main display -->
+                            <div id="mainMedia" style="position:relative;min-height:400px;background:#f3f4f6;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                <?php if ($first['type'] === 'video'): ?>
+                                <video src="<?php echo htmlspecialchars($first['url']); ?>" controls style="width:100%;height:400px;object-fit:contain;background:#000;border-radius:8px;" id="mainVideo"></video>
+                                <?php else: ?>
+                                <img src="<?php echo htmlspecialchars($first['url']); ?>" alt="<?php echo htmlspecialchars($case_data['title']); ?>" style="width:100%;height:400px;object-fit:contain;border-radius:8px;background:#f3f4f6;" id="mainImage" onclick="openImageViewer(0)">
+                                <?php endif; ?>
                             </div>
+
+                            <!-- Thumbnail strip -->
+                            <?php if ($showThumbs): ?>
+                            <div class="case-media-thumbs" style="margin-top:12px;">
+                                <?php foreach ($allMedia as $mi => $m): ?>
+                                <div class="case-media-thumb <?php echo $mi === 0 ? 'active' : ''; ?>"
+                                     onclick="switchMedia(this)"
+                                     data-type="<?php echo $m['type']; ?>"
+                                     data-url="<?php echo htmlspecialchars($m['url']); ?>"
+                                     data-idx="<?php echo $m['idx']; ?>"
+                                     style="position:relative;">
+                                    <?php if ($m['type'] === 'video'): ?>
+                                    <video src="<?php echo htmlspecialchars($m['url']); ?>" muted preload="metadata" style="width:100%;height:100%;object-fit:cover;"></video>
+                                    <i class="fas fa-play-circle" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);"></i>
+                                    <?php else: ?>
+                                    <img src="<?php echo htmlspecialchars($m['url']); ?>" alt="">
+                                    <?php endif; ?>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php endif; ?>
 
                             <?php endif; ?>
 
