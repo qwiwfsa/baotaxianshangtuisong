@@ -1,0 +1,29 @@
+{
+    "id": "1779464681634",
+    "title": "测试二",
+    "type": "企业摆账",
+    "city": "",
+    "amount": "",
+    "period": "",
+    "summary": "",
+    "detail": "",
+    "image": "\/uploads\/20260522_6a107a0829071.jpg",
+    "coverImage": "\/uploads\/20260522_6a107a0829071.jpg",
+    "images": [
+        "\/uploads\/20260522_6a107a0829071.jpg"
+    ],
+    "highlights": [],
+    "process": [
+        "制定方案",
+        "资料过审",
+        "签订协议",
+        "费用结算",
+        "进款出款"
+    ],
+    "hasVideo": true,
+    "video": "\/uploads\/videos\/20260522_6a107a0dcdfc6.mp4",
+    "tag_ids": [],
+    "status": "published",
+    "createdAt": "2026-05-23 00:19:16",
+    "lastModified": "2026-05-23 00:19:16"
+}

@@ -101,7 +101,6 @@
         .media-preview { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; }
 
         .media-preview-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1; }
-        .media-preview-item.video { aspect-ratio: 16 / 9; }
 
         .media-preview-item img, .media-preview-item video { width: 100%; height: 100%; object-fit: cover; }
 
@@ -910,7 +909,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
         let currentCase = {
 
-            id: '', title: '', type: '企业过桥', summary: '', amount: '', images: [], video: '', highlights: [], process: [], status: 'draft', highlightTitle: '', tag_ids: []
+            id: '', title: '', type: '企业过桥', summary: '', amount: '', images: [], video: '', hasVideo: false, highlights: [], process: [], status: 'published', highlightTitle: '', tag_ids: []
 
         };
 
@@ -1581,7 +1580,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
                     ${index === 0 ? '<span style="position: absolute; top: 8px; left: 8px; background: #3b82f6; color: white; font-size: 11px; padding: 4px 8px; border-radius: 4px;">主图</span>' : ''}
 
-                    <img src="${imageUrl}" alt="案例图片" onerror="this.src='../images/placeholder.jpg'; this.onerror=null;">
+                    <img src="${imageUrl}" alt="案例图片" onerror="this.src='/images/placeholder.jpg'; this.onerror=null;">
 
                     <div class="media-preview-overlay">
 
@@ -1696,6 +1695,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
                 if (result.success && result.data && result.data.url) {
 
                     currentCase.video = result.data.url;
+                    currentCase.hasVideo = true;
 
                     document.getElementById('hasVideo').checked = true;
                     document.getElementById('videoSection').style.display = 'block';
@@ -1708,6 +1708,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
                     // 兼容不同的返回字段
 
                     currentCase.video = result.data.path;
+                    currentCase.hasVideo = true;
 
                     document.getElementById('hasVideo').checked = true;
                     document.getElementById('videoSection').style.display = 'block';
