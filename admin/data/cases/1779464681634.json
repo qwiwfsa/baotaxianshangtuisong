@@ -12,8 +12,7 @@
     "images": [
         "\/uploads\/20260522_6a107a0829071.jpg",
         "\/uploads\/20260523_6a1125f3b82f3.png",
-        "\/uploads\/20260523_6a1125f3e549a.png",
-        "\/uploads\/20260523_6a1125f4167b3.png"
+        "\/uploads\/20260523_6a1125f3e549a.png"
     ],
     "highlights": [],
     "process": [
@@ -24,9 +23,9 @@
         "进款出款"
     ],
     "hasVideo": true,
-    "video": "\/uploads\/videos\/20260522_6a107a0dcdfc6.mp4",
+    "video": "\/uploads\/20260523_59f5028b6cc4de6d.mp4",
     "tag_ids": [],
     "status": "published",
-    "createdAt": "2026-05-23 11:59:05",
-    "lastModified": "2026-05-23 11:59:05"
+    "createdAt": "2026-05-23 12:34:34",
+    "lastModified": "2026-05-23 12:34:34"
 }
