@@ -1,0 +1,308 @@
+/**
+ * Media Picker - 从线上素材库选择图片/视频
+ * Usage: openMediaPicker({type, multiple, maxSelect, title, callback})
+ */
+(function() {
+  var CSS_INJECTED = false;
+
+  function injectStyles() {
+    if (CSS_INJECTED) return;
+    CSS_INJECTED = true;
+    var style = document.createElement('style');
+    style.textContent = '.media-picker-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;animation:mp-fadein .2s}@keyframes mp-fadein{from{opacity:0}to{opacity:1}}.media-picker-modal{background:#fff;border-radius:12px;max-width:800px;width:92%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:mp-slideup .25s}@keyframes mp-slideup{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}.media-picker-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #e5e7eb}.media-picker-header h3{margin:0;font-size:17px;font-weight:600;color:#111827}.media-picker-close{background:none;border:none;font-size:24px;cursor:pointer;color:#9ca3af;padding:0;line-height:1}.media-picker-close:hover{color:#374151}.media-picker-body{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-height:200px}.media-picker-folders{flex-shrink:0;display:flex;flex-wrap:wrap;gap:6px;padding:12px 20px 12px 20px;border-bottom:1px solid #f3f4f6;position:sticky;top:0;background:#fff;z-index:1}.media-picker-content{flex:1;padding:16px 20px;min-height:100px}.media-picker-folder-chip{padding:5px 12px;border-radius:16px;font-size:12px;cursor:pointer;border:1px solid #d1d5db;background:#fff;color:#6b7280;white-space:nowrap;transition:all .15s}.media-picker-folder-chip:hover{border-color:#93c5fd;color:#3b82f6}.media-picker-folder-chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}.media-picker-folder-chip .folder-count{font-size:11px;margin-left:2px;opacity:0.7}.media-picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}.media-picker-item{position:relative;border:2px solid #e5e7eb;border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .15s}.media-picker-item:hover{border-color:#93c5fd}.media-picker-item.selected{border-color:#3b82f6}.media-picker-item.disabled{cursor:not-allowed;opacity:0.5}.media-picker-item.disabled:hover{border-color:#e5e7eb}.media-picker-item-thumb{width:100%;height:120px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;overflow:hidden}.media-picker-item-thumb img{width:100%;height:100%;object-fit:cover}.media-picker-item-video-icon{font-size:40px;color:#9ca3af}.media-picker-item-check{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid #d1d5db;display:none;align-items:center;justify-content:center;z-index:2;font-size:12px;color:#fff}.media-picker-item.selected .media-picker-item-check{display:flex;background:#3b82f6;border-color:#3b82f6}.media-picker-item-name{padding:6px 8px;font-size:12px;color:#6b7280;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}.media-picker-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid #e5e7eb}.media-picker-count{font-size:14px;color:#6b7280}.media-picker-actions{display:flex;gap:8px}.media-picker-btn{padding:8px 20px;border-radius:6px;font-size:14px;cursor:pointer;border:1px solid #d1d5db;background:#fff;color:#374151;transition:all .15s}.media-picker-btn:hover{background:#f9fafb}.media-picker-btn-confirm{background:#3b82f6;color:#fff;border-color:#3b82f6}.media-picker-btn-confirm:hover{background:#2563eb}.media-picker-btn-confirm:disabled{opacity:0.4;cursor:not-allowed}.media-picker-loading,.media-picker-empty,.media-picker-error{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#9ca3af}.media-picker-loading-bar{width:100%;height:3px;background:#e5e7eb;overflow:hidden;flex-shrink:0}.media-picker-loading-bar-inner{width:40%;height:100%;background:#3b82f6;animation:mp-loading-bar 1.2s ease-in-out infinite}@keyframes mp-loading-bar{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}.media-picker-error-btn{margin-top:12px;padding:6px 16px;border-radius:4px;border:1px solid #d1d5db;background:#fff;cursor:pointer;font-size:13px}.media-picker-pagination{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:16px;flex-wrap:wrap}.media-picker-pagination button{min-width:32px;height:32px;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer;font-size:13px}.media-picker-pagination button.active{background:#3b82f6;color:#fff;border-color:#3b82f6}.media-picker-pagination button:disabled{opacity:0.3;cursor:not-allowed}';
+    document.head.appendChild(style);
+  }
+
+  function h(tag, attrs, children) {
+    var el = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'className') el.className = attrs[k];
+      else if (k === 'style') Object.assign(el.style, attrs[k]);
+      else if (k.startsWith('on')) el.addEventListener(k.slice(2).toLowerCase(), attrs[k]);
+      else el.setAttribute(k, attrs[k]);
+    }
+    if (children) {
+      if (typeof children === 'string') el.innerHTML = children;
+      else if (Array.isArray(children)) children.forEach(function(c) {
+        if (typeof c === 'string') el.appendChild(document.createTextNode(c));
+        else if (c) el.appendChild(c);
+      });
+      else if (children instanceof Node) el.appendChild(children);
+    }
+    return el;
+  }
+
+  window.openMediaPicker = function(config) {
+    config = config || {};
+    var type = config.type || 'image';
+    var multiple = !!config.multiple;
+    var maxSelect = config.maxSelect || (multiple ? 99 : 1);
+    var title = config.title || (type === 'video' ? '选择视频' : '选择图片');
+    var callback = config.callback || function() {};
+    var onCancel = config.onCancel || null;
+
+    injectStyles();
+
+    // Remove existing picker
+    var existing = document.querySelector('.media-picker-overlay');
+    if (existing) existing.remove();
+
+    // State
+    var selectedMap = {};
+    var selectedCount = 0;
+    var currentPage = 1;
+    var totalPages = 1;
+    var isLoading = false;
+    var currentFolder = 0;
+    var foldersData = [];
+
+    // Build DOM
+    var overlay = h('div', {className: 'media-picker-overlay', onclick: function(e) { if (e.target === overlay) close(); }});
+
+    var titleEl = h('h3', {}, title);
+    var closeBtn = h('button', {className: 'media-picker-close', onclick: close}, '×');
+    var header = h('div', {className: 'media-picker-header'}, [titleEl, closeBtn]);
+
+    var loadingBar = h('div', {className: 'media-picker-loading-bar', style: {display: 'none'}}, h('div', {className: 'media-picker-loading-bar-inner'}));
+    var emptyEl = h('div', {className: 'media-picker-empty', style: {display: 'none'}}, h('p', {}, '素材库中没有相关文件'));
+    var errorEl = h('div', {className: 'media-picker-error', style: {display: 'none'}}, [
+      h('p', {}, '加载失败'),
+      h('button', {className: 'media-picker-error-btn', onclick: function() { loadPage(1); }}, '重试')
+    ]);
+    var gridEl = h('div', {className: 'media-picker-grid', style: {display: 'none'}});
+    var paginationEl = h('div', {className: 'media-picker-pagination', style: {display: 'none'}});
+    var contentEl = h('div', {className: 'media-picker-content'}, [emptyEl, errorEl, gridEl, paginationEl]);
+    var foldersEl = h('div', {className: 'media-picker-folders', style: {display: 'none'}});
+    var body = h('div', {className: 'media-picker-body'}, [loadingBar, foldersEl, contentEl]);
+
+    var countEl = h('span', {className: 'media-picker-count'}, '已选择 0 个');
+    var cancelBtn = h('button', {className: 'media-picker-btn', onclick: close}, '取消');
+    var confirmBtn = h('button', {className: 'media-picker-btn media-picker-btn-confirm', disabled: true, onclick: confirm}, '确认');
+    var footer = h('div', {className: 'media-picker-footer'}, [countEl, h('div', {className: 'media-picker-actions'}, [cancelBtn, confirmBtn])]);
+
+    var modal = h('div', {className: 'media-picker-modal'}, [header, body, footer]);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    // Keyboard
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    document.addEventListener('keydown', onKey);
+
+    function close() {
+      document.removeEventListener('keydown', onKey);
+      overlay.remove();
+      document.body.style.overflow = '';
+      if (onCancel) onCancel();
+    }
+
+    function confirm() {
+      if (selectedCount === 0) return;
+      var items = [];
+      for (var k in selectedMap) {
+        if (selectedMap.hasOwnProperty(k)) items.push(selectedMap[k]);
+      }
+      document.removeEventListener('keydown', onKey);
+      overlay.remove();
+      document.body.style.overflow = '';
+      callback(items);
+    }
+
+    function showState(state) {
+      loadingBar.style.display = 'none';
+      if (state === 'loading') {
+        // Keep current content visible, just show loading bar - no layout change
+        loadingBar.style.display = '';
+        return;
+      }
+      emptyEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      gridEl.style.display = 'none';
+      paginationEl.style.display = 'none';
+      if (state === 'empty') emptyEl.style.display = '';
+      else if (state === 'error') errorEl.style.display = '';
+      else if (state === 'grid') { gridEl.style.display = ''; paginationEl.style.display = ''; }
+    }
+
+    function updateCount() {
+      countEl.textContent = '已选择 ' + selectedCount + ' 个';
+      confirmBtn.disabled = selectedCount === 0;
+    }
+
+    function renderGrid(items) {
+      gridEl.innerHTML = '';
+      if (!items.length) {
+        showState('empty');
+        return;
+      }
+      showState('grid');
+      items.forEach(function(item) {
+        var isSelected = !!selectedMap[item.id];
+        var isDisabled = !isSelected && selectedCount >= maxSelect;
+        var thumbContent;
+        if (item.file_type && item.file_type.indexOf('video') === 0) {
+          thumbContent = h('video', {src: item.url, muted: 'muted', preload: 'metadata', style: {width: '100%', height: '100%', objectFit: 'cover'}});
+        } else {
+          thumbContent = h('img', {src: (item.thumb || item.url) + '?v=' + Date.now(), alt: item.original_name, loading: 'lazy'});
+        }
+        var card = h('div', {
+          className: 'media-picker-item' + (isSelected ? ' selected' : '') + (isDisabled ? ' disabled' : ''),
+          'data-id': item.id,
+          'data-url': item.url || '',
+          'data-file-type': item.file_type || '',
+          onclick: function(e) { toggleItem(item.id, card, e); }
+        }, [
+          h('div', {className: 'media-picker-item-check'}, '<i class="fas fa-check"></i>'),
+          h('div', {className: 'media-picker-item-thumb'}, [thumbContent]),
+          h('div', {className: 'media-picker-item-name'}, item.original_name || item.filename || '')
+        ]);
+        gridEl.appendChild(card);
+      });
+    }
+
+    function toggleItem(id, card, e) {
+      if (isLoading) return;
+      var wasSelected = !!selectedMap[id];
+      if (wasSelected) {
+        // Deselect
+        delete selectedMap[id];
+        selectedCount--;
+        card.classList.remove('selected');
+        updateCount();
+        // Re-enable disabled items
+        if (selectedCount < maxSelect) {
+          gridEl.querySelectorAll('.media-picker-item.disabled').forEach(function(el) {
+            el.classList.remove('disabled');
+          });
+        }
+      } else {
+        // Select
+        if (selectedCount >= maxSelect) return;
+        // For single select, clear previous
+        if (!multiple && selectedCount > 0) {
+          selectedMap = {};
+          selectedCount = 0;
+          gridEl.querySelectorAll('.media-picker-item.selected').forEach(function(el) {
+            el.classList.remove('selected');
+          });
+        }
+        // Store item data from card attributes
+        selectedMap[id] = {
+          id: id,
+          url: card.getAttribute('data-url') || '',
+          file_type: card.getAttribute('data-file-type') || '',
+          thumb: '',
+          original_name: (card.querySelector('.media-picker-item-name') || {}).textContent || ''
+        };
+        selectedCount++;
+        card.classList.add('selected');
+        updateCount();
+        // Disable remaining if max reached
+        if (selectedCount >= maxSelect) {
+          gridEl.querySelectorAll('.media-picker-item:not(.selected)').forEach(function(el) {
+            el.classList.add('disabled');
+          });
+        }
+      }
+    }
+
+    function renderPagination(page, pages) {
+      paginationEl.innerHTML = '';
+      if (pages <= 1) return;
+      // Prev
+      var prevBtn = h('button', {disabled: page <= 1, onclick: function() { if (page > 1) loadPage(page - 1); }}, '‹');
+      paginationEl.appendChild(prevBtn);
+      // Pages
+      var start = Math.max(1, page - 2);
+      var end = Math.min(pages, page + 2);
+      for (var p = start; p <= end; p++) {
+        (function(pn) {
+          paginationEl.appendChild(h('button', {
+            className: pn === page ? 'active' : '',
+            onclick: function() { if (pn !== page) loadPage(pn); }
+          }, '' + pn));
+        })(p);
+      }
+      // Next
+      var nextBtn = h('button', {disabled: page >= pages, onclick: function() { if (page < pages) loadPage(page + 1); }}, '›');
+      paginationEl.appendChild(nextBtn);
+    }
+
+    function renderFolders() {
+      foldersEl.innerHTML = '';
+      // "全部" chip
+      (function() {
+        var chip = h('div', {
+          className: 'media-picker-folder-chip' + (currentFolder === 0 ? ' active' : ''),
+          onclick: function() { currentFolder = 0; renderFolders(); loadPage(1); }
+        }, '全部');
+        foldersEl.appendChild(chip);
+      })();
+      foldersData.forEach(function(f) {
+        (function(folder) {
+          var label = folder.name + (folder.file_count ? ' (' + folder.file_count + ')' : '');
+          var chip = h('div', {
+            className: 'media-picker-folder-chip' + (currentFolder == folder.id ? ' active' : ''),
+            onclick: function() { currentFolder = folder.id; renderFolders(); loadPage(1); }
+          }, label);
+          foldersEl.appendChild(chip);
+        })(f);
+      });
+      foldersEl.style.display = foldersData.length ? '' : 'none';
+    }
+
+    function loadFolders() {
+      fetch('/admin/api/media/folders.php', {credentials: 'include'})
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success) {
+            foldersData = d.data || [];
+            renderFolders();
+          }
+        })
+        .catch(function() { /* folders are optional, ignore errors */ });
+    }
+
+    function loadPage(page) {
+      if (isLoading) return;
+      isLoading = true;
+      currentPage = page;
+      showState('loading');
+
+      var url = '/admin/api/media/media-list.php?type=' + encodeURIComponent(type) + '&limit=50&page=' + page + (currentFolder ? '&folder=' + currentFolder : '');
+      fetch(url, {credentials: 'include'})
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(d) {
+          isLoading = false;
+          if (!d.success) throw new Error('API error');
+          var items = d.data || [];
+          totalPages = d.pages || 1;
+          // Enrich selectedMap with full item data from API
+          items.forEach(function(item) {
+            if (selectedMap[item.id]) {
+              selectedMap[item.id] = {
+                id: item.id,
+                url: item.url || selectedMap[item.id].url || '',
+                file_type: item.file_type || selectedMap[item.id].file_type || '',
+                thumb: item.thumb || '',
+                original_name: item.original_name || item.filename || selectedMap[item.id].original_name || ''
+              };
+            }
+          });
+          renderGrid(items);
+          renderPagination(page, totalPages);
+        })
+        .catch(function(err) {
+          isLoading = false;
+          console.error('MediaPicker fetch error:', err);
+          showState('error');
+        });
+    }
+
+    loadFolders();
+    loadPage(1);
+  };
+})();

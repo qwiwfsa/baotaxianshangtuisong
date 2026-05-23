@@ -119,7 +119,6 @@
         .add-image-btn i { font-size: 24px; color: #9ca3af; margin-bottom: 4px; }
 
         .add-image-btn span { font-size: 13px; color: #6b7280; }
-        .add-image-dropdown-item:hover { background: #f3f4f6; }
 
         .highlights-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
 
@@ -727,21 +726,18 @@
 
                             <div class="media-preview" id="imagePreview"></div>
 
-                            <div class="add-image-dropdown" id="addImageDropdown" style="position:relative;display:inline-block;">
-                                <div class="add-image-btn" onclick="toggleImageSourceMenu()" id="addImageBtn">
-                                    <i class="fas fa-plus"></i>
-                                    <span>添加图片</span>
-                                </div>
-                                <div class="add-image-dropdown-menu" id="imageSourceMenu" style="display:none;position:absolute;top:100%;left:0;z-index:100;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;margin-top:4px;padding:4px 0;">
-                                    <div class="add-image-dropdown-item" onclick="addImage();closeImageSourceMenu()" style="padding:10px 16px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:14px;color:#374151;transition:background .15s;">
-                                        <i class="fas fa-upload" style="color:#6b7280;width:18px;text-align:center;"></i>
-                                        <span>本地上传</span>
-                                    </div>
-                                    <div class="add-image-dropdown-item" onclick="openMediaPickerForImages();closeImageSourceMenu()" style="padding:10px 16px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:14px;color:#374151;transition:background .15s;">
-                                        <i class="fas fa-images" style="color:#3b82f6;width:18px;text-align:center;"></i>
-                                        <span>从素材库选择</span>
-                                    </div>
-                                </div>
+                            <div class="add-image-btn" onclick="addImage()" id="addImageBtn">
+
+                                <i class="fas fa-plus"></i>
+
+                                <span>添加图片</span>
+
+                            </div>
+
+                        </div>
+                            <div class="add-image-btn" onclick="openMediaPickerForImages()" id="pickImageBtn" style="border-color: #3b82f6; background: #eff6ff;">
+                                <i class="fas fa-images"></i>
+                                <span>从素材库选择</span>
                             </div>
 
                     </div>
@@ -1486,7 +1482,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
             input.type = 'file';
 
-            input.accept = 'image/*,video/*';
+            input.accept = 'image/*';
             input.multiple = true;
 
             input.onchange = async function(e) {
@@ -1504,46 +1500,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
                 showLoading();
                 let uploaded = 0;
 
-                // Separate images and videos
-                var imageFiles = [];
-                var videoFile = null;
                 for (const file of files) {
-                    if (file.type.startsWith('video/')) {
-                        if (!videoFile) videoFile = file;
-                    } else {
-                        imageFiles.push(file);
-                    }
-                }
-
-                // Upload video first if any
-                if (videoFile) {
-                    if (videoFile.size > 50 * 1024 * 1024) {
-                        showToast('视频大小超过50MB限制', 'error');
-                    } else {
-                        try {
-                            const vFormData = new FormData();
-                            vFormData.append('file', videoFile);
-                            const vResponse = await fetchWithTimeout('api/upload-video.php', {
-                                method: 'POST',
-                                body: vFormData
-                            }, 60000);
-                            if (vResponse.ok) {
-                                const vResult = await vResponse.json();
-                                var vUrl = (vResult.data && vResult.data.url) ? vResult.data.url : (vResult.data && vResult.data.path ? vResult.data.path : null);
-                                if (vUrl) {
-                                    currentCase.video = vUrl;
-                                    currentCase.hasVideo = true;
-                                    document.getElementById('hasVideo').checked = true;
-                                    document.getElementById('videoSection').style.display = 'block';
-                                    renderVideo();
-                                    uploaded++;
-                                }
-                            }
-                        } catch (e) { console.error('视频上传失败:', e); }
-                    }
-                }
-
-                for (const file of imageFiles) {
                     if (file.size > 5 * 1024 * 1024) {
                         showToast(file.name + ' 大小超过5MB限制，已跳过', 'error');
                         continue;
@@ -1589,7 +1546,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
                 if (uploaded > 0) {
                     renderImages();
-                    showToast('成功添加' + uploaded + '个素材');
+                    showToast('成功上传' + uploaded + '张图片');
                 }
                 hideLoading();
 };
@@ -1601,26 +1558,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
 
         
-        // Image source dropdown
-window.toggleImageSourceMenu = function() {
-    var menu = document.getElementById('imageSourceMenu');
-    if (!menu) return;
-    var isOpen = menu.style.display === 'block';
-    menu.style.display = isOpen ? 'none' : 'block';
-};
-window.closeImageSourceMenu = function() {
-    var menu = document.getElementById('imageSourceMenu');
-    if (menu) menu.style.display = 'none';
-};
-// Close dropdown when clicking outside
-document.addEventListener('click', function(e) {
-    var dropdown = document.getElementById('addImageDropdown');
-    if (dropdown && !dropdown.contains(e.target)) {
-        closeImageSourceMenu();
-    }
-});
-
-// === Media Picker callbacks ===
+        // === Media Picker callbacks ===
         function openMediaPickerForImages() {
             var remaining = 4 - (currentCase.images ? currentCase.images.length : 0);
             if (remaining <= 0) {
@@ -1628,29 +1566,19 @@ document.addEventListener('click', function(e) {
                 return;
             }
             openMediaPicker({
-                type: '',
+                type: 'image',
                 multiple: true,
                 maxSelect: remaining,
                 title: '选择图片',
                 callback: function(items) {
-                    var imgCount = 0;
                     items.forEach(function(item) {
-                        if (item.file_type && item.file_type.indexOf('video') === 0) {
-                            currentCase.video = item.url;
-                            currentCase.hasVideo = true;
-                            document.getElementById('hasVideo').checked = true;
-                            document.getElementById('videoSection').style.display = 'block';
-                            renderVideo();
-                        } else {
-                            if (!currentCase.images) currentCase.images = [];
-                            if (currentCase.images.length < 4) {
-                                currentCase.images.push(item.url);
-                                imgCount++;
-                            }
+                        if (!currentCase.images) currentCase.images = [];
+                        if (currentCase.images.length < 4) {
+                            currentCase.images.push(item.url);
                         }
                     });
-                    if (imgCount > 0) renderImages();
-                    showToast('已添加 ' + items.length + ' 个素材');
+                    renderImages();
+                    showToast('已添加 ' + items.length + ' 张图片');
                 }
             });
         }
@@ -1720,6 +1648,7 @@ function renderImages() {
             `}).join('');
 
             document.getElementById('addImageBtn').style.display = currentCase.images.length >= 4 ? 'none' : 'flex';
+            var pickBtn = document.getElementById('pickImageBtn'); if (pickBtn) pickBtn.style.display = currentCase.images.length >= 4 ? 'none' : 'flex';
 
         }
 

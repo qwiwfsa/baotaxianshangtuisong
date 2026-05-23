@@ -1,6 +1,7 @@
 <?php
 /**
- * Media upload - upload + thumbnail generation + DB insert
+ * Media upload - basic upload + DB insert
+ * Uses extension-based MIME detection (no fileinfo dependency)
  */
 require_once __DIR__ . "/../config.php";
 requireAdmin();
@@ -37,6 +38,7 @@ $allowed = ["jpg","jpeg","png","gif","webp","svg","pdf","doc","docx","xls","xlsx
 
 $db = getDbConnection();
 
+// MIME map - no fileinfo dependency
 $mime_map = [
     "jpg"=>"image/jpeg","jpeg"=>"image/jpeg","png"=>"image/png",
     "gif"=>"image/gif","webp"=>"image/webp","svg"=>"image/svg+xml",
@@ -64,45 +66,18 @@ for ($i = 0; $i < count($names); $i++) {
     $mime = isset($mime_map[$ext]) ? $mime_map[$ext] : "application/octet-stream";
 
     $width = $height = 0;
-    $thumb_path = "";
     $is_img = in_array($ext, ["jpg","jpeg","png","webp","gif","bmp"]);
     if ($is_img) {
         $info = @getimagesize($dest);
         if ($info) { $width = $info[0]; $height = $info[1]; }
-        // Generate thumbnail with GD
-        $src_img = null;
-        switch ($info[2] ?? 0) {
-            case IMAGETYPE_JPEG: $src_img = @imagecreatefromjpeg($dest); break;
-            case IMAGETYPE_PNG:  $src_img = @imagecreatefrompng($dest); break;
-            case IMAGETYPE_GIF:  $src_img = @imagecreatefromgif($dest); break;
-            case IMAGETYPE_WEBP: $src_img = @imagecreatefromwebp($dest); break;
-            case IMAGETYPE_BMP:  $src_img = @imagecreatefrombmp($dest); break;
-        }
-        if ($src_img) {
-            $tw = 300; $th = (int)($height * 300 / max($width, 1));
-            if ($th > 220) { $th = 220; $tw = (int)($width * 220 / max($height, 1)); }
-            $dst = imagecreatetruecolor($tw, $th);
-            if (in_array($info[2] ?? 0, [IMAGETYPE_PNG, IMAGETYPE_WEBP])) {
-                imagealphablending($dst, false);
-                imagesavealpha($dst, true);
-            }
-            imagecopyresampled($dst, $src_img, 0, 0, 0, 0, $tw, $th, $width, $height);
-            $thumb_name = "thumb_" . $newname;
-            $thumb_dest = $upload_dir . "/" . $thumb_name;
-            imagejpeg($dst, $thumb_dest, 80);
-            imagedestroy($dst);
-            imagedestroy($src_img);
-            $thumb_path = str_replace(__DIR__ . "/../../../uploads", "", $thumb_dest);
-        }
     }
 
     $newname_esc = $db->real_escape_string($newname);
     $orig_esc = $db->real_escape_string($orig);
     $rel_esc = $db->real_escape_string($rel);
     $mime_esc = $db->real_escape_string($mime);
-    $thumb_esc = $db->real_escape_string($thumb_path);
 
-    $sql = "INSERT INTO media (filename, original_name, file_path, file_type, file_size, folder_id, width, height, webp_path, thumbnail_path, is_deleted, used_in) VALUES ('$newname_esc', '$orig_esc', '$rel_esc', '$mime_esc', $fsize, $folder_id, $width, $height, '', '$thumb_esc', 0, '')";
+    $sql = "INSERT INTO media (filename, original_name, file_path, file_type, file_size, folder_id, width, height, webp_path, thumbnail_path, is_deleted, used_in) VALUES ('$newname_esc', '$orig_esc', '$rel_esc', '$mime_esc', $fsize, $folder_id, $width, $height, '', '', 0, '')";
     $db->query($sql);
     $mid = $db->insert_id;
 
@@ -114,7 +89,7 @@ for ($i = 0; $i < count($names); $i++) {
         "filename" => $newname,
         "original_name" => $orig,
         "url" => "/uploads" . $rel,
-        "thumb" => $thumb_path ? "/uploads" . $thumb_path : "",
+        "thumb" => "",
         "size" => $fsize,
         "width" => $width,
         "height" => $height,

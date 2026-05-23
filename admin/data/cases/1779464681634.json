@@ -10,7 +10,10 @@
     "image": "\/uploads\/20260522_6a107a0829071.jpg",
     "coverImage": "\/uploads\/20260522_6a107a0829071.jpg",
     "images": [
-        "\/uploads\/20260522_6a107a0829071.jpg"
+        "\/uploads\/20260522_6a107a0829071.jpg",
+        "\/uploads\/20260523_6a1125f3b82f3.png",
+        "\/uploads\/20260523_6a1125f3e549a.png",
+        "\/uploads\/20260523_6a1125f4167b3.png"
     ],
     "highlights": [],
     "process": [
@@ -24,6 +27,6 @@
     "video": "\/uploads\/videos\/20260522_6a107a0dcdfc6.mp4",
     "tag_ids": [],
     "status": "published",
-    "createdAt": "2026-05-23 00:19:16",
-    "lastModified": "2026-05-23 00:19:16"
+    "createdAt": "2026-05-23 11:59:05",
+    "lastModified": "2026-05-23 11:59:05"
 }

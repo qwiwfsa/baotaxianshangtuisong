@@ -1486,7 +1486,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
             input.type = 'file';
 
-            input.accept = 'image/*,video/*';
+            input.accept = 'image/*';
             input.multiple = true;
 
             input.onchange = async function(e) {
@@ -1504,46 +1504,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
                 showLoading();
                 let uploaded = 0;
 
-                // Separate images and videos
-                var imageFiles = [];
-                var videoFile = null;
                 for (const file of files) {
-                    if (file.type.startsWith('video/')) {
-                        if (!videoFile) videoFile = file;
-                    } else {
-                        imageFiles.push(file);
-                    }
-                }
-
-                // Upload video first if any
-                if (videoFile) {
-                    if (videoFile.size > 50 * 1024 * 1024) {
-                        showToast('视频大小超过50MB限制', 'error');
-                    } else {
-                        try {
-                            const vFormData = new FormData();
-                            vFormData.append('file', videoFile);
-                            const vResponse = await fetchWithTimeout('api/upload-video.php', {
-                                method: 'POST',
-                                body: vFormData
-                            }, 60000);
-                            if (vResponse.ok) {
-                                const vResult = await vResponse.json();
-                                var vUrl = (vResult.data && vResult.data.url) ? vResult.data.url : (vResult.data && vResult.data.path ? vResult.data.path : null);
-                                if (vUrl) {
-                                    currentCase.video = vUrl;
-                                    currentCase.hasVideo = true;
-                                    document.getElementById('hasVideo').checked = true;
-                                    document.getElementById('videoSection').style.display = 'block';
-                                    renderVideo();
-                                    uploaded++;
-                                }
-                            }
-                        } catch (e) { console.error('视频上传失败:', e); }
-                    }
-                }
-
-                for (const file of imageFiles) {
                     if (file.size > 5 * 1024 * 1024) {
                         showToast(file.name + ' 大小超过5MB限制，已跳过', 'error');
                         continue;
@@ -1589,7 +1550,7 @@ if (localStorage.getItem('cms_logged_in') === 'true' && document.cookie.indexOf(
 
                 if (uploaded > 0) {
                     renderImages();
-                    showToast('成功添加' + uploaded + '个素材');
+                    showToast('成功上传' + uploaded + '张图片');
                 }
                 hideLoading();
 };
@@ -1628,29 +1589,19 @@ document.addEventListener('click', function(e) {
                 return;
             }
             openMediaPicker({
-                type: '',
+                type: 'image',
                 multiple: true,
                 maxSelect: remaining,
                 title: '选择图片',
                 callback: function(items) {
-                    var imgCount = 0;
                     items.forEach(function(item) {
-                        if (item.file_type && item.file_type.indexOf('video') === 0) {
-                            currentCase.video = item.url;
-                            currentCase.hasVideo = true;
-                            document.getElementById('hasVideo').checked = true;
-                            document.getElementById('videoSection').style.display = 'block';
-                            renderVideo();
-                        } else {
-                            if (!currentCase.images) currentCase.images = [];
-                            if (currentCase.images.length < 4) {
-                                currentCase.images.push(item.url);
-                                imgCount++;
-                            }
+                        if (!currentCase.images) currentCase.images = [];
+                        if (currentCase.images.length < 4) {
+                            currentCase.images.push(item.url);
                         }
                     });
-                    if (imgCount > 0) renderImages();
-                    showToast('已添加 ' + items.length + ' 个素材');
+                    renderImages();
+                    showToast('已添加 ' + items.length + ' 张图片');
                 }
             });
         }

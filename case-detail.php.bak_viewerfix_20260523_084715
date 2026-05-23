@@ -446,7 +446,24 @@ else:
 endif;
 
 ?>;
-var allViewerMedia = [];
+var allViewerMedia = (function() {
+    var list = (currentCaseImages || []).map(function(url, idx) {
+        return {type: 'image', url: url, idx: idx};
+    });
+    var vinput = document.getElementById('caseVideoUrl');
+    if (vinput && vinput.value) {
+        list.push({type: 'video', url: vinput.value, idx: list.length});
+    }
+    // Also check for video data from rendered gallery
+    if (list.length === 0) {
+        var vthumb = document.querySelector('[data-type="video"]');
+        if (vthumb) {
+            var vurl = vthumb.getAttribute('data-url');
+            if (vurl) list.push({type: 'video', url: vurl, idx: 0});
+        }
+    }
+    return list;
+})();
 
 
 var currentImageIndex = 0;
@@ -460,9 +477,8 @@ window.switchMedia = function(el) {
     var main = document.getElementById('mainMedia');
     if (!main) return;
     if (url.indexOf('http') !== 0 && url.indexOf('/') !== 0) url = '/' + url;
-    window.currentImageIndex = idx;
     if (type === 'video') {
-        main.innerHTML = '<video src="' + url + '" controls autoplay style="width:100%;height:400px;object-fit:contain;background:#000;border-radius:8px;" id="mainVideo" onclick="openImageViewer(' + idx + ')"></video>';
+        main.innerHTML = '<video src="' + url + '" controls autoplay style="width:100%;height:400px;object-fit:contain;background:#000;border-radius:8px;" id="mainVideo"></video>';
     } else {
         main.innerHTML = '<img src="' + url + '" alt="" style="width:100%;height:400px;object-fit:contain;border-radius:8px;background:#f3f4f6;" id="mainImage" onclick="openImageViewer(' + idx + ')">';
     }
@@ -715,12 +731,9 @@ window.nextImage = window.nextImage || function() {
                             <?php endif; ?>
 
                             <?php endif; ?>
-                            <?php if ($hasMedia): ?>
-                            <script>allViewerMedia = <?php echo json_encode(array_values($allMedia)); ?>;</script>
-                            <?php endif; ?>
 
                             
-                            <?php endif; ?>
+                            <input type="hidden" id="caseVideoUrl" value="<?php echo htmlspecialchars(['video'] ?? ''); ?>"><?php endif; ?>
 
                         </div>
 
