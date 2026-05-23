@@ -1639,7 +1639,7 @@ document.addEventListener('click', function(e) {
                             currentCase.hasVideo = true;
                             document.getElementById('hasVideo').checked = true;
                             document.getElementById('videoSection').style.display = 'block';
-                            renderVideo(); document.getElementById('videoSection').scrollIntoView({behavior:'smooth'});
+                            renderVideo();
                         } else {
                             if (!currentCase.images) currentCase.images = [];
                             if (currentCase.images.length < 4) {
