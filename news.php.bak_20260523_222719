@@ -603,27 +603,13 @@ try {
 
             }
 
-
+            
 
             // 保存当前选中的分类ID
 
             const prevSelected = currentCategoryId;
 
-
-
-            // 保存服务端渲染的分类作为兜底，避免使用硬编码默认值
-
-            const serverRenderedCats = [];
-
-            const existingEls = categoriesContainer.querySelectorAll('.news-category[data-cat-id]:not([data-cat-id="0"])');
-
-            existingEls.forEach(function(el) {
-
-                serverRenderedCats.push({ id: el.dataset.catId, name: el.textContent.trim() });
-
-            });
-
-
+            
 
             // 重建容器 - 保留"全部资讯"
 
@@ -703,25 +689,29 @@ try {
 
                 });
 
-            } else if (serverRenderedCats.length > 0) {
+            } else {
 
-                serverRenderedCats.forEach(function(cat) {
+                // 使用默认分类
+
+                const defaultCategories = ['行业动态', '政策解读', '业务知识', '公司新闻'];
+
+                defaultCategories.forEach((name, index) => {
 
                     const catLink = document.createElement('a');
 
                     catLink.href = '#';
 
-                    catLink.className = 'news-category' + (parseInt(cat.id) === prevSelected ? ' active' : '');
+                    catLink.className = 'news-category';
 
-                    catLink.textContent = cat.name;
+                    catLink.textContent = name;
 
-                    catLink.dataset.catId = cat.id;
+                    catLink.dataset.catId = index + 1;
 
                     catLink.addEventListener('click', function(e) {
 
                         e.preventDefault();
 
-                        currentCategoryId = parseInt(cat.id);
+                        currentCategoryId = index + 1;
 
                         updateActiveCategory();
 
