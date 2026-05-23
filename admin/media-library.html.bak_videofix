@@ -180,7 +180,7 @@ document.querySelectorAll('.tab')[i].classList.toggle('active',x===t);
 
 function selectAll(){document.querySelectorAll('.media-card.selecting').forEach(function(c){var id=parseInt(c.getAttribute('data-id'));if(id>0){sel.add(id);c.classList.add('selected')}});updateSel()}
 function previewMedia(id){var c=document.querySelector('[data-id="'+id+'"]');if(!c)return;var u=c.getAttribute('data-url'),ft=c.getAttribute('data-ftype')||'';var pc=G('previewContent');if(ft.indexOf('video/')===0){pc.innerHTML='<video src="'+u+'" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:4px"></video>'}else{pc.innerHTML='<img src="'+u+'" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px" onclick=event.stopPropagation()>'}G('previewOverlay').classList.add('show');document.body.style.overflow='hidden'}
-function closePreview(){var v=document.querySelector('#previewContent video');if(v){v.pause();v.currentTime=0}G('previewOverlay').classList.remove('show');document.body.style.overflow=''}
+function closePreview(){G('previewOverlay').classList.remove('show');document.body.style.overflow=''}
 function loadFiles(){
 api('media-list.php?page='+page+'&limit=30&folder='+fid+'&search='+encodeURIComponent(G('searchInput').value)+'&type='+G('typeFilter').value).then(function(d){
 if(!d.success)return;var g=G('mediaGrid'),e=G('emptyState');

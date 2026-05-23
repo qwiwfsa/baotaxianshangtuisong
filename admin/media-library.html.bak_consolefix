@@ -179,8 +179,8 @@ document.querySelectorAll('.tab')[i].classList.toggle('active',x===t);
 });if(t==='files')loadFiles();else if(t==='folders')loadFolders();else if(t==='recycle')loadRecycle();else if(t==='logs')loadLogs();else if(t==='settings')loadSettings()}
 
 function selectAll(){document.querySelectorAll('.media-card.selecting').forEach(function(c){var id=parseInt(c.getAttribute('data-id'));if(id>0){sel.add(id);c.classList.add('selected')}});updateSel()}
-function previewMedia(id){var c=document.querySelector('[data-id="'+id+'"]');if(!c)return;var u=c.getAttribute('data-url'),ft=c.getAttribute('data-ftype')||'';var pc=G('previewContent');if(ft.indexOf('video/')===0){pc.innerHTML='<video src="'+u+'" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:4px"></video>'}else{pc.innerHTML='<img src="'+u+'" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px" onclick=event.stopPropagation()>'}G('previewOverlay').classList.add('show');document.body.style.overflow='hidden'}
-function closePreview(){var v=document.querySelector('#previewContent video');if(v){v.pause();v.currentTime=0}G('previewOverlay').classList.remove('show');document.body.style.overflow=''}
+function previewMedia(id){var c=document.querySelector('[data-id='+id+']');if(!c)return;var u=c.getAttribute('data-url'),ft=c.getAttribute('data-ftype')||'';var pc=G('previewContent');if(ft.indexOf('video/')===0){pc.innerHTML='<video src="'+u+'" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:4px"></video>'}else{pc.innerHTML='<img src="'+u+'" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px" onclick=event.stopPropagation()>'}G('previewOverlay').classList.add('show');document.body.style.overflow='hidden'}
+function closePreview(){G('previewOverlay').classList.remove('show');document.body.style.overflow=''}
 function loadFiles(){
 api('media-list.php?page='+page+'&limit=30&folder='+fid+'&search='+encodeURIComponent(G('searchInput').value)+'&type='+G('typeFilter').value).then(function(d){
 if(!d.success)return;var g=G('mediaGrid'),e=G('emptyState');
@@ -204,7 +204,7 @@ api('folders.php').then(function(d){if(d.success){G('folderBar').innerHTML='<spa
 function doUpload(files){if(!files||!files.length)return;var fd=new FormData();for(var i=0;i<files.length;i++)fd.append('files[]',files[i]);fd.append('folder_id',fid);T('上传中...');fetch(A+'media-upload.php',{method:'POST',body:fd}).then(function(r){return r.json()}).then(function(d){if(d.success){T(d.data.uploaded.length+'个成功');loadFiles()}else{T(d.message||'失败','error')}})}
 
 function toggleSelect(){sm=!sm;if(!sm){sel.clear();updateSel()}document.querySelectorAll('.media-card').forEach(function(c){c.classList.toggle('selecting',sm)})}
-function cardClick(id,e){if(sm){sel[sel.has(id)?'delete':'add'](id);document.querySelector('[data-id="'+id+'"]').classList.toggle('selected',sel.has(id));updateSel()}else{previewMedia(id)}}
+function cardClick(id,e){if(sm){sel[sel.has(id)?'delete':'add'](id);document.querySelector('[data-id='+id+']').classList.toggle('selected',sel.has(id));updateSel()}else{previewMedia(id)}}
 function updateSel(){var b=G('batchBar');b.classList.toggle('show',sel.size>0);G('batchCount').textContent='已选'+sel.size+'个'}
 function cancelSelect(){sm=false;sel.clear();updateSel();document.querySelectorAll('.media-card').forEach(function(c){c.classList.remove('selecting','selected')})}
 function batchAction(act,ids){ids=ids||Array.from(sel);if(!ids.length)return;if(act==='delete'&&!confirm('确定删除?'+ids.length+'个文件?'))return;
@@ -235,7 +235,7 @@ function delFolder(id){if(!confirm('删除文件夹？文件移至默认分类�
 
 function loadSettings(){api('settings.php').then(function(d){if(!d.success)return;var s=d.data;var fs=[{k:'compression_quality',l:'压缩质量(1-100)',t:'number'},{k:'max_width',l:'最大宽度(px)',t:'number'},{k:'max_height',l:'最大高度(px)',t:'number'},{k:'webp_enabled',l:'WebP转换',t:'select',o:{0:'关闭',1:'开启'}},{k:'watermark_enabled',l:'水印',t:'select',o:{0:'关闭',1:'开启'}},{k:'watermark_text',l:'水印文字',t:'text'},{k:'exif_remove',l:'清除EXIF',t:'select',o:{0:'关闭',1:'开启'}},{k:'cdn_enabled',l:'CDN',t:'select',o:{0:'关闭',1:'开启'}},{k:'cdn_url',l:'CDN域名',t:'text'}];
 G('settingsForm').innerHTML=fs.map(function(f){var v=s[f.k]||'',i=f.t==='select'?'<select id=s_'+f.k+'>'+Object.entries(f.o||{}).map(function(o){return'<option value='+o[0]+(String(v)===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>':'<input id=s_'+f.k+' type='+f.t+' value='+v+'>';return'<label>'+f.l+'</label>'+i}).join('')})}
-function saveSettings(){var d={};['compression_quality','max_width','max_height','webp_enabled','watermark_enabled','watermark_text','exif_remove','cdn_enabled','cdn_url'].forEach(function(k){var e=G('s_'+k);if(e)d[k]=e.value});api('settings.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(d2){if(d2.success)T('已保存')})}
+function saveSettings(){var d={};['compression_quality','max_width','max_height','webp_enabled','watermark_enabled','watermark_text','exif_remove','cdn_enabled','cdn_url'].forEach(function(k){var e=G('s_'+k);if(e)d[k]=e.value});api('settings.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(d2){if(d2.success)T('已保存')})}
 
 var dz=G('dropZone');dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over')});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over')});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');doUpload(e.dataTransfer.files)});
 
