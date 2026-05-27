@@ -425,6 +425,15 @@ header("Expires: 0");
                 text-align: left;
             }
             
+            .article-nav-item.next:only-child {
+                grid-column: auto;
+                text-align: right;
+            }
+            
+            .article-nav-item.next:only-child .article-nav-label {
+                justify-content: flex-end;
+            }
+            
             .article-nav-item.next .article-nav-label {
                 justify-content: flex-start;
             }
