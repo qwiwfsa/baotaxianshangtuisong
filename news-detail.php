@@ -204,17 +204,21 @@ header("Expires: 0");
         .article-navigation {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 16px;
             margin-top: 40px;
         }
         
         .article-nav-item {
             background: white;
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 8px;
+            padding: 12px 16px;
             text-decoration: none;
             transition: all 0.3s;
             border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
         }
         
         .article-nav-item:hover {
@@ -223,11 +227,11 @@ header("Expires: 0");
         }
         
         .article-nav-item.prev {
-            text-align: left;
+            justify-content: flex-start;
         }
         
         .article-nav-item.next {
-            text-align: right;
+            justify-content: flex-end;
         }
         
         .article-nav-item.next:only-child {
@@ -237,21 +241,29 @@ header("Expires: 0");
         .article-nav-label {
             font-size: 12px;
             color: #9ca3af;
-            margin-bottom: 8px;
+            white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
+            flex-shrink: 0;
         }
         
         .article-nav-item.next .article-nav-label {
-            justify-content: flex-end;
+            order: 2;
         }
         
         .article-nav-title {
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             color: #1f2937;
-            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .article-nav-item.next .article-nav-title {
+            order: 1;
+            text-align: right;
         }
         
         /* 相关文章 */
@@ -418,24 +430,24 @@ header("Expires: 0");
             }
             
             .article-navigation {
-                grid-template-columns: 1fr;
+                gap: 12px;
             }
             
-            .article-nav-item.next {
-                text-align: left;
+            .article-nav-item {
+                padding: 10px 14px;
+                border-radius: 6px;
+            }
+            
+            .article-nav-label {
+                font-size: 11px;
+            }
+            
+            .article-nav-title {
+                font-size: 12px;
             }
             
             .article-nav-item.next:only-child {
-                grid-column: auto;
-                text-align: right;
-            }
-            
-            .article-nav-item.next:only-child .article-nav-label {
-                justify-content: flex-end;
-            }
-            
-            .article-nav-item.next .article-nav-label {
-                justify-content: flex-start;
+                grid-column: 2;
             }
             
             .related-articles-grid {
