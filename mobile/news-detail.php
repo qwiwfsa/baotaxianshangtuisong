@@ -911,29 +911,39 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
             }
 
             
-
             .article-navigation {
 
-                grid-template-columns: 1fr;
+                gap: 10px;
 
             }
 
             
 
-            .article-nav-item.next {
+            .article-nav-item {
 
-                text-align: left;
+                padding: 8px 12px;
+
+                border-radius: 6px;
 
             }
 
             
 
-            .article-nav-item.next .article-nav-label {
+            .article-nav-label {
 
-                justify-content: flex-start;
+                font-size: 11px;
+
+                gap: 3px;
 
             }
 
+            
+
+            .article-nav-title {
+
+                font-size: 12px;
+
+            }
             
 
             .related-articles-grid {
@@ -1793,23 +1803,6 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
 
 
 
-        <!-- 上一篇/下一篇导航 -->
-        <?php if (!empty($article_data['prev_article']) || !empty($article_data['next_article'])): ?>
-        <div class="article-navigation">
-            <?php if (!empty($article_data['prev_article'])): ?>
-            <a href="news-detail.php?id=<?php echo $article_data['prev_article']['id']; ?>" class="article-nav-item prev">
-                <div class="article-nav-label"><i class="fas fa-arrow-left"></i> 上一篇</div>
-                <div class="article-nav-title"><?php echo htmlspecialchars($article_data['prev_article']['title'], ENT_QUOTES, 'UTF-8'); ?></div>
-            </a>
-            <?php endif; ?>
-            <?php if (!empty($article_data['next_article'])): ?>
-            <a href="news-detail.php?id=<?php echo $article_data['next_article']['id']; ?>" class="article-nav-item next">
-                <div class="article-nav-label">下一篇 <i class="fas fa-arrow-right"></i></div>
-                <div class="article-nav-title"><?php echo htmlspecialchars($article_data['next_article']['title'], ENT_QUOTES, 'UTF-8'); ?></div>
-            </a>
-            <?php endif; ?>
-        </div>
-        <?php endif; ?>
         <!-- 用户评论 -->
 
         <section class="comments-section">
@@ -2154,6 +2147,23 @@ window.__relatedArticles = <?php echo json_encode($article_data['related_article
                         </div>
 
                     </div>
+
+                    ${(article.prev_article || article.next_article) ? `
+                    <div class="article-navigation">
+                        ${article.prev_article ? `
+                        <a href="news-detail.php?id=${article.prev_article.id}" class="article-nav-item prev">
+                            <div class="article-nav-label"><i class="fas fa-arrow-left"></i> 上一篇</div>
+                            <div class="article-nav-title">${article.prev_article.title}</div>
+                        </a>
+                        ` : ''}
+                        ${article.next_article ? `
+                        <a href="news-detail.php?id=${article.next_article.id}" class="article-nav-item next">
+                            <div class="article-nav-label">下一篇 <i class="fas fa-arrow-right"></i></div>
+                            <div class="article-nav-title">${article.next_article.title}</div>
+                        </a>
+                        ` : ''}
+                    </div>
+                    ` : ''}
 
                 </div>
 
