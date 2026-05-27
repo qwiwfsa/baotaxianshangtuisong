@@ -72,14 +72,14 @@ if ($article_id > 0) {
         $tagStmt->close();
 
         // 上一篇/下一篇
-        $prevStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id > ? AND status = 'published' ORDER BY id ASC LIMIT 1");
+        $prevStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id < ? AND status = 'published' ORDER BY id DESC LIMIT 1");
         $prevStmt->bind_param('i', $article_id);
         $prevStmt->execute();
         $prevResult = $prevStmt->get_result();
         $article_prev = $prevResult->fetch_assoc();
         $prevStmt->close();
 
-        $nextStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id < ? AND status = 'published' ORDER BY id DESC LIMIT 1");
+        $nextStmt = $db->prepare("SELECT id, title FROM cms_articles WHERE id > ? AND status = 'published' ORDER BY id ASC LIMIT 1");
         $nextStmt->bind_param('i', $article_id);
         $nextStmt->execute();
         $nextResult = $nextStmt->get_result();
