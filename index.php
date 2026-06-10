@@ -199,45 +199,9 @@ var _hmt = _hmt || [];
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
-    <!-- 导航栏 -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img loading="lazy" src="<?php echo $header_logo; ?>" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
-                <?php include __DIR__ . "/includes/nav.php"; ?>
-            </ul>
-            
-            
-            
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
-            <!-- 搜索按钮 -->
-            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-
-        <!-- 搜索框 -->
-        <div class="search-overlay" id="searchOverlay" role="search" aria-hidden="true">
-            <div class="search-container">
-                <form class="search-form" id="searchForm" action="#" method="get">
-                    <input type="search" class="search-input" id="searchInput" placeholder="搜索业务、案例、资讯..." aria-label="搜索内容">
-                    <button type="submit" class="search-submit" aria-label="搜索">
-                        <i class="fas fa-search" aria-hidden="true"></i>
-                    </button>
-                </form>
-                <div class="search-suggestions" id="searchSuggestions" aria-live="polite"></div>
-                <button class="search-close" id="searchClose" aria-label="关闭搜索">
-                    <i class="fas fa-times" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
 
     <main id="main-content">
     <!-- Hero区域 -->
@@ -590,7 +554,7 @@ var _hmt = _hmt || [];
 
     <!-- 页脚(由数据库动态渲染) -->
     <?php include 'includes/footer.php'; ?>
-<script src="/js/main.js?v=20260513b"></script>
+<script src="/js/main.js?v=20260610"></script>
     
     <!-- CMS Data Integration -->
 

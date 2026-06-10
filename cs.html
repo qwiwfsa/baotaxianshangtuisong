@@ -46,18 +46,9 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
-            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
+
     <main id="main-content"><div class="page-content"><div class="text-module" style="text-align: left;"><h2 class="module-title">测试</h2><div class="module-content">下是公司的具体业务，请深入学习了解
 🎯 上市公司类
 •    上市公司短拆、股票解质押过桥
@@ -128,6 +119,6 @@
     <script src="/js/footer-loader.js"></script>
     <script src="/assets/js/page-builder.js"></script>
     <script src="/js/nav-loader.js?v=5"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js?v=20260610"></script>
 </body>
 </html>

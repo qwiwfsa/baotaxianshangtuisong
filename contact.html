@@ -48,18 +48,9 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src=\" . $logoPath . \" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar" id="dynamicNavMenu"></ul>
-            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
+
     <main id="main-content"><div class="page-content"><div class="card-grid card-style-modern" style="grid-template-columns: repeat(4, 1fr);"><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>联系电话</span></div><div class="card-body"><h3 class="card-title">联系电话</h3><p class="card-description">13552883008</p></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>电子邮箱</span></div><div class="card-body"><h3 class="card-title">电子邮箱</h3><p class="card-description">wanglizhongguo@126.com</p></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>公司地址</span></div><div class="card-body"><h3 class="card-title">公司地址</h3><p class="card-description">财富金融中心
                                 北京市朝阳区呼家楼街道东三环中路5号。</p></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>微信咨询</span></div><div class="card-body"><h3 class="card-title">微信咨询</h3><p class="card-description">扫码添加微信</p></div></div><div class="card-item"><div class="card-image"><img src="/uploads/wechat-qr.png" alt="扫码添加微信" class="card-img"></div><div class="card-body"><h3 class="card-title">扫码添加微信</h3><p class="card-description">微信扫一扫，添加好友咨询</p></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>工作时间</span></div><div class="card-body"><h3 class="card-title">工作时间</h3><p class="card-description">紧急需求可随时联系</p></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>图片</span></div><div class="card-body"></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>图片</span></div><div class="card-body"></div></div><div class="card-item"><div class="card-image card-image-placeholder"><i class="fas fa-image"></i><span>图片</span></div><div class="card-body"></div></div></div></div></main>
     <div class="chat-widget" id="chatWidget" aria-label="联系电话">
@@ -133,6 +124,6 @@
     <script src="/js/footer-loader.js"></script>
     <script src="/assets/js/page-builder.js"></script>
     <script src="/js/nav-loader.js?v=4"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js?v=20260610"></script>
 </body>
 </html>

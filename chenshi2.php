@@ -46,18 +46,9 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
-            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
+
     <main id="main-content"><div class="page-content"><div class="text-module" style="text-align: left;"><h2 class="module-title">标题文本</h2><div class="module-content">这里是内容文本，可以编辑修改。</div></div><div class="image-module layout-normal"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22400%22%20viewBox%3D%220%200%20800%20400%22%3E%3Crect%20fill%3D%22%23e5e7eb%22%20width%3D%22800%22%20height%3D%22400%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20text-anchor%3D%22middle%22%20x%3D%22400%22%20y%3D%22210%22%3EPlaceholder%3C%2Ftext%3E%3C%2Fsvg%3E" alt="图片描述" style="width: 100%;" class="image-module-img"></div><div class="button-module" style="text-align: center;"><a href="#" class="btn btn-primary btn-medium" >点击按钮</a></div></div></main>
     <div class="chat-widget" id="chatWidget" aria-label="联系电话">
         <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="点击电话"><i class="fas fa-phone-alt"></i></button>
@@ -68,6 +59,6 @@
     
     <script src="/assets/js/page-builder.js"></script>
     
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js?v=20260610"></script>
 </body>
 </html>

@@ -411,6 +411,11 @@ input, textarea, select {
     border-color: var(--color-primary);
 }
 
+/* 隐藏浏览器原生搜索清除按钮 */
+.search-input::-webkit-search-cancel-button {
+    display: none;
+}
+
 .search-submit {
     padding: 14px 24px;
     background: var(--color-primary);

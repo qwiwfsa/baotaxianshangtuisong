@@ -72,23 +72,9 @@ DeviceDetector::redirect();
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
-    <!-- 导航栏 -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
-            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
 
     <main id="main-content">
         <!-- 页面标题区 -->
@@ -630,7 +616,140 @@ DeviceDetector::redirect();
     <!-- 页脚 -->
 
 
-    <script src="js/main.js"></script>
+    <!-- FAQ搜索功能 -->
+    <script>
+        (function() {
+            var searchInput = document.querySelector('.faq-search-input');
+            var searchBtn = document.querySelector('.faq-search-btn');
+            if (!searchInput || !searchBtn) return;
+
+            // 搜索结果提示条
+            var resultBar = document.createElement('div');
+            resultBar.className = 'faq-search-result-bar';
+            resultBar.style.cssText = 'display:none;text-align:center;padding:10px 16px;margin-bottom:16px;background:#f0f7ff;border-radius:8px;color:#1e3a8a;font-size:14px;';
+            var searchBox = document.querySelector('.faq-search-box');
+            if (searchBox) searchBox.parentNode.insertBefore(resultBar, searchBox.nextSibling);
+
+            // 清除搜索按钮
+            var clearBtn = document.createElement('span');
+            clearBtn.innerHTML = '<i class="fas fa-times-circle"></i>';
+            clearBtn.style.cssText = 'position:absolute;right:100px;top:50%;transform:translateY(-50%);cursor:pointer;color:#9ca3af;font-size:18px;display:none;z-index:2;line-height:1;';
+            if (searchBox) {
+                searchBox.style.position = 'relative';
+                searchBox.appendChild(clearBtn);
+            }
+
+            // 显示/隐藏清除按钮
+            function toggleClearBtn() {
+                clearBtn.style.display = searchInput.value ? 'block' : 'none';
+            }
+
+            // 执行搜索
+            function doSearch() {
+                var keyword = searchInput.value.trim().toLowerCase();
+                var items = document.querySelectorAll('.faq-custom-item');
+                var categories = document.querySelectorAll('.faq-custom-category');
+                var totalVisible = 0;
+
+                // 如果没有关键词，恢复全部显示
+                if (!keyword) {
+                    items.forEach(function(item) {
+                        item.style.display = '';
+                        item.style.opacity = '';
+                        item.style.transform = '';
+                        if (item.open) item.open = false;
+                    });
+                    categories.forEach(function(cat) {
+                        cat.style.display = '';
+                    });
+                    resultBar.style.display = 'none';
+                    toggleClearBtn();
+                    document.querySelectorAll('.faq-category-item').forEach(function(ci) { ci.classList.remove('active'); });
+                    var allBtn = document.querySelector('.faq-category-item[data-category="all"]');
+                    if (allBtn) allBtn.classList.add('active');
+                    return;
+                }
+
+                toggleClearBtn();
+
+                // 遍历每个FAQ条目，匹配问题或答案
+                categories.forEach(function(cat) {
+                    var catItems = cat.querySelectorAll('.faq-custom-item');
+                    var catHasMatch = false;
+
+                    catItems.forEach(function(item) {
+                        var questionEl = item.querySelector('.faq-custom-question span');
+                        var questionText = questionEl ? questionEl.textContent.toLowerCase() : '';
+                        var answerEl = item.querySelector('.faq-custom-answer');
+                        var answerText = answerEl ? answerEl.textContent.toLowerCase() : '';
+
+                        if (questionText.indexOf(keyword) !== -1 || answerText.indexOf(keyword) !== -1) {
+                            item.style.display = '';
+                            item.style.opacity = '1';
+                            item.style.transform = '';
+                            if (!item.open) item.open = true;
+                            catHasMatch = true;
+                            totalVisible++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    cat.style.display = catHasMatch ? '' : 'none';
+                });
+
+                // 更新结果提示
+                if (totalVisible > 0) {
+                    resultBar.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i>找到 <strong>' + totalVisible + '</strong> 条相关问题';
+                    resultBar.style.display = 'block';
+                } else {
+                    resultBar.innerHTML = '<i class="fas fa-search" style="margin-right:6px;"></i>未找到包含 "<strong>' + keyword + '</strong>" 的问题，试试其他关键词';
+                    resultBar.style.display = 'block';
+                    categories.forEach(function(cat) { cat.style.display = 'none'; });
+                }
+            }
+
+            // 搜索按钮点击
+            searchBtn.addEventListener('click', function() {
+                doSearch();
+            });
+
+            // 回车键搜索
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    doSearch();
+                }
+            });
+
+            // 输入时防抖搜索（300ms）
+            var debounceTimer;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                toggleClearBtn();
+                debounceTimer = setTimeout(function() {
+                    doSearch();
+                }, 300);
+            });
+
+            // 清除按钮
+            clearBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                searchInput.value = '';
+                toggleClearBtn();
+                doSearch();
+                searchInput.focus();
+            });
+
+            // 搜索输入框获得焦点时也显示清除按钮
+            searchInput.addEventListener('focus', toggleClearBtn);
+            searchInput.addEventListener('blur', function() {
+                setTimeout(toggleClearBtn, 200);
+            });
+        })();
+    </script>
+
+    <script src="js/main.js?v=20260610"></script>
     <script>
         // 显示/隐藏电话号码
         function showPhoneNumber() {

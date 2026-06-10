@@ -70,30 +70,9 @@
     <a href="#main-content" class="skip-link">תҪ</a>
 
     <!--  -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="">
-        <div class="navbar-container">
-<a href="index.html" class="logo" aria-label="Yaoʽҳ"><img src="uploads/logo.png?v=20260502040820" alt="Yaoʽ" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar">
-<li role="none"><a href="/" class="nav-link" role="menuitem">首页</a></li>
-<li role="none"><a href="/cases.html" class="nav-link" role="menuitem">成功案例</a></li>
-<li role="none"><a href="/services.html" class="nav-link" role="menuitem">业务范围</a></li>
-<li role="none"><a href="/advantages.html" class="nav-link" role="menuitem">服务优势</a></li>
-<li role="none"><a href="/news.php" class="nav-link" role="menuitem">行业资讯</a></li>
-<li role="none"><a href="/contact.html" class="nav-link" role="menuitem">联系我们</a></li>
-<li role="none"><a href="/faq.html" class="nav-link" role="menuitem">常见问题</a></li>
-</ul>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
-            <button class="search-toggle" id="searchToggle" aria-label="" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="򿪲˵" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
 
     <main id="main-content">
         <!-- ҳ -->
@@ -697,7 +676,7 @@
     </div>
 </footer>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=20260610"></script>
     <script>
         // ʾ/ص绰
         function showPhoneNumber() {

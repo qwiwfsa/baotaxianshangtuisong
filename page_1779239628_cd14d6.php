@@ -46,18 +46,9 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-            <a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
-            <button class="search-toggle" id="searchToggle" aria-label="搜索网站" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
+
     <main id="main-content"><div class="page-content"></div></main>
     <div class="chat-widget" id="chatWidget" aria-label="联系电话">
         <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="点击电话"><i class="fas fa-phone-alt"></i></button>
@@ -68,6 +59,6 @@
     
     <script src="/assets/js/page-builder.js"></script>
     
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js?v=20260610"></script>
 </body>
 </html>

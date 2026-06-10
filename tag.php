@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/logo.php';
 require_once __DIR__ . '/device-detect.php';
 DeviceDetector::redirect();
 // ===== 动态 SEO - 标签页 =====
-$tag_seo_title = '标签 - Yao资金网';
+$tag_seo_title = $tag_slug_seo ? $tag_slug_seo . " - Yao资金网" : "资金业务标签 - Yao资金网";
 $tag_seo_desc = '浏览Yao资金网相关标签内容';
 $tag_seo_keywords = '';
 $tag_slug_seo = trim($_GET['slug'] ?? '');
@@ -18,7 +18,7 @@ if ($tag_slug_seo) {
         $result_tag = $stmt_tag->get_result();
         if ($row_tag = $result_tag->fetch_assoc()) {
             $tag_name_seo = $row_tag['name'];
-            $tag_seo_title = !empty($row_tag['seo_title']) ? $row_tag['seo_title'] : ($tag_name_seo . ' - Yao资金网');
+            $tag_seo_title = $tag_slug_seo ? $tag_slug_seo . " - Yao资金网" : "资金业务标签 - Yao资金网";
             $tag_seo_desc = !empty($row_tag['seo_description']) ? $row_tag['seo_description'] : ('浏览与' . $tag_name_seo . '相关的文章和案例');
             $tag_seo_keywords = !empty($row_tag['seo_keywords']) ? $row_tag['seo_keywords'] : $tag_name_seo;
             $tag_content = $row_tag['content'] ?? '';
@@ -148,22 +148,9 @@ var _hmt = _hmt || [];
 
 </head>
 <body>
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo/logo_20260505_122045_69f9c47d515d1.png" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
-            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
 
     <main>
         <section class="tag-detail-header">

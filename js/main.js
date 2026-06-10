@@ -192,28 +192,16 @@
 
         if (!searchToggle || !searchOverlay) return;
 
-        // 搜索关键词数据
-        const searchData = [
-            { title: '上市公司过桥资金', url: '#services', category: '业务' },
-            { title: '股票解质押', url: '#services', category: '业务' },
-            { title: '企业摆账服务', url: '#services', category: '业务' },
-            { title: '亮资业务', url: '#services', category: '业务' },
-            { title: '银行存款冲量', url: '#services', category: '业务' },
-            { title: '应收账款融资', url: '#services', category: '业务' },
-            { title: '云信票据', url: '#services', category: '业务' },
-            { title: '成功案例', url: '#cases', category: '页面' },
-            { title: '服务优势', url: '#advantages', category: '页面' },
-            { title: '常见问题', url: '#faq', category: '页面' },
-            { title: '行业资讯', url: '#news', category: '页面' },
-            { title: '联系我们', url: '#contact', category: '页面' }
-        ];
+        // 搜索请求防抖
+        var searchTimer = null;
+        var activeRequest = null;
 
         // 打开搜索
-        searchToggle.addEventListener('click', () => {
+        searchToggle.addEventListener('click', function() {
             searchOverlay.classList.add('active');
             searchOverlay.setAttribute('aria-hidden', 'false');
             searchToggle.setAttribute('aria-expanded', 'true');
-            setTimeout(() => searchInput.focus(), 100);
+            setTimeout(function() { searchInput.focus(); }, 100);
             document.body.style.overflow = 'hidden';
         });
 
@@ -225,64 +213,97 @@
             document.body.style.overflow = '';
             searchInput.value = '';
             searchSuggestions.innerHTML = '';
+            if (activeRequest) {
+                activeRequest.abort();
+                activeRequest = null;
+            }
         }
 
         searchClose.addEventListener('click', closeSearch);
 
-        // 点击遮罩关闭
-        searchOverlay.addEventListener('click', (e) => {
-            if (e.target === searchOverlay) {
+        // 点击空白处关闭搜索
+        document.addEventListener('click', function(e) {
+            if (searchOverlay.classList.contains('active') && !e.target.closest('.search-container') && e.target !== searchToggle) {
                 closeSearch();
             }
         });
 
         // ESC键关闭
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
                 closeSearch();
             }
         });
 
-        // 搜索输入建议
-        searchInput.addEventListener('input', debounce(function() {
-            const query = this.value.trim().toLowerCase();
-            
+        // 搜索输入 - 调用后端API获取实时建议
+        searchInput.addEventListener('input', function() {
+            var query = this.value.trim();
+
             if (query.length < 1) {
                 searchSuggestions.innerHTML = '';
+                if (activeRequest) {
+                    activeRequest.abort();
+                    activeRequest = null;
+                }
                 return;
             }
 
-            const matches = searchData.filter(item => 
-                item.title.toLowerCase().includes(query)
-            ).slice(0, 5);
-
-            if (matches.length > 0) {
-                searchSuggestions.innerHTML = matches.map(item => `
-                    <a href="${item.url}" class="search-suggestion-item" onclick="document.getElementById('searchOverlay').classList.remove('active'); document.body.style.overflow = '';">
-                        <span class="suggestion-title">${highlightMatch(item.title, query)}</span>
-                        <span class="suggestion-category">${item.category}</span>
-                    </a>
-                `).join('');
-            } else {
-                searchSuggestions.innerHTML = '<div class="search-no-results">未找到相关结果</div>';
+            // 取消之前的请求
+            if (activeRequest) {
+                activeRequest.abort();
             }
-        }, 200));
 
-        // 搜索表单提交
-        searchForm.addEventListener('submit', (e) => {
+            // 防抖
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                var xhr = new XMLHttpRequest();
+                activeRequest = xhr;
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        activeRequest = null;
+                        if (xhr.status === 200) {
+                            try {
+                                var data = JSON.parse(xhr.responseText);
+                                if (data.success && data.data.results.length > 0) {
+                                    var results = data.data.results;
+                                    var html = '';
+                                    for (var i = 0; i < results.length; i++) {
+                                        var item = results[i];
+                                        html += '<a href="' + item.url + '" class="search-suggestion-item">'
+                                            + '<span class="suggestion-title">' + highlightMatch(item.title, query) + '</span>'
+                                            + '<span class="suggestion-category">' + item.type_label + '</span>'
+                                            + (item.summary ? '<span class="suggestion-desc">' + escapeHTML(item.summary) + '</span>' : '')
+                                            + '</a>';
+                                    }
+                                    searchSuggestions.innerHTML = html;
+                                } else {
+                                    searchSuggestions.innerHTML = '<div class="search-no-results">未找到相关结果，试试其他关键词</div>';
+                                }
+                            } catch(e) {
+                                searchSuggestions.innerHTML = '<div class="search-no-results">搜索失败，请稍后重试</div>';
+                            }
+                        } else if (xhr.status !== 0) {
+                            searchSuggestions.innerHTML = '<div class="search-no-results">搜索失败，请稍后重试</div>';
+                        }
+                    }
+                };
+
+                xhr.open('GET', '/api/search.php?q=' + encodeURIComponent(query), true);
+                xhr.send();
+            }, 200);
+        });
+
+        // 搜索表单提交 - 跳转到新闻列表页
+        searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const query = searchInput.value.trim();
+            var query = searchInput.value.trim();
             if (query) {
-                // 实际项目中这里应该跳转到搜索结果页
-                showNotification('搜索功能演示：搜索 "' + query + '"', 'info');
+                window.location.href = '/news.php?search=' + encodeURIComponent(query);
                 closeSearch();
             }
         });
     }
-
-    /**
-     * 高亮匹配文本
-     */
     function highlightMatch(text, query) {
         const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
         return text.replace(regex, '<mark>$1</mark>');
@@ -294,6 +315,7 @@
     function escapeRegex(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
+/**     * 转义 HTML 特殊字符     */    function escapeHTML(str) {        var div = document.createElement('div');        div.appendChild(document.createTextNode(str));        return div.innerHTML;    }
 
     /**
      * 移动端菜单

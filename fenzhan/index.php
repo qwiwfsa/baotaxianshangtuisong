@@ -126,12 +126,12 @@ try {
 $escapedCity = htmlspecialchars($city_name, ENT_QUOTES, 'UTF-8');
 $escapedPhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
 // 默认 SEO
-$page_title = !empty($city['title']) ? $city['title'] : $city_name . '资金服务_过桥短拆_实资摆账_资金证明 - Yao资金网';
+$page_title = !empty($city['title']) ? $city['title'] : $city_name . '资金服务 | 过桥短拆 | 实资摆账 | 资金证明 - Yao资金网';
 $page_keywords = !empty($city['keywords']) ? $city['keywords'] : $city_name . '资金,' . $city_name . '过桥短拆,' . $city_name . '实资摆账,' . $city_name . '资金证明';
 $page_description = !empty($city['description']) ? $city['description'] : '专业提供' . $city_name . '、' . $province . '地区企业个人、过桥短拆实资摆账、资金证明、大额亮资等资金业务，快速安全。';
 // 省份页 SEO 覆盖
 if ($is_province_page) {
-    $page_title = $province_name . '资金服务_过桥短拆_实资摆账_资金证明 - Yao资金网';
+    $page_title = $province_name . '资金服务 | 过桥短拆 | 实资摆账 | 资金证明 - Yao资金网';
     $page_keywords = $province_name . '资金,' . $province_name . '过桥短拆,' . $province_name . '实资摆账,' . $province_name . '资金证明';
     $page_description = '专业提供' . $province_name . '全省各地企业个人、过桥短拆实资摆账、资金证明、大额亮资等资金业务，覆盖全省各市县，快速安全。';
 }

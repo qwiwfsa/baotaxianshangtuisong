@@ -1,174 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Bitnami: Open Source. Simplified</title>
-  <link href="bitnami.css" media="all" rel="Stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/css/page-custom.css?v=20260519"> 
-  <link href="/dashboard/stylesheets/all.css" rel="stylesheet" type="text/css" />
-<script>
-(function() {
-    var pageName = window.location.pathname.split('/').pop() || 'index.html';
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            try {
-                var data = JSON.parse(xhr.responseText);
-                if (data && data.code === 0 && data.data) {
-                    var seo = data.data;
-                    // PHP handles title
-                    if (seo.meta_keywords) {
-                        var kw = document.querySelector('meta[name="keywords"]');
-                        if (kw) kw.content = seo.meta_keywords;
-                    }
-                    if (seo.meta_description) {
-                        var desc = document.querySelector('meta[name="description"]');
-                        if (desc) desc.content = seo.meta_description;
-                    }
-                }
-            } catch(e) {}
-        }
-    };
-    xhr.send();
-})();
-</script>
-<script>
-(function() {
-    var pageName = window.location.pathname.split('/').pop() || 'index.html';
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'admin/api/fetch-seo.php?page=' + pageName + '&t=' + Date.now(), true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            try {
-                var data = JSON.parse(xhr.responseText);
-                if (data && data.code === 0 && data.data) {
-                    var seo = data.data;
-                    // PHP handles title
-                    if (seo.meta_keywords) {
-                        var kw = document.querySelector('meta[name="keywords"]');
-                        if (kw) kw.content = seo.meta_keywords;
-                    }
-                    if (seo.meta_description) {
-                        var desc = document.querySelector('meta[name="description"]');
-                        if (desc) desc.content = seo.meta_description;
-                    }
-                }
-            } catch(e) {}
-        }
-    };
-    xhr.send();
-})();
-</script>
-
-<script>
-(function(){var ua=navigator.userAgent;if(/Mobile|Android|iPhone|iPod|BlackBerry|Windows Phone|webOS|Opera Mini|IEMobile/i.test(ua)&&window.location.pathname.indexOf("/mobile/")===-1){var p=window.location.pathname.split("/").pop();if(p){window.location.href="mobile/"+p;}}})();
-</script>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资金业务应用场景 | 企业摆账 | 过桥短拆 | 实缴验资 - Yao资金网</title>
+    <meta name="description" content="了解企业摆账、过桥短拆、实缴验资、资金证明等资金业务在上市公司、工程建筑、房地产等行业的实际应用场景和解决方案。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.yaozijin.com/applications.html">
+    <link rel="icon" href="/favicon-v2.png" type="image/x-icon">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/css/style.min.css?v=20260519">
+    <link rel="stylesheet" href="/css/page-custom.css?v=20260519">
 </head>
 <body>
-  <div class="contain-to-grid">
-    <nav class="top-bar" data-topbar>
-      <ul class="title-area">
-        <li class="name">
-          <h1><a href="/dashboard/index.html">Apache Friends</a></h1>
-        </li>
-        <li class="toggle-topbar menu-icon">
-          <a href="#">
-            <span>Menu</span>
-          </a>
-        </li>
-      </ul>
+    <div id="header-placeholder"></div>
+    <script>fetch('/admin/api/fetch-header.php').then(r=>r.text()).then(d=>document.getElementById('header-placeholder').innerHTML=d);</script>
 
-      <section class="top-bar-section">
-        <!-- Right Nav Section -->
-        <ul class="right">
-          <li class="active"><a href="/applications.html">Applications</a></li>
-          <li class=""><a href="/dashboard/faq.html">FAQs</a></li>
-          <li class=""><a href="/dashboard/howto.html">HOW-TO Guides</a></li>
-          <li class=""><a target="_blank" href="/dashboard/phpinfo.php">PHPInfo</a></li>
-          <li class=""><a href="/phpmyadmin/">phpMyAdmin</a></li>
-        </ul>
-      </section>
-    </nav>
-  </div>
-  <div id="wrapper">
-    <div class="hero">
-       <div class="row">
-         <div class="large-12 columns">
-            <p>Apache Friends and Bitnami are cooperating to make dozens of open source applications available on XAMPP, for free. Bitnami-packaged applications include Wordpress, Drupal, Joomla! and dozens of others and can be deployed with one-click installers. Visit the <a href="https://bitnami.com/xampp?utm_source=bitnami&utm_medium=installer&utm_campaign=XAMPP%2BModule" target="_blank">Bitnami XAMPP page</a> for details on the currently available apps.</p><br/>
-            <p>Check out our <a href="https://www.apachefriends.org/bitnami_for_xampp.html" target="_blank" >Bitnami for XAMPP Start Guide</a> for more information about the applications installed.</p>
-         </div>
-       </div>
-    </div>
-    <div id="lowerContainer" class="row">
-      <div id="content" class="large-12 columns">
-          <!-- @@BITNAMI_MODULE_PLACEHOLDER@@ -->
-      </div>
-    </div>
-  </div>
-  <footer class="footer">
-    <div class="footer-container">
-        <div class="footer-main">
-            <div class="footer-brand">
-                <div class="footer-logo"><img src="/uploads/logo/logo_20260502_190529_69f62ed969290.png" alt="Yao资资金" style="height:48px;width:auto;"></div>
-                <p class="footer-desc">专业资金业务服务商，提供上市公司短拆、企业过桥、银行存款、应收账款保理等全方位资金服务</p>
-            </div>
-            <div class="footer-nav footer-nav-horizontal" data-footer-group="quick_links">
-                <h4 class="footer-nav-title">快捷导航</h4>
-                <ul class="footer-nav-list" style="flex-direction:row;flex-wrap:wrap;gap:20px">
-                    <li><a href="https://yaozijin.com/fenzhan/hangzhou.html">杭州</a></li>
-                    <li><a href="https://yaozijin.com/fenzhan/chongqing.html">重庆</a></li>
-                    <li><a href="https://yaozijin.com/fenzhan/chengdu.html">成都</a></li>
-                    <li><a href="#">更多城市</a></li>
-                    <li><a href="/sitemap.xml">网站地图</a></li>
-                </ul>
+    <main class="page-content">
+        <div class="container">
+            <h1 class="page-header-title">资金业务应用场景</h1>
+            <div class="applications-grid">
+                <section>
+                    <h2>上市公司资金业务</h2>
+                    <p>为上市公司提供股票解质押过桥、短期拆借、定增配资等资金服务，助力上市公司优化资本结构。</p>
+                </section>
+                <section>
+                    <h2>企业融资服务</h2>
+                    <p>为企业提供摆账亮资、实缴验资、资金证明等服务，满足企业在招投标、资质审核、商务谈判等环节的资金需求。</p>
+                </section>
+                <section>
+                    <h2>工程建筑行业</h2>
+                    <p>为工程建筑企业提供工程亮资、履约保证金、投标保证金等资金服务，保障工程项目顺利推进。</p>
+                </section>
+                <section>
+                    <h2>银行冲量业务</h2>
+                    <p>提供银行存款时点冲量、日均冲量服务，帮助银行网点完成存款考核指标。</p>
+                </section>
+                <section>
+                    <h2>个人资金服务</h2>
+                    <p>为高净值个人提供资金证明、个人亮资、定期存款等服务，满足个人在投资、移民、购房等场景的资金证明需求。</p>
+                </section>
+                <section>
+                    <h2>云信融资出表</h2>
+                    <p>提供云信实摆真实出表服务，帮助企业优化财务报表，降低资产负债率。</p>
+                </section>
             </div>
         </div>
-        <div class="footer-provinces">
-            <div class="footer-provinces-inner">
-                <h4 class="footer-provinces-title">全国省份</h4>
-                <div class="footer-province-links">
-                    <a href="/fenzhan/province-shanghai.html" class="footer-province-item">上海资金服务</a>
-                    <a href="/fenzhan/province-yun-nan.html" class="footer-province-item">云南资金服务</a>
-                    <a href="/fenzhan/province-nei-meng-gu.html" class="footer-province-item">内蒙古资金服务</a>
-                    <a href="/fenzhan/province-beijing.html" class="footer-province-item">北京资金服务</a>
-                    <a href="/fenzhan/province-ji-lin.html" class="footer-province-item">吉林资金服务</a>
-                    <a href="/fenzhan/province-si-chuan.html" class="footer-province-item">四川资金服务</a>
-                    <a href="/fenzhan/province-tianjin.html" class="footer-province-item">天津资金服务</a>
-                    <a href="/fenzhan/province-ning-xia.html" class="footer-province-item">宁夏资金服务</a>
-                    <a href="/fenzhan/province-an-hui.html" class="footer-province-item">安徽资金服务</a>
-                    <a href="/fenzhan/province-shan-dong.html" class="footer-province-item">山东资金服务</a>
-                    <a href="/fenzhan/province-shan-xi.html" class="footer-province-item">山西资金服务</a>
-                    <a href="/fenzhan/province-guang-dong.html" class="footer-province-item">广东资金服务</a>
-                    <a href="/fenzhan/province-guang-xi.html" class="footer-province-item">广西资金服务</a>
-                    <a href="/fenzhan/province-xin-jiang.html" class="footer-province-item">新疆资金服务</a>
-                    <a href="/fenzhan/province-jiang-su.html" class="footer-province-item">江苏资金服务</a>
-                    <a href="/fenzhan/province-jiang-xi.html" class="footer-province-item">江西资金服务</a>
-                    <a href="/fenzhan/province-he-bei.html" class="footer-province-item">河北资金服务</a>
-                    <a href="/fenzhan/province-he-nan.html" class="footer-province-item">河南资金服务</a>
-                    <a href="/fenzhan/province-zhe-jiang.html" class="footer-province-item">浙江资金服务</a>
-                    <a href="/fenzhan/province-hai-nan.html" class="footer-province-item">海南资金服务</a>
-                    <a href="/fenzhan/province-gang-ao-tai.html" class="footer-province-item">港澳台资金服务</a>
-                    <a href="/fenzhan/province-hu-bei.html" class="footer-province-item">湖北资金服务</a>
-                    <a href="/fenzhan/province-hu-nan.html" class="footer-province-item">湖南资金服务</a>
-                    <a href="/fenzhan/province-gan-su.html" class="footer-province-item">甘肃资金服务</a>
-                    <a href="/fenzhan/province-fu-jian.html" class="footer-province-item">福建资金服务</a>
-                    <a href="/fenzhan/province-xi-zang.html" class="footer-province-item">西藏资金服务</a>
-                    <a href="/fenzhan/province-gui-zhou.html" class="footer-province-item">贵州资金服务</a>
-                    <a href="/fenzhan/province-liao-ning.html" class="footer-province-item">辽宁资金服务</a>
-                    <a href="/fenzhan/province-chongqing.html" class="footer-province-item">重庆资金服务</a>
-                    <a href="/fenzhan/province-shaan-xi.html" class="footer-province-item">陕西资金服务</a>
-                    <a href="/fenzhan/province-qing-hai.html" class="footer-province-item">青海资金服务</a>
-                    <a href="/fenzhan/province-hei-long-jiang.html" class="footer-province-item">黑龙江资金服务</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="footer-copyright">&copy; 2026 Yao资资金 成都资本版权所有</p>
-            <p class="footer-disclaimer">蜀ICP备2026052915号</p>
-        </div>
-    </div>
-</footer>
-    <script src="admin/assets/cms.js"></script>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script>fetch('/admin/api/fetch-footer.php').then(r=>r.text()).then(d=>document.getElementById('footer-placeholder').innerHTML=d);</script>
 </body>
 </html>

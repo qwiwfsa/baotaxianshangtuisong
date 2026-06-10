@@ -107,23 +107,9 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
 <body>
     <a href="#main-content" class="skip-link">跳转到主要内容</a>
 
-    <!-- 导航栏 -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
-        <div class="navbar-container">
-<a href="/" class="logo" aria-label="Yao资金网首页"><img src="/uploads/logo.png?v=20260502040820" alt="Yao资金网" style="height:48px;width:auto;"></a>
-            <ul class="nav-menu" role="menubar"><?php include __DIR__ . "/includes/nav.php"; ?></ul>
+    <?php require_once __DIR__ . '/includes/logo.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
-            <button class="search-toggle" id="searchToggle" aria-label="打开搜索" aria-expanded="false">
-                <i class="fas fa-search" aria-hidden="true"></i>
-            </button>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
 
     <main id="main-content">
         <!-- 业务范围Banner图片 -->
@@ -349,7 +335,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");header("Pragma: no-
 
     <!-- 页脚 -->
 <?php include 'includes/footer.php'; ?>
-<script src="/js/main.js"></script>
+<script src="/js/main.js?v=20260610"></script>
     
     <!-- CMS Editor -->
     <script>
