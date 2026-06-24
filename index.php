@@ -554,7 +554,7 @@ var _hmt = _hmt || [];
 
     <!-- 页脚(由数据库动态渲染) -->
     <?php include 'includes/footer.php'; ?>
-<script src="/js/main.js?v=20260610"></script>
+<script src="/js/main.js?v=20260611"></script>
     
     <!-- CMS Data Integration -->
 

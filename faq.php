@@ -389,7 +389,7 @@ if ('caches' in window) {
         })();
     </script>
 
-<script src="/js/main.js?v=20260610"></script>
+<script src="/js/main.js?v=20260611"></script>
     <script>
         // 显示/隐藏电话号码
         function showPhoneNumber() {

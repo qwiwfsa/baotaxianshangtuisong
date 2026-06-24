@@ -185,7 +185,6 @@
     function initSearch() {
         const searchToggle = document.getElementById('searchToggle');
         const searchOverlay = document.getElementById('searchOverlay');
-        const searchClose = document.getElementById('searchClose');
         const searchInput = document.getElementById('searchInput');
         const searchForm = document.getElementById('searchForm');
         const searchSuggestions = document.getElementById('searchSuggestions');
@@ -219,7 +218,6 @@
             }
         }
 
-        searchClose.addEventListener('click', closeSearch);
 
         // 点击空白处关闭搜索
         document.addEventListener('click', function(e) {
